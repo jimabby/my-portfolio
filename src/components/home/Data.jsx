@@ -59,7 +59,7 @@ const Data = () => {
         Web / Software Developer
       </h3>
       <p className='home__description'>
-        I am a web developer based in Brisbane, and I'm very passionate and dedicated to my work.
+        I am a Full Stack developer based in Brisbane, and I'm very passionate and dedicated to my work.
       </p>
       <a href='#contact' className='button button--flex'>
         Say Hello
