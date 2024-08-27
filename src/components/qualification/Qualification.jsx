@@ -64,6 +64,40 @@ const Qualification = () => {
               </div>
             </div>  
 
+            <div className='qualification__data'>
+              <div>
+                <h3 className='qualification__title'>
+                  AWS Certified Cloud Practitioner
+                </h3>
+                <span className='qualification__subtitle'>Amazon Web Service</span>
+                <div className='qualification__calendar'>
+                  <i class='uil uil-calendar-alt'>2023</i>
+                </div>
+              </div>
+
+              <div>
+                <span className='qualification__rounder'></span>
+                <span className='qualification__line'></span>
+              </div>
+            </div>
+
+            <div className='qualification__data'>
+              <div></div>
+              <div>
+                <span className='qualification__rounder'></span>
+                <span className='qualification__line'></span>
+              </div>
+              <div>
+                <h3 className='qualification__title'>
+                  IBM Data Analyst Professional Certificate
+                </h3>
+                <span className='qualification__subtitle'>IBM</span>
+                <div className='qualification__calendar'>
+                  <i class='uil uil-calendar-alt'>2024</i>
+                </div>
+              </div>
+            </div>  
+
           </div>
 
           {/**Experience */}
