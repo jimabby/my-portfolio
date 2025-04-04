@@ -98,6 +98,40 @@ const Qualification = () => {
               </div>
             </div>  
 
+            <div className='qualification__data'>
+              <div>
+                <h3 className='qualification__title'>
+                  AWS Certified Machine Learning Engineer - Associate 
+                </h3>
+                <span className='qualification__subtitle'>Amazon Web Service</span>
+                <div className='qualification__calendar'>
+                  <i class='uil uil-calendar-alt'>2024</i>
+                </div>
+              </div>
+
+              <div>
+                <span className='qualification__rounder'></span>
+                <span className='qualification__line'></span>
+              </div>
+            </div>
+
+            <div className='qualification__data'>
+              <div></div>
+              <div>
+                <span className='qualification__rounder'></span>
+                <span className='qualification__line'></span>
+              </div>
+              <div>
+                <h3 className='qualification__title'>
+                  Oracle Cloud Infrastructure 2025 Certified Foundations Associate
+                </h3>
+                <span className='qualification__subtitle'>Oracle</span>
+                <div className='qualification__calendar'>
+                  <i class='uil uil-calendar-alt'>2025</i>
+                </div>
+              </div>
+            </div>  
+
           </div>
 
           {/**Experience */}
@@ -160,12 +194,28 @@ const Qualification = () => {
               </div>
               <div>
                 <h3 className='qualification__title'>
-                  Software Developer
+                  Software Developer / Test Engineer
                 </h3>
                 <span className='qualification__subtitle'>Braiv</span>
                 <div className='qualification__calendar'>
                   <i class='uil uil-calendar-alt'>2024 - 2025</i>
                 </div>
+              </div>
+            </div>  
+
+            <div className='qualification__data'>
+              <div>
+                <h3 className='qualification__title'>
+                  Software Developer
+                </h3>
+                <span className='qualification__subtitle'>VEPRM</span>
+                <div className='qualification__calendar'>
+                  <i class='uil uil-calendar-alt'>2025 - 2026</i>
+                </div>
+              </div>
+              <div>
+                <span className='qualification__rounder'></span>
+                <span className='qualification__line'></span>
               </div>
             </div>  
 
