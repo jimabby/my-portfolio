@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/my-portfolio/static/css/main.9e2f37bf.css",
-    "main.js": "/my-portfolio/static/js/main.77b1bd9e.js",
+    "main.js": "/my-portfolio/static/js/main.daf63d2d.js",
     "static/js/453.acca0757.chunk.js": "/my-portfolio/static/js/453.acca0757.chunk.js",
     "static/media/idesign.png": "/my-portfolio/static/media/idesign.6d90537282cf46622753.png",
     "static/media/sociopedia.png": "/my-portfolio/static/media/sociopedia.0637c56ee8875f8b3dad.png",
@@ -12,18 +12,18 @@
     "static/media/Takeaway.png": "/my-portfolio/static/media/Takeaway.598123beab9c12dc41c0.png",
     "static/media/gym.png": "/my-portfolio/static/media/gym.06188917c290d127cd94.png",
     "static/media/medirecords.png": "/my-portfolio/static/media/medirecords.53f5eb4cac0f83a1b74b.png",
-    "static/media/JimKong.pdf": "/my-portfolio/static/media/JimKong.5fa68cc213c8981ba088.pdf",
+    "static/media/JimKong.pdf": "/my-portfolio/static/media/JimKong.f3c06f4d57182cd8d502.pdf",
     "static/media/profile.jpg": "/my-portfolio/static/media/profile.19edcb1d8d7bf2e758e2.jpg",
     "static/media/testimonial3.png": "/my-portfolio/static/media/testimonial3.2e18bfe27c6d2e2e9fdc.png",
     "static/media/testimonial2.png": "/my-portfolio/static/media/testimonial2.39a53f7f092f07f5bceb.png",
     "static/media/testimonial1.png": "/my-portfolio/static/media/testimonial1.89079c1d25f2c94ceb89.png",
     "index.html": "/my-portfolio/index.html",
     "main.9e2f37bf.css.map": "/my-portfolio/static/css/main.9e2f37bf.css.map",
-    "main.77b1bd9e.js.map": "/my-portfolio/static/js/main.77b1bd9e.js.map",
+    "main.daf63d2d.js.map": "/my-portfolio/static/js/main.daf63d2d.js.map",
     "453.acca0757.chunk.js.map": "/my-portfolio/static/js/453.acca0757.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9e2f37bf.css",
-    "static/js/main.77b1bd9e.js"
+    "static/js/main.daf63d2d.js"
   ]
 }
