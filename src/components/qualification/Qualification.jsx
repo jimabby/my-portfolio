@@ -18,12 +18,12 @@ const Qualification = () => {
           <div className={toggleState === 1 ? "qualification__button qualification__active button--flex" : "qualification__button button--flex"}
             onClick={() => toggleTab(1)}
           >
-            <i class="uil uil-graduation-cap qualification__active qualification__icon"></i> Education
+            <i className="uil uil-graduation-cap qualification__active qualification__icon"></i> Education
           </div>
           <div className={toggleState === 2 ? "qualification__button qualification__active button--flex" : "qualification__button button--flex"}
             onClick={() => toggleTab(2)}
           >
-            <i class="uil uil-briefcase-alt qualificatione__icon"></i> Experience
+            <i className="uil uil-briefcase-alt qualificatione__icon"></i> Experience
           </div>
         </div>
 
@@ -37,7 +37,7 @@ const Qualification = () => {
                 </h3>
                 <span className='qualification__subtitle'>Michigan State University - Institute</span>
                 <div className='qualification__calendar'>
-                  <i class='uil uil-calendar-alt'>2014 - 2018</i>
+                  <i className='uil uil-calendar-alt'>2014 - 2018</i>
                 </div>
               </div>
 
@@ -59,7 +59,7 @@ const Qualification = () => {
                 </h3>
                 <span className='qualification__subtitle'>University of Queensland - Institute</span>
                 <div className='qualification__calendar'>
-                  <i class='uil uil-calendar-alt'>2019 - 2022</i>
+                  <i className='uil uil-calendar-alt'>2019 - 2022</i>
                 </div>
               </div>
             </div>  
@@ -71,7 +71,7 @@ const Qualification = () => {
                 </h3>
                 <span className='qualification__subtitle'>Amazon Web Service</span>
                 <div className='qualification__calendar'>
-                  <i class='uil uil-calendar-alt'>2023</i>
+                  <i className='uil uil-calendar-alt'>2023</i>
                 </div>
               </div>
 
@@ -93,7 +93,7 @@ const Qualification = () => {
                 </h3>
                 <span className='qualification__subtitle'>IBM</span>
                 <div className='qualification__calendar'>
-                  <i class='uil uil-calendar-alt'>2024</i>
+                  <i className='uil uil-calendar-alt'>2024</i>
                 </div>
               </div>
             </div>  
@@ -105,7 +105,7 @@ const Qualification = () => {
                 </h3>
                 <span className='qualification__subtitle'>Amazon Web Service</span>
                 <div className='qualification__calendar'>
-                  <i class='uil uil-calendar-alt'>2024</i>
+                  <i className='uil uil-calendar-alt'>2024</i>
                 </div>
               </div>
 
@@ -127,7 +127,7 @@ const Qualification = () => {
                 </h3>
                 <span className='qualification__subtitle'>Oracle</span>
                 <div className='qualification__calendar'>
-                  <i class='uil uil-calendar-alt'>2025</i>
+                  <i className='uil uil-calendar-alt'>2025</i>
                 </div>
               </div>
             </div>  
@@ -143,7 +143,7 @@ const Qualification = () => {
                 </h3>
                 <span className='qualification__subtitle'>Moview</span>
                 <div className='qualification__calendar'>
-                  <i class='uil uil-calendar-alt'>2021- 2022</i>
+                  <i className='uil uil-calendar-alt'>2021- 2022</i>
                 </div>
               </div>
 
@@ -165,7 +165,7 @@ const Qualification = () => {
                 </h3>
                 <span className='qualification__subtitle'>Takeaway Platform</span>
                 <div className='qualification__calendar'>
-                  <i class='uil uil-calendar-alt'>2022 - 2023</i>
+                  <i className='uil uil-calendar-alt'>2022 - 2023</i>
                 </div>
               </div>
             </div>  
@@ -177,7 +177,7 @@ const Qualification = () => {
                 </h3>
                 <span className='qualification__subtitle'>Upward Consulting</span>
                 <div className='qualification__calendar'>
-                  <i class='uil uil-calendar-alt'>2023 - 2024</i>
+                  <i className='uil uil-calendar-alt'>2023 - 2024</i>
                 </div>
               </div>
               <div>
@@ -198,7 +198,7 @@ const Qualification = () => {
                 </h3>
                 <span className='qualification__subtitle'>Braiv</span>
                 <div className='qualification__calendar'>
-                  <i class='uil uil-calendar-alt'>2024 - 2025</i>
+                  <i className='uil uil-calendar-alt'>2024 - 2025</i>
                 </div>
               </div>
             </div>  
@@ -210,7 +210,7 @@ const Qualification = () => {
                 </h3>
                 <span className='qualification__subtitle'>VEPRM</span>
                 <div className='qualification__calendar'>
-                  <i class='uil uil-calendar-alt'>2025 - 2026</i>
+                  <i className='uil uil-calendar-alt'>2025 - 2026</i>
                 </div>
               </div>
               <div>

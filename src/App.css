@@ -168,6 +168,17 @@ img {
   align-items: center;
 }
 
+/* Re-enable bullets inside blog content */
+.blog__content ul {
+  list-style: disc !important;
+  padding-left: 1.5rem;
+  margin-left: 0;
+}
+
+.blog__content li {
+  display: list-item;
+}
+
 /*=============== BREAKPOINTS ===============*/
 /* For large devices */
 @media screen and (max-width: 992px) {

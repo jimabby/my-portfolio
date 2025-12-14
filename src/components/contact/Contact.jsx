@@ -25,40 +25,40 @@ const Contact = () => {
 
             {/** Email */}
             <div className='contact__card'>
-              <i class="bx bx-mail-send contact__card-icon"></i>
+              <i className="bx bx-mail-send contact__card-icon"></i>
 
               <h3 className='contact__card-title'>Email</h3>
               <span className='contact__card-data'>wksunshine@gmail.com</span>
 
               <a href='mailto:wksunshine@gmail.com' className='contact__button'>
                 Write me
-                <i class='bx bx-right-arrow-alt contact__button-icon'></i>
+                <i className='bx bx-right-arrow-alt contact__button-icon'></i>
               </a>
             </div>
             
             {/** Whatsapp */}
             <div className='contact__card'>
-              <i class="bx bxl-whatsapp contact__card-icon"></i>
+              <i className="bx bxl-whatsapp contact__card-icon"></i>
 
               <h3 className='contact__card-title'>Whatsapp</h3>
               <span className='contact__card-data'>+61-406-448-436</span>
 
               <a href='https://api.whatsapp.com/send?phone=61406448436&text=Hello, more information' className='contact__button'>
                 Write me
-                <i class='bx bx-right-arrow-alt contact__button-icon'></i>
+                <i className='bx bx-right-arrow-alt contact__button-icon'></i>
               </a>
             </div>
 
             {/** Messenger */}
             <div className='contact__card'>
-              <i class="bx bxl-messenger contact__card-icon"></i>
+              <i className="bx bxl-messenger contact__card-icon"></i>
 
               <h3 className='contact__card-title'>Messenger</h3>
               <span className='contact__card-data'>Weidong Kong</span>
 
               <a href='https://m.me/weidongkong' className='contact__button'>
                 Write me
-                <i class='bx bx-right-arrow-alt contact__button-icon'></i>
+                <i className='bx bx-right-arrow-alt contact__button-icon'></i>
               </a>
             </div>
           </div>

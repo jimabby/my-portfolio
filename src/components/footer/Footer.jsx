@@ -8,27 +8,27 @@ const Footer = () => {
         <h1 className='footer__title'>Jim</h1>
         <ul className='footer__list'>
           <li>
-            <a href='#about' className='footer__link'>About</a>
+            <a href='/my-portfolio#about' className='footer__link'>About</a>
           </li>
           <li>
-            <a href='#portfolio' className='footer__link'>Portfolio</a>
+            <a href='/my-portfolio#portfolio' className='footer__link'>Portfolio</a>
           </li>
           <li>
-            <a href='#testimonial' className='footer__link'>Testimonials</a>
+            <a href='/my-portfolio#testimonial' className='footer__link'>Testimonials</a>
           </li>
         </ul>
 
         <div className='footer__social'>
           <a href='https://www.facebook.com/weidong.kong/' className='footer__social-link' target='_blank'>
-            <i class='bx bxl-facebook'></i>
+            <i className='bx bxl-facebook'></i>
           </a>
 
           <a href='https://www.instagram.com/wkongjim/' className='footer__social-link' target='_blank'>
-            <i class='bx bxl-instagram'></i>
+            <i className='bx bxl-instagram'></i>
           </a>
 
           <a href='https://x.com/Weidong_jim' className='footer__social-link' target='_blank'>
-            <i class='bx bxl-twitter'></i>
+            <i className='bx bxl-twitter'></i>
           </a>
         </div>
 

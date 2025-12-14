@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import "./header.css"
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   //Change Background Header
@@ -20,53 +21,64 @@ const Header = () => {
   return (
     <header className='header'>
       <nav className='nav container'>
-        <a href='index.html' className='nav__logo'>Jim</a>
+        <Link to="/" className="nav__logo">Jim</Link>
 
         <div className={Toggle ? "nav__menu show-menu": "nav__menu"}>
           <ul className='nav__list grid'>
             <li className='nav__item'>
-              <a href="#home" onClick={() => setActiveNav('#home')} 
+              <a href="/my-portfolio#home" onClick={() => setActiveNav('#home')} 
                 className= {activeNav === '#home' ? 'nav__link active-link' : 'nav__link'}>
-                <i class='uil uil-estate nav__icon'></i>Home
+                <i className='uil uil-estate nav__icon'></i>Home
               </a>
             </li>
             <li className='nav__item'>
-              <a href="#about" onClick={() => setActiveNav('#about')} 
+              <a href="/my-portfolio#about" onClick={() => setActiveNav('#about')} 
                 className= {activeNav === '#about' ? 'nav__link active-link' : 'nav__link'}>
-                <i class='uil uil-user nav__icon'></i>About
+                <i className='uil uil-user nav__icon'></i>About
               </a>
             </li>
             <li className='nav__item'>
-              <a href="#skills" onClick={() => setActiveNav('#skills')} 
+              <a href="/my-portfolio#skills" onClick={() => setActiveNav('#skills')} 
                 className= {activeNav === '#skills' ? 'nav__link active-link' : 'nav__link'}>
-                <i class='uil uil-file nav__icon'></i>Skills
+                <i className='uil uil-file nav__icon'></i>Skills
               </a>
             </li>
             <li className='nav__item'>
-              <a href="#services" onClick={() => setActiveNav('#services')} 
+              <a href="/my-portfolio#services" onClick={() => setActiveNav('#services')} 
                 className= {activeNav === '#services' ? 'nav__link active-link' : 'nav__link'}>
-                <i class='uil uil-briefcase-alt nav__icon'></i>Services
+                <i className='uil uil-briefcase-alt nav__icon'></i>Services
               </a>
             </li>
             <li className='nav__item'>
-              <a href="#portfolio" onClick={() => setActiveNav('#portfolio')} 
+              <a href="/my-portfolio#portfolio" onClick={() => setActiveNav('#portfolio')} 
                 className= {activeNav === '#portfolio' ? 'nav__link active-link' : 'nav__link'}>
-                <i class='uil uil-scenery nav__icon'></i>Portfolio
+                <i className='uil uil-scenery nav__icon'></i>Portfolio
               </a>
             </li>
+            <li className="nav__item">
+              <Link
+                to="/blog"
+                onClick={() => setActiveNav("blog")}
+                className={
+                  activeNav === "blog" ? "nav__link active-link" : "nav__link"
+                }
+              >
+                <i className="uil uil-notes nav__icon"></i>Blog
+              </Link>
+            </li>
             <li className='nav__item'>
-              <a href="#contact" onClick={() => setActiveNav('#contact')} 
+              <a href="/my-portfolio#contact" onClick={() => setActiveNav('#contact')} 
                 className= {activeNav === '#contact' ? 'nav__link active-link' : 'nav__link'}>
-                <i class='uil uil-message nav__icon'></i>Contact
+                <i className='uil uil-message nav__icon'></i>Contact
               </a>
             </li>
           </ul>
 
-          <i class="uil uil-times nav__close" onClick={() => showMenu(!Toggle)}></i>
+          <i className="uil uil-times nav__close" onClick={() => showMenu(!Toggle)}></i>
         </div>
 
         <div className='nav__toggle' onClick={() => showMenu(!Toggle)}>
-          <i class='uil uil-apps'></i>
+          <i className='uil uil-apps'></i>
         </div>
       </nav>
     </header>

@@ -1,22 +1,33 @@
-import React from 'react'
-import "./scrollup.css"
+import React, { useEffect } from "react";
+import "./scrollup.css";
 
 const ScrollUp = () => {
-  window.addEventListener("scroll", function() {
-    const scrollup = document.querySelector(".scrollup");
-    //when the scroll is higher than 560 viewport height, add the show-scroll class to a tag with the scroll-top class
-    if (this.scrollY >= 560){
-      scrollup.classList.add("show-scroll")
-    }else {
-      scrollup.classList.remove("show-scroll")
-    }
-  })
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollup = document.querySelector(".scrollup");
+      if (!scrollup) return; // ✅ prevent null crash
+
+      if (window.scrollY >= 560) {
+        scrollup.classList.add("show-scroll");
+      } else {
+        scrollup.classList.remove("show-scroll");
+      }
+    };
+
+    // Run once and add listener
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    // Cleanup on unmount
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <a href='#home' className='scrollup'>
-      <i class='uil uil-arrow-up scrollup__icon'></i>
+    <a href="#top" className="scrollup">
+      <i className="uil uil-arrow-up scrollup__icon"></i>
     </a>
-  )
-}
+  );
+};
 
-export default ScrollUp
+export default ScrollUp;
+
