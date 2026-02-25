@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/my-portfolio/static/css/main.9e2f37bf.css",
-    "main.js": "/my-portfolio/static/js/main.daf63d2d.js",
+    "main.css": "/my-portfolio/static/css/main.6aebf6f6.css",
+    "main.js": "/my-portfolio/static/js/main.35595e10.js",
     "static/js/453.acca0757.chunk.js": "/my-portfolio/static/js/453.acca0757.chunk.js",
     "static/media/idesign.png": "/my-portfolio/static/media/idesign.6d90537282cf46622753.png",
     "static/media/sociopedia.png": "/my-portfolio/static/media/sociopedia.0637c56ee8875f8b3dad.png",
@@ -12,18 +12,26 @@
     "static/media/Takeaway.png": "/my-portfolio/static/media/Takeaway.598123beab9c12dc41c0.png",
     "static/media/gym.png": "/my-portfolio/static/media/gym.06188917c290d127cd94.png",
     "static/media/medirecords.png": "/my-portfolio/static/media/medirecords.53f5eb4cac0f83a1b74b.png",
-    "static/media/JimKong.pdf": "/my-portfolio/static/media/JimKong.f3c06f4d57182cd8d502.pdf",
+    "static/media/long-exposure.webp": "/my-portfolio/static/media/long-exposure.f95f625f41cf4370dc87.webp",
+    "static/media/JimKong.pdf": "/my-portfolio/static/media/JimKong.f0bc863ab107c3582277.pdf",
+    "static/media/exposure-triangle.jpg": "/my-portfolio/static/media/exposure-triangle.29f3c151d7f329a9aada.jpg",
+    "static/media/manual-mode.jpg": "/my-portfolio/static/media/manual-mode.eacbfafdfe2adc8381f3.jpg",
+    "static/media/apertune.jpg": "/my-portfolio/static/media/apertune.11bf99ad5c7a3e7b1f90.jpg",
+    "static/media/Nikon-Z8-m-mode.jpg": "/my-portfolio/static/media/Nikon-Z8-m-mode.f43687965849ffbfa439.jpg",
+    "static/media/shutter-speed.jpg": "/my-portfolio/static/media/shutter-speed.6a559b25c55cce86e9ce.jpg",
+    "static/media/m-mode.jpg": "/my-portfolio/static/media/m-mode.5f4477b7ff928268d2cc.jpg",
     "static/media/profile.jpg": "/my-portfolio/static/media/profile.19edcb1d8d7bf2e758e2.jpg",
+    "static/media/portrait.jpg": "/my-portfolio/static/media/portrait.d555cbc38b2ea71624cd.jpg",
     "static/media/testimonial3.png": "/my-portfolio/static/media/testimonial3.2e18bfe27c6d2e2e9fdc.png",
     "static/media/testimonial2.png": "/my-portfolio/static/media/testimonial2.39a53f7f092f07f5bceb.png",
     "static/media/testimonial1.png": "/my-portfolio/static/media/testimonial1.89079c1d25f2c94ceb89.png",
     "index.html": "/my-portfolio/index.html",
-    "main.9e2f37bf.css.map": "/my-portfolio/static/css/main.9e2f37bf.css.map",
-    "main.daf63d2d.js.map": "/my-portfolio/static/js/main.daf63d2d.js.map",
+    "main.6aebf6f6.css.map": "/my-portfolio/static/css/main.6aebf6f6.css.map",
+    "main.35595e10.js.map": "/my-portfolio/static/js/main.35595e10.js.map",
     "453.acca0757.chunk.js.map": "/my-portfolio/static/js/453.acca0757.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9e2f37bf.css",
-    "static/js/main.daf63d2d.js"
+    "static/css/main.6aebf6f6.css",
+    "static/js/main.35595e10.js"
   ]
 }
