@@ -1,6 +1,16 @@
 import { Link } from "react-router-dom";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
+import heroImage from '../../assets/Nikon-Z8-m-mode.jpg'
+import Mmode from "../../assets/m-mode.jpg"
+import ShuuterSpeed from "../../assets/shutter-speed.jpg"
+import Apertune from "../../assets/apertune.jpg"
+import ISO from "../../assets/iso.png"
+import exposureTriangle from "../../assets/exposure-triangle.jpg"
+import Portrait from "../../assets/portrait.jpg"
+import longExposure from "../../assets/long-exposure.webp"
+import ManualMode from "../../assets/manual-mode.jpg"
+import "./blog.css";
 
 const FirstPost = () => {
   return (
@@ -12,16 +22,22 @@ const FirstPost = () => {
 
           {/* Back button */}
           <div className="blog__back-wrapper">
-            <Link to="/blog" className="button button--flex blog__back-button">
+            <Link to="/blog" className="blog__back-button">
               ← Back to Blog
             </Link>
           </div>
 
           {/* HERO */}
           <header className="blog__hero card">
-            <span className="blog__badge">Camera Basics</span>
+            <div className="blog__post-meta">
+              <span className="blog__badge">Camera Basics</span>
+              <span className="blog__meta-dot">·</span>
+              <time className="blog__meta-date">February 2025</time>
+              <span className="blog__meta-dot">·</span>
+              <span className="blog__meta-readtime">5 min read</span>
+            </div>
 
-            <h1 className="section__title blog__post-title">
+            <h1 className="blog__post-title">
               Understanding M Mode
             </h1>
 
@@ -32,29 +48,38 @@ const FirstPost = () => {
             </p>
 
             <p className="blog__hero-text">
-              In this guide, you’ll learn how shutter speed, aperture, and ISO
+              In this guide, you'll learn how shutter speed, aperture, and ISO
               work together, with simple examples you can try immediately.
             </p>
 
-            <div className="blog__image-placeholder blog__image-placeholder--hero">
-              <span>Hero image: Camera in M Mode</span>
-            </div>
+            <figure className="blog__figure blog__figure--hero">
+              <img src={heroImage} alt="Camera in M Mode" className="blog__img" />
+            </figure>
           </header>
 
-          <span className="section__subtitle blog__post-subtitle">
-            A simple, practical guide to Manual Photography
-          </span>
+          {/* TABLE OF CONTENTS */}
+          <nav className="blog__toc card">
+            <h2 className="blog__toc-title">In this article</h2>
+            <ol className="blog__toc-list">
+              <li><a href="#step-1">Step 1 — Switch to M Mode</a></li>
+              <li><a href="#step-2">Step 2 — The Three Settings Explained</a></li>
+              <li><a href="#work-together">How They Work Together</a></li>
+              <li><a href="#examples">Example Settings to Try</a></li>
+              <li><a href="#final-tips">Final Tips</a></li>
+            </ol>
+          </nav>
 
           {/* CONTENT */}
           <div className="blog__content">
 
             {/* STEP 1 */}
-            <section className="blog__section card">
-              <h2 className="blog__heading">🔧 Step 1 — Switch to M Mode</h2>
+            <section className="blog__section card" id="step-1">
+              <h2 className="blog__heading">Step 1 — Switch to M Mode</h2>
 
-              <div className="blog__image-placeholder blog__image-placeholder--small">
-                <span>Image: Camera dial on “M”</span>
-              </div>
+              <figure className="blog__figure blog__figure--aside">
+                <img src={Mmode} alt='Camera dial on M' className="blog__img" />
+                <figcaption className="blog__caption">Camera mode dial set to M</figcaption>
+              </figure>
 
               <p>
                 Most cameras have a mode dial on top. Turn the dial until it
@@ -72,25 +97,26 @@ const FirstPost = () => {
               <div className="blog__tip">
                 <h3 className="blog__tip-title">Quick Tip</h3>
                 <p className="blog__tip-text">
-                  Don’t worry if it feels confusing at first. The goal is to
+                  Don't worry if it feels confusing at first. The goal is to
                   learn how each setting changes your photo.
                 </p>
               </div>
             </section>
 
             {/* STEP 2 */}
-            <section className="blog__section card">
+            <section className="blog__section card" id="step-2">
               <h2 className="blog__heading">
-                🎛️ Step 2 — The Three Settings Explained
+                Step 2 — The Three Settings Explained
               </h2>
 
               {/* Shutter */}
               <div className="blog__info-block">
-                <div className="blog__image-placeholder blog__image-placeholder--icon">
-                  <span>Diagram: Shutter Speed</span>
-                </div>
+                <figure className="blog__figure blog__figure--diagram">
+                  <img src={ShuuterSpeed} alt="Shutter Speed diagram" className="blog__img" />
+                  <figcaption className="blog__caption">Shutter speed</figcaption>
+                </figure>
 
-                <h3>1️⃣ Shutter Speed — Motion</h3>
+                <h3 className="blog__subheading">Shutter Speed — Motion</h3>
 
                 <ul className="blog__list">
                   <li>Fast shutter (1/1000s): freezes action</li>
@@ -101,11 +127,12 @@ const FirstPost = () => {
 
               {/* Aperture */}
               <div className="blog__info-block">
-                <div className="blog__image-placeholder blog__image-placeholder--icon">
-                  <span>Diagram: Aperture</span>
-                </div>
+                <figure className="blog__figure blog__figure--diagram">
+                  <img src={Apertune} alt="Aperture diagram" className="blog__img" />
+                  <figcaption className="blog__caption">Aperture</figcaption>
+                </figure>
 
-                <h3>2️⃣ Aperture — Depth of Field</h3>
+                <h3 className="blog__subheading">Aperture — Depth of Field</h3>
 
                 <ul className="blog__list">
                   <li>Wide aperture (f/1.8): blurry background</li>
@@ -116,11 +143,12 @@ const FirstPost = () => {
 
               {/* ISO */}
               <div className="blog__info-block">
-                <div className="blog__image-placeholder blog__image-placeholder--icon">
-                  <span>Diagram: ISO</span>
-                </div>
+                <figure className="blog__figure blog__figure--diagram">
+                  <img src={ISO} alt="ISO diagram" className="blog__img" />
+                  <figcaption className="blog__caption">ISO</figcaption>
+                </figure>
 
-                <h3>3️⃣ ISO — Brightness & Noise</h3>
+                <h3 className="blog__subheading">ISO — Brightness &amp; Noise</h3>
 
                 <ul className="blog__list">
                   <li>Low ISO (100–400): clean image</li>
@@ -131,17 +159,18 @@ const FirstPost = () => {
             </section>
 
             {/* HOW THEY WORK TOGETHER */}
-            <section className="blog__section card">
-              <h2 className="blog__heading">🌈 How They Work Together</h2>
+            <section className="blog__section card" id="work-together">
+              <h2 className="blog__heading">How They Work Together</h2>
 
-              <div className="blog__image-placeholder blog__image-placeholder--triangle">
-                <span>Exposure Triangle Diagram</span>
-              </div>
+              <figure className="blog__figure blog__figure--full">
+                <img src={exposureTriangle} alt="Exposure Triangle Diagram" className="blog__img" />
+                <figcaption className="blog__caption">Exposure Triangle Diagram</figcaption>
+              </figure>
 
               <ul className="blog__list">
-                <li><strong>Shutter</strong> → controls motion</li>
-                <li><strong>Aperture</strong> → controls background blur</li>
-                <li><strong>ISO</strong> → controls brightness</li>
+                <li><strong>Shutter</strong> — controls motion</li>
+                <li><strong>Aperture</strong> — controls background blur</li>
+                <li><strong>ISO</strong> — controls brightness</li>
               </ul>
 
               <p>To brighten your photo, you can:</p>
@@ -156,8 +185,8 @@ const FirstPost = () => {
             </section>
 
             {/* EXAMPLES */}
-            <section className="blog__section card">
-              <h2 className="blog__heading">📷 Example Settings to Try</h2>
+            <section className="blog__section card" id="examples">
+              <h2 className="blog__heading">Example Settings to Try</h2>
 
               <ul className="blog__list blog__list--spaced">
                 <li>
@@ -174,19 +203,21 @@ const FirstPost = () => {
                 </li>
               </ul>
 
-              <div className="blog__examples-images">
-                <div className="blog__image-placeholder blog__image-placeholder--stacked">
-                  <span>Portrait example</span>
-                </div>
-                <div className="blog__image-placeholder blog__image-placeholder--stacked">
-                  <span>Long-exposure night shot</span>
-                </div>
+              <div className="blog__examples-grid">
+                <figure className="blog__figure">
+                  <img src={Portrait} alt="Portrait example" className="blog__img blog__img--cover" />
+                  <figcaption className="blog__caption">Portrait example</figcaption>
+                </figure>
+                <figure className="blog__figure">
+                  <img src={longExposure} alt="Long-exposure night shot" className="blog__img blog__img--cover" />
+                  <figcaption className="blog__caption">Long-exposure night shot</figcaption>
+                </figure>
               </div>
             </section>
 
             {/* FINAL TIPS */}
-            <section className="blog__section card">
-              <h2 className="blog__heading">🎯 Final Tips</h2>
+            <section className="blog__section card" id="final-tips">
+              <h2 className="blog__heading">Final Tips</h2>
 
               <ul className="blog__list">
                 <li>Start with Aperture Priority (A/Av) if M Mode feels too hard.</li>
@@ -195,12 +226,35 @@ const FirstPost = () => {
                 <li>Mistakes are the best teacher — keep experimenting.</li>
               </ul>
 
-              <div className="blog__image-placeholder blog__image-placeholder--wide">
-                <span>Image: Photographer shooting in Manual Mode</span>
-              </div>
+              <figure className="blog__figure blog__figure--full">
+                <img src={ManualMode} alt="Photographer shooting in Manual Mode" className="blog__img" />
+              </figure>
             </section>
 
           </div>
+
+          {/* AUTHOR BIO */}
+          <div className="blog__author card">
+            <div className="blog__author-avatar">
+              <span>J</span>
+            </div>
+            <div className="blog__author-info">
+              <p className="blog__author-label">Written by</p>
+              <p className="blog__author-name">Jim</p>
+              <p className="blog__author-bio">
+                Photographer and developer passionate about sharing techniques
+                that make complex ideas approachable.
+              </p>
+            </div>
+          </div>
+
+          {/* BOTTOM BACK NAV */}
+          <div className="blog__back-wrapper blog__back-wrapper--bottom">
+            <Link to="/blog" className="blog__back-button">
+              ← Back to Blog
+            </Link>
+          </div>
+
         </div>
       </main>
 
