@@ -12,7 +12,7 @@ import longExposure from "../../assets/long-exposure.webp"
 import ManualMode from "../../assets/manual-mode.jpg"
 import "./blog.css";
 
-const FirstPost = () => {
+const MMode = () => {
   return (
     <>
       <Header />
@@ -263,4 +263,4 @@ const FirstPost = () => {
   );
 };
 
-export default FirstPost;
+export default MMode;

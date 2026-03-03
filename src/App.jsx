@@ -13,7 +13,8 @@ import Services from './components/services/Services';
 import Skills from './components/skills/Skills';
 import Testimonials from './components/Testimonials/Testimonials';
 import { useEffect } from 'react';
-import FirstPost from './components/blog/FirstPost';
+import MMode from './components/blog/MMode';
+import Hermes from './components/blog/Hermes';
 
 function PortfolioPage() {
   useEffect(() => {
@@ -59,7 +60,8 @@ function App() {
         <Route path="/" element={<PortfolioPage />} />
         <Route path="/my-portfolio" element={<PortfolioPage />} />
         <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/first-post" element={<FirstPost />} />
+        <Route path="/blog/m-mode" element={<MMode />} />
+        <Route path="/blog/hermes" element={<Hermes />} />
       </Routes>
     </BrowserRouter>
   );

@@ -34,7 +34,34 @@ const Blog = () => {
                 <span className="blog__tag">Photography</span>
                 <span className="blog__tag">Beginner</span>
               </div>
-              <Link to="/blog/first-post" className="blog__card-link">
+              <Link to="/blog/m-mode" className="blog__card-link">
+                Read article <span className="blog__card-arrow">→</span>
+              </Link>
+            </div>
+          </article>
+          <article className="blog__card">
+            <div className="blog__card-meta">
+              <span className="blog__card-category">Project</span>
+              <span className="blog__card-dot">·</span>
+              <time className="blog__card-date">Mar 2026</time>
+              <span className="blog__card-dot">·</span>
+              <span className="blog__card-readtime">6 min read</span>
+            </div>
+
+            <h3 className="blog__card-title">Hermes — An AI-Powered Email Client</h3>
+
+            <p className="blog__card-excerpt">
+              A full-featured email client with Claude AI built in. Connect Gmail,
+              Outlook, or any IMAP account and use 9 AI writing modes to compose
+              better emails — with real-time streaming suggestions.
+            </p>
+
+            <div className="blog__card-footer">
+              <div className="blog__card-tags">
+                <span className="blog__tag">AI</span>
+                <span className="blog__tag">Project</span>
+              </div>
+              <Link to="/blog/hermes" className="blog__card-link">
                 Read article <span className="blog__card-arrow">→</span>
               </Link>
             </div>
