@@ -1,7 +1,5 @@
-import { defineConfig, loadEnv } from 'vite'
-import react from '@vitejs/plugin-react'
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-// Keep in sync with api/chat.js
 const SYSTEM_PROMPT = `You are an AI assistant on Jim Kong's portfolio website.
 Answer questions about Jim based ONLY on the information below.
 Be concise, friendly, and helpful. Keep answers short (2-4 sentences unless a list is clearly better).
@@ -55,63 +53,58 @@ Backend: Python (Advanced), Java (Advanced), PHP (Intermediate), Node.js (Advanc
 - "Hermes — An AI-Powered Email Client" — project writeup
 
 ## Contact
-Jim can be contacted via the contact form on this portfolio. Suggest scrolling to the contact section or clicking "Say Hello".`
+Jim can be contacted via the contact form on this portfolio. Suggest scrolling to the contact section or clicking "Say Hello".`;
 
-function devChatApi(apiKey) {
-  return {
-    name: 'dev-chat-api',
-    apply: 'serve',
-    configureServer(server) {
-      server.middlewares.use('/api/chat', (req, res) => {
-        if (req.method !== 'POST') {
-          res.statusCode = 405
-          return res.end()
-        }
-        let body = ''
-        req.on('data', (d) => (body += d))
-        req.on('end', async () => {
-          try {
-            const { GoogleGenerativeAI } = await import('@google/generative-ai')
-            const { message, history = [] } = JSON.parse(body)
-            const genAI = new GoogleGenerativeAI(apiKey)
-            const model = genAI.getGenerativeModel({
-              model: 'gemini-2.5-flash',
-              systemInstruction: SYSTEM_PROMPT,
-            })
-            const chat = model.startChat({
-              history: history.slice(-10).map((m) => ({
-                role: m.role === 'assistant' ? 'model' : 'user',
-                parts: [{ text: m.content }],
-              })),
-            })
-            res.setHeader('Content-Type', 'text/event-stream')
-            res.setHeader('Cache-Control', 'no-cache')
-            const result = await chat.sendMessageStream(message.trim())
-            for await (const chunk of result.stream) {
-              const text = chunk.text()
-              if (text) res.write(`data: ${JSON.stringify({ text })}\n\n`)
-            }
-            res.write('data: [DONE]\n\n')
-            res.end()
-          } catch (err) {
-            if (!res.headersSent) {
-              res.statusCode = 500
-              res.setHeader('Content-Type', 'application/json')
-              res.end(JSON.stringify({ error: err.message }))
-            } else {
-              res.end()
-            }
-          }
-        })
-      })
-    },
+module.exports = async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
-}
 
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '')
-  return {
-    plugins: [react(), devChatApi(env.GEMINI_API_KEY)],
-    base: '/',
+  const { message, history = [] } = req.body;
+
+  if (!message?.trim()) {
+    return res.status(400).json({ error: 'Message is required' });
   }
-})
+
+  if (!process.env.GEMINI_API_KEY) {
+    return res.status(500).json({ error: 'API key not configured' });
+  }
+
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  const model = genAI.getGenerativeModel({
+    model: 'gemini-2.5-flash',
+    systemInstruction: SYSTEM_PROMPT,
+  });
+
+  // Keep last 10 messages to limit context size
+  const chatHistory = history.slice(-10).map((m) => ({
+    role: m.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: m.content }],
+  }));
+
+  const chat = model.startChat({ history: chatHistory });
+
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+
+  try {
+    const result = await chat.sendMessageStream(message.trim());
+    for await (const chunk of result.stream) {
+      const text = chunk.text();
+      if (text) {
+        res.write(`data: ${JSON.stringify({ text })}\n\n`);
+      }
+    }
+    res.write('data: [DONE]\n\n');
+    res.end();
+  } catch (err) {
+    console.error('Gemini error:', err.message);
+    if (!res.headersSent) {
+      res.status(500).json({ error: 'Failed to get a response' });
+    } else {
+      res.write(`data: ${JSON.stringify({ error: 'Stream interrupted' })}\n\n`);
+      res.end();
+    }
+  }
+};

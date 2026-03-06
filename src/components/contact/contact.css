@@ -1,7 +1,7 @@
 .contact__container {
   grid-template-columns: repeat(2, max-content);
   justify-content: center;
-  column-gap: 6rem;
+  column-gap: 5rem;
   padding-bottom: 3rem;
 }
 
@@ -15,20 +15,21 @@
 .contact__info {
   display: grid;
   row-gap: 1rem;
-  grid-template-columns: 300px;
+  grid-template-columns: 320px;
 }
 
 .contact__card {
   background-color: var(--container-color);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--card-shadow);
   padding: 1rem;
-  border-radius: 0.75rem;
+  border-radius: var(--radius-md);
   text-align: center;
 }
 
 .contact__card-icon {
-  font-size: 2rem;
-  color: var(--title-color);
+  font-size: 1.9rem;
+  color: var(--primary-color-dark);
   margin-bottom: var(--mb-0-25);
 }
 
@@ -61,11 +62,16 @@
 }
 
 .contact__button:hover .contact__button-icon {
-  transform: translate(0.25rem);
+  transform: translateX(0.25rem);
 }
 
 .contact__form {
-  width: 360px;
+  width: 380px;
+  background: var(--container-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
 }
 
 .contact__form-div {
@@ -80,11 +86,11 @@
   left: 0;
   width: 100%;
   height: 100%;
-  border: 2px solid rgba(0, 0, 0, 0.3);
-  background: none;
+  border: 1px solid hsl(var(--hue), 24%, 74%);
+  background: hsl(210, 38%, 98%);
   color: var(--text-color);
   outline: none;
-  border-radius: 0.75rem;
+  border-radius: 0.85rem;
   padding: 1.5rem;
   z-index: 1;
 }
@@ -95,7 +101,7 @@
   left: 1.25rem;
   font-size: var(--smaller-font-size);
   padding: 0.25rem;
-  background-color: var(--body-color);
+  background-color: var(--container-color);
   z-index: 10;
 }
 
@@ -107,15 +113,12 @@
   resize: none;
 }
 
-/*=============== BREAKPOINTS ===============*/
-/* For large devices */
 @media screen and (max-width: 992px) {
   .contact__container {
     column-gap: 3rem;
   }
 }
 
-/* For medium devices */
 @media screen and (max-width: 768px) {
   .contact__container {
     grid-template-columns: 1fr;
@@ -127,7 +130,7 @@
   }
 
   .contact__form {
-    margin: 0 auto
+    margin: 0 auto;
   }
 }
 
@@ -139,8 +142,4 @@
   .contact__form {
     width: 100%;
   }
-}
-
-/* For small devices */
-@media screen and (max-width: 350px) {
 }

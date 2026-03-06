@@ -1,39 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
-/*=============== VARIABLES CSS ===============*/
 :root {
-  --header-height: 3rem;
+  --header-height: 3.5rem;
 
-  /*========== Colors ==========*/
-  /*Color mode HSL(hue, saturation, lightness)*/
   --hue: 0;
   --sat: 0%;
   --title-color: hsl(var(--hue), var(--sat), 20%);
-  --title-color-dark: hsl(var(--hue), var(--sat), 0%);
-  --text-color: hsl(var(--hue), var(--sat), 46%);
-  --body-color: hsl(var(--hue), var(--sat), 98%);
-  --container-color: #fff;
+  --title-color-dark: hsl(var(--hue), var(--sat), 8%);
+  --text-color: hsl(var(--hue), var(--sat), 38%);
+  --body-color: hsl(var(--hue), var(--sat), 97%);
+  --container-color: #ffffff;
+  --border-color: hsl(var(--hue), var(--sat), 86%);
+  --primary-color: hsl(var(--hue), var(--sat), 16%);
+  --primary-color-dark: hsl(var(--hue), var(--sat), 8%);
+  --soft-surface: hsl(var(--hue), var(--sat), 94%);
 
-  /*========== Font and typography ==========*/
-  --body-font: "Poppins", sans-serif;
+  --body-font: 'Poppins', sans-serif;
 
-  /*.5rem = 8px | 1rem = 16px ...*/
-  --big-font-size: 3.5rem;
-  --h1-font-size: 2.25rem;
-  --h2-font-size: 1.5rem;
-  --h3-font-size: 1.25rem;
+  --big-font-size: 3.35rem;
+  --h1-font-size: 2.2rem;
+  --h2-font-size: 1.4rem;
+  --h3-font-size: 1.15rem;
   --normal-font-size: 1rem;
-  --small-font-size: 0.875rem;
-  --smaller-font-size: 0.813rem;
-  --tiny-font-size: 0.625rem;
+  --small-font-size: 0.9rem;
+  --smaller-font-size: 0.82rem;
+  --tiny-font-size: 0.72rem;
 
-  /*========== Font weight ==========*/
   --font-normal: 400;
   --font-medium: 500;
   --font-semi-bold: 600;
 
-  /*========== Margenes Bottom ==========*/
-  /*.5rem = 8px | 1rem = 16px ...*/
   --mb-0-25: 0.25rem;
   --mb-0-5: 0.5rem;
   --mb-0-75: 0.75rem;
@@ -43,26 +39,27 @@
   --mb-2-5: 2.5rem;
   --mb-3: 3rem;
 
-  /*========== z index ==========*/
+  --radius-sm: 0.6rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.35rem;
+  --card-shadow: 0 10px 24px rgba(13, 39, 80, 0.08);
   --z-tooltip: 10;
   --z-fixed: 100;
   --z-modal: 1000;
 }
 
-/* Responsive typography */
 @media screen and (max-width: 992px) {
   :root {
     --big-font-size: 2.75rem;
-    --h1-font-size: 1.5rem;
-    --h2-font-size: 1.25rem;
+    --h1-font-size: 1.7rem;
+    --h2-font-size: 1.2rem;
     --h3-font-size: 1rem;
-    --normal-font-size: 0.938rem;
-    --small-font-size: 0.813rem;
-    --smaller-font-size: 0.75rem;
+    --normal-font-size: 0.95rem;
+    --small-font-size: 0.84rem;
+    --smaller-font-size: 0.76rem;
   }
 }
 
-/*=============== BASE ===============*/
 * {
   margin: 0;
   padding: 0;
@@ -82,8 +79,12 @@ textarea {
 }
 
 body {
-  background-color: var(--body-color);
+  background:
+    radial-gradient(circle at 10% 0%, hsl(0, 0%, 100%), transparent 34%),
+    radial-gradient(circle at 90% 8%, hsl(0, 0%, 95%), transparent 30%),
+    var(--body-color);
   color: var(--text-color);
+  line-height: 1.6;
 }
 
 h1,
@@ -91,6 +92,7 @@ h2,
 h3 {
   color: var(--title-color);
   font-weight: var(--font-semi-bold);
+  line-height: 1.25;
 }
 
 ul {
@@ -112,20 +114,26 @@ img {
   height: auto;
 }
 
-/*=============== REUSABLE CSS CLASSES ===============*/
+main {
+  overflow: hidden;
+}
+
 .section {
-  padding: 6rem 0 2rem;
+  padding: 6rem 0 2.5rem;
+  scroll-margin-top: calc(var(--header-height) + 2rem);
 }
 
 .section__title {
   font-size: var(--h1-font-size);
   color: var(--title-color);
+  letter-spacing: -0.02em;
 }
 
 .section__subtitle {
   display: block;
   font-size: var(--small-font-size);
-  margin-bottom: 4rem;
+  margin-bottom: 3.25rem;
+  color: hsl(var(--hue), 20%, 45%);
 }
 
 .section__title,
@@ -133,11 +141,12 @@ img {
   text-align: center;
 }
 
-/*=============== LAYOUT ===============*/
 .container {
-  max-width: 968px;
+  max-width: 1024px;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 
 .grid {
@@ -145,22 +154,27 @@ img {
   gap: 1.5rem;
 }
 
-/*=============== BUTTONS ===============*/
 .button {
-  display: inline-block;
-  background-color: var(--title-color);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--primary-color), hsl(0, 0%, 26%));
   color: var(--container-color);
-  padding: 1.25rem 2rem;
-  border-radius: 1rem;
+  padding: 0.95rem 1.5rem;
+  border-radius: var(--radius-md);
   font-weight: var(--font-medium);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .button:hover {
-  background-color: var(--title-color-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.28);
+  background: linear-gradient(135deg, var(--primary-color-dark), hsl(0, 0%, 16%));
 }
 
 .button__icon {
-  margin-left: var(--mb-0-5);
+  margin-left: 0;
 }
 
 .button--flex {
@@ -168,7 +182,6 @@ img {
   align-items: center;
 }
 
-/* Re-enable bullets inside blog content */
 .blog__content ul {
   list-style: disc !important;
   padding-left: 1.5rem;
@@ -179,8 +192,6 @@ img {
   display: list-item;
 }
 
-/*=============== BREAKPOINTS ===============*/
-/* For large devices */
 @media screen and (max-width: 992px) {
   .container {
     margin-left: var(--mb-1-5);
@@ -188,7 +199,7 @@ img {
   }
 
   .button {
-    padding: 1rem 1.75rem;
+    padding: 0.85rem 1.35rem;
   }
 
   .button__icon {
@@ -197,28 +208,23 @@ img {
   }
 }
 
-/* For medium devices */
 @media screen and (max-width: 768px) {
   body {
     margin: 0 0 var(--header-height) 0;
   }
 
   .section {
-    padding: 2rem 0 4rem;
+    padding: 3.5rem 0 3rem;
   }
 
   .section__subtitle {
-    margin-bottom: var(--mb-3);
+    margin-bottom: 2.4rem;
   }
 }
 
-@media screen and (max-width: 576px) {
-}
-
-/* For small devices */
 @media screen and (max-width: 350px) {
   :root {
-    --big-font-size: 2.25rem;
+    --big-font-size: 2.2rem;
   }
 
   .container {

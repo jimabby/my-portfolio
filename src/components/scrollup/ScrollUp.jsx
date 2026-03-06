@@ -5,7 +5,7 @@ const ScrollUp = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollup = document.querySelector(".scrollup");
-      if (!scrollup) return; // ✅ prevent null crash
+      if (!scrollup) return;
 
       if (window.scrollY >= 560) {
         scrollup.classList.add("show-scroll");
@@ -14,11 +14,9 @@ const ScrollUp = () => {
       }
     };
 
-    // Run once and add listener
     window.addEventListener("scroll", handleScroll);
     handleScroll();
 
-    // Cleanup on unmount
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -30,4 +28,3 @@ const ScrollUp = () => {
 };
 
 export default ScrollUp;
-

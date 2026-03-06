@@ -1,11 +1,11 @@
 .home__container {
-  row-gap: 7rem;
+  row-gap: 5.5rem;
 }
 
 .home__content {
   grid-template-columns: 116px repeat(2, 1fr);
-  padding-top: 5.5rem;
-  column-gap: 2rem;
+  padding-top: 5.25rem;
+  column-gap: 2.25rem;
   align-items: center;
 }
 
@@ -16,17 +16,20 @@
 }
 
 .home__social-icon {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   color: var(--title-color);
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .home__social-icon:hover {
-  color: var(--title-color-dark);
+  color: var(--primary-color-dark);
+  transform: translateY(-2px);
 }
 
 .home__title {
   font-size: var(--big-font-size);
   margin-bottom: var(--mb-0-25);
+  letter-spacing: -0.02em;
 }
 
 .home__hand {
@@ -37,8 +40,8 @@
 
 .home__subtitle {
   position: relative;
-  font-size: var(-h3-font-size);
-  padding-left: 5.4rem;
+  font-size: var(--h3-font-size);
+  padding-left: 5.2rem;
   font-weight: var(--font-normal);
   margin-bottom: var(--mb-1);
 }
@@ -46,16 +49,16 @@
 .home__subtitle::before {
   content: '';
   position: absolute;
-  width: 70px;
-  height: 1px;
-  background-color: var(--text-color);
+  width: 68px;
+  height: 2px;
+  background-color: hsl(var(--hue), 18%, 56%);
   left: 0;
-  top: 1rem;
+  top: 0.95rem;
 }
 
 .home__description {
-  max-width: 400px;
-  margin-bottom: var(--mb-3);
+  max-width: 440px;
+  margin-bottom: var(--mb-2-5);
 }
 
 .home__img {
@@ -63,7 +66,8 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  box-shadow: inset 0 0 0 9px rgb(255 255 255/30%);
+  border: 6px solid rgba(255, 255, 255, 0.7);
+  box-shadow: var(--card-shadow);
   order: 1;
   justify-self: center;
   width: 300px;
@@ -109,11 +113,9 @@
 
 .home__scroll-arrow {
   font-size: 1.25rem;
-  color: var(--title-color);
+  color: var(--primary-color-dark);
 }
 
-/*=============== BREAKPOINTS ===============*/
-/* For large devices */
 @media screen and (max-width: 992px) {
   .home__content {
     grid-template-columns: 100px repeat(2, 1fr);
@@ -143,7 +145,6 @@
   .home__img {
     width: 250px;
     height: 250px;
-    box-shadow: inset 0 0 0 8px rgb(255 255 255/30%);
   }
 
   .home__scroll {
@@ -151,11 +152,10 @@
   }
 }
 
-/* For medium devices */
 @media screen and (max-width: 768px) {
   .home__content {
     grid-template-columns: 0.5fr 3fr;
-    padding-top: 3.5rem;
+    padding-top: 3.3rem;
   }
 
   .home__img {
@@ -168,7 +168,6 @@
   }
 
   .home__img {
-    box-shadow: inset 0 0 0 6px rgb(255 255 255/30%);
     width: 200px;
     height: 200px;
   }
@@ -178,7 +177,6 @@
   }
 }
 
-/* For small devices */
 @media screen and (max-width: 350px) {
   .home__img {
     width: 180px;

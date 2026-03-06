@@ -16,7 +16,7 @@ const Services = () => {
       <div className='services__container container grid'>
         <div className='services__content'>
           <div>
-            <i className="uil uil-web-grid services_icon"></i>
+            <i className="uil uil-web-grid services__icon"></i>
             <h3 className='services__title'>
               Full-Stack <br /> Developer
             </h3>
@@ -29,7 +29,7 @@ const Services = () => {
 
           <div className={toggleState === 1 ? "services__model active-model": "services__model"}>
             <div className='services__model-content'>
-              <i onClick={() => toggleTab(0)} class="uil uil-times services__model-close"></i>
+              <i onClick={() => toggleTab(0)} className="uil uil-times services__model-close"></i>
 
               <h3 className='services__model-title'>
                 Full-Stack Developer
@@ -82,7 +82,7 @@ const Services = () => {
 
         <div className='services__content'>
           <div>
-            <i className="uil uil-arrow services_icon"></i>
+            <i className="uil uil-arrow services__icon"></i>
             <h3 className='services__title'>
               Software <br /> Developer
             </h3>
@@ -95,7 +95,7 @@ const Services = () => {
 
           <div className={toggleState === 2 ? "services__model active-model": "services__model"}>
             <div className='services__model-content'>
-              <i onClick={() => toggleTab(0)} class="uil uil-times services__model-close"></i>
+              <i onClick={() => toggleTab(0)} className="uil uil-times services__model-close"></i>
 
               <h3 className='services__model-title'>
                 Software Developer
@@ -148,7 +148,7 @@ const Services = () => {
 
         <div className='services__content'>
           <div>
-            <i className="uil uil-edit services_icon"></i>
+            <i className="uil uil-edit services__icon"></i>
             <h3 className='services__title'>
               Data <br /> Analyst
             </h3>
@@ -161,7 +161,7 @@ const Services = () => {
 
           <div className={toggleState === 3 ? "services__model active-model": "services__model"}>
             <div className='services__model-content'>
-              <i onClick={() => toggleTab(0)} class="uil uil-times services__model-close"></i>
+              <i onClick={() => toggleTab(0)} className="uil uil-times services__model-close"></i>
 
               <h3 className='services__model-title'>
                 Data Analyst

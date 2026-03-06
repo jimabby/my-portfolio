@@ -23,7 +23,7 @@ const Qualification = () => {
           <div className={toggleState === 2 ? "qualification__button qualification__active button--flex" : "qualification__button button--flex"}
             onClick={() => toggleTab(2)}
           >
-            <i className="uil uil-briefcase-alt qualificatione__icon"></i> Experience
+            <i className="uil uil-briefcase-alt qualification__icon"></i> Experience
           </div>
         </div>
 

@@ -4,11 +4,14 @@
   top: 0;
   left: 0;
   z-index: var(--z-fixed);
-  background-color: var(--body-color);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .nav {
-  height: calc(var(--header-height) + 1.5rem);
+  height: calc(var(--header-height) + 1.25rem);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,12 +21,16 @@
 .nav__logo,
 .nav__toggle {
   color: var(--title-color);
-  font-weight: var(--font-medium);
+  font-weight: 700;
+}
+
+.nav__logo {
+  letter-spacing: 0.04em;
 }
 
 .nav__list {
   display: flex;
-  column-gap: 2rem;
+  column-gap: 1.7rem;
 }
 
 .nav__link {
@@ -33,7 +40,7 @@
   font-size: var(--small-font-size);
   color: var(--title-color);
   font-weight: var(--font-medium);
-  transition: .3s;
+  transition: color 0.2s ease;
 }
 
 .nav__icon,
@@ -42,23 +49,21 @@
   display: none;
 }
 
-/* Active Link */
 .active-link,
 .nav__link:hover {
-  color: var(--title-color-dark);
+  color: var(--primary-color-dark);
 }
 
-/* Change background header */
 .scroll-header {
-  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.15);
+  border-color: var(--border-color);
+  box-shadow: 0 8px 20px rgba(21, 47, 88, 0.08);
 }
 
-/*=============== BREAKPOINTS ===============*/
-/* For medium devices */
 @media screen and (max-width: 768px) {
   .header {
     top: initial;
     bottom: 0;
+    background: rgba(255, 255, 255, 0.96);
   }
 
   .nav {
@@ -70,14 +75,13 @@
     bottom: -100%;
     left: 0;
     width: 100%;
-    background-color: var(--body-color);
+    background-color: var(--container-color);
     padding: 2rem 1.5rem 4rem;
-    box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 -10px 24px rgba(17, 39, 68, 0.2);
     border-radius: 1.5rem 1.5rem 0 0;
-    transition: .3s;
+    transition: bottom 0.3s ease;
   }
 
-  /* Show Menu */
   .show-menu {
     bottom: 0;
   }
@@ -85,7 +89,7 @@
   .nav__list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    gap: 1.8rem;
   }
 
   .nav__icon {
@@ -95,18 +99,18 @@
   .nav__close {
     position: absolute;
     right: 1.3rem;
-    bottom: 1.5rem;
+    bottom: 1.25rem;
     font-size: 1.5rem;
     cursor: pointer;
     color: var(--title-color);
   }
 
   .nav__close:hover {
-    color: var(--title-color-dark);
+    color: var(--primary-color-dark);
   }
 
   .nav__toggle {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     cursor: pointer;
   }
 
@@ -117,8 +121,7 @@
   }
 }
 
-/* For small devices */
-@media  screen and (max-width: 350px) {
+@media screen and (max-width: 350px) {
   .nav__menu {
     padding: 2rem 0.25rem 4rem;
   }
