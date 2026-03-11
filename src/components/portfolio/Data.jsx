@@ -85,6 +85,6 @@ export const projectsNav = [
     name: 'Wordpress'
   },
   {
-    name: 'Data Analyst'
+    name: 'App'
   }
 ]

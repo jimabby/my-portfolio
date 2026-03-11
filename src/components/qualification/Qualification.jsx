@@ -217,7 +217,57 @@ const Qualification = () => {
                 <span className='qualification__rounder'></span>
                 <span className='qualification__line'></span>
               </div>
-            </div>  
+            </div>
+
+            <div className='qualification__data'>
+              <div></div>
+              <div>
+                <span className='qualification__rounder'></span>
+                <span className='qualification__line'></span>
+              </div>
+              <div>
+                <h3 className='qualification__title'>
+                  Full Stack Developer
+                </h3>
+                <span className='qualification__subtitle'>Our Big Kitchen</span>
+                <div className='qualification__calendar'>
+                  <i className='uil uil-calendar-alt'>2025 - Present</i>
+                </div>
+              </div>
+            </div>
+
+            <div className='qualification__data'>
+              <div>
+                <h3 className='qualification__title'>
+                  Automation Developer
+                </h3>
+                <span className='qualification__subtitle'>Airbest</span>
+                <div className='qualification__calendar'>
+                  <i className='uil uil-calendar-alt'>2026</i>
+                </div>
+              </div>
+              <div>
+                <span className='qualification__rounder'></span>
+                <span className='qualification__line'></span>
+              </div>
+            </div>
+
+            <div className='qualification__data'>
+              <div></div>
+              <div>
+                <span className='qualification__rounder'></span>
+                <span className='qualification__line'></span>
+              </div>
+              <div>
+                <h3 className='qualification__title'>
+                  Full Stack Developer
+                </h3>
+                <span className='qualification__subtitle'>Cessleigh.Housed</span>
+                <div className='qualification__calendar'>
+                  <i className='uil uil-calendar-alt'>2026 - Present</i>
+                </div>
+              </div>
+            </div>
 
           </div>
           
