@@ -63,6 +63,22 @@
 
 .testimonial__description {
   font-size: var(--small-font-size);
+  white-space: pre-line;
+}
+
+.testimonial__toggle {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: var(--smaller-font-size);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  padding: 0;
+  margin-top: var(--mb-0-5);
+}
+
+.testimonial__toggle:hover {
+  text-decoration: underline;
 }
 
 

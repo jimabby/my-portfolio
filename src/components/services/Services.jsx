@@ -27,8 +27,8 @@ const Services = () => {
             <i className="uil uil-arrow-right services__button-icon"></i>
           </span>
 
-          <div className={toggleState === 1 ? "services__model active-model": "services__model"}>
-            <div className='services__model-content'>
+          <div className={toggleState === 1 ? "services__model active-model": "services__model"} onClick={() => toggleTab(0)}>
+            <div className='services__model-content' onClick={(e) => e.stopPropagation()}>
               <i onClick={() => toggleTab(0)} className="uil uil-times services__model-close"></i>
 
               <h3 className='services__model-title'>
@@ -93,8 +93,8 @@ const Services = () => {
             <i className="uil uil-arrow-right services__button-icon"></i>
           </span>
 
-          <div className={toggleState === 2 ? "services__model active-model": "services__model"}>
-            <div className='services__model-content'>
+          <div className={toggleState === 2 ? "services__model active-model": "services__model"} onClick={() => toggleTab(0)}>
+            <div className='services__model-content' onClick={(e) => e.stopPropagation()}>
               <i onClick={() => toggleTab(0)} className="uil uil-times services__model-close"></i>
 
               <h3 className='services__model-title'>
@@ -159,8 +159,8 @@ const Services = () => {
             <i className="uil uil-arrow-right services__button-icon"></i>
           </span>
 
-          <div className={toggleState === 3 ? "services__model active-model": "services__model"}>
-            <div className='services__model-content'>
+          <div className={toggleState === 3 ? "services__model active-model": "services__model"} onClick={() => toggleTab(0)}>
+            <div className='services__model-content' onClick={(e) => e.stopPropagation()}>
               <i onClick={() => toggleTab(0)} className="uil uil-times services__model-close"></i>
 
               <h3 className='services__model-title'>

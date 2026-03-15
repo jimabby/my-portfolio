@@ -1,10 +1,34 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import "./testimonials.css"
 import Data from './Data';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from 'swiper/modules';
+
+const CHAR_LIMIT = 200;
+
+const TestimonialCard = ({ image, title, description }) => {
+  const [expanded, setExpanded] = useState(false);
+  const isLong = description.length > CHAR_LIMIT;
+  const displayText = !isLong || expanded ? description : description.slice(0, CHAR_LIMIT) + '...';
+
+  return (
+    <>
+      {image
+        ? <img src={image} alt="" className='testimonial__img' />
+        : <div className='testimonial__img testimonial__img-placeholder'><i className='uil uil-user'></i></div>
+      }
+      <h3 className='testimonial__name'>{title}</h3>
+      <p className='testimonial__description'>{displayText}</p>
+      {isLong && (
+        <button className='testimonial__toggle' onClick={() => setExpanded(!expanded)}>
+          {expanded ? 'Show less' : 'Read more'}
+        </button>
+      )}
+    </>
+  );
+};
 
 const Testimonials = () => {
   const swiperRef = useRef(null);
@@ -39,12 +63,7 @@ const Testimonials = () => {
           {Data.map(({id, image, title, description}) => {
             return (
               <SwiperSlide className='testimonial__card' key={id}>
-                {image
-                  ? <img src={image} alt="" className='testimonial__img' />
-                  : <div className='testimonial__img testimonial__img-placeholder'><i className='uil uil-user'></i></div>
-                }
-                <h3 className='testimonial__name'>{title}</h3>
-                <p className='testimonial__description'>{description}</p>
+                <TestimonialCard image={image} title={title} description={description} />
               </SwiperSlide>
             )
           })}

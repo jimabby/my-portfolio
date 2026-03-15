@@ -1,15 +1,24 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import './contact.css'
 import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const form = useRef();
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | error
 
-  const sendEmail = (e) => {
+  const sendEmail = async (e) => {
     e.preventDefault();
+    setStatus('sending');
 
-    emailjs.sendForm('service_rxvllnw', 'template_e9s4prq', form.current, 'RsMGDSFegXHpttgll');
-    e.target.reset();
+    try {
+      await emailjs.sendForm('service_rxvllnw', 'template_e9s4prq', form.current, 'RsMGDSFegXHpttgll');
+      setStatus('sent');
+      e.target.reset();
+      setTimeout(() => setStatus('idle'), 4000);
+    } catch {
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 4000);
+    }
   }
 
   return (
@@ -82,8 +91,8 @@ const Contact = () => {
               <textarea name='message' cols='30' rows='10' className='contact__form-input' placeholder='Please enter your message.'></textarea>
             </div>
 
-            <button type='submit' className='button button--flex'>
-              Send Message
+            <button type='submit' className='button button--flex' disabled={status === 'sending'}>
+              {status === 'sending' ? 'Sending...' : 'Send Message'}
               <svg
                 className="button__icon"
                 xmlns="http://www.w3.org/2000/svg"
@@ -103,6 +112,8 @@ const Contact = () => {
               </svg>
             </button>
 
+            {status === 'sent' && <p className='contact__status contact__status--success'>Message sent successfully!</p>}
+            {status === 'error' && <p className='contact__status contact__status--error'>Failed to send. Please try again.</p>}
           </form>
         </div>
       </div>
