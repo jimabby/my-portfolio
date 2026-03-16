@@ -3,13 +3,12 @@ import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import "./blog.css";
 
-// TODO: uncomment and replace paths when you have screenshots
-// import heroImg        from '../../assets/hermes-hero.png';
-// import accountImg     from '../../assets/hermes-accounts.png';
-// import inboxImg       from '../../assets/hermes-inbox.png';
-// import aiPanelImg     from '../../assets/hermes-ai-panel.png';
-// import streamingImg   from '../../assets/hermes-streaming.png';
-// import foldersImg     from '../../assets/hermes-folders.png';
+import overviewImg    from '../../assets/Hermes_overview.webp';
+import aiSummaryImg   from '../../assets/Hermes_ai-summary.webp';
+import aiPanelImg     from '../../assets/Hermes_ai-panel.webp';
+import aiAssistantImg from '../../assets/Hermes_ai-assistant.webp';
+import categoryImg    from '../../assets/Hermes_ai-category.webp';
+import accountsImg    from '../../assets/Hermes_accounts.webp';
 
 const Hermes = () => {
   return (
@@ -53,21 +52,21 @@ const Hermes = () => {
               let AI handle the hard parts of writing while you stay in control.
             </p>
 
-            {/* TODO: hero screenshot — replace src with heroImg once you have it */}
-            {/* <figure className="blog__figure blog__figure--hero">
-              <img src={heroImg} alt="Hermes app overview" className="blog__img" />
-            </figure> */}
+            <figure className="blog__figure blog__figure--hero">
+              <img src={overviewImg} alt="Hermes app overview showing the inbox" className="blog__img" />
+            </figure>
           </header>
 
           {/* TABLE OF CONTENTS */}
           <nav className="blog__toc card">
             <h2 className="blog__toc-title">In this article</h2>
             <ol className="blog__toc-list">
-              <li><a href="#multi-account">Multi-Account Support</a></li>
+              <li><a href="#multi-account">Multi-Account &amp; AI Provider</a></li>
               <li><a href="#email-client">Full Email Client</a></li>
+              <li><a href="#ai-summary">AI Email Summary</a></li>
               <li><a href="#ai-assist">AI Assist — 9 Writing Modes</a></li>
-              <li><a href="#streaming">Real-Time Streaming</a></li>
-              <li><a href="#folders">Folder Navigation</a></li>
+              <li><a href="#ai-assistant">AI Assistant</a></li>
+              <li><a href="#smart-category">Smart Categories</a></li>
               <li><a href="#desktop">Desktop &amp; Browser App</a></li>
               <li><a href="#try-it">Try It Yourself</a></li>
             </ol>
@@ -76,9 +75,9 @@ const Hermes = () => {
           {/* CONTENT */}
           <div className="blog__content">
 
-            {/* MULTI-ACCOUNT */}
+            {/* MULTI-ACCOUNT & AI PROVIDER */}
             <section className="blog__section card" id="multi-account">
-              <h2 className="blog__heading">Multi-Account Support</h2>
+              <h2 className="blog__heading">Multi-Account &amp; AI Provider</h2>
 
               <p>
                 Most people have more than one email address. Hermes handles
@@ -92,21 +91,21 @@ const Hermes = () => {
               </ul>
 
               <p>
-                OAuth means you log in through Google or Microsoft's own
-                secure flow. Hermes never sees your password.
+                Beyond email accounts, you can also choose your preferred AI
+                provider. Switch between different AI models to power the
+                writing assistant, summaries, and smart features.
               </p>
 
-              {/* TODO: account switcher screenshot */}
-              {/* <figure className="blog__figure blog__figure--full">
-                <img src={accountImg} alt="Hermes account switcher" className="blog__img" />
-                <figcaption className="blog__caption">Switching between accounts in Hermes</figcaption>
-              </figure> */}
+              <figure className="blog__figure blog__figure--full">
+                <img src={accountsImg} alt="Hermes account settings showing multiple email accounts and AI provider selection" className="blog__img" />
+                <figcaption className="blog__caption">Connect multiple email accounts and choose your AI provider</figcaption>
+              </figure>
 
               <div className="blog__tip">
                 <h3 className="blog__tip-title">Why it matters</h3>
                 <p className="blog__tip-text">
                   Switch between accounts instantly without logging in and out.
-                  All your inboxes, one app.
+                  All your inboxes, one app — powered by the AI provider you trust.
                 </p>
               </div>
             </section>
@@ -132,11 +131,29 @@ const Hermes = () => {
                 want it, invisible when you don't.
               </p>
 
-              {/* TODO: inbox / reading view screenshot */}
-              {/* <figure className="blog__figure blog__figure--full">
-                <img src={inboxImg} alt="Hermes inbox view" className="blog__img" />
-                <figcaption className="blog__caption">Reading and composing emails in Hermes</figcaption>
-              </figure> */}
+            </section>
+
+            {/* AI EMAIL SUMMARY */}
+            <section className="blog__section card" id="ai-summary">
+              <h2 className="blog__heading">AI Email Summary</h2>
+
+              <p>
+                Long email threads can be exhausting to read through. Hermes
+                solves this with AI-powered summaries that give you the key
+                points of any email or conversation instantly.
+              </p>
+
+              <p>
+                Open any email and the AI generates a concise summary of the
+                content — highlighting action items, key decisions, and
+                important details so you can respond faster without reading
+                every word.
+              </p>
+
+              <figure className="blog__figure blog__figure--full">
+                <img src={aiSummaryImg} alt="Hermes AI email summary" className="blog__img" />
+                <figcaption className="blog__caption">AI-generated summary of email content</figcaption>
+              </figure>
             </section>
 
             {/* AI ASSIST */}
@@ -210,11 +227,10 @@ const Hermes = () => {
                 </ul>
               </div>
 
-              {/* TODO: AI modes panel screenshot */}
-              {/* <figure className="blog__figure blog__figure--full">
-                <img src={aiPanelImg} alt="Hermes AI Assist panel showing 9 modes" className="blog__img" />
+              <figure className="blog__figure blog__figure--full">
+                <img src={aiPanelImg} alt="Hermes AI Assist panel showing 9 writing modes" className="blog__img" />
                 <figcaption className="blog__caption">The AI Assist panel with all 9 writing modes</figcaption>
-              </figure> */}
+              </figure>
 
               <div className="blog__tip">
                 <h3 className="blog__tip-title">Design philosophy</h3>
@@ -226,51 +242,49 @@ const Hermes = () => {
               </div>
             </section>
 
-            {/* STREAMING */}
-            <section className="blog__section card" id="streaming">
-              <h2 className="blog__heading">Real-Time Streaming</h2>
+            {/* AI ASSISTANT */}
+            <section className="blog__section card" id="ai-assistant">
+              <h2 className="blog__heading">AI Assistant</h2>
 
               <p>
-                AI suggestions stream in word by word — you see the output
-                being generated in real time, just like a fast typist filling
-                in your email. No waiting for a spinner to finish before you
-                can read the result.
+                Need to quickly understand an email thread or ask a question
+                about your inbox? Click the AI assistant icon in the corner
+                and a side panel opens up.
               </p>
 
               <p>
-                This makes the experience feel responsive and alive rather than
-                like a slow API call with a loading screen.
+                Ask anything — summarize a conversation, find a specific
+                email, draft a quick response, or get context on a thread
+                you've been CC'd into. The assistant has full context of
+                your emails and responds in real time.
               </p>
 
-              {/* TODO: streaming in action screenshot / GIF */}
-              {/* <figure className="blog__figure blog__figure--full">
-                <img src={streamingImg} alt="AI suggestion streaming in real time" className="blog__img" />
-                <figcaption className="blog__caption">AI suggestions streaming word by word</figcaption>
-              </figure> */}
+              <figure className="blog__figure blog__figure--full">
+                <img src={aiAssistantImg} alt="Hermes AI assistant side panel" className="blog__img" />
+                <figcaption className="blog__caption">The AI assistant panel — ask any question about your emails</figcaption>
+              </figure>
             </section>
 
-            {/* FOLDERS */}
-            <section className="blog__section card" id="folders">
-              <h2 className="blog__heading">Folder Navigation</h2>
+            {/* SMART CATEGORIES */}
+            <section className="blog__section card" id="smart-category">
+              <h2 className="blog__heading">Smart Categories</h2>
 
               <p>
-                Hermes mirrors the folder structure you already have in your
-                email provider.
+                Hermes uses AI to automatically categorize your incoming
+                emails, so you can focus on what matters most.
               </p>
 
-              <ul className="blog__list">
-                <li><strong>Inbox</strong> — your main incoming mail</li>
-                <li><strong>Sent</strong> — everything you've sent</li>
-                <li><strong>Drafts</strong> — emails in progress</li>
-                <li><strong>Trash</strong> — deleted items</li>
-                <li><strong>Custom folders</strong> — any folders you've created in Gmail, Outlook, or your IMAP server appear automatically</li>
-              </ul>
+              <p>
+                Instead of manually sorting through your inbox, emails are
+                intelligently grouped by type — promotions, updates, personal
+                messages, and more. No rules to configure, no filters to
+                maintain. The AI handles it.
+              </p>
 
-              {/* TODO: folder sidebar screenshot */}
-              {/* <figure className="blog__figure blog__figure--full">
-                <img src={foldersImg} alt="Hermes folder navigation sidebar" className="blog__img" />
-                <figcaption className="blog__caption">Folder navigation sidebar in Hermes</figcaption>
-              </figure> */}
+              <figure className="blog__figure blog__figure--full">
+                <img src={categoryImg} alt="Hermes smart email categories powered by AI" className="blog__img" />
+                <figcaption className="blog__caption">AI-powered smart categorization of emails</figcaption>
+              </figure>
             </section>
 
             {/* DESKTOP */}
