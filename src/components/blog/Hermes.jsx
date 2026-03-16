@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
+import BlogProgressBar from "./BlogProgressBar";
+import BlogShareButtons from "./BlogShareButtons";
+import BlogPrevNext from "./BlogPrevNext";
+import BlogSEO from "./BlogSEO";
+import ScrollUp from "../scrollup/ScrollUp";
 import "./blog.css";
 
 import overviewImg    from '../../assets/Hermes_overview.webp';
@@ -13,7 +18,14 @@ import accountsImg    from '../../assets/Hermes_accounts.webp';
 const Hermes = () => {
   return (
     <>
+      <BlogSEO
+        title="Hermes — An AI-Powered Email Client"
+        description="A full-featured email client with Claude AI built in. Connect Gmail, Outlook, or any IMAP account and use 9 AI writing modes to compose better emails."
+        ogImage="hermes.webp"
+        slug="hermes"
+      />
       <Header />
+      <BlogProgressBar />
 
       <main className="blog blog--single section" id="hermes">
         <div className="blog__container container">
@@ -259,7 +271,7 @@ const Hermes = () => {
                 your emails and responds in real time.
               </p>
 
-              <figure className="blog__figure blog__figure--full">
+              <figure className="blog__figure blog__figure--full blog__figure--capped">
                 <img src={aiAssistantImg} alt="Hermes AI assistant side panel" className="blog__img" />
                 <figcaption className="blog__caption">The AI assistant panel — ask any question about your emails</figcaption>
               </figure>
@@ -348,6 +360,12 @@ const Hermes = () => {
             </div>
           </div>
 
+          {/* SHARE */}
+          <BlogShareButtons title="Hermes — An AI-Powered Email Client" />
+
+          {/* PREV / NEXT */}
+          <BlogPrevNext currentSlug="hermes" />
+
           {/* BOTTOM BACK NAV */}
           <div className="blog__back-wrapper blog__back-wrapper--bottom">
             <Link to="/blog" className="blog__back-button">
@@ -358,6 +376,7 @@ const Hermes = () => {
         </div>
       </main>
 
+      <ScrollUp />
       <Footer />
     </>
   );

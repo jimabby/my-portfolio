@@ -1,14 +1,14 @@
 .scrollup {
   position: fixed;
-  right: 2rem;
+  right: calc(2rem + 8px); /* offset so center aligns with AI FAB (58px wide) */
   bottom: -20%;
   background-color: var(--primary-color);
-  opacity: 0.9;
+  opacity: 0.6;
   padding: 0.4rem 0.55rem;
   border-radius: 0.55rem;
   z-index: var(--z-tooltip);
   box-shadow: 0 8px 16px rgba(11, 84, 137, 0.26);
-  transition: 0.35s;
+  transition: bottom 0.35s, opacity 0.2s;
 }
 
 .scrollup__icon {
@@ -18,15 +18,16 @@
 
 .scrollup:hover {
   background-color: var(--primary-color-dark);
+  opacity: 1;
 }
 
 .show-scroll {
-  bottom: 2.5rem;
+  bottom: 1rem;
 }
 
 @media screen and (max-width: 992px) {
   .scrollup {
-    right: 1.5rem;
+    right: calc(2rem + 13px); /* smaller icon, recalculate center offset */
     padding: 0.25rem 0.4rem;
   }
 
@@ -35,14 +36,8 @@
   }
 }
 
-@media screen and (max-width: 768px) {
-  .show-scroll {
-    bottom: 4.5rem;
-  }
-}
-
-@media screen and (max-width: 350px) {
+@media screen and (max-width: 480px) {
   .scrollup {
-    right: 1rem;
+    right: calc(1.2rem + 13px);
   }
 }

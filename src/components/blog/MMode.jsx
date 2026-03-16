@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
+import BlogProgressBar from "./BlogProgressBar";
+import BlogShareButtons from "./BlogShareButtons";
+import BlogPrevNext from "./BlogPrevNext";
+import BlogSEO from "./BlogSEO";
+import ScrollUp from "../scrollup/ScrollUp";
 import heroImage from '../../assets/Nikon-Z8-m-mode.jpg'
 import Mmode from "../../assets/m-mode.jpg"
 import ShuuterSpeed from "../../assets/shutter-speed.jpg"
@@ -15,7 +20,14 @@ import "./blog.css";
 const MMode = () => {
   return (
     <>
+      <BlogSEO
+        title="Understanding M Mode"
+        description="Learn how shutter speed, aperture, and ISO work together to give you full creative control over your camera — with practical examples you can try right away."
+        ogImage="m-mode.jpg"
+        slug="m-mode"
+      />
       <Header />
+      <BlogProgressBar />
 
       <main className="blog blog--single section" id="first-post">
         <div className="blog__container container">
@@ -248,6 +260,12 @@ const MMode = () => {
             </div>
           </div>
 
+          {/* SHARE */}
+          <BlogShareButtons title="Understanding M Mode" />
+
+          {/* PREV / NEXT */}
+          <BlogPrevNext currentSlug="m-mode" />
+
           {/* BOTTOM BACK NAV */}
           <div className="blog__back-wrapper blog__back-wrapper--bottom">
             <Link to="/blog" className="blog__back-button">
@@ -258,6 +276,7 @@ const MMode = () => {
         </div>
       </main>
 
+      <ScrollUp />
       <Footer />
     </>
   );
