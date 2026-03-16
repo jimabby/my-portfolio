@@ -1,5 +1,5 @@
 import hermesThumb  from '../../assets/Hermes_ai-panel.webp';
-import mmodeThumb   from '../../assets/Nikon-Z8-m-mode.jpg';
+import mmodeThumb   from '../../assets/Nikon-Z8-m-mode.webp';
 
 export const posts = [
   {

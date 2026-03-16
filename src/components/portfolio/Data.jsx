@@ -1,13 +1,13 @@
-import HermesImg from "../../assets/Hermes_overview.webp";
-import Work1 from "../../assets/Takeaway.png";
-import Work2 from "../../assets/sociopedia.png";
-import Work3 from "../../assets/gym.png";
-import Work4 from "../../assets/icase.png";
-import Work5 from "../../assets/idesign.png";
-import Work6 from "../../assets/earrelief.png";
-import Work7 from "../../assets/maxmise.png";
-import Work8 from "../../assets/medirecords.png";
-import Work9 from "../../assets/myownvet.png";
+import HermesImg from "../../assets/Hermes_ai-panel.webp";
+import Work1 from "../../assets/Takeaway.webp";
+import Work2 from "../../assets/sociopedia.webp";
+import Work3 from "../../assets/gym.webp";
+import Work4 from "../../assets/icase.webp";
+import Work5 from "../../assets/idesign.webp";
+import Work6 from "../../assets/earrelief.webp";
+import Work7 from "../../assets/maxmise.webp";
+import Work8 from "../../assets/medirecords.webp";
+import Work9 from "../../assets/myownvet.webp";
 
 export const projectsData = [
   {
@@ -15,7 +15,7 @@ export const projectsData = [
     image: HermesImg,
     title: 'Hermes — AI Email Client',
     category: 'App',
-    link: '[YOUR_VERCEL_URL]/blog/hermes'
+    link: 'https://jimkong-portfolio.vercel.app/blog/hermes'
   },
   {
     id: 1,

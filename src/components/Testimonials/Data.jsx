@@ -1,7 +1,7 @@
-import DorinBlaga from '../../assets/Dorin-Blaga.jpg';
-import BenRadcliffe from '../../assets/Ben-Radcliffe.jpg';
-import ZhongtaoLi from '../../assets/Zhongtao-Li.jpg';
-import JamesXabregas from '../../assets/James-Xabregas.jpg';
+import DorinBlaga from '../../assets/Dorin-Blaga.webp';
+import BenRadcliffe from '../../assets/Ben-Radcliffe.webp';
+import ZhongtaoLi from '../../assets/Zhongtao-Li.webp';
+import JamesXabregas from '../../assets/James-Xabregas.webp';
 
 const Data = [
   {

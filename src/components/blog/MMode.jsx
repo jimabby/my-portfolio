@@ -6,15 +6,15 @@ import BlogShareButtons from "./BlogShareButtons";
 import BlogPrevNext from "./BlogPrevNext";
 import BlogSEO from "./BlogSEO";
 import ScrollUp from "../scrollup/ScrollUp";
-import heroImage from '../../assets/Nikon-Z8-m-mode.jpg'
-import Mmode from "../../assets/m-mode.jpg"
-import ShuuterSpeed from "../../assets/shutter-speed.jpg"
-import Apertune from "../../assets/apertune.jpg"
-import ISO from "../../assets/iso.png"
-import exposureTriangle from "../../assets/exposure-triangle.jpg"
-import Portrait from "../../assets/portrait.jpg"
+import heroImage from '../../assets/Nikon-Z8-m-mode.webp'
+import Mmode from "../../assets/m-mode.webp"
+import ShuuterSpeed from "../../assets/shutter-speed.webp"
+import Apertune from "../../assets/apertune.webp"
+import ISO from "../../assets/iso.webp"
+import exposureTriangle from "../../assets/exposure-triangle.webp"
+import Portrait from "../../assets/portrait.webp"
 import longExposure from "../../assets/long-exposure.webp"
-import ManualMode from "../../assets/manual-mode.jpg"
+import ManualMode from "../../assets/manual-mode.webp"
 import "./blog.css";
 
 const MMode = () => {
@@ -23,7 +23,7 @@ const MMode = () => {
       <BlogSEO
         title="Understanding M Mode"
         description="Learn how shutter speed, aperture, and ISO work together to give you full creative control over your camera — with practical examples you can try right away."
-        ogImage="m-mode.jpg"
+        ogImage="m-mode.webp"
         slug="m-mode"
       />
       <Header />
