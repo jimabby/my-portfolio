@@ -127,6 +127,14 @@
   color: #c62828;
 }
 
+.contact__form-error {
+  display: block;
+  margin-top: -1.25rem;
+  margin-bottom: 0.5rem;
+  font-size: var(--smaller-font-size);
+  color: #c62828;
+}
+
 @media screen and (max-width: 992px) {
   .contact__container {
     column-gap: 3rem;

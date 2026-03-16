@@ -5,9 +5,30 @@ import emailjs from '@emailjs/browser';
 const Contact = () => {
   const form = useRef();
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+  const [errors, setErrors] = useState({});
+
+  const validate = (fields) => {
+    const errs = {};
+    if (!fields.name.trim()) errs.name = 'Name is required.';
+    if (!fields.email.trim()) {
+      errs.email = 'Email is required.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email)) {
+      errs.email = 'Please enter a valid email.';
+    }
+    if (!fields.message.trim()) errs.message = 'Message is required.';
+    return errs;
+  };
 
   const sendEmail = async (e) => {
     e.preventDefault();
+
+    const data = Object.fromEntries(new FormData(form.current));
+    const errs = validate(data);
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs);
+      return;
+    }
+    setErrors({});
     setStatus('sending');
 
     try {
@@ -80,16 +101,19 @@ const Contact = () => {
               <label className='contact__form-tag'>Name:</label>
               <input type='text' name='name' className='contact__form-input' placeholder='Please enter your name' />
             </div>
+            {errors.name && <span className='contact__form-error'>{errors.name}</span>}
 
             <div className='contact__form-div'>
               <label className='contact__form-tag'>Email:</label>
-              <input type='email' name='email' className='contact__form-input' placeholder='Please enter your email' />
+              <input type='text' name='email' className='contact__form-input' placeholder='Please enter your email' />
             </div>
+            {errors.email && <span className='contact__form-error'>{errors.email}</span>}
 
             <div className='contact__form-div contact__form-area'>
               <label className='contact__form-tag'>Message:</label>
               <textarea name='message' cols='30' rows='10' className='contact__form-input' placeholder='Please enter your message.'></textarea>
             </div>
+            {errors.message && <span className='contact__form-error'>{errors.message}</span>}
 
             <button type='submit' className='button button--flex' disabled={status === 'sending'}>
               {status === 'sending' ? 'Sending...' : 'Send Message'}

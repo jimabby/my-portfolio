@@ -1,3 +1,4 @@
+import HermesImg from "../../assets/Hermes_overview.webp";
 import Work1 from "../../assets/Takeaway.png";
 import Work2 from "../../assets/sociopedia.png";
 import Work3 from "../../assets/gym.png";
@@ -9,6 +10,13 @@ import Work8 from "../../assets/medirecords.png";
 import Work9 from "../../assets/myownvet.png";
 
 export const projectsData = [
+  {
+    id: 0,
+    image: HermesImg,
+    title: 'Hermes — AI Email Client',
+    category: 'App',
+    link: '[YOUR_VERCEL_URL]/blog/hermes'
+  },
   {
     id: 1,
     image: Work1,
