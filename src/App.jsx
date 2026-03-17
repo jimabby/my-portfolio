@@ -15,6 +15,7 @@ import Testimonials from './components/Testimonials/Testimonials';
 import { useEffect } from 'react';
 import MMode from './components/blog/MMode';
 import Hermes from './components/blog/Hermes';
+import Hiro from './components/blog/Hiro';
 import Assistant from './components/assistant/Assistant';
 
 function PortfolioPage() {
@@ -63,6 +64,7 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/m-mode" element={<MMode />} />
         <Route path="/blog/hermes" element={<Hermes />} />
+        <Route path="/blog/hiro" element={<Hiro />} />
       </Routes>
       <Assistant />
     </BrowserRouter>

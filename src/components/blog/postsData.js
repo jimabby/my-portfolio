@@ -3,6 +3,17 @@ import mmodeThumb   from '../../assets/Nikon-Z8-m-mode.webp';
 
 export const posts = [
   {
+    id: 3,
+    slug: 'hiro',
+    title: 'Hiro — The AI Job Application Agent',
+    category: 'Project',
+    date: 'Mar 2026',
+    readTime: '8 min read',
+    tags: ['AI', 'Automation', 'Project'],
+    excerpt:
+      'An AI desktop agent that scrapes Seek, Indeed, and LinkedIn on a schedule, scores every job against your resume, tailors your application, and submits — all while you sleep.',
+  },
+  {
     id: 1,
     slug: 'hermes',
     title: 'Hermes — An AI-Powered Email Client',
