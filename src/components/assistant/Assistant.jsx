@@ -10,6 +10,8 @@ const STARTER_PROMPTS = [
   'How can I contact Jim?',
 ];
 
+const STORAGE_KEY = 'assistant_messages_v1';
+
 export default function Assistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -18,6 +20,26 @@ export default function Assistant() {
   const [streamText, setStreamText] = useState('');
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) setMessages(parsed);
+      }
+    } catch {
+      // ignore storage errors
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+    } catch {
+      // ignore storage errors
+    }
+  }, [messages]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -105,6 +127,13 @@ export default function Assistant() {
     }
   }
 
+  function clearMessages() {
+    if (isStreaming) return;
+    setMessages([]);
+    setStreamText('');
+    setInput('');
+  }
+
   const allMessages = isStreaming
     ? [...messages, { role: 'assistant', content: streamText, streaming: true }]
     : messages;
@@ -135,13 +164,23 @@ export default function Assistant() {
                 <p className="assistant__status">AI assistant powered by Gemini</p>
               </div>
             </div>
-            <button
-              className="assistant__close"
-              onClick={() => setIsOpen(false)}
-              aria-label="Close"
-            >
-              X
-            </button>
+            <div className="assistant__actions">
+              <button
+                className="assistant__clear"
+                onClick={clearMessages}
+                disabled={isStreaming || messages.length === 0}
+                aria-label="Clear chat"
+              >
+                Clear
+              </button>
+              <button
+                className="assistant__close"
+                onClick={() => setIsOpen(false)}
+                aria-label="Close"
+              >
+                X
+              </button>
+            </div>
           </div>
 
           <div className="assistant__messages">

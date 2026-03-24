@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import About from './components/about/About';
 import Blog from './components/blog/Blog';
@@ -19,9 +19,11 @@ import Hiro from './components/blog/Hiro';
 import Assistant from './components/assistant/Assistant';
 
 function PortfolioPage() {
+  const location = useLocation();
+
   useEffect(() => {
     // when this page loads, check the hash and scroll to that section
-    const hash = window.location.hash; // e.g. "#about"
+    const hash = location.hash; // e.g. "#about"
     if (hash) {
       const el = document.querySelector(hash);
       if (el) {
@@ -31,7 +33,7 @@ function PortfolioPage() {
         }, 0);
       }
     }
-  }, []);
+  }, [location.hash]);
 
   return (
     <>
@@ -56,7 +58,7 @@ function PortfolioPage() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <div id="top"></div>
       <Routes>
         <Route path="/" element={<PortfolioPage />} />

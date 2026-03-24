@@ -22,7 +22,7 @@ const MMode = () => {
     <>
       <BlogSEO
         title="Understanding M Mode"
-        description="Learn how shutter speed, aperture, and ISO work together to give you full creative control over your camera — with practical examples you can try right away."
+        description="Learn how shutter speed, aperture, and ISO work together to give you full creative control over your camera - with practical examples you can try right away."
         ogImage="m-mode.webp"
         slug="m-mode"
       />
@@ -35,7 +35,7 @@ const MMode = () => {
           {/* Back button */}
           <div className="blog__back-wrapper">
             <Link to="/blog" className="blog__back-button">
-              ← Back to Blog
+              {"<- Back to Blog"}
             </Link>
           </div>
 
@@ -43,9 +43,9 @@ const MMode = () => {
           <header className="blog__hero card">
             <div className="blog__post-meta">
               <span className="blog__badge">Camera Basics</span>
-              <span className="blog__meta-dot">·</span>
+              <span className="blog__meta-dot">|</span>
               <time className="blog__meta-date">February 2025</time>
-              <span className="blog__meta-dot">·</span>
+              <span className="blog__meta-dot">|</span>
               <span className="blog__meta-readtime">5 min read</span>
             </div>
 
@@ -73,8 +73,8 @@ const MMode = () => {
           <nav className="blog__toc card">
             <h2 className="blog__toc-title">In this article</h2>
             <ol className="blog__toc-list">
-              <li><a href="#step-1">Step 1 — Switch to M Mode</a></li>
-              <li><a href="#step-2">Step 2 — The Three Settings Explained</a></li>
+              <li><a href="#step-1">Step 1 - Switch to M Mode</a></li>
+              <li><a href="#step-2">Step 2 - The Three Settings Explained</a></li>
               <li><a href="#work-together">How They Work Together</a></li>
               <li><a href="#examples">Example Settings to Try</a></li>
               <li><a href="#final-tips">Final Tips</a></li>
@@ -86,7 +86,7 @@ const MMode = () => {
 
             {/* STEP 1 */}
             <section className="blog__section card" id="step-1">
-              <h2 className="blog__heading">Step 1 — Switch to M Mode</h2>
+              <h2 className="blog__heading">Step 1 - Switch to M Mode</h2>
 
               <figure className="blog__figure blog__figure--aside">
                 <img src={Mmode} alt='Camera dial on M' className="blog__img" />
@@ -118,7 +118,7 @@ const MMode = () => {
             {/* STEP 2 */}
             <section className="blog__section card" id="step-2">
               <h2 className="blog__heading">
-                Step 2 — The Three Settings Explained
+                Step 2 - The Three Settings Explained
               </h2>
 
               {/* Shutter */}
@@ -128,7 +128,7 @@ const MMode = () => {
                   <figcaption className="blog__caption">Shutter speed</figcaption>
                 </figure>
 
-                <h3 className="blog__subheading">Shutter Speed — Motion</h3>
+                <h3 className="blog__subheading">Shutter Speed - Motion</h3>
 
                 <ul className="blog__list">
                   <li>Fast shutter (1/1000s): freezes action</li>
@@ -144,12 +144,12 @@ const MMode = () => {
                   <figcaption className="blog__caption">Aperture</figcaption>
                 </figure>
 
-                <h3 className="blog__subheading">Aperture — Depth of Field</h3>
+                <h3 className="blog__subheading">Aperture - Depth of Field</h3>
 
                 <ul className="blog__list">
                   <li>Wide aperture (f/1.8): blurry background</li>
-                  <li>Narrow aperture (f/8–f/16): more in focus</li>
-                  <li>Common for portraits: f/1.8–f/2.8</li>
+                  <li>Narrow aperture (f/8-f/16): more in focus</li>
+                  <li>Common for portraits: f/1.8-f/2.8</li>
                 </ul>
               </div>
 
@@ -160,10 +160,10 @@ const MMode = () => {
                   <figcaption className="blog__caption">ISO</figcaption>
                 </figure>
 
-                <h3 className="blog__subheading">ISO — Brightness &amp; Noise</h3>
+                <h3 className="blog__subheading">ISO - Brightness &amp; Noise</h3>
 
                 <ul className="blog__list">
-                  <li>Low ISO (100–400): clean image</li>
+                  <li>Low ISO (100-400): clean image</li>
                   <li>High ISO (1600+): brighter but grainy</li>
                   <li>Use ISO last, after setting shutter/aperture</li>
                 </ul>
@@ -180,9 +180,9 @@ const MMode = () => {
               </figure>
 
               <ul className="blog__list">
-                <li><strong>Shutter</strong> — controls motion</li>
-                <li><strong>Aperture</strong> — controls background blur</li>
-                <li><strong>ISO</strong> — controls brightness</li>
+                <li><strong>Shutter</strong> - controls motion</li>
+                <li><strong>Aperture</strong> - controls background blur</li>
+                <li><strong>ISO</strong> - controls brightness</li>
               </ul>
 
               <p>To brighten your photo, you can:</p>
@@ -202,16 +202,16 @@ const MMode = () => {
 
               <ul className="blog__list blog__list--spaced">
                 <li>
-                  <strong>Portrait:</strong> 1/125s, f/2.8, ISO 100–400
+                  <strong>Portrait:</strong> 1/125s, f/2.8, ISO 100-400
                 </li>
                 <li>
-                  <strong>Indoor:</strong> 1/60s, f/2.0, ISO 800–1600
+                  <strong>Indoor:</strong> 1/60s, f/2.0, ISO 800-1600
                 </li>
                 <li>
-                  <strong>Sports:</strong> 1/1000s, f/4, ISO 400–800
+                  <strong>Sports:</strong> 1/1000s, f/4, ISO 400-800
                 </li>
                 <li>
-                  <strong>Night city (tripod):</strong> 1–5s, f/8, ISO 100
+                  <strong>Night city (tripod):</strong> 1-5s, f/8, ISO 100
                 </li>
               </ul>
 
@@ -234,8 +234,8 @@ const MMode = () => {
               <ul className="blog__list">
                 <li>Start with Aperture Priority (A/Av) if M Mode feels too hard.</li>
                 <li>Watch your light meter for guidance.</li>
-                <li>Take 2–3 test shots whenever lighting changes.</li>
-                <li>Mistakes are the best teacher — keep experimenting.</li>
+                <li>Take 2-3 test shots whenever lighting changes.</li>
+                <li>Mistakes are the best teacher - keep experimenting.</li>
               </ul>
 
               <figure className="blog__figure blog__figure--full">
@@ -269,7 +269,7 @@ const MMode = () => {
           {/* BOTTOM BACK NAV */}
           <div className="blog__back-wrapper blog__back-wrapper--bottom">
             <Link to="/blog" className="blog__back-button">
-              ← Back to Blog
+              {"<- Back to Blog"}
             </Link>
           </div>
 

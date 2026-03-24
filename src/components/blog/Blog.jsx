@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
@@ -10,6 +10,10 @@ const categories = ['All', ...Array.from(new Set(posts.map(p => p.category)))];
 const Blog = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [query, setQuery] = useState('');
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, []);
 
   const filtered = posts.filter(p => {
     const matchCat = activeCategory === 'All' || p.category === activeCategory;
@@ -64,9 +68,9 @@ const Blog = () => {
 
               <div className="blog__card-meta">
                 <span className="blog__card-category">{post.category}</span>
-                <span className="blog__card-dot">·</span>
+                <span className="blog__card-dot">|</span>
                 <time className="blog__card-date">{post.date}</time>
-                <span className="blog__card-dot">·</span>
+                <span className="blog__card-dot">|</span>
                 <span className="blog__card-readtime">{post.readTime}</span>
               </div>
 
@@ -81,7 +85,7 @@ const Blog = () => {
                   ))}
                 </div>
                 <Link to={`/blog/${post.slug}`} className="blog__card-link">
-                  Read article <span className="blog__card-arrow">→</span>
+                  Read article <span className="blog__card-arrow">-></span>
                 </Link>
               </div>
             </article>

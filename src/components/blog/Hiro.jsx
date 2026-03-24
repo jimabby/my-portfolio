@@ -12,8 +12,8 @@ const Hiro = () => {
   return (
     <>
       <BlogSEO
-        title="Hiro — The AI Job Application Agent"
-        description="Hiro scrapes Seek, Indeed, and LinkedIn on a schedule, scores every job against your resume, tailors your application, and submits — all while you sleep."
+        title="Hiro - The AI Job Application Agent"
+        description="Hiro scrapes Seek, Indeed, and LinkedIn on a schedule, scores every job against your resume, tailors your application, and submits - all while you sleep."
         ogImage="hiro.webp"
         slug="hiro"
       />
@@ -26,7 +26,7 @@ const Hiro = () => {
           {/* Back button */}
           <div className="blog__back-wrapper">
             <Link to="/blog" className="blog__back-button">
-              ← Back to Blog
+              {"<- Back to Blog"}
             </Link>
           </div>
 
@@ -34,28 +34,28 @@ const Hiro = () => {
           <header className="blog__hero card">
             <div className="blog__post-meta">
               <span className="blog__badge">Project</span>
-              <span className="blog__meta-dot">·</span>
+              <span className="blog__meta-dot">|</span>
               <time className="blog__meta-date">March 2026</time>
-              <span className="blog__meta-dot">·</span>
+              <span className="blog__meta-dot">|</span>
               <span className="blog__meta-readtime">8 min read</span>
             </div>
 
             <h1 className="blog__post-title">
-              Hiro — The AI Job Application Agent
+              Hiro - The AI Job Application Agent
             </h1>
 
             <p className="blog__hero-text">
               Job hunting is a second job. You refresh listings, copy-paste your
               resume, rewrite cover letters for each posting, and still end up
               sending the same generic application as everyone else.{" "}
-              <strong>Hiro</strong> does it for you — automatically.
+              <strong>Hiro</strong> does it for you - automatically.
             </p>
 
             <p className="blog__hero-text">
               Hiro is an AI-powered desktop agent that scrapes Seek, Indeed, and
               LinkedIn on a configurable schedule, scores each job against your
               resume, tailors your application to the specific role, and submits
-              — all overnight. You wake up to a dashboard of applications already
+             - all overnight. You wake up to a dashboard of applications already
               sent.
             </p>
           </header>
@@ -95,7 +95,7 @@ const Hiro = () => {
               <p>
                 Most of that loop is automatable. The only part that actually
                 needs your judgement is deciding whether a job is worth your
-                time — and even that can be assisted with AI scoring. Hiro
+                time - and even that can be assisted with AI scoring. Hiro
                 automates everything else so you can focus on what matters:
                 preparing for the interviews you actually want.
               </p>
@@ -105,7 +105,7 @@ const Hiro = () => {
                 <p className="blog__tip-text">
                   Hiro doesn't spam applications blindly. Every submission is
                   scored, tailored, and filtered against your configured
-                  preferences — so what gets sent represents you accurately.
+                  preferences - so what gets sent represents you accurately.
                 </p>
               </div>
             </section>
@@ -117,20 +117,20 @@ const Hiro = () => {
               <p>
                 Hiro watches three of the largest job boards simultaneously.
                 Each platform has its own login flow, pagination logic, and
-                listing format — Hiro handles all of it.
+                listing format - Hiro handles all of it.
               </p>
 
               <ul className="blog__list blog__list--spaced">
                 <li>
-                  <strong>Seek</strong> — full listing scrape with title, company,
+                  <strong>Seek</strong> - full listing scrape with title, company,
                   salary range, location, and full job description
                 </li>
                 <li>
-                  <strong>Indeed</strong> — same depth of extraction, including
+                  <strong>Indeed</strong> - same depth of extraction, including
                   sponsored and organic listings
                 </li>
                 <li>
-                  <strong>LinkedIn</strong> — stealth session login to access
+                  <strong>LinkedIn</strong> - stealth session login to access
                   Easy Apply listings that require authentication
                 </li>
               </ul>
@@ -149,7 +149,7 @@ const Hiro = () => {
               <p>
                 Every scraped job gets scored against your resume before anything
                 else happens. The AI reads both documents and returns a match
-                percentage (0–100%) alongside a one-sentence explanation of why
+                percentage (0-100%) alongside a one-sentence explanation of why
                 the score landed where it did.
               </p>
 
@@ -165,7 +165,7 @@ const Hiro = () => {
 
               <p>
                 Jobs that score below your configured threshold are skipped
-                entirely. You set the bar — Hiro respects it. This keeps your
+                entirely. You set the bar - Hiro respects it. This keeps your
                 application quality high and avoids wasting recruiter time on
                 roles that aren't a fit.
               </p>
@@ -174,7 +174,7 @@ const Hiro = () => {
                 <h3 className="blog__tip-title">Keyword Gap</h3>
                 <p className="blog__tip-text">
                   The Job Detail panel shows exactly which skills from the job
-                  description are present or missing in your resume — so you
+                  description are present or missing in your resume - so you
                   can see at a glance what's dragging a score down.
                 </p>
               </div>
@@ -187,7 +187,7 @@ const Hiro = () => {
               <p>
                 A generic resume sent to every job is one of the fastest ways
                 to get filtered out. Hiro tailors your resume and cover letter
-                to each specific job description — without changing facts.
+                to each specific job description - without changing facts.
               </p>
 
               <div className="blog__info-block">
@@ -195,7 +195,7 @@ const Hiro = () => {
                 <p>
                   The AI reorders and rewrites your bullet points to emphasise
                   the experience most relevant to each role. Your actual
-                  experience doesn't change — the framing does. The tailored
+                  experience doesn't change - the framing does. The tailored
                   resume is available to download as a DOCX from the Job Detail
                   panel.
                 </p>
@@ -208,12 +208,12 @@ const Hiro = () => {
                   can configure the tone globally in Settings:
                 </p>
                 <ul className="blog__list">
-                  <li><strong>Professional</strong> — formal, structured, to the point</li>
-                  <li><strong>Casual &amp; Warm</strong> — conversational, approachable</li>
-                  <li><strong>Confident &amp; Direct</strong> — assertive, high-agency</li>
+                  <li><strong>Professional</strong> - formal, structured, to the point</li>
+                  <li><strong>Casual &amp; Warm</strong> - conversational, approachable</li>
+                  <li><strong>Confident &amp; Direct</strong> - assertive, high-agency</li>
                 </ul>
                 <p>
-                  You can also provide an optional cover letter template — a
+                  You can also provide an optional cover letter template - a
                   structural skeleton the AI fills in, so the output always
                   matches your preferred format.
                 </p>
@@ -243,15 +243,15 @@ const Hiro = () => {
 
               <ul className="blog__list blog__list--spaced">
                 <li>
-                  <strong>Seek Quick Apply</strong> — fills and submits the
+                  <strong>Seek Quick Apply</strong> - fills and submits the
                   Quick Apply form including skill checkboxes and salary fields
                 </li>
                 <li>
-                  <strong>LinkedIn Easy Apply</strong> — completes multi-step
+                  <strong>LinkedIn Easy Apply</strong> - completes multi-step
                   Easy Apply flows, including screening questions
                 </li>
                 <li>
-                  <strong>Indeed</strong> — handles Indeed's native application
+                  <strong>Indeed</strong> - handles Indeed's native application
                   flow
                 </li>
               </ul>
@@ -283,15 +283,15 @@ const Hiro = () => {
               <div className="blog__info-block">
                 <h3 className="blog__subheading">Application table</h3>
                 <ul className="blog__list">
-                  <li>Filter by status — Applied, Interview, Rejected, No Response</li>
-                  <li>Filter by platform — Seek, Indeed, LinkedIn</li>
+                  <li>Filter by status - Applied, Interview, Rejected, No Response</li>
+                  <li>Filter by platform - Seek, Indeed, LinkedIn</li>
                   <li>Live search by job title or company (press <kbd>/</kbd> to focus)</li>
                   <li>
-                    <kbd>↑</kbd> / <kbd>↓</kbd> keyboard navigation between rows
+                    <kbd>Up</kbd> / <kbd>Down</kbd> keyboard navigation between rows
                   </li>
                   <li><kbd>Escape</kbd> to close the detail panel</li>
-                  <li>Inline comments — add notes to any application in the table</li>
-                  <li>Export CSV — downloads all applications respecting active filters</li>
+                  <li>Inline comments - add notes to any application in the table</li>
+                  <li>Export CSV - downloads all applications respecting active filters</li>
                 </ul>
               </div>
             </section>
@@ -301,33 +301,33 @@ const Hiro = () => {
               <h2 className="blog__heading">Job Detail Panel</h2>
 
               <p>
-                Click any row to open the Job Detail panel — a full-width
+                Click any row to open the Job Detail panel - a full-width
                 side panel showing everything about that application.
               </p>
 
               <ul className="blog__list blog__list--spaced">
                 <li>
-                  <strong>Match explanation</strong> — the one-sentence AI summary
+                  <strong>Match explanation</strong> - the one-sentence AI summary
                   of why the job scored the way it did
                 </li>
                 <li>
-                  <strong>Keyword Gap</strong> — side-by-side view of skills
+                  <strong>Keyword Gap</strong> - side-by-side view of skills
                   present and missing in your resume vs the job description
                 </li>
                 <li>
-                  <strong>Interview Questions</strong> — for jobs in "Interview"
+                  <strong>Interview Questions</strong> - for jobs in "Interview"
                   status, generate 8 likely interview questions tailored to the role
                 </li>
                 <li>
-                  <strong>Full tailored resume</strong> — download the resume
+                  <strong>Full tailored resume</strong> - download the resume
                   Hiro used for this specific application as a DOCX
                 </li>
                 <li>
-                  <strong>Screening Q&amp;A</strong> — view the AI-generated answers
+                  <strong>Screening Q&amp;A</strong> - view the AI-generated answers
                   to application questions
                 </li>
                 <li>
-                  <strong>Blacklist Company</strong> — one click to exclude this
+                  <strong>Blacklist Company</strong> - one click to exclude this
                   company from all future scans permanently
                 </li>
               </ul>
@@ -336,7 +336,7 @@ const Hiro = () => {
                 <h3 className="blog__tip-title">Interview prep built in</h3>
                 <p className="blog__tip-text">
                   When a job moves to "Interview" status, Hiro generates 8
-                  likely questions based on the job description and your resume —
+                  likely questions based on the job description and your resume - 
                   so you can walk in knowing what they're likely to ask.
                 </p>
               </div>
@@ -355,8 +355,8 @@ const Hiro = () => {
                 <h3 className="blog__subheading">Analytics page</h3>
                 <ul className="blog__list">
                   <li>SVG bar chart of applications over the last 7 days</li>
-                  <li>Platform donut chart — how your applications split across Seek, Indeed, LinkedIn</li>
-                  <li>By-status breakdown — Applied, Interview, Rejected, No Response</li>
+                  <li>Platform donut chart - how your applications split across Seek, Indeed, LinkedIn</li>
+                  <li>By-status breakdown - Applied, Interview, Rejected, No Response</li>
                   <li>Response rate over time</li>
                 </ul>
               </div>
@@ -366,7 +366,7 @@ const Hiro = () => {
                 <p>
                   Every application grouped by day and platform in a collapsible
                   day-by-day history. Useful for reconstructing the story of your
-                  job search and spotting patterns — which days generated the most
+                  job search and spotting patterns - which days generated the most
                   responses, which platforms perform best.
                 </p>
               </div>
@@ -378,8 +378,8 @@ const Hiro = () => {
 
               <p>
                 Hiro runs on your schedule, not the other way around. Set a
-                daily scan time in Settings and it runs Monday–Friday at that
-                time automatically — no need to open the app.
+                daily scan time in Settings and it runs Monday-Friday at that
+                time automatically - no need to open the app.
               </p>
 
               <div className="blog__info-block">
@@ -396,7 +396,7 @@ const Hiro = () => {
                 <h3 className="blog__subheading">Daily email report</h3>
                 <p>
                   At 6pm each day, Hiro sends a summary of everything it applied
-                  to that day directly to your Gmail — job titles, companies,
+                  to that day directly to your Gmail - job titles, companies,
                   platforms, and match scores. You stay informed without having
                   to open the app.
                 </p>
@@ -448,7 +448,7 @@ const Hiro = () => {
           </div>
 
           {/* SHARE */}
-          <BlogShareButtons title="Hiro — The AI Job Application Agent" />
+          <BlogShareButtons title="Hiro - The AI Job Application Agent" />
 
           {/* PREV / NEXT */}
           <BlogPrevNext currentSlug="hiro" />
@@ -456,7 +456,7 @@ const Hiro = () => {
           {/* BOTTOM BACK NAV */}
           <div className="blog__back-wrapper blog__back-wrapper--bottom">
             <Link to="/blog" className="blog__back-button">
-              ← Back to Blog
+              {"<- Back to Blog"}
             </Link>
           </div>
 

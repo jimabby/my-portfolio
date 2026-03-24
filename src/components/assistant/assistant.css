@@ -103,6 +103,27 @@
   line-height: 1;
 }
 
+.assistant__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.assistant__clear {
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 0.28rem 0.6rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.assistant__clear:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .assistant__messages {
   flex: 1;
   overflow-y: auto;

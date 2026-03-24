@@ -17,31 +17,31 @@ Frontend: HTML (Advanced), CSS (Advanced), React (Intermediate), TypeScript (Int
 Backend: Python (Advanced), Java (Advanced), PHP (Intermediate), Node.js (Advanced), MySQL (Advanced), Flutter (Basic)
 
 ## Education
-- Bachelor of Science in Mathematics — Michigan State University (2014–2018)
-- Master of Information Technology — University of Queensland (2019–2022)
+- Bachelor of Science in Mathematics - Michigan State University (2014-2018)
+- Master of Information Technology - University of Queensland (2019-2022)
 - AWS Certified Cloud Practitioner (2023)
 - IBM Data Analyst Professional Certificate (2024)
-- AWS Certified Machine Learning Engineer – Associate (2024)
+- AWS Certified Machine Learning Engineer - Associate (2024)
 - Oracle Cloud Infrastructure 2025 Certified Foundations Associate (2025)
 
 ## Work Experience
-- Full Stack Developer @ Moview (2021–2022)
-- Full Stack Developer @ Takeaway Platform (2022–2023)
-- Web Developer @ Upward Consulting (2023–2024)
-- Software Developer / Test Engineer @ Braiv (2024–2025)
-- Software Developer @ VEPRM (2025–2026)
+- Full Stack Developer @ Moview (2021-2022)
+- Full Stack Developer @ Takeaway Platform (2022-2023)
+- Web Developer @ Upward Consulting (2023-2024)
+- Software Developer / Test Engineer @ Braiv (2024-2025)
+- Software Developer @ VEPRM (2025-2026)
 
 ## Projects
-1. Takeaway System — food ordering platform — github.com/jimabby/TakeawayPlatform---Backend
-2. Sociopedia — social media web app — github.com/jimabby/Sociopedia
-3. Gym Website — fitness landing page — github.com/jimabby/gym-website
-4. iCase — phone case store — github.com/jimabby/iCase
-5. iDesign — e-commerce platform — github.com/jimabby/ecommerce-website
-6. EarRelief — WordPress site — earrelief.com.au
-7. MaxMise Beauty — WordPress site — maximisebeauty.com.au
-8. MediRecords — WordPress site — medirecords.com
-9. MyOwnVet — WordPress site — myownvet.com.au
-10. Hermes — AI-powered email client built with Claude AI; supports Gmail/Outlook/IMAP, 9 AI writing modes, real-time streaming, runs as Electron desktop app or in browser
+1. Takeaway System - food ordering platform - github.com/jimabby/TakeawayPlatform---Backend
+2. Sociopedia - social media web app - github.com/jimabby/Sociopedia
+3. Gym Website - fitness landing page - github.com/jimabby/gym-website
+4. iCase - phone case store - github.com/jimabby/iCase
+5. iDesign - e-commerce platform - github.com/jimabby/ecommerce-website
+6. EarRelief - WordPress site - earrelief.com.au
+7. MaxMise Beauty - WordPress site - maximisebeauty.com.au
+8. MediRecords - WordPress site - medirecords.com
+9. MyOwnVet - WordPress site - myownvet.com.au
+10. Hermes - AI-powered email client built with Claude AI; supports Gmail/Outlook/IMAP, 9 AI writing modes, real-time streaming, runs as Electron desktop app or in browser
 
 ## Services Jim Offers
 - Full-Stack Development (websites & web apps)
@@ -49,8 +49,8 @@ Backend: Python (Advanced), Java (Advanced), PHP (Intermediate), Node.js (Advanc
 - Data Analysis (Excel, SQL, Python, data visualizations)
 
 ## Blog
-- "Understanding M Mode" — camera photography basics guide
-- "Hermes — An AI-Powered Email Client" — project writeup
+- "Understanding M Mode" - camera photography basics guide
+- "Hermes - An AI-Powered Email Client" - project writeup
 
 ## Contact
 Jim can be contacted via the contact form on this portfolio. Suggest scrolling to the contact section or clicking "Say Hello".`;

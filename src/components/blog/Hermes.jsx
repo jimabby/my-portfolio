@@ -19,7 +19,7 @@ const Hermes = () => {
   return (
     <>
       <BlogSEO
-        title="Hermes — An AI-Powered Email Client"
+        title="Hermes - An AI-Powered Email Client"
         description="A full-featured email client with Claude AI built in. Connect Gmail, Outlook, or any IMAP account and use 9 AI writing modes to compose better emails."
         ogImage="hermes.webp"
         slug="hermes"
@@ -33,7 +33,7 @@ const Hermes = () => {
           {/* Back button */}
           <div className="blog__back-wrapper">
             <Link to="/blog" className="blog__back-button">
-              ← Back to Blog
+              {"<- Back to Blog"}
             </Link>
           </div>
 
@@ -41,14 +41,14 @@ const Hermes = () => {
           <header className="blog__hero card">
             <div className="blog__post-meta">
               <span className="blog__badge">Project</span>
-              <span className="blog__meta-dot">·</span>
+              <span className="blog__meta-dot">|</span>
               <time className="blog__meta-date">March 2026</time>
-              <span className="blog__meta-dot">·</span>
+              <span className="blog__meta-dot">|</span>
               <span className="blog__meta-readtime">6 min read</span>
             </div>
 
             <h1 className="blog__post-title">
-              Hermes — An AI-Powered Email Client
+              Hermes - An AI-Powered Email Client
             </h1>
 
             <p className="blog__hero-text">
@@ -59,7 +59,7 @@ const Hermes = () => {
 
             <p className="blog__hero-text">
               Hermes is a full-featured email client with Claude AI built
-              directly into the writing experience — not bolted on as an
+              directly into the writing experience - not bolted on as an
               afterthought. Connect Gmail, Outlook, or any IMAP account, and
               let AI handle the hard parts of writing while you stay in control.
             </p>
@@ -76,7 +76,7 @@ const Hermes = () => {
               <li><a href="#multi-account">Multi-Account &amp; AI Provider</a></li>
               <li><a href="#email-client">Full Email Client</a></li>
               <li><a href="#ai-summary">AI Email Summary</a></li>
-              <li><a href="#ai-assist">AI Assist — 9 Writing Modes</a></li>
+              <li><a href="#ai-assist">AI Assist - 9 Writing Modes</a></li>
               <li><a href="#ai-assistant">AI Assistant</a></li>
               <li><a href="#smart-category">Smart Categories</a></li>
               <li><a href="#desktop">Desktop &amp; Browser App</a></li>
@@ -97,9 +97,9 @@ const Hermes = () => {
               </p>
 
               <ul className="blog__list">
-                <li><strong>Gmail</strong> — connected via OAuth, no password stored</li>
-                <li><strong>Outlook</strong> — connected via OAuth, no password stored</li>
-                <li><strong>Any IMAP/SMTP server</strong> — custom mail servers, personal domains, or work accounts</li>
+                <li><strong>Gmail</strong> - connected via OAuth, no password stored</li>
+                <li><strong>Outlook</strong> - connected via OAuth, no password stored</li>
+                <li><strong>Any IMAP/SMTP server</strong> - custom mail servers, personal domains, or work accounts</li>
               </ul>
 
               <p>
@@ -117,7 +117,7 @@ const Hermes = () => {
                 <h3 className="blog__tip-title">Why it matters</h3>
                 <p className="blog__tip-text">
                   Switch between accounts instantly without logging in and out.
-                  All your inboxes, one app — powered by the AI provider you trust.
+                  All your inboxes, one app - powered by the AI provider you trust.
                 </p>
               </div>
             </section>
@@ -127,19 +127,19 @@ const Hermes = () => {
               <h2 className="blog__heading">Full Email Client</h2>
 
               <p>
-                Hermes isn't just an AI wrapper — it's a complete email
+                Hermes isn't just an AI wrapper - it's a complete email
                 client. Everything you expect is there.
               </p>
 
               <ul className="blog__list">
-                <li><strong>Read</strong> — view emails with full formatting support</li>
-                <li><strong>Compose</strong> — write new emails from scratch</li>
-                <li><strong>Reply</strong> — respond in-thread with full context</li>
-                <li><strong>Forward</strong> — pass emails along with your own message</li>
+                <li><strong>Read</strong> - view emails with full formatting support</li>
+                <li><strong>Compose</strong> - write new emails from scratch</li>
+                <li><strong>Reply</strong> - respond in-thread with full context</li>
+                <li><strong>Forward</strong> - pass emails along with your own message</li>
               </ul>
 
               <p>
-                The AI layer sits alongside these features — available when you
+                The AI layer sits alongside these features - available when you
                 want it, invisible when you don't.
               </p>
 
@@ -157,7 +157,7 @@ const Hermes = () => {
 
               <p>
                 Open any email and the AI generates a concise summary of the
-                content — highlighting action items, key decisions, and
+                content - highlighting action items, key decisions, and
                 important details so you can respond faster without reading
                 every word.
               </p>
@@ -170,7 +170,7 @@ const Hermes = () => {
 
             {/* AI ASSIST */}
             <section className="blog__section card" id="ai-assist">
-              <h2 className="blog__heading">AI Assist — 9 Writing Modes</h2>
+              <h2 className="blog__heading">AI Assist - 9 Writing Modes</h2>
 
               <p>
                 This is the core of Hermes. While composing any email, you can
@@ -182,15 +182,15 @@ const Hermes = () => {
                 <h3 className="blog__subheading">Polish &amp; Clarity</h3>
                 <ul className="blog__list">
                   <li>
-                    <strong>Improve</strong> — rewrites your draft to be more
+                    <strong>Improve</strong> - rewrites your draft to be more
                     professional and clear, keeping your original intent intact
                   </li>
                   <li>
-                    <strong>Concise</strong> — trims the email without losing
+                    <strong>Concise</strong> - trims the email without losing
                     meaning; ideal when you've written too much
                   </li>
                   <li>
-                    <strong>Fix Grammar</strong> — corrects grammar and spelling
+                    <strong>Fix Grammar</strong> - corrects grammar and spelling
                     while leaving your voice unchanged
                   </li>
                 </ul>
@@ -200,11 +200,11 @@ const Hermes = () => {
                 <h3 className="blog__subheading">Tone Adjustment</h3>
                 <ul className="blog__list">
                   <li>
-                    <strong>Formal</strong> — rewrites in a professional,
+                    <strong>Formal</strong> - rewrites in a professional,
                     formal tone for stakeholders, clients, or executives
                   </li>
                   <li>
-                    <strong>Friendly</strong> — adds warmth and approachability,
+                    <strong>Friendly</strong> - adds warmth and approachability,
                     great for teammates or casual contacts
                   </li>
                 </ul>
@@ -214,15 +214,15 @@ const Hermes = () => {
                 <h3 className="blog__subheading">Generation</h3>
                 <ul className="blog__list">
                   <li>
-                    <strong>Complete</strong> — finishes what you started; write
+                    <strong>Complete</strong> - finishes what you started; write
                     the first sentence and let AI continue
                   </li>
                   <li>
-                    <strong>Subject Ideas</strong> — generates subject line
+                    <strong>Subject Ideas</strong> - generates subject line
                     options based on your email content
                   </li>
                   <li>
-                    <strong>Draft Reply</strong> — reads the email you received
+                    <strong>Draft Reply</strong> - reads the email you received
                     and writes a fitting response automatically
                   </li>
                 </ul>
@@ -232,7 +232,7 @@ const Hermes = () => {
                 <h3 className="blog__subheading">Open-Ended</h3>
                 <ul className="blog__list">
                   <li>
-                    <strong>Custom</strong> — type any instruction and the AI
+                    <strong>Custom</strong> - type any instruction and the AI
                     follows it. "Make this more urgent." "Remove the last
                     paragraph." "Translate to Spanish." Anything goes.
                   </li>
@@ -265,7 +265,7 @@ const Hermes = () => {
               </p>
 
               <p>
-                Ask anything — summarize a conversation, find a specific
+                Ask anything - summarize a conversation, find a specific
                 email, draft a quick response, or get context on a thread
                 you've been CC'd into. The assistant has full context of
                 your emails and responds in real time.
@@ -273,7 +273,7 @@ const Hermes = () => {
 
               <figure className="blog__figure blog__figure--full blog__figure--capped">
                 <img src={aiAssistantImg} alt="Hermes AI assistant side panel" className="blog__img" />
-                <figcaption className="blog__caption">The AI assistant panel — ask any question about your emails</figcaption>
+                <figcaption className="blog__caption">The AI assistant panel - ask any question about your emails</figcaption>
               </figure>
             </section>
 
@@ -288,7 +288,7 @@ const Hermes = () => {
 
               <p>
                 Instead of manually sorting through your inbox, emails are
-                intelligently grouped by type — promotions, updates, personal
+                intelligently grouped by type - promotions, updates, personal
                 messages, and more. No rules to configure, no filters to
                 maintain. The AI handles it.
               </p>
@@ -309,18 +309,18 @@ const Hermes = () => {
 
               <ul className="blog__list blog__list--spaced">
                 <li>
-                  <strong>Electron desktop app</strong> — installs as a native
+                  <strong>Electron desktop app</strong> - installs as a native
                   app on your machine. Sits in your dock or taskbar, launches
                   instantly, works offline for reading cached emails.
                 </li>
                 <li>
-                  <strong>Browser</strong> — run it directly in any browser
+                  <strong>Browser</strong> - run it directly in any browser
                   with no installation required.
                 </li>
               </ul>
 
               <p>
-                The same codebase powers both — no features are missing in
+                The same codebase powers both - no features are missing in
                 either mode.
               </p>
             </section>
@@ -330,7 +330,7 @@ const Hermes = () => {
               <h2 className="blog__heading">Try It Yourself</h2>
 
               <p>
-                Hermes is available to try — links coming soon.
+                Hermes is available to try - links coming soon.
               </p>
 
               {/* TODO: add project links here */}
@@ -361,7 +361,7 @@ const Hermes = () => {
           </div>
 
           {/* SHARE */}
-          <BlogShareButtons title="Hermes — An AI-Powered Email Client" />
+          <BlogShareButtons title="Hermes - An AI-Powered Email Client" />
 
           {/* PREV / NEXT */}
           <BlogPrevNext currentSlug="hermes" />
@@ -369,7 +369,7 @@ const Hermes = () => {
           {/* BOTTOM BACK NAV */}
           <div className="blog__back-wrapper blog__back-wrapper--bottom">
             <Link to="/blog" className="blog__back-button">
-              ← Back to Blog
+              {"<- Back to Blog"}
             </Link>
           </div>
 

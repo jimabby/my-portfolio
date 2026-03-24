@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { projectsData, projectsNav } from './Data';
 import WorksItems from './WorksItems';
 
@@ -6,6 +6,16 @@ const Works = () => {
   const [item, setItem] = useState({name:  "all"});
   const [projects, setProjects] = useState([]);
   const [active, setActive] = useState(0);
+  const [galleryState, setGalleryState] = useState({
+    isOpen: false,
+    title: '',
+    summary: '',
+    tags: [],
+    images: [],
+    index: 0,
+  });
+
+  const galleryImages = useMemo(() => galleryState.images, [galleryState.images]);
 
   useEffect(() => {
     if(item.name === "all"){
@@ -23,6 +33,53 @@ const Works = () => {
     setItem({name: e.target.textContent.toLowerCase()});
     setActive(index);
   }
+
+  const openGallery = (project, startIndex = 0) => {
+    const images = project.gallery && project.gallery.length > 0
+      ? project.gallery
+      : [project.image];
+    setGalleryState({
+      isOpen: true,
+      title: project.title,
+      summary: project.summary || '',
+      tags: project.tags || [],
+      images,
+      index: Math.max(0, Math.min(startIndex, images.length - 1)),
+    });
+  };
+
+  const closeGallery = () => {
+    setGalleryState((prev) => ({ ...prev, isOpen: false }));
+  };
+
+  const showPrev = () => {
+    setGalleryState((prev) => ({
+      ...prev,
+      index: (prev.index - 1 + prev.images.length) % prev.images.length,
+    }));
+  };
+
+  const showNext = () => {
+    setGalleryState((prev) => ({
+      ...prev,
+      index: (prev.index + 1) % prev.images.length,
+    }));
+  };
+
+  useEffect(() => {
+    if (!galleryState.isOpen) return;
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') closeGallery();
+      if (e.key === 'ArrowLeft') showPrev();
+      if (e.key === 'ArrowRight') showNext();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [galleryState.isOpen]);
 
   return (
     <div>
@@ -44,10 +101,66 @@ const Works = () => {
       <div className='work__container container grid'>
         {projects.map((item) => {
           return (
-            <WorksItems item={item} key={item.id} />
+            <WorksItems item={item} key={item.id} onOpenGallery={openGallery} />
           )
         })}
       </div>
+
+      {galleryState.isOpen && (
+        <div className="work__modal" role="dialog" aria-label={`${galleryState.title} gallery`}>
+          <div className="work__modal-backdrop" onClick={closeGallery} />
+          <div className="work__modal-content">
+            <button className="work__modal-close" onClick={closeGallery} aria-label="Close gallery">
+              X
+            </button>
+            <div className="work__modal-header">
+              <div className="work__modal-heading">
+                <h3 className="work__modal-title">{galleryState.title}</h3>
+                {galleryState.summary && (
+                  <p className="work__modal-summary">{galleryState.summary}</p>
+                )}
+                {galleryState.tags.length > 0 && (
+                  <div className="work__modal-tags">
+                    {galleryState.tags.map((tag) => (
+                      <span key={`${galleryState.title}-${tag}`} className="work__modal-tag">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <span className="work__modal-count">
+                {galleryState.index + 1} / {galleryImages.length}
+              </span>
+            </div>
+            <div className="work__modal-body">
+              <button className="work__modal-nav work__modal-nav--prev" onClick={showPrev} aria-label="Previous image">
+                Prev
+              </button>
+              <img
+                src={galleryImages[galleryState.index]}
+                alt={`${galleryState.title} screenshot ${galleryState.index + 1}`}
+                className="work__modal-img"
+              />
+              <button className="work__modal-nav work__modal-nav--next" onClick={showNext} aria-label="Next image">
+                Next
+              </button>
+            </div>
+            <div className="work__modal-thumbs">
+              {galleryImages.map((img, idx) => (
+                <button
+                  key={`${galleryState.title}-${idx}`}
+                  className={`work__modal-thumb${idx === galleryState.index ? ' is-active' : ''}`}
+                  onClick={() => setGalleryState((prev) => ({ ...prev, index: idx }))}
+                  aria-label={`View image ${idx + 1}`}
+                >
+                  <img src={img} alt="" />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
     
   )
