@@ -24,6 +24,14 @@
   font-weight: 700;
 }
 
+.nav__toggle,
+.nav__close {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+}
+
 .nav__logo {
   letter-spacing: 0.04em;
 }
@@ -52,6 +60,29 @@
 .active-link,
 .nav__link:hover {
   color: var(--primary-color-dark);
+}
+
+.nav__buttons {
+  display: flex;
+  align-items: center;
+  column-gap: 0.75rem;
+}
+
+.nav__theme-toggle {
+  font-size: 1.25rem;
+  color: var(--title-color);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.nav__theme-toggle:hover {
+  color: var(--primary-color-dark);
+  transform: rotate(15deg);
 }
 
 .scroll-header {

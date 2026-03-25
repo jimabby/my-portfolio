@@ -9,7 +9,7 @@ const WorksItems = ({ item, onOpenGallery }) => {
         onClick={() => onOpenGallery?.(item)}
         aria-label={`Open ${item.title} gallery`}
       >
-        <img src={item.image} alt={item.title} className='work__img' />
+        <img src={item.image} alt={item.title} className='work__img' loading="lazy" />
         <span className="work__img-overlay">View gallery</span>
       </button>
 

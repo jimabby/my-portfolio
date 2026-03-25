@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "./services.css"
 
 const Services = () => {
@@ -7,6 +7,15 @@ const Services = () => {
   const toggleTab = (index) => {
     setToggleState(index);
   }
+
+  useEffect(() => {
+    if (toggleState !== 0) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [toggleState]);
 
   return (
     <section className='services section' id='services'>

@@ -17,9 +17,29 @@ import MMode from './components/blog/MMode';
 import Hermes from './components/blog/Hermes';
 import Hiro from './components/blog/Hiro';
 import Assistant from './components/assistant/Assistant';
+import NotFound from './components/notfound/NotFound';
+
+function useSectionReveal() {
+  useEffect(() => {
+    const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('section--visible');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
+}
 
 function PortfolioPage() {
   const location = useLocation();
+  useSectionReveal();
 
   useEffect(() => {
     // when this page loads, check the hash and scroll to that section
@@ -67,6 +87,7 @@ function App() {
         <Route path="/blog/m-mode" element={<MMode />} />
         <Route path="/blog/hermes" element={<Hermes />} />
         <Route path="/blog/hiro" element={<Hiro />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Assistant />
     </BrowserRouter>

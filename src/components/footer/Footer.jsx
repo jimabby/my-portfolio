@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import "./footer.css"
 
 const Footer = () => {
@@ -8,13 +9,13 @@ const Footer = () => {
         <h1 className='footer__title'>Jim</h1>
         <ul className='footer__list'>
           <li>
-            <a href='/my-portfolio#about' className='footer__link'>About</a>
+            <Link to="/#about" className='footer__link'>About</Link>
           </li>
           <li>
-            <a href='/my-portfolio#portfolio' className='footer__link'>Portfolio</a>
+            <Link to="/#portfolio" className='footer__link'>Portfolio</Link>
           </li>
           <li>
-            <a href='/my-portfolio#testimonial' className='footer__link'>Testimonials</a>
+            <Link to="/#testimonial" className='footer__link'>Testimonials</Link>
           </li>
         </ul>
 
@@ -32,7 +33,7 @@ const Footer = () => {
           </a>
         </div>
 
-        <span className='footer__copyright'>&#169; Jim All rights reserved.</span>
+        <span className='footer__copyright'>&#169; {new Date().getFullYear()} Jim. All rights reserved.</span>
       </div>
     </footer>
   )

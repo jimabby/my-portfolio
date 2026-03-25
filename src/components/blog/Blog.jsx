@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
+import ScrollUp from '../scrollup/ScrollUp';
 import { posts } from './postsData';
 import './blog.css';
 
@@ -85,7 +86,7 @@ const Blog = () => {
                   ))}
                 </div>
                 <Link to={`/blog/${post.slug}`} className="blog__card-link">
-                  Read article <span className="blog__card-arrow">-></span>
+                  Read article <span className="blog__card-arrow">&rarr;</span>
                 </Link>
               </div>
             </article>
@@ -93,6 +94,7 @@ const Blog = () => {
         </div>
       </section>
       <Footer />
+      <ScrollUp />
     </>
   );
 };

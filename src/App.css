@@ -48,6 +48,152 @@
   --z-modal: 1000;
 }
 
+/* ─── Dark theme ─── */
+[data-theme='dark'] {
+  --title-color: hsl(220, 10%, 90%);
+  --title-color-dark: hsl(220, 10%, 96%);
+  --text-color: hsl(220, 8%, 62%);
+  --body-color: hsl(220, 12%, 8%);
+  --container-color: hsl(220, 10%, 12%);
+  --border-color: hsl(220, 8%, 20%);
+  --primary-color: hsl(220, 10%, 78%);
+  --primary-color-dark: hsl(220, 10%, 88%);
+  --soft-surface: hsl(220, 10%, 16%);
+  --card-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme='dark'] body {
+  background:
+    radial-gradient(circle at 10% 0%, hsl(220, 14%, 12%), transparent 34%),
+    radial-gradient(circle at 90% 8%, hsl(220, 14%, 6%), transparent 30%),
+    var(--body-color);
+}
+
+/* Header */
+[data-theme='dark'] .header {
+  background: hsla(220, 12%, 10%, 0.88);
+  backdrop-filter: blur(12px);
+}
+
+[data-theme='dark'] .scroll-header {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Buttons */
+[data-theme='dark'] .button {
+  background: linear-gradient(135deg, hsl(220, 8%, 88%), hsl(220, 8%, 72%));
+  color: hsl(220, 12%, 8%);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .button:hover {
+  background: linear-gradient(135deg, hsl(220, 8%, 96%), hsl(220, 8%, 80%));
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Section subtitle */
+[data-theme='dark'] .section__subtitle {
+  color: hsl(220, 8%, 50%);
+}
+
+/* Home */
+[data-theme='dark'] .home__img {
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme='dark'] .home__subtitle::before {
+  background-color: hsl(220, 8%, 40%);
+}
+
+/* About */
+[data-theme='dark'] .about__img {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Skills */
+[data-theme='dark'] .skills .bx-badge-check {
+  color: hsl(220, 10%, 70%);
+}
+
+/* Qualification */
+[data-theme='dark'] .qualification__line {
+  background-color: hsl(220, 8%, 28%);
+}
+
+/* Services modal */
+[data-theme='dark'] .services__model {
+  background-color: rgba(0, 0, 0, 0.72);
+}
+
+/* Portfolio modal */
+[data-theme='dark'] .work__modal-backdrop {
+  background: rgba(0, 0, 0, 0.82);
+}
+
+[data-theme='dark'] .work__modal-content {
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme='dark'] .work__modal-tag {
+  background: hsl(220, 8%, 20%);
+}
+
+[data-theme='dark'] .work__modal-nav {
+  background: hsl(220, 8%, 20%);
+}
+
+[data-theme='dark'] .work__modal-nav:hover {
+  background: hsl(220, 8%, 28%);
+}
+
+[data-theme='dark'] .work__modal-img {
+  background: hsl(220, 10%, 14%);
+}
+
+[data-theme='dark'] .work__modal-close {
+  background: rgba(255, 255, 255, 0.08);
+  color: hsl(220, 10%, 80%);
+}
+
+/* Contact */
+[data-theme='dark'] .contact__form-input {
+  background: hsl(220, 10%, 14%);
+  border-color: hsl(220, 8%, 24%);
+  color: hsl(220, 10%, 88%);
+}
+
+[data-theme='dark'] .contact__form-tag {
+  background-color: var(--container-color);
+  color: var(--text-color);
+}
+
+/* Testimonials */
+[data-theme='dark'] .swiper-pagination-bullet {
+  background-color: hsl(220, 8%, 36%) !important;
+}
+
+/* Scrollup */
+[data-theme='dark'] .scrollup {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Footer */
+[data-theme='dark'] .footer__social-link:hover {
+  background-color: hsl(220, 8%, 22%);
+}
+
+@media screen and (max-width: 768px) {
+  [data-theme='dark'] .header {
+    background: hsla(220, 12%, 10%, 0.96);
+  }
+
+  [data-theme='dark'] .nav__menu {
+    background-color: hsl(220, 10%, 13%);
+    box-shadow: 0 -10px 24px rgba(0, 0, 0, 0.4);
+  }
+}
+
 @media screen and (max-width: 992px) {
   :root {
     --big-font-size: 2.75rem;
@@ -219,6 +365,26 @@ main {
 
   .section__subtitle {
     margin-bottom: 2.4rem;
+  }
+}
+
+/* ─── Section reveal animation ─── */
+/* Scoped to .main so blog/404 pages are not affected.
+   Opacity-only so position:fixed modals (gallery, services) aren't broken
+   (transform creates a containing block that traps fixed children). */
+.main .section {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.main .section.section--visible {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main .section {
+    opacity: 1;
+    transition: none;
   }
 }
 

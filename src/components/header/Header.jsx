@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import "./header.css"
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+
+const SECTIONS = ['home', 'about', 'skills', 'services', 'portfolio', 'testimonial', 'contact'];
 
 const Header = () => {
+  const location = useLocation();
+
   useEffect(() => {
     const onScroll = () => {
       const header = document.querySelector(".header");
@@ -22,6 +26,54 @@ const Header = () => {
   //Toggle Menu
   const [Toggle, showMenu] = useState(false);
   const [activeNav, setActiveNav] = useState("#home");
+
+  // Track active section via IntersectionObserver on portfolio page
+  useEffect(() => {
+    if (location.pathname !== '/' && location.pathname !== '/my-portfolio') return;
+
+    const observers = [];
+    const handleIntersect = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveNav(`#${entry.target.id}`);
+        }
+      });
+    };
+
+    SECTIONS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const observer = new IntersectionObserver(handleIntersect, {
+        rootMargin: '-30% 0px -60% 0px',
+        threshold: 0,
+      });
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
+  }, [location.pathname]);
+
+  // Set blog as active when on blog routes
+  useEffect(() => {
+    if (location.pathname.startsWith('/blog')) {
+      setActiveNav('blog');
+    }
+  }, [location.pathname]);
+
+  // Dark mode
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'light';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
 
   const handleNavClick = (hash) => {
     setActiveNav(hash);
@@ -102,11 +154,18 @@ const Header = () => {
             </li>
           </ul>
 
-          <i className="uil uil-times nav__close" onClick={() => showMenu(!Toggle)}></i>
+          <button className="nav__close" onClick={() => showMenu(!Toggle)} aria-label="Close menu">
+            <i className="uil uil-times"></i>
+          </button>
         </div>
 
-        <div className='nav__toggle' onClick={() => showMenu(!Toggle)}>
-          <i className='uil uil-apps'></i>
+        <div className="nav__buttons">
+          <button className="nav__theme-toggle" onClick={toggleTheme} aria-label="Toggle dark mode">
+            <i className={theme === 'light' ? 'uil uil-moon' : 'uil uil-sun'}></i>
+          </button>
+          <button className='nav__toggle' onClick={() => showMenu(!Toggle)} aria-label="Open menu">
+            <i className='uil uil-apps'></i>
+          </button>
         </div>
       </nav>
     </header>

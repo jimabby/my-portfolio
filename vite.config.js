@@ -11,7 +11,7 @@ Always suggest the contact form when someone wants to reach Jim.
 ## About Jim Kong
 - Full Stack Developer, Software Developer, and Data Analyst
 - Based in Sydney, Australia
-- 3+ years of professional experience, 20+ completed projects
+- 5+ years of professional experience, 20+ completed projects
 - GitHub: github.com/jimabby
 
 ## Skills
@@ -32,18 +32,25 @@ Backend: Python (Advanced), Java (Advanced), PHP (Intermediate), Node.js (Advanc
 - Web Developer @ Upward Consulting (2023-2024)
 - Software Developer / Test Engineer @ Braiv (2024-2025)
 - Software Developer @ VEPRM (2025-2026)
+- Full Stack Developer @ Our Big Kitchen (2025-Present)
+- Automation Developer @ Airbest (2026)
+- Full Stack Developer @ Cessleigh.Housed (2026-Present)
 
 ## Projects
-1. Takeaway System - food ordering platform - github.com/jimabby/TakeawayPlatform---Backend
-2. Sociopedia - social media web app - github.com/jimabby/Sociopedia
-3. Gym Website - fitness landing page - github.com/jimabby/gym-website
-4. iCase - phone case store - github.com/jimabby/iCase
-5. iDesign - e-commerce platform - github.com/jimabby/ecommerce-website
-6. EarRelief - WordPress site - earrelief.com.au
-7. MaxMise Beauty - WordPress site - maximisebeauty.com.au
-8. MediRecords - WordPress site - medirecords.com
-9. MyOwnVet - WordPress site - myownvet.com.au
-10. Hermes - AI-powered email client built with Claude AI; supports Gmail/Outlook/IMAP, 9 AI writing modes, real-time streaming, runs as Electron desktop app or in browser
+1. Hermes - AI-powered email client built with Claude AI; supports Gmail/Outlook/IMAP, 9 AI writing modes, real-time streaming, runs as Electron desktop app or in browser
+2. Hiro - AI job application agent that scrapes Seek/Indeed/LinkedIn, scores jobs against your resume, tailors applications, and auto-submits
+3. Takeaway System - food ordering platform - github.com/jimabby/TakeawayPlatform---Backend
+4. Sociopedia - social media web app - github.com/jimabby/Sociopedia
+5. Gym Website - fitness landing page - github.com/jimabby/gym-website
+6. iCase - phone case store - github.com/jimabby/iCase
+7. iDesign - e-commerce platform - github.com/jimabby/ecommerce-website
+8. EarRelief - WordPress site - earrelief.com.au
+9. Housed - gym website - housed.com.au
+10. Onsen - premium gym brand site - onsen.housed.com.au
+11. Simba Education - education site - simba.nsw.edu.au
+12. MaxMise Beauty - WordPress site - maximisebeauty.com.au
+13. MediRecords - WordPress site - medirecords.com
+14. MyOwnVet - WordPress site - myownvet.com.au
 
 ## Services Jim Offers
 - Full-Stack Development (websites & web apps)
@@ -51,8 +58,9 @@ Backend: Python (Advanced), Java (Advanced), PHP (Intermediate), Node.js (Advanc
 - Data Analysis (Excel, SQL, Python, data visualizations)
 
 ## Blog
+- "Hiro - The AI Job Application Agent" - AI automation project writeup
+- "Hermes - An AI-Powered Email Client" - AI email client project writeup
 - "Understanding M Mode" - camera photography basics guide
-- "Hermes - An AI-Powered Email Client" - project writeup
 
 ## Contact
 Jim can be contacted via the contact form on this portfolio. Suggest scrolling to the contact section or clicking "Say Hello".`

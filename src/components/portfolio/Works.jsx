@@ -79,7 +79,7 @@ const Works = () => {
       document.removeEventListener('keydown', onKeyDown);
       document.body.style.overflow = '';
     };
-  }, [galleryState.isOpen]);
+  }, [galleryState.isOpen, galleryState.index]);
 
   return (
     <div>
@@ -129,35 +129,43 @@ const Works = () => {
                   </div>
                 )}
               </div>
-              <span className="work__modal-count">
-                {galleryState.index + 1} / {galleryImages.length}
-              </span>
+              {galleryImages.length > 1 && (
+                <span className="work__modal-count">
+                  {galleryState.index + 1} / {galleryImages.length}
+                </span>
+              )}
             </div>
-            <div className="work__modal-body">
-              <button className="work__modal-nav work__modal-nav--prev" onClick={showPrev} aria-label="Previous image">
-                Prev
-              </button>
+            <div className={`work__modal-body${galleryImages.length <= 1 ? ' work__modal-body--single' : ''}`}>
+              {galleryImages.length > 1 && (
+                <button className="work__modal-nav work__modal-nav--prev" onClick={showPrev} aria-label="Previous image">
+                  <i className="bx bx-chevron-left"></i>
+                </button>
+              )}
               <img
                 src={galleryImages[galleryState.index]}
                 alt={`${galleryState.title} screenshot ${galleryState.index + 1}`}
                 className="work__modal-img"
               />
-              <button className="work__modal-nav work__modal-nav--next" onClick={showNext} aria-label="Next image">
-                Next
-              </button>
-            </div>
-            <div className="work__modal-thumbs">
-              {galleryImages.map((img, idx) => (
-                <button
-                  key={`${galleryState.title}-${idx}`}
-                  className={`work__modal-thumb${idx === galleryState.index ? ' is-active' : ''}`}
-                  onClick={() => setGalleryState((prev) => ({ ...prev, index: idx }))}
-                  aria-label={`View image ${idx + 1}`}
-                >
-                  <img src={img} alt="" />
+              {galleryImages.length > 1 && (
+                <button className="work__modal-nav work__modal-nav--next" onClick={showNext} aria-label="Next image">
+                  <i className="bx bx-chevron-right"></i>
                 </button>
-              ))}
+              )}
             </div>
+            {galleryImages.length > 1 && (
+              <div className="work__modal-thumbs">
+                {galleryImages.map((img, idx) => (
+                  <button
+                    key={`${galleryState.title}-${idx}`}
+                    className={`work__modal-thumb${idx === galleryState.index ? ' is-active' : ''}`}
+                    onClick={() => setGalleryState((prev) => ({ ...prev, index: idx }))}
+                    aria-label={`View image ${idx + 1}`}
+                  >
+                    <img src={img} alt="" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}

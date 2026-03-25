@@ -339,3 +339,95 @@
     right: 1.2rem;
   }
 }
+
+/* ─── Dark mode ─── */
+[data-theme='dark'] .assistant__fab {
+  background: linear-gradient(135deg, hsl(220, 10%, 80%), hsl(220, 8%, 50%));
+  color: hsl(220, 12%, 8%);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme='dark'] .assistant__fab--open {
+  background: linear-gradient(135deg, hsl(220, 10%, 26%), hsl(220, 10%, 14%));
+  color: #fff;
+}
+
+[data-theme='dark'] .assistant__panel {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme='dark'] .assistant__header {
+  background: linear-gradient(135deg, hsl(220, 14%, 14%), hsl(220, 14%, 8%));
+}
+
+[data-theme='dark'] .assistant__messages {
+  background: hsl(220, 10%, 10%);
+}
+
+[data-theme='dark'] .assistant__messages::-webkit-scrollbar-thumb {
+  background: hsl(220, 8%, 28%);
+}
+
+[data-theme='dark'] .assistant__message--assistant .assistant__message-text {
+  background-color: hsl(220, 10%, 16%);
+  border-color: hsl(220, 8%, 22%);
+  color: hsl(220, 10%, 84%);
+}
+
+[data-theme='dark'] .assistant__message--user .assistant__message-text {
+  background: linear-gradient(135deg, hsl(220, 10%, 76%), hsl(220, 8%, 50%));
+  color: hsl(220, 12%, 8%);
+}
+
+[data-theme='dark'] .assistant__typing {
+  background-color: hsl(220, 10%, 16%);
+  border-color: hsl(220, 8%, 22%);
+}
+
+[data-theme='dark'] .assistant__typing span {
+  background: hsl(220, 8%, 40%);
+}
+
+[data-theme='dark'] .assistant__chips-bar {
+  background: hsl(220, 10%, 12%);
+  border-top-color: hsl(220, 8%, 20%);
+}
+
+[data-theme='dark'] .assistant__chip {
+  background: hsl(220, 10%, 16%);
+  border-color: hsl(220, 8%, 24%);
+  color: hsl(220, 10%, 72%);
+}
+
+[data-theme='dark'] .assistant__chip:hover {
+  background-color: hsl(220, 10%, 20%);
+  border-color: hsl(220, 8%, 32%);
+}
+
+[data-theme='dark'] .assistant__input-area {
+  background: hsl(220, 10%, 12%);
+  border-top-color: hsl(220, 8%, 20%);
+}
+
+[data-theme='dark'] .assistant__input {
+  background: hsl(220, 10%, 14%);
+  border-color: hsl(220, 8%, 24%);
+  color: hsl(220, 10%, 88%);
+}
+
+[data-theme='dark'] .assistant__input:focus {
+  border-color: hsl(220, 8%, 40%);
+}
+
+[data-theme='dark'] .assistant__send {
+  background-color: hsl(220, 10%, 76%);
+  color: hsl(220, 12%, 8%);
+}
+
+[data-theme='dark'] .assistant__send:hover:not(:disabled) {
+  background-color: hsl(220, 10%, 88%);
+}
+
+[data-theme='dark'] .assistant__cursor {
+  background: hsl(220, 10%, 72%);
+}
