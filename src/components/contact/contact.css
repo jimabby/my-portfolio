@@ -95,6 +95,11 @@
   z-index: 1;
 }
 
+.contact__form-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
 .contact__form-tag {
   position: absolute;
   top: -0.75rem;

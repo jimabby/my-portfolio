@@ -11,6 +11,14 @@ const Services = () => {
   useEffect(() => {
     if (toggleState !== 0) {
       document.body.style.overflow = 'hidden';
+      const onKeyDown = (e) => {
+        if (e.key === 'Escape') setToggleState(0);
+      };
+      document.addEventListener('keydown', onKeyDown);
+      return () => {
+        document.body.style.overflow = '';
+        document.removeEventListener('keydown', onKeyDown);
+      };
     } else {
       document.body.style.overflow = '';
     }
@@ -31,14 +39,16 @@ const Services = () => {
             </h3>
           </div>
 
-          <span className='services__button' onClick={() => toggleTab(1)}>
+          <button type="button" className='services__button' onClick={() => toggleTab(1)}>
             View More
             <i className="uil uil-arrow-right services__button-icon"></i>
-          </span>
+          </button>
 
           <div className={toggleState === 1 ? "services__model active-model": "services__model"} onClick={() => toggleTab(0)}>
             <div className='services__model-content' onClick={(e) => e.stopPropagation()}>
-              <i onClick={() => toggleTab(0)} className="uil uil-times services__model-close"></i>
+              <button type="button" onClick={() => toggleTab(0)} className="services__model-close" aria-label="Close modal">
+                <i className="uil uil-times"></i>
+              </button>
 
               <h3 className='services__model-title'>
                 Full-Stack Developer
@@ -97,14 +107,16 @@ const Services = () => {
             </h3>
           </div>
 
-          <span className='services__button' onClick={() => toggleTab(2)}>
+          <button type="button" className='services__button' onClick={() => toggleTab(2)}>
             View More
             <i className="uil uil-arrow-right services__button-icon"></i>
-          </span>
+          </button>
 
           <div className={toggleState === 2 ? "services__model active-model": "services__model"} onClick={() => toggleTab(0)}>
             <div className='services__model-content' onClick={(e) => e.stopPropagation()}>
-              <i onClick={() => toggleTab(0)} className="uil uil-times services__model-close"></i>
+              <button type="button" onClick={() => toggleTab(0)} className="services__model-close" aria-label="Close modal">
+                <i className="uil uil-times"></i>
+              </button>
 
               <h3 className='services__model-title'>
                 Software Developer
@@ -163,14 +175,16 @@ const Services = () => {
             </h3>
           </div>
 
-          <span className='services__button' onClick={() => toggleTab(3)}>
+          <button type="button" className='services__button' onClick={() => toggleTab(3)}>
             View More
             <i className="uil uil-arrow-right services__button-icon"></i>
-          </span>
+          </button>
 
           <div className={toggleState === 3 ? "services__model active-model": "services__model"} onClick={() => toggleTab(0)}>
             <div className='services__model-content' onClick={(e) => e.stopPropagation()}>
-              <i onClick={() => toggleTab(0)} className="uil uil-times services__model-close"></i>
+              <button type="button" onClick={() => toggleTab(0)} className="services__model-close" aria-label="Close modal">
+                <i className="uil uil-times"></i>
+              </button>
 
               <h3 className='services__model-title'>
                 Data Analyst

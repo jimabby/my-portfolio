@@ -8,18 +8,23 @@ const Header = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => {
+    let ticking = false;
+    const update = () => {
       const header = document.querySelector(".header");
-      if (!header) return;
-      if (window.scrollY >= 80) {
-        header.classList.add("scroll-header");
-      } else {
-        header.classList.remove("scroll-header");
+      if (header) {
+        header.classList.toggle("scroll-header", window.scrollY >= 80);
+      }
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
       }
     };
 
-    window.addEventListener("scroll", onScroll);
-    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    update();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 

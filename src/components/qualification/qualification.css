@@ -16,6 +16,9 @@
   cursor: pointer;
   padding: 0.4rem 0.6rem;
   border-radius: var(--radius-sm);
+  background: none;
+  border: none;
+  font-family: inherit;
 }
 
 .qualification__button:hover {

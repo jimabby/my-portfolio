@@ -42,24 +42,24 @@ function PortfolioPage() {
   useSectionReveal();
 
   useEffect(() => {
-    // when this page loads, check the hash and scroll to that section
     const hash = location.hash; // e.g. "#about"
-    if (hash) {
-      const el = document.querySelector(hash);
-      if (el) {
-        // optional: setTimeout to ensure layout is ready
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: "smooth" });
-        }, 0);
-      }
+    if (!hash) {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      return;
     }
-  }, [location.hash]);
+    // Wait one frame so the DOM is laid out before scrolling.
+    const id = requestAnimationFrame(() => {
+      const el = document.querySelector(hash);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [location.hash, location.pathname]);
 
   return (
     <>
       <Header />
 
-      <main className="main">
+      <main className="main" id="main-content">
         <Home />
         <About />
         <Skills />
@@ -80,6 +80,7 @@ function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <div id="top"></div>
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       <Routes>
         <Route path="/" element={<PortfolioPage />} />
         <Route path="/my-portfolio" element={<PortfolioPage />} />

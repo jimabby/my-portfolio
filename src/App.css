@@ -163,6 +163,11 @@
   color: hsl(220, 10%, 88%);
 }
 
+[data-theme='dark'] .contact__form-input:focus {
+  border-color: hsl(220, 10%, 50%);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
+}
+
 [data-theme='dark'] .contact__form-tag {
   background-color: var(--container-color);
   color: var(--text-color);
@@ -253,6 +258,31 @@ button {
   cursor: pointer;
   border: none;
   outline: none;
+}
+
+/* Keyboard-only focus ring (visible on Tab, hidden on click) */
+:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Skip link — visible only when focused via keyboard */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.6rem 1rem;
+  background: var(--primary-color);
+  color: var(--container-color);
+  border-radius: 0.5rem;
+  font-weight: var(--font-medium);
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
 }
 
 img {

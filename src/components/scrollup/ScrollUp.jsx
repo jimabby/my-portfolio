@@ -3,19 +3,23 @@ import "./scrollup.css";
 
 const ScrollUp = () => {
   useEffect(() => {
-    const handleScroll = () => {
+    let ticking = false;
+    const update = () => {
       const scrollup = document.querySelector(".scrollup");
-      if (!scrollup) return;
-
-      if (window.scrollY >= 560) {
-        scrollup.classList.add("show-scroll");
-      } else {
-        scrollup.classList.remove("show-scroll");
+      if (scrollup) {
+        scrollup.classList.toggle("show-scroll", window.scrollY >= 560);
+      }
+      ticking = false;
+    };
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    update();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);

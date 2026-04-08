@@ -11,7 +11,7 @@ const Home = () => {
         <div className='home__content grid'>
           <Social />
 
-          <div className='home__img'></div>
+          <div className='home__img' role="img" aria-label="Jim Kong profile photo"></div>
 
           <Data />
         </div>

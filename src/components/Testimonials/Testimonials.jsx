@@ -16,7 +16,7 @@ const TestimonialCard = ({ image, title, description }) => {
   return (
     <>
       {image
-        ? <img src={image} alt="" className='testimonial__img' />
+        ? <img src={image} alt={`${title}'s photo`} className='testimonial__img' />
         : <div className='testimonial__img testimonial__img-placeholder'><i className='uil uil-user'></i></div>
       }
       <h3 className='testimonial__name'>{title}</h3>

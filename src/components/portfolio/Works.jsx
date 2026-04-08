@@ -29,8 +29,8 @@ const Works = () => {
     }
   }, [item]);
 
-  const handleClick = (e, index) => {
-    setItem({name: e.target.textContent.toLowerCase()});
+  const handleClick = (name, index) => {
+    setItem({ name: name.toLowerCase() });
     setActive(index);
   }
 
@@ -84,16 +84,17 @@ const Works = () => {
   return (
     <div>
       <div className='work__filters'>
-        {projectsNav.map((item, index) => {
+        {projectsNav.map((nav, index) => {
           return (
-            <span onClick={(e) => {
-              handleClick(e, index);
-            }} 
+            <button
+              type="button"
+              onClick={() => handleClick(nav.name, index)}
               className={`${active === index ? 'active-work' : ""} work__item`}
-              key={index}
+              key={nav.name}
+              aria-pressed={active === index}
             >
-              {item.name}
-            </span>
+              {nav.name}
+            </button>
           )
         })}
       </div>
@@ -107,7 +108,7 @@ const Works = () => {
       </div>
 
       {galleryState.isOpen && (
-        <div className="work__modal" role="dialog" aria-label={`${galleryState.title} gallery`}>
+        <div className="work__modal" role="dialog" aria-modal="true" aria-label={`${galleryState.title} gallery`}>
           <div className="work__modal-backdrop" onClick={closeGallery} />
           <div className="work__modal-content">
             <button className="work__modal-close" onClick={closeGallery} aria-label="Close gallery">

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
@@ -16,14 +16,16 @@ const Blog = () => {
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, []);
 
-  const filtered = posts.filter(p => {
-    const matchCat = activeCategory === 'All' || p.category === activeCategory;
-    if (!query.trim()) return matchCat;
-    const words     = query.toLowerCase().split(/\s+/).filter(Boolean);
-    const haystack  = `${p.title} ${p.excerpt} ${p.category} ${p.tags.join(' ')}`.toLowerCase();
-    const matchQuery = words.every(word => haystack.includes(word));
-    return matchCat && matchQuery;
-  });
+  const filtered = useMemo(() => {
+    const words = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    return posts.filter(p => {
+      const matchCat = activeCategory === 'All' || p.category === activeCategory;
+      if (!matchCat) return false;
+      if (words.length === 0) return true;
+      const haystack = `${p.title} ${p.excerpt} ${p.category} ${p.tags.join(' ')}`.toLowerCase();
+      return words.every(word => haystack.includes(word));
+    });
+  }, [activeCategory, query]);
 
   return (
     <>

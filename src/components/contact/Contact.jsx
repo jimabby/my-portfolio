@@ -73,7 +73,7 @@ const Contact = () => {
               <h3 className='contact__card-title'>Whatsapp</h3>
               <span className='contact__card-data'>+61-406-448-436</span>
 
-              <a href='https://api.whatsapp.com/send?phone=61406448436&text=Hello, more information' className='contact__button'>
+              <a href='https://api.whatsapp.com/send?phone=61406448436&text=Hello%2C%20more%20information' target='_blank' rel='noopener noreferrer' className='contact__button'>
                 Write me
                 <i className='bx bx-right-arrow-alt contact__button-icon'></i>
               </a>
@@ -86,7 +86,7 @@ const Contact = () => {
               <h3 className='contact__card-title'>Messenger</h3>
               <span className='contact__card-data'>Weidong Kong</span>
 
-              <a href='https://m.me/weidongkong' className='contact__button'>
+              <a href='https://m.me/weidongkong' target='_blank' rel='noopener noreferrer' className='contact__button'>
                 Write me
                 <i className='bx bx-right-arrow-alt contact__button-icon'></i>
               </a>
@@ -98,20 +98,20 @@ const Contact = () => {
 
           <form ref={form} onSubmit={sendEmail} className='contact__form'>
             <div className='contact__form-div'>
-              <label className='contact__form-tag'>Name:</label>
-              <input type='text' name='name' className='contact__form-input' placeholder='Please enter your name' />
+              <label htmlFor='contact-name' className='contact__form-tag'>Name:</label>
+              <input type='text' name='name' id='contact-name' className='contact__form-input' placeholder='Please enter your name' />
             </div>
             {errors.name && <span className='contact__form-error'>{errors.name}</span>}
 
             <div className='contact__form-div'>
-              <label className='contact__form-tag'>Email:</label>
-              <input type='email' name='email' className='contact__form-input' placeholder='Please enter your email' />
+              <label htmlFor='contact-email' className='contact__form-tag'>Email:</label>
+              <input type='email' name='email' id='contact-email' className='contact__form-input' placeholder='Please enter your email' />
             </div>
             {errors.email && <span className='contact__form-error'>{errors.email}</span>}
 
             <div className='contact__form-div contact__form-area'>
-              <label className='contact__form-tag'>Message:</label>
-              <textarea name='message' cols='30' rows='10' className='contact__form-input' placeholder='Please enter your message.'></textarea>
+              <label htmlFor='contact-message' className='contact__form-tag'>Message:</label>
+              <textarea name='message' id='contact-message' cols='30' rows='10' className='contact__form-input' placeholder='Please enter your message.'></textarea>
             </div>
             {errors.message && <span className='contact__form-error'>{errors.message}</span>}
 
@@ -136,8 +136,10 @@ const Contact = () => {
               </svg>
             </button>
 
-            {status === 'sent' && <p className='contact__status contact__status--success'>Message sent successfully!</p>}
-            {status === 'error' && <p className='contact__status contact__status--error'>Failed to send. Please try again.</p>}
+            <div aria-live='polite' role='status'>
+              {status === 'sent' && <p className='contact__status contact__status--success'>Message sent successfully!</p>}
+              {status === 'error' && <p className='contact__status contact__status--error'>Failed to send. Please try again.</p>}
+            </div>
           </form>
         </div>
       </div>
