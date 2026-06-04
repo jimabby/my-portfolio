@@ -16,6 +16,7 @@ import { useEffect } from 'react';
 import MMode from './components/blog/MMode';
 import Hermes from './components/blog/Hermes';
 import Hiro from './components/blog/Hiro';
+import GrandHotelTaipei from './components/blog/GrandHotelTaipei';
 import Assistant from './components/assistant/Assistant';
 import NotFound from './components/notfound/NotFound';
 
@@ -88,6 +89,7 @@ function App() {
         <Route path="/blog/m-mode" element={<MMode />} />
         <Route path="/blog/hermes" element={<Hermes />} />
         <Route path="/blog/hiro" element={<Hiro />} />
+        <Route path="/blog/grand-hotel-taipei" element={<GrandHotelTaipei />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Assistant />

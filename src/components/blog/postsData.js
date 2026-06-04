@@ -1,7 +1,20 @@
 import hermesThumb  from '../../assets/Hermes_ai-panel.webp';
 import mmodeThumb   from '../../assets/Nikon-Z8-m-mode.webp';
+import grandHotelTaipeiThumb from '../../assets/taipei-taoyuan/taipei-taoyuan-9.webp';
 
 export const posts = [
+  {
+    id: 4,
+    slug: 'grand-hotel-taipei',
+    title: 'Staying at the Grand Hotel Taipei',
+    category: 'Travel',
+    date: 'Apr 2026',
+    readTime: '5 min read',
+    tags: ['Taipei', 'Travel', 'Photography'],
+    thumbnail: grandHotelTaipeiThumb,
+    excerpt:
+      'A personal April stay at the Grand Hotel Taipei, from the red-pillared entrance and grand lobby to quiet corridors, city views, and slow moments around the grounds.',
+  },
   {
     id: 3,
     slug: 'hiro',
