@@ -53,8 +53,10 @@ export default function Assistant() {
     const userMessage = text.trim();
     if (!userMessage || isStreaming) return;
 
-    const nextHistory = [...messages, { role: 'user', content: userMessage }];
-    setMessages(nextHistory);
+    // `messages` holds the prior turns only; the new message is sent
+    // separately so the server doesn't receive it twice.
+    const priorHistory = messages;
+    setMessages([...messages, { role: 'user', content: userMessage }]);
     setInput('');
     setIsStreaming(true);
     setStreamText('');
@@ -65,7 +67,7 @@ export default function Assistant() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: userMessage,
-          history: nextHistory,
+          history: priorHistory,
         }),
       });
 

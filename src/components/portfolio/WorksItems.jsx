@@ -2,7 +2,7 @@ import React from 'react'
 
 const WorksItems = ({ item, onOpenGallery }) => {
   return (
-    <div className='work__card' key={item.id}>
+    <div className='work__card'>
       <button
         type="button"
         className="work__img-button"
