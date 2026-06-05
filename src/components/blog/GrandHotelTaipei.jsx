@@ -28,18 +28,10 @@ import galleryImage17 from "../../assets/taipei-taoyuan/taipei-taoyuan-17.webp";
 import galleryImage18 from "../../assets/taipei-taoyuan/taipei-taoyuan-18.webp";
 
 const galleryPhotos = [
-  { src: galleryImage1, alt: "Taipei-Taoyuan travel photo 1" },
-  { src: galleryImage6, alt: "Taipei-Taoyuan travel photo 6" },
-  { src: galleryImage7, alt: "Taipei-Taoyuan travel photo 7" },
-  { src: galleryImage8, alt: "Taipei-Taoyuan travel photo 8" },
-  { src: galleryImage10, alt: "Taipei-Taoyuan travel photo 10" },
-  { src: galleryImage11, alt: "Taipei-Taoyuan travel photo 11" },
-  { src: galleryImage12, alt: "Taipei-Taoyuan travel photo 12" },
-  { src: galleryImage13, alt: "Taipei-Taoyuan travel photo 13" },
-  { src: galleryImage14, alt: "Taipei-Taoyuan travel photo 14" },
-  { src: galleryImage15, alt: "Taipei-Taoyuan travel photo 15" },
-  { src: galleryImage17, alt: "Taipei-Taoyuan travel photo 17" },
-  { src: galleryImage18, alt: "Taipei-Taoyuan travel photo 18" },
+  { src: galleryImage8, alt: "Grand Hotel Taipei rooflines against a clear sky" },
+  { src: galleryImage12, alt: "Patterned hotel door framing the courtyard" },
+  { src: galleryImage17, alt: "Lantern-lit interior with a gong at the Grand Hotel Taipei" },
+  { src: galleryImage18, alt: "Stone monument on the Grand Hotel Taipei grounds" },
 ];
 
 const GrandHotelTaipei = () => {
@@ -69,7 +61,7 @@ const GrandHotelTaipei = () => {
               <span className="blog__meta-dot">|</span>
               <time className="blog__meta-date">April 2026</time>
               <span className="blog__meta-dot">|</span>
-              <span className="blog__meta-readtime">5 min read</span>
+              <span className="blog__meta-readtime">8 min read</span>
             </div>
 
             <h1 className="blog__post-title">
@@ -101,7 +93,10 @@ const GrandHotelTaipei = () => {
               <li><a href="#arrival">Arriving at the Gate</a></li>
               <li><a href="#lobby">The Red Lobby</a></li>
               <li><a href="#stay">Settling Into the Stay</a></li>
+              <li><a href="#room">The Room</a></li>
+              <li><a href="#dining">Dining at the Hotel</a></li>
               <li><a href="#details">Details Around the Hotel</a></li>
+              <li><a href="#tunnels">The Tunnels Beneath the Hotel</a></li>
               <li><a href="#views">Views Over Taipei</a></li>
               <li><a href="#gallery">Photo Gallery</a></li>
               <li><a href="#reflection">What Stayed With Me</a></li>
@@ -182,6 +177,81 @@ const GrandHotelTaipei = () => {
               </figure>
             </section>
 
+            <section className="blog__section card" id="room">
+              <h2 className="blog__heading">The Room</h2>
+
+              <p>
+                After all the ceremony of the public spaces, the room was a
+                calmer, more comfortable kind of Chinese style. A hand-painted
+                branch with birds spread across the wall behind the bed, paired
+                with dark lattice panels, a red bedside cabinet, and a soft gold
+                runner across crisp white sheets. It felt traditional without
+                being heavy.
+              </p>
+
+              <p>
+                The bathroom was more modern and practical: warm wood tones, a
+                deep tub, a large mirror, and a tidy vanity. Small touches like
+                the dark amber Blueseeds toiletries kept it feeling considered
+                rather than generic. It was an easy room to come back to between
+                walks around the grounds.
+              </p>
+
+              <figure className="blog__figure blog__figure--full">
+                <img src={galleryImage10} alt="Guest room at the Grand Hotel Taipei with a painted branch mural behind the bed" className="blog__img" />
+                <figcaption className="blog__caption">Traditional Chinese style, softened for comfort</figcaption>
+              </figure>
+
+              <div className="blog__examples-grid">
+                <figure className="blog__figure">
+                  <img src={galleryImage11} alt="Modern bathroom with a deep tub at the Grand Hotel Taipei" className="blog__img blog__img--cover" />
+                  <figcaption className="blog__caption">A modern, practical bathroom</figcaption>
+                </figure>
+                <figure className="blog__figure">
+                  <img src={galleryImage15} alt="Blueseeds bath amenities in the Grand Hotel Taipei bathroom" className="blog__img blog__img--cover" />
+                  <figcaption className="blog__caption">Small considered touches</figcaption>
+                </figure>
+              </div>
+            </section>
+
+            <section className="blog__section card" id="dining">
+              <h2 className="blog__heading">Dining at the Hotel</h2>
+
+              <p>
+                Eating at the Grand Hotel feels like an extension of the
+                architecture. The restaurants lean into the same red-and-gold
+                language as the rest of the building, so even a casual meal
+                comes with patterned ceilings, marble, and warm lighting. One
+                wall I kept coming back to was a glowing red panel with the
+                hotel's tower logo picked out in rows of little bottles, framed
+                against the stone.
+              </p>
+
+              <p>
+                The food itself was comforting and unfussy: bamboo steamers
+                arriving still warm, classic Chinese plates brought out in
+                steady rounds, and a table set up near the windows so the light
+                changed while we ate. It was the kind of slow, generous meal
+                that suits the pace of the whole place.
+              </p>
+
+              <figure className="blog__figure blog__figure--full">
+                <img src={galleryImage7} alt="A glowing red panel forming the Grand Hotel Taipei logo inside the restaurant" className="blog__img" />
+                <figcaption className="blog__caption">The restaurant carries the same red-and-gold theme as the lobby</figcaption>
+              </figure>
+
+              <div className="blog__examples-grid">
+                <figure className="blog__figure">
+                  <img src={galleryImage6} alt="A bamboo steamer of warm dim sum at the Grand Hotel Taipei" className="blog__img blog__img--cover" />
+                  <figcaption className="blog__caption">Bamboo steamers arriving warm</figcaption>
+                </figure>
+                <figure className="blog__figure">
+                  <img src={galleryImage14} alt="A plated dish on a dining table by the window at the Grand Hotel Taipei" className="blog__img blog__img--cover" />
+                  <figcaption className="blog__caption">A plate brought out by the window</figcaption>
+                </figure>
+              </div>
+            </section>
+
             <section className="blog__section card" id="details">
               <h2 className="blog__heading">Details Around the Hotel</h2>
 
@@ -202,6 +272,39 @@ const GrandHotelTaipei = () => {
               <figure className="blog__figure blog__figure--full">
                 <img src={dragonImage} alt="A golden dragon display inside the Grand Hotel Taipei" className="blog__img" />
                 <figcaption className="blog__caption">A small interior scene with a lot of character</figcaption>
+              </figure>
+            </section>
+
+            <section className="blog__section card" id="tunnels">
+              <h2 className="blog__heading">The Tunnels Beneath the Hotel</h2>
+
+              <p>
+                The part I did not expect to enjoy as much as I did was going
+                underground. Hidden beneath the Grand Hotel are escape tunnels,
+                built into the hill so guests could leave quickly in an
+                emergency. Today you can walk them, and they are a complete
+                contrast to the polished red interiors upstairs: rough,
+                cave-like walls, cool air, and a long curving passage lit by
+                small lights.
+              </p>
+
+              <p>
+                What makes them memorable is the slide. Instead of only stairs,
+                one tunnel has a smooth metal chute running alongside the steps,
+                originally meant to move people down the slope fast. Standing at
+                the top, looking down the curve of stone and metal disappearing
+                into the dim light, was easily the most surprising moment of the
+                stay.
+              </p>
+
+              <figure className="blog__figure blog__figure--full">
+                <img src={galleryImage1} alt="The stone escape tunnel and slide beneath the Grand Hotel Taipei" className="blog__img" />
+                <figcaption className="blog__caption">Stairs and a slide running down through the stone tunnel</figcaption>
+              </figure>
+
+              <figure className="blog__figure blog__figure--full">
+                <img src={galleryImage13} alt="A close look at the curving metal slide inside the Grand Hotel tunnel" className="blog__img" />
+                <figcaption className="blog__caption">The metal chute curving down into the dim light</figcaption>
               </figure>
             </section>
 
@@ -231,13 +334,13 @@ const GrandHotelTaipei = () => {
               <h2 className="blog__heading">Photo Gallery</h2>
 
               <p>
-                A few more frames from the trip: small details, vertical shots,
-                and the extra moments around Taipei and Taoyuan that did not
-                need their own section but still belong with the stay.
+                A few more frames from the stay: the room and bathroom, smaller
+                architectural details, and quiet moments around the grounds that
+                did not need their own section but still belong with the trip.
               </p>
 
               <div className="blog__examples-grid">
-                {galleryPhotos.map((photo, index) => (
+                {galleryPhotos.map((photo) => (
                   <figure className="blog__figure" key={photo.src}>
                     <img
                       src={photo.src}
@@ -245,7 +348,7 @@ const GrandHotelTaipei = () => {
                       className="blog__img blog__img--cover"
                     />
                     <figcaption className="blog__caption">
-                      Taipei-Taoyuan frame {index + 1}
+                      {photo.alt}
                     </figcaption>
                   </figure>
                 ))}
