@@ -4,6 +4,14 @@ import { Link, useLocation } from 'react-router-dom';
 
 const SECTIONS = ['home', 'about', 'skills', 'services', 'portfolio', 'testimonial', 'contact'];
 
+const getStoredTheme = () => {
+  try {
+    return localStorage.getItem('theme') || 'light';
+  } catch {
+    return 'light';
+  }
+};
+
 const Header = () => {
   const location = useLocation();
 
@@ -67,13 +75,15 @@ const Header = () => {
   }, [location.pathname]);
 
   // Dark mode
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'light';
-  });
+  const [theme, setTheme] = useState(getStoredTheme);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+    try {
+      localStorage.setItem('theme', theme);
+    } catch {
+      // Ignore storage errors in restricted contexts.
+    }
   }, [theme]);
 
   const toggleTheme = () => {
@@ -159,16 +169,28 @@ const Header = () => {
             </li>
           </ul>
 
-          <button className="nav__close" onClick={() => showMenu(!Toggle)} aria-label="Close menu">
+          <button type="button" className="nav__close" onClick={() => showMenu(false)} aria-label="Close menu">
             <i className="uil uil-times"></i>
           </button>
         </div>
 
         <div className="nav__buttons">
-          <button className="nav__theme-toggle" onClick={toggleTheme} aria-label="Toggle dark mode">
+          <button
+            type="button"
+            className="nav__theme-toggle"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            aria-pressed={theme === 'dark'}
+          >
             <i className={theme === 'light' ? 'uil uil-moon' : 'uil uil-sun'}></i>
           </button>
-          <button className='nav__toggle' onClick={() => showMenu(!Toggle)} aria-label="Open menu">
+          <button
+            type="button"
+            className='nav__toggle'
+            onClick={() => showMenu(!Toggle)}
+            aria-label="Open menu"
+            aria-expanded={Toggle}
+          >
             <i className='uil uil-apps'></i>
           </button>
         </div>

@@ -330,15 +330,16 @@ const Hermes = () => {
               <h2 className="blog__heading">Try It Yourself</h2>
 
               <p>
-                Hermes is available to try - links coming soon.
+                Hermes is currently available as a private demo. If you want to
+                review the build, discuss the architecture, or see the source,
+                contact me and I can share the right access path.
               </p>
 
-              {/* TODO: add project links here */}
               <div className="blog__tip">
-                <h3 className="blog__tip-title">Coming soon</h3>
+                <h3 className="blog__tip-title">Request access</h3>
                 <p className="blog__tip-text">
-                  Project links, demo, and source code will be added here
-                  shortly.
+                  Use the portfolio contact form with "Hermes demo" in your
+                  message and I will follow up with details.
                 </p>
               </div>
             </section>

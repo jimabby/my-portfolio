@@ -11,6 +11,7 @@ const STARTER_PROMPTS = [
 ];
 
 const STORAGE_KEY = 'assistant_messages_v1';
+const MAX_STORED_MESSAGES = 20;
 
 export default function Assistant() {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +36,7 @@ export default function Assistant() {
 
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(-MAX_STORED_MESSAGES)));
     } catch {
       // ignore storage errors
     }
@@ -76,6 +77,10 @@ export default function Assistant() {
         throw new Error(`HTTP ${response.status}: ${body}`);
       }
 
+      if (!response.body) {
+        throw new Error('Streaming is not supported by this browser.');
+      }
+
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let buffer = '';
@@ -92,7 +97,10 @@ export default function Assistant() {
         for (const line of lines) {
           if (!line.startsWith('data: ')) continue;
           const data = line.slice(6).trim();
-          if (data === '[DONE]') break;
+          if (data === '[DONE]') {
+            buffer = '';
+            break;
+          }
           try {
             const parsed = JSON.parse(data);
             if (parsed.error) throw new Error(parsed.error);
@@ -106,9 +114,17 @@ export default function Assistant() {
         }
       }
 
-      setMessages((prev) => [...prev, { role: 'assistant', content: fullText }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: fullText || "I couldn't find a response. Please try again.",
+        },
+      ]);
     } catch (err) {
-      console.error('[Assistant] Error:', err.message);
+      if (import.meta.env.DEV) {
+        console.error('[Assistant] Error:', err.message);
+      }
       setMessages((prev) => [
         ...prev,
         {
@@ -143,9 +159,11 @@ export default function Assistant() {
   return (
     <>
       <button
+        type="button"
         className={`assistant__fab ${isOpen ? 'assistant__fab--open' : ''}`}
         onClick={() => setIsOpen((v) => !v)}
         aria-label="Toggle AI assistant"
+        aria-expanded={isOpen}
       >
         {isOpen ? (
           <span className="assistant__fab-icon">X</span>
@@ -168,6 +186,7 @@ export default function Assistant() {
             </div>
             <div className="assistant__actions">
               <button
+                type="button"
                 className="assistant__clear"
                 onClick={clearMessages}
                 disabled={isStreaming || messages.length === 0}
@@ -176,6 +195,7 @@ export default function Assistant() {
                 Clear
               </button>
               <button
+                type="button"
                 className="assistant__close"
                 onClick={() => setIsOpen(false)}
                 aria-label="Close"
@@ -212,6 +232,7 @@ export default function Assistant() {
           <div className="assistant__chips-bar">
             {STARTER_PROMPTS.map((prompt) => (
               <button
+                type="button"
                 key={prompt}
                 className="assistant__chip"
                 onClick={() => sendMessage(prompt)}
@@ -234,6 +255,7 @@ export default function Assistant() {
               disabled={isStreaming}
             />
             <button
+              type="button"
               className="assistant__send"
               onClick={() => sendMessage(input)}
               disabled={isStreaming || !input.trim()}

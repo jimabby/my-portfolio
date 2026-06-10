@@ -37,6 +37,7 @@ const Blog = () => {
         {/* Search */}
         <div className="blog__search-wrapper">
           <input
+            aria-label="Search articles"
             type="text"
             className="blog__search"
             placeholder="Search articles..."
@@ -49,9 +50,11 @@ const Blog = () => {
         <div className="blog__filters">
           {categories.map(cat => (
             <button
+              type="button"
               key={cat}
               className={`blog__filter-btn${activeCategory === cat ? ' blog__filter-btn--active' : ''}`}
               onClick={() => setActiveCategory(cat)}
+              aria-pressed={activeCategory === cat}
             >
               {cat}
             </button>

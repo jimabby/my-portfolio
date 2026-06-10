@@ -21,8 +21,23 @@ function devChatApi(apiKey) {
         req.on('data', (d) => (body += d))
         req.on('end', async () => {
           try {
+            if (!apiKey) {
+              res.statusCode = 500
+              res.setHeader('Content-Type', 'application/json')
+              return res.end(JSON.stringify({ error: 'API key not configured' }))
+            }
             const { GoogleGenerativeAI } = await import('@google/generative-ai')
             const { message, history = [] } = JSON.parse(body)
+            if (!message?.trim()) {
+              res.statusCode = 400
+              res.setHeader('Content-Type', 'application/json')
+              return res.end(JSON.stringify({ error: 'Message is required' }))
+            }
+            if (message.length > 1000 || !Array.isArray(history)) {
+              res.statusCode = 400
+              res.setHeader('Content-Type', 'application/json')
+              return res.end(JSON.stringify({ error: 'Invalid request' }))
+            }
             const genAI = new GoogleGenerativeAI(apiKey)
             const model = genAI.getGenerativeModel({
               model: 'gemini-2.5-flash',

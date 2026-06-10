@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { posts } from './postsData';
 
 const BlogPrevNext = ({ currentSlug }) => {
-  const idx  = posts.findIndex(p => p.slug === currentSlug);
+  const idx = posts.findIndex(p => p.slug === currentSlug);
   const next = posts[idx - 1];
   const prev = posts[idx + 1];
 
@@ -22,7 +22,7 @@ const BlogPrevNext = ({ currentSlug }) => {
             <i className="bx bx-arrow-back"></i> Previous
           </span>
           <span className="blog__prevnext-title">{prev.title}</span>
-          <span className="blog__prevnext-meta">{prev.date} · {prev.readTime}</span>
+          <span className="blog__prevnext-meta">{prev.date} - {prev.readTime}</span>
         </Link>
       ) : <div />}
 
@@ -36,7 +36,7 @@ const BlogPrevNext = ({ currentSlug }) => {
             Next <i className="bx bx-right-arrow-alt"></i>
           </span>
           <span className="blog__prevnext-title">{next.title}</span>
-          <span className="blog__prevnext-meta">{next.date} · {next.readTime}</span>
+          <span className="blog__prevnext-meta">{next.date} - {next.readTime}</span>
         </Link>
       ) : <div />}
     </div>

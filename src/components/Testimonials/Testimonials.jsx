@@ -22,7 +22,7 @@ const TestimonialCard = ({ image, title, description }) => {
       <h3 className='testimonial__name'>{title}</h3>
       <p className='testimonial__description'>{displayText}</p>
       {isLong && (
-        <button className='testimonial__toggle' onClick={() => setExpanded(!expanded)}>
+        <button type="button" className='testimonial__toggle' onClick={() => setExpanded(!expanded)} aria-expanded={expanded}>
           {expanded ? 'Show less' : 'Read more'}
         </button>
       )}
@@ -39,7 +39,7 @@ const Testimonials = () => {
       <span className='section__subtitle'>Colleagues & Leaders</span>
 
       <div className='testimonial__wrapper'>
-        <button className='testimonial__nav testimonial__nav-prev' onClick={() => swiperRef.current?.slidePrev()}>
+        <button type="button" className='testimonial__nav testimonial__nav-prev' onClick={() => swiperRef.current?.slidePrev()} aria-label="Previous testimonial">
           <i className='uil uil-angle-left'></i>
         </button>
 
@@ -69,7 +69,7 @@ const Testimonials = () => {
           })}
         </Swiper>
 
-        <button className='testimonial__nav testimonial__nav-next' onClick={() => swiperRef.current?.slideNext()}>
+        <button type="button" className='testimonial__nav testimonial__nav-next' onClick={() => swiperRef.current?.slideNext()} aria-label="Next testimonial">
           <i className='uil uil-angle-right'></i>
         </button>
       </div>

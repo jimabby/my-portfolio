@@ -40,6 +40,7 @@
   right: 2rem;
   width: 420px;
   height: 600px;
+  max-height: calc(100vh - 11rem);
   background: var(--container-color);
   border-radius: 18px;
   border: 1px solid var(--border-color);
@@ -332,6 +333,7 @@
     width: auto;
     bottom: 8.8rem;
     height: 72vh;
+    max-height: 72vh;
   }
 
   .assistant__fab {

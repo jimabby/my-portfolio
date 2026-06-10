@@ -111,7 +111,7 @@ const Works = () => {
         <div className="work__modal" role="dialog" aria-modal="true" aria-label={`${galleryState.title} gallery`}>
           <div className="work__modal-backdrop" onClick={closeGallery} />
           <div className="work__modal-content">
-            <button className="work__modal-close" onClick={closeGallery} aria-label="Close gallery">
+            <button type="button" className="work__modal-close" onClick={closeGallery} aria-label="Close gallery">
               X
             </button>
             <div className="work__modal-header">
@@ -138,7 +138,7 @@ const Works = () => {
             </div>
             <div className={`work__modal-body${galleryImages.length <= 1 ? ' work__modal-body--single' : ''}`}>
               {galleryImages.length > 1 && (
-                <button className="work__modal-nav work__modal-nav--prev" onClick={showPrev} aria-label="Previous image">
+                <button type="button" className="work__modal-nav work__modal-nav--prev" onClick={showPrev} aria-label="Previous image">
                   <i className="bx bx-chevron-left"></i>
                 </button>
               )}
@@ -148,7 +148,7 @@ const Works = () => {
                 className="work__modal-img"
               />
               {galleryImages.length > 1 && (
-                <button className="work__modal-nav work__modal-nav--next" onClick={showNext} aria-label="Next image">
+                <button type="button" className="work__modal-nav work__modal-nav--next" onClick={showNext} aria-label="Next image">
                   <i className="bx bx-chevron-right"></i>
                 </button>
               )}
@@ -157,6 +157,7 @@ const Works = () => {
               <div className="work__modal-thumbs">
                 {galleryImages.map((img, idx) => (
                   <button
+                    type="button"
                     key={`${galleryState.title}-${idx}`}
                     className={`work__modal-thumb${idx === galleryState.index ? ' is-active' : ''}`}
                     onClick={() => setGalleryState((prev) => ({ ...prev, index: idx }))}

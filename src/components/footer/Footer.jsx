@@ -20,15 +20,15 @@ const Footer = () => {
         </ul>
 
         <div className='footer__social'>
-          <a href='https://www.facebook.com/weidong.kong/' className='footer__social-link' target='_blank' rel='noopener noreferrer'>
+          <a href='https://www.facebook.com/weidong.kong/' className='footer__social-link' target='_blank' rel='noopener noreferrer' aria-label="Jim Kong on Facebook">
             <i className='bx bxl-facebook'></i>
           </a>
 
-          <a href='https://www.instagram.com/wkongjim/' className='footer__social-link' target='_blank' rel='noopener noreferrer'>
+          <a href='https://www.instagram.com/wkongjim/' className='footer__social-link' target='_blank' rel='noopener noreferrer' aria-label="Jim Kong on Instagram">
             <i className='bx bxl-instagram'></i>
           </a>
 
-          <a href='https://x.com/Weidong_jim' className='footer__social-link' target='_blank' rel='noopener noreferrer'>
+          <a href='https://x.com/Weidong_jim' className='footer__social-link' target='_blank' rel='noopener noreferrer' aria-label="Jim Kong on X">
             <i className='bx bxl-twitter'></i>
           </a>
         </div>

@@ -6,10 +6,18 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { message, history = [] } = req.body;
+  const { message, history = [] } = req.body || {};
 
   if (!message?.trim()) {
     return res.status(400).json({ error: 'Message is required' });
+  }
+
+  if (message.length > 1000) {
+    return res.status(400).json({ error: 'Message is too long' });
+  }
+
+  if (!Array.isArray(history)) {
+    return res.status(400).json({ error: 'History must be an array' });
   }
 
   if (!process.env.GEMINI_API_KEY) {
