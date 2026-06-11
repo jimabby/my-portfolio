@@ -66,6 +66,21 @@ const Works = () => {
     }));
   };
 
+  const touchStartX = React.useRef(null);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null || galleryState.images.length <= 1) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(deltaX) < 40) return;
+    if (deltaX < 0) showNext();
+    else showPrev();
+  };
+
   useEffect(() => {
     if (!galleryState.isOpen) return;
     const onKeyDown = (e) => {
@@ -130,11 +145,6 @@ const Works = () => {
                   </div>
                 )}
               </div>
-              {galleryImages.length > 1 && (
-                <span className="work__modal-count">
-                  {galleryState.index + 1} / {galleryImages.length}
-                </span>
-              )}
             </div>
             <div className={`work__modal-body${galleryImages.length <= 1 ? ' work__modal-body--single' : ''}`}>
               {galleryImages.length > 1 && (
@@ -142,11 +152,22 @@ const Works = () => {
                   <i className="bx bx-chevron-left"></i>
                 </button>
               )}
-              <img
-                src={galleryImages[galleryState.index]}
-                alt={`${galleryState.title} screenshot ${galleryState.index + 1}`}
-                className="work__modal-img"
-              />
+              <div
+                className="work__modal-figure"
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+              >
+                <img
+                  src={galleryImages[galleryState.index]}
+                  alt={`${galleryState.title} screenshot ${galleryState.index + 1}`}
+                  className="work__modal-img"
+                />
+                {galleryImages.length > 1 && (
+                  <span className="work__modal-count">
+                    {galleryState.index + 1} / {galleryImages.length}
+                  </span>
+                )}
+              </div>
               {galleryImages.length > 1 && (
                 <button type="button" className="work__modal-nav work__modal-nav--next" onClick={showNext} aria-label="Next image">
                   <i className="bx bx-chevron-right"></i>
