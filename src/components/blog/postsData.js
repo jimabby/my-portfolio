@@ -1,6 +1,7 @@
 import hermesThumb  from '../../assets/Hermes_ai-panel.webp';
 import mmodeThumb   from '../../assets/Nikon-Z8-m-mode.webp';
 import grandHotelTaipeiThumb from '../../assets/taipei-taoyuan/taipei-taoyuan-9.webp';
+import hiroThumb from '../../assets/hiro.webp';
 
 export const posts = [
   {
@@ -23,6 +24,7 @@ export const posts = [
     date: 'Mar 2026',
     readTime: '8 min read',
     tags: ['AI', 'Automation', 'Project'],
+    thumbnail: hiroThumb,
     excerpt:
       'An AI desktop agent that scrapes Seek, Indeed, and LinkedIn on a schedule, scores every job against your resume, tailors your application, and submits — all while you sleep.',
   },

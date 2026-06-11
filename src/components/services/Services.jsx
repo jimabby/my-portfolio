@@ -45,18 +45,19 @@ const Services = () => {
           </button>
 
           <div className={toggleState === 1 ? "services__model active-model": "services__model"} onClick={() => toggleTab(0)}>
-            <div className='services__model-content' onClick={(e) => e.stopPropagation()}>
+            <div className='services__model-content' role="dialog" aria-modal="true" aria-labelledby="services-modal-title-1" onClick={(e) => e.stopPropagation()}>
               <button type="button" onClick={() => toggleTab(0)} className="services__model-close" aria-label="Close modal">
                 <i className="uil uil-times"></i>
               </button>
 
-              <h3 className='services__model-title'>
+              <h3 className='services__model-title' id="services-modal-title-1">
                 Full-Stack Developer
               </h3>
 
               <p className='services__model-description'>
-                Service with more than three years of experience. 
-                Providing quality work to clients and companies.
+                I build complete web applications end to end — responsive React
+                frontends, robust APIs, and databases — and take them from idea
+                to production deployment.
               </p>
 
               <ul className='services__model-services grid'>
@@ -113,18 +114,19 @@ const Services = () => {
           </button>
 
           <div className={toggleState === 2 ? "services__model active-model": "services__model"} onClick={() => toggleTab(0)}>
-            <div className='services__model-content' onClick={(e) => e.stopPropagation()}>
+            <div className='services__model-content' role="dialog" aria-modal="true" aria-labelledby="services-modal-title-2" onClick={(e) => e.stopPropagation()}>
               <button type="button" onClick={() => toggleTab(0)} className="services__model-close" aria-label="Close modal">
                 <i className="uil uil-times"></i>
               </button>
 
-              <h3 className='services__model-title'>
+              <h3 className='services__model-title' id="services-modal-title-2">
                 Software Developer
               </h3>
 
               <p className='services__model-description'>
-                Service with more than three years of experience. 
-                Providing quality work to clients and companies.
+                I design and ship reliable software — from desktop tools to AI
+                automation agents — with a focus on clean architecture and
+                maintainable code.
               </p>
 
               <ul className='services__model-services grid'>
@@ -181,18 +183,19 @@ const Services = () => {
           </button>
 
           <div className={toggleState === 3 ? "services__model active-model": "services__model"} onClick={() => toggleTab(0)}>
-            <div className='services__model-content' onClick={(e) => e.stopPropagation()}>
+            <div className='services__model-content' role="dialog" aria-modal="true" aria-labelledby="services-modal-title-3" onClick={(e) => e.stopPropagation()}>
               <button type="button" onClick={() => toggleTab(0)} className="services__model-close" aria-label="Close modal">
                 <i className="uil uil-times"></i>
               </button>
 
-              <h3 className='services__model-title'>
+              <h3 className='services__model-title' id="services-modal-title-3">
                 Data Analyst
               </h3>
 
               <p className='services__model-description'>
-                Service with more than three years of experience. 
-                Providing quality work to clients and companies.
+                I turn raw data into clear insights with SQL, Python, and
+                visualization tools, helping teams make confident, data-driven
+                decisions.
               </p>
 
               <ul className='services__model-services grid'>

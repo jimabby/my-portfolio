@@ -26,6 +26,14 @@
   background: linear-gradient(135deg, hsl(0, 0%, 12%), hsl(0, 0%, 6%));
 }
 
+/* Keep the FAB out of the way while the mobile nav sheet is open. */
+@media screen and (max-width: 768px) {
+  body:has(.nav__menu.show-menu) .assistant__fab {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
 .assistant__fab-icon {
   display: flex;
   align-items: center;

@@ -188,7 +188,7 @@ const Header = () => {
             type="button"
             className='nav__toggle'
             onClick={() => showMenu(!Toggle)}
-            aria-label="Open menu"
+            aria-label={Toggle ? 'Close menu' : 'Open menu'}
             aria-expanded={Toggle}
           >
             <i className='uil uil-apps'></i>

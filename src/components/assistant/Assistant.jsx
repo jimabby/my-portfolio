@@ -47,7 +47,13 @@ export default function Assistant() {
   }, [messages, streamText]);
 
   useEffect(() => {
-    if (isOpen) inputRef.current?.focus();
+    if (!isOpen) return;
+    inputRef.current?.focus();
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
   }, [isOpen]);
 
   async function sendMessage(text) {
@@ -101,15 +107,16 @@ export default function Assistant() {
             buffer = '';
             break;
           }
+          let parsed;
           try {
-            const parsed = JSON.parse(data);
-            if (parsed.error) throw new Error(parsed.error);
-            if (parsed.text) {
-              fullText += parsed.text;
-              setStreamText(fullText);
-            }
+            parsed = JSON.parse(data);
           } catch {
-            // Ignore malformed stream chunks.
+            continue; // Ignore malformed stream chunks.
+          }
+          if (parsed.error) throw new Error(parsed.error);
+          if (parsed.text) {
+            fullText += parsed.text;
+            setStreamText(fullText);
           }
         }
       }
@@ -125,12 +132,17 @@ export default function Assistant() {
       if (import.meta.env.DEV) {
         console.error('[Assistant] Error:', err.message);
       }
+      const detail = err.message || '';
+      let friendly = "Sorry, I couldn't get a response. Please try again.";
+      if (detail.includes('API key not configured')) {
+        friendly =
+          'The assistant is not configured in this environment. Add GEMINI_API_KEY to a .env file and restart the dev server.';
+      } else if (detail.includes('HTTP 404') || detail.includes('HTTP 405')) {
+        friendly = 'The assistant API is not available in this environment.';
+      }
       setMessages((prev) => [
         ...prev,
-        {
-          role: 'assistant',
-          content: "Sorry, I couldn't get a response. Please try again.",
-        },
+        { role: 'assistant', content: friendly },
       ]);
     } finally {
       setIsStreaming(false);
@@ -205,7 +217,7 @@ export default function Assistant() {
             </div>
           </div>
 
-          <div className="assistant__messages">
+          <div className="assistant__messages" aria-live="polite">
             {allMessages.length === 0 && (
               <p className="assistant__welcome-text">
                 Ask about projects, skills, and experience. Answers are based on portfolio content.

@@ -19,6 +19,17 @@ const Contact = () => {
     return errs;
   };
 
+  const clearFieldError = (e) => {
+    const { name } = e.target;
+    if (errors[name]) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next[name];
+        return next;
+      });
+    }
+  };
+
   const sendEmail = async (e) => {
     e.preventDefault();
 
@@ -99,21 +110,21 @@ const Contact = () => {
           <form ref={form} onSubmit={sendEmail} className='contact__form'>
             <div className='contact__form-div'>
               <label htmlFor='contact-name' className='contact__form-tag'>Name:</label>
-              <input type='text' name='name' id='contact-name' className='contact__form-input' placeholder='Please enter your name' />
+              <input type='text' name='name' id='contact-name' className='contact__form-input' placeholder='Please enter your name' onChange={clearFieldError} aria-invalid={!!errors.name} aria-describedby={errors.name ? 'contact-name-error' : undefined} />
             </div>
-            {errors.name && <span className='contact__form-error'>{errors.name}</span>}
+            {errors.name && <span id='contact-name-error' className='contact__form-error'>{errors.name}</span>}
 
             <div className='contact__form-div'>
               <label htmlFor='contact-email' className='contact__form-tag'>Email:</label>
-              <input type='email' name='email' id='contact-email' className='contact__form-input' placeholder='Please enter your email' />
+              <input type='email' name='email' id='contact-email' className='contact__form-input' placeholder='Please enter your email' onChange={clearFieldError} aria-invalid={!!errors.email} aria-describedby={errors.email ? 'contact-email-error' : undefined} />
             </div>
-            {errors.email && <span className='contact__form-error'>{errors.email}</span>}
+            {errors.email && <span id='contact-email-error' className='contact__form-error'>{errors.email}</span>}
 
             <div className='contact__form-div contact__form-area'>
               <label htmlFor='contact-message' className='contact__form-tag'>Message:</label>
-              <textarea name='message' id='contact-message' cols='30' rows='10' className='contact__form-input' placeholder='Please enter your message.'></textarea>
+              <textarea name='message' id='contact-message' cols='30' rows='10' className='contact__form-input' placeholder='Please enter your message.' onChange={clearFieldError} aria-invalid={!!errors.message} aria-describedby={errors.message ? 'contact-message-error' : undefined}></textarea>
             </div>
-            {errors.message && <span className='contact__form-error'>{errors.message}</span>}
+            {errors.message && <span id='contact-message-error' className='contact__form-error'>{errors.message}</span>}
 
             <button type='submit' className='button button--flex' disabled={status === 'sending'}>
               {status === 'sending' ? 'Sending...' : 'Send Message'}

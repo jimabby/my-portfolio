@@ -101,20 +101,27 @@
     height: var(--header-height);
   }
 
+  /* The header's backdrop-filter makes it the containing block for this
+     fixed menu, so bottom: -100% resolves against the header height and
+     leaves the menu visible. Hide it with transform + visibility instead. */
   .nav__menu {
     position: fixed;
-    bottom: -100%;
+    bottom: 0;
     left: 0;
     width: 100%;
     background-color: var(--container-color);
     padding: 2rem 1.5rem 4rem;
     box-shadow: 0 -10px 24px rgba(17, 39, 68, 0.2);
     border-radius: 1.5rem 1.5rem 0 0;
-    transition: bottom 0.3s ease;
+    transform: translateY(110%);
+    visibility: hidden;
+    transition: transform 0.3s ease, visibility 0s linear 0.3s;
   }
 
   .show-menu {
-    bottom: 0;
+    transform: translateY(0);
+    visibility: visible;
+    transition: transform 0.3s ease;
   }
 
   .nav__list {
