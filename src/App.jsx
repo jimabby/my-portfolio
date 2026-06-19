@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import './App.css';
 import About from './components/about/About';
 import Contact from './components/contact/Contact';
@@ -30,19 +31,42 @@ const Testimonials = lazy(() => import('./components/Testimonials/Testimonials')
 
 function useSectionReveal() {
   useEffect(() => {
-    const sections = document.querySelectorAll('.section');
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('section--visible');
+            observer.unobserve(entry.target);
           }
         });
       },
       { threshold: 0.1 }
     );
-    sections.forEach((s) => observer.observe(s));
-    return () => observer.disconnect();
+
+    const observe = (el) => {
+      if (!el.classList.contains('section--visible')) observer.observe(el);
+    };
+
+    document.querySelectorAll('.section').forEach(observe);
+
+    // Lazy-loaded sections (e.g. Testimonials) mount after this effect runs, so
+    // their <section> isn't caught by the initial query. Watch for sections
+    // added later and observe them too, otherwise they stay at opacity: 0.
+    const mutationObserver = new MutationObserver((mutations) => {
+      mutations.forEach((m) => {
+        m.addedNodes.forEach((node) => {
+          if (node.nodeType !== 1) return;
+          if (node.matches?.('.section')) observe(node);
+          node.querySelectorAll?.('.section').forEach(observe);
+        });
+      });
+    });
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
   }, []);
 }
 
@@ -110,6 +134,7 @@ function App() {
           <Assistant />
         </Suspense>
         <Analytics />
+        <SpeedInsights />
       </BrowserRouter>
     </ErrorBoundary>
   );
