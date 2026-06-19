@@ -21,6 +21,25 @@ import OnsenImg1 from "../../assets/onsen1.webp";
 import SimbaImg from "../../assets/simbaeducation.webp";
 import SimbaImg1 from "../../assets/simbaeducation1.webp";
 import SimbaImg2 from "../../assets/simbaeducation2.webp";
+import SimbaEduNew1 from "../../assets/simba-edu-new1.webp";
+import SimbaEduNew2 from "../../assets/simba-edu-new2.webp";
+import SimbaEduNew3 from "../../assets/simba-edu-new3.webp";
+import SimbaEduNew4 from "../../assets/simba-edu-new4.webp";
+import SimbaEduNew5 from "../../assets/simba-edu-new5.webp";
+import SimbaEduNew6 from "../../assets/simba-edu-new6.webp";
+import SimbaEduRedesign1 from "../../assets/simba-edu-redesign1.webp";
+import SimbaEduRedesign2 from "../../assets/simba-edu-redesign2.webp";
+import SimbaEduRedesign3 from "../../assets/simba-edu-redesign3.webp";
+import SimbaEduRedesign4 from "../../assets/simba-edu-redesign4.webp";
+import SimbaEduRedesign5 from "../../assets/simba-edu-redesign5.webp";
+import SimbaHealth1 from "../../assets/simba-health-new1.webp";
+import SimbaHealth2 from "../../assets/simba-health-new2.webp";
+import SimbaHealth3 from "../../assets/simba-health-new3.webp";
+import SimbaHealth4 from "../../assets/simba-health-new4.webp";
+import SimbaHearing1 from "../../assets/simba-hearing1.webp";
+import SimbaHearing2 from "../../assets/simba-hearing2.webp";
+import SimbaHearing3 from "../../assets/simba-hearing3.webp";
+import SimbaHearing4 from "../../assets/simba-hearing4.webp";
 
 export const projectsData = [
   {
@@ -150,6 +169,69 @@ export const projectsData = [
     link: 'https://myownvet.com.au/',
     summary: 'Veterinary services site optimized for conversions.',
     tags: ['WordPress', 'Healthcare', 'Services'],
+  },
+  {
+    id: 13,
+    image: SimbaEduNew1,
+    title: 'Simba Education - New Build',
+    category: 'Website',
+    link: '#',
+    summary: 'Custom-built education site replacing the legacy WordPress version.',
+    tags: ['Website', 'Education', 'Next.js'],
+    gallery: [
+      SimbaEduNew1,
+      SimbaEduNew2,
+      SimbaEduNew3,
+      SimbaEduNew4,
+      SimbaEduNew5,
+      SimbaEduNew6,
+    ],
+  },
+  {
+    id: 14,
+    image: SimbaEduRedesign1,
+    title: 'Simba Education - Redesign',
+    category: 'Website',
+    link: '#',
+    summary: 'Refreshed visual identity and layout for the Simba Education brand.',
+    tags: ['Website', 'Education', 'Redesign'],
+    gallery: [
+      SimbaEduRedesign1,
+      SimbaEduRedesign2,
+      SimbaEduRedesign3,
+      SimbaEduRedesign4,
+      SimbaEduRedesign5,
+    ],
+  },
+  {
+    id: 15,
+    image: SimbaHealth1,
+    title: 'Simba Health - Redesign',
+    category: 'Website',
+    link: '#',
+    summary: 'Custom-built healthcare site replacing the legacy WordPress version.',
+    tags: ['Website', 'Healthcare', 'Redesign'],
+    gallery: [
+      SimbaHealth1,
+      SimbaHealth2,
+      SimbaHealth3,
+      SimbaHealth4,
+    ],
+  },
+  {
+    id: 16,
+    image: SimbaHearing1,
+    title: 'Simba Hearing',
+    category: 'Website',
+    link: '#',
+    summary: 'Audiology and hearing services site with a clean, trustworthy feel.',
+    tags: ['Website', 'Healthcare', 'Audiology'],
+    gallery: [
+      SimbaHearing1,
+      SimbaHearing2,
+      SimbaHearing3,
+      SimbaHearing4,
+    ],
   },
 ]
 
