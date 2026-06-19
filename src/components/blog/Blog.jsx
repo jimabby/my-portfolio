@@ -4,13 +4,17 @@ import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import ScrollUp from '../scrollup/ScrollUp';
 import { posts } from './postsData';
+import { useLanguage } from '../../i18n/LanguageContext';
 import './blog.css';
 
 const categories = ['All', ...Array.from(new Set(posts.map(p => p.category)))];
 
 const Blog = () => {
+  const { t } = useLanguage();
   const [activeCategory, setActiveCategory] = useState('All');
   const [query, setQuery] = useState('');
+
+  const catLabel = (cat) => t(`blog.categories.${cat}`, cat);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
@@ -22,25 +26,27 @@ const Blog = () => {
       const matchCat = activeCategory === 'All' || p.category === activeCategory;
       if (!matchCat) return false;
       if (words.length === 0) return true;
-      const haystack = `${p.title} ${p.excerpt} ${p.category} ${p.tags.join(' ')}`.toLowerCase();
+      const title = t(`posts.${p.key}.title`, p.title);
+      const excerpt = t(`posts.${p.key}.excerpt`, p.excerpt);
+      const haystack = `${p.title} ${p.excerpt} ${title} ${excerpt} ${p.category} ${catLabel(p.category)} ${p.tags.join(' ')}`.toLowerCase();
       return words.every(word => haystack.includes(word));
     });
-  }, [activeCategory, query]);
+  }, [activeCategory, query, t]);
 
   return (
     <>
       <Header />
       <section className="blog section" id="blog">
-        <h2 className="section__title">Blog</h2>
-        <span className="section__subtitle">My latest posts</span>
+        <h2 className="section__title">{t('blog.title')}</h2>
+        <span className="section__subtitle">{t('blog.subtitle')}</span>
 
         {/* Search */}
         <div className="blog__search-wrapper">
           <input
-            aria-label="Search articles"
+            aria-label={t('blog.searchAria')}
             type="text"
             className="blog__search"
-            placeholder="Search articles..."
+            placeholder={t('blog.searchPlaceholder')}
             value={query}
             onChange={e => setQuery(e.target.value)}
           />
@@ -56,33 +62,33 @@ const Blog = () => {
               onClick={() => setActiveCategory(cat)}
               aria-pressed={activeCategory === cat}
             >
-              {cat}
+              {catLabel(cat)}
             </button>
           ))}
         </div>
 
         <div className="blog__list-container container">
           {filtered.length === 0 && (
-            <p className="blog__no-results">No articles found.</p>
+            <p className="blog__no-results">{t('blog.noResults')}</p>
           )}
 
           {filtered.map(post => (
             <article className="blog__card" key={post.id}>
               {post.thumbnail && (
-                <img src={post.thumbnail} alt={post.title} className="blog__card-thumb" />
+                <img src={post.thumbnail} alt={t(`posts.${post.key}.title`, post.title)} className="blog__card-thumb" />
               )}
 
               <div className="blog__card-meta">
-                <span className="blog__card-category">{post.category}</span>
+                <span className="blog__card-category">{catLabel(post.category)}</span>
                 <span className="blog__card-dot">|</span>
-                <time className="blog__card-date">{post.date}</time>
+                <time className="blog__card-date">{t(`posts.${post.key}.date`, post.date)}</time>
                 <span className="blog__card-dot">|</span>
-                <span className="blog__card-readtime">{post.readTime}</span>
+                <span className="blog__card-readtime">{t(`posts.${post.key}.readTime`, post.readTime)}</span>
               </div>
 
-              <h3 className="blog__card-title">{post.title}</h3>
+              <h3 className="blog__card-title">{t(`posts.${post.key}.title`, post.title)}</h3>
 
-              <p className="blog__card-excerpt">{post.excerpt}</p>
+              <p className="blog__card-excerpt">{t(`posts.${post.key}.excerpt`, post.excerpt)}</p>
 
               <div className="blog__card-footer">
                 <div className="blog__card-tags">
@@ -91,7 +97,7 @@ const Blog = () => {
                   ))}
                 </div>
                 <Link to={`/blog/${post.slug}`} className="blog__card-link">
-                  Read article <span className="blog__card-arrow">&rarr;</span>
+                  {t('blog.readArticle')} <span className="blog__card-arrow">&rarr;</span>
                 </Link>
               </div>
             </article>

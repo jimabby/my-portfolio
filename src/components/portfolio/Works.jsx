@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { projectsData, projectsNav } from './Data';
 import WorksItems from './WorksItems';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 const Works = () => {
+  const { t } = useLanguage();
   const [item, setItem] = useState({name:  "all"});
   const [projects, setProjects] = useState([]);
   const [active, setActive] = useState(0);
@@ -16,6 +18,9 @@ const Works = () => {
   });
 
   const galleryImages = useMemo(() => galleryState.images, [galleryState.images]);
+
+  const closeButtonRef = React.useRef(null);
+  const lastFocusedRef = React.useRef(null);
 
   useEffect(() => {
     if(item.name === "all"){
@@ -35,13 +40,14 @@ const Works = () => {
   }
 
   const openGallery = (project, startIndex = 0) => {
+    lastFocusedRef.current = document.activeElement;
     const images = project.gallery && project.gallery.length > 0
       ? project.gallery
       : [project.image];
     setGalleryState({
       isOpen: true,
       title: project.title,
-      summary: project.summary || '',
+      summary: t(`projects.${project.id}`, project.summary || ''),
       tags: project.tags || [],
       images,
       index: Math.max(0, Math.min(startIndex, images.length - 1)),
@@ -96,6 +102,15 @@ const Works = () => {
     };
   }, [galleryState.isOpen, galleryState.index]);
 
+  useEffect(() => {
+    if (galleryState.isOpen) {
+      closeButtonRef.current?.focus();
+    } else if (lastFocusedRef.current) {
+      lastFocusedRef.current.focus?.();
+      lastFocusedRef.current = null;
+    }
+  }, [galleryState.isOpen]);
+
   return (
     <div>
       <div className='work__filters'>
@@ -108,7 +123,7 @@ const Works = () => {
               key={nav.name}
               aria-pressed={active === index}
             >
-              {nav.name}
+              {t(`portfolio.filters.${nav.name.toLowerCase()}`, nav.name)}
             </button>
           )
         })}
@@ -126,7 +141,7 @@ const Works = () => {
         <div className="work__modal" role="dialog" aria-modal="true" aria-label={`${galleryState.title} gallery`}>
           <div className="work__modal-backdrop" onClick={closeGallery} />
           <div className="work__modal-content">
-            <button type="button" className="work__modal-close" onClick={closeGallery} aria-label="Close gallery">
+            <button ref={closeButtonRef} type="button" className="work__modal-close" onClick={closeGallery} aria-label={t('portfolio.closeGallery')}>
               X
             </button>
             <div className="work__modal-header">
@@ -148,7 +163,7 @@ const Works = () => {
             </div>
             <div className={`work__modal-body${galleryImages.length <= 1 ? ' work__modal-body--single' : ''}`}>
               {galleryImages.length > 1 && (
-                <button type="button" className="work__modal-nav work__modal-nav--prev" onClick={showPrev} aria-label="Previous image">
+                <button type="button" className="work__modal-nav work__modal-nav--prev" onClick={showPrev} aria-label={t('portfolio.prevImage')}>
                   <i className="bx bx-chevron-left"></i>
                 </button>
               )}
@@ -169,7 +184,7 @@ const Works = () => {
                 )}
               </div>
               {galleryImages.length > 1 && (
-                <button type="button" className="work__modal-nav work__modal-nav--next" onClick={showNext} aria-label="Next image">
+                <button type="button" className="work__modal-nav work__modal-nav--next" onClick={showNext} aria-label={t('portfolio.nextImage')}>
                   <i className="bx bx-chevron-right"></i>
                 </button>
               )}

@@ -1,21 +1,23 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import "./footer.css"
+import { useLanguage } from '../../i18n/LanguageContext'
 
 const Footer = () => {
+  const { t } = useLanguage()
   return (
     <footer className='footer'>
       <div className='footer__container container'>
         <Link to="/" className='footer__title'>Jim</Link>
         <ul className='footer__list'>
           <li>
-            <Link to="/#about" className='footer__link'>About</Link>
+            <Link to="/#about" className='footer__link'>{t('footer.about')}</Link>
           </li>
           <li>
-            <Link to="/#portfolio" className='footer__link'>Portfolio</Link>
+            <Link to="/#portfolio" className='footer__link'>{t('footer.portfolio')}</Link>
           </li>
           <li>
-            <Link to="/#testimonial" className='footer__link'>Testimonials</Link>
+            <Link to="/#testimonial" className='footer__link'>{t('footer.testimonials')}</Link>
           </li>
         </ul>
 
@@ -33,7 +35,7 @@ const Footer = () => {
           </a>
         </div>
 
-        <span className='footer__copyright'>&#169; {new Date().getFullYear()} Jim. All rights reserved.</span>
+        <span className='footer__copyright'>&#169; {new Date().getFullYear()} Jim. {t('footer.rights')}</span>
       </div>
     </footer>
   )

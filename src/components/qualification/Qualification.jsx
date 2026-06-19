@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import "./qualification.css"
+import { useLanguage } from '../../i18n/LanguageContext'
 
 const Qualification = () => {
+  const { t } = useLanguage()
   const [toggleState, setToggleState] = useState(1);
 
   const toggleTab = (index) => {
@@ -10,20 +12,20 @@ const Qualification = () => {
 
   return (
     <section className='qualification section' id='qualification'>
-      <h2 className='section__title'>Qualification</h2>
-      <span className='section__subtitle'>My personal journey</span>
+      <h2 className='section__title'>{t('qualification.title')}</h2>
+      <span className='section__subtitle'>{t('qualification.subtitle')}</span>
 
       <div className='qualification__container container'>
         <div className='qualification__tabs'>
           <button type="button" className={toggleState === 1 ? "qualification__button qualification__active button--flex" : "qualification__button button--flex"}
             onClick={() => toggleTab(1)}
           >
-            <i className="uil uil-graduation-cap qualification__icon"></i> Education
+            <i className="uil uil-graduation-cap qualification__icon"></i> {t('qualification.education')}
           </button>
           <button type="button" className={toggleState === 2 ? "qualification__button qualification__active button--flex" : "qualification__button button--flex"}
             onClick={() => toggleTab(2)}
           >
-            <i className="uil uil-briefcase-alt qualification__icon"></i> Experience
+            <i className="uil uil-briefcase-alt qualification__icon"></i> {t('qualification.experience')}
           </button>
         </div>
 
@@ -33,7 +35,7 @@ const Qualification = () => {
             <div className='qualification__data'>
               <div>
                 <h3 className='qualification__title'>
-                  Bachelor of Science in Mathematics
+                  {t('qualification.edu.bsMath')}
                 </h3>
                 <span className='qualification__subtitle'>Michigan State University - Institute</span>
                 <div className='qualification__calendar'>
@@ -55,7 +57,7 @@ const Qualification = () => {
               </div>
               <div>
                 <h3 className='qualification__title'>
-                  Master of Information and Technology
+                  {t('qualification.edu.masterIT')}
                 </h3>
                 <span className='qualification__subtitle'>University of Queensland - Institute</span>
                 <div className='qualification__calendar'>
@@ -67,7 +69,7 @@ const Qualification = () => {
             <div className='qualification__data'>
               <div>
                 <h3 className='qualification__title'>
-                  AWS Certified Cloud Practitioner
+                  {t('qualification.edu.awsCcp')}
                 </h3>
                 <span className='qualification__subtitle'>Amazon Web Service</span>
                 <div className='qualification__calendar'>
@@ -89,7 +91,7 @@ const Qualification = () => {
               </div>
               <div>
                 <h3 className='qualification__title'>
-                  IBM Data Analyst Professional Certificate
+                  {t('qualification.edu.ibmData')}
                 </h3>
                 <span className='qualification__subtitle'>IBM</span>
                 <div className='qualification__calendar'>
@@ -101,7 +103,7 @@ const Qualification = () => {
             <div className='qualification__data'>
               <div>
                 <h3 className='qualification__title'>
-                  AWS Certified Machine Learning Engineer - Associate 
+                  {t('qualification.edu.awsMl')}
                 </h3>
                 <span className='qualification__subtitle'>Amazon Web Service</span>
                 <div className='qualification__calendar'>
@@ -123,7 +125,7 @@ const Qualification = () => {
               </div>
               <div>
                 <h3 className='qualification__title'>
-                  Oracle Cloud Infrastructure 2025 Certified Foundations Associate
+                  {t('qualification.edu.oci')}
                 </h3>
                 <span className='qualification__subtitle'>Oracle</span>
                 <div className='qualification__calendar'>
@@ -139,7 +141,7 @@ const Qualification = () => {
             <div className='qualification__data'>
               <div>
                 <h3 className='qualification__title'>
-                  Full Stack Developer
+                  {t('qualification.exp.moview')}
                 </h3>
                 <span className='qualification__subtitle'>Moview</span>
                 <div className='qualification__calendar'>
@@ -161,7 +163,7 @@ const Qualification = () => {
               </div>
               <div>
                 <h3 className='qualification__title'>
-                  Full Stack Developer
+                  {t('qualification.exp.takeaway')}
                 </h3>
                 <span className='qualification__subtitle'>Takeaway Platform</span>
                 <div className='qualification__calendar'>
@@ -173,7 +175,7 @@ const Qualification = () => {
             <div className='qualification__data'>
               <div>
                 <h3 className='qualification__title'>
-                  Web Developer
+                  {t('qualification.exp.upward')}
                 </h3>
                 <span className='qualification__subtitle'>Upward Consulting</span>
                 <div className='qualification__calendar'>
@@ -194,7 +196,7 @@ const Qualification = () => {
               </div>
               <div>
                 <h3 className='qualification__title'>
-                  Software Developer / Test Engineer
+                  {t('qualification.exp.braiv')}
                 </h3>
                 <span className='qualification__subtitle'>Braiv</span>
                 <div className='qualification__calendar'>
@@ -206,7 +208,7 @@ const Qualification = () => {
             <div className='qualification__data'>
               <div>
                 <h3 className='qualification__title'>
-                  Software Developer
+                  {t('qualification.exp.veprm')}
                 </h3>
                 <span className='qualification__subtitle'>VEPRM</span>
                 <div className='qualification__calendar'>
@@ -227,11 +229,11 @@ const Qualification = () => {
               </div>
               <div>
                 <h3 className='qualification__title'>
-                  Full Stack Developer
+                  {t('qualification.exp.obk')}
                 </h3>
                 <span className='qualification__subtitle'>Our Big Kitchen</span>
                 <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2025 - Present
+                  <i className='uil uil-calendar-alt'></i> 2025 - {t('qualification.present')}
                 </div>
               </div>
             </div>
@@ -239,7 +241,7 @@ const Qualification = () => {
             <div className='qualification__data'>
               <div>
                 <h3 className='qualification__title'>
-                  Automation Developer
+                  {t('qualification.exp.airbest')}
                 </h3>
                 <span className='qualification__subtitle'>Airbest</span>
                 <div className='qualification__calendar'>
@@ -260,11 +262,11 @@ const Qualification = () => {
               </div>
               <div>
                 <h3 className='qualification__title'>
-                  Full Stack Developer
+                  {t('qualification.exp.housed')}
                 </h3>
                 <span className='qualification__subtitle'>Cessleigh.Housed</span>
                 <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2026 - Present
+                  <i className='uil uil-calendar-alt'></i> 2026 - {t('qualification.present')}
                 </div>
               </div>
             </div>

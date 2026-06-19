@@ -6,6 +6,7 @@ import BlogShareButtons from "./BlogShareButtons";
 import BlogPrevNext from "./BlogPrevNext";
 import BlogSEO from "./BlogSEO";
 import ScrollUp from "../scrollup/ScrollUp";
+import { useLanguage } from '../../i18n/LanguageContext';
 import "./blog.css";
 
 import overviewImg    from '../../assets/Hermes_overview.webp';
@@ -16,6 +17,7 @@ import categoryImg    from '../../assets/Hermes_ai-category.webp';
 import accountsImg    from '../../assets/Hermes_accounts.webp';
 
 const Hermes = () => {
+  const { t } = useLanguage();
   return (
     <>
       <BlogSEO
@@ -33,7 +35,7 @@ const Hermes = () => {
           {/* Back button */}
           <div className="blog__back-wrapper">
             <Link to="/blog" className="blog__back-button">
-              {"<- Back to Blog"}
+              {t('blog.backToBlog')}
             </Link>
           </div>
 
@@ -42,26 +44,21 @@ const Hermes = () => {
             <div className="blog__post-meta">
               <span className="blog__badge">Project</span>
               <span className="blog__meta-dot">|</span>
-              <time className="blog__meta-date">March 2026</time>
+              <time className="blog__meta-date">{t('posts.hermes.date')}</time>
               <span className="blog__meta-dot">|</span>
-              <span className="blog__meta-readtime">6 min read</span>
+              <span className="blog__meta-readtime">{t('posts.hermes.readTime')}</span>
             </div>
 
             <h1 className="blog__post-title">
-              Hermes - An AI-Powered Email Client
+              {t('posts.hermes.title')}
             </h1>
 
             <p className="blog__hero-text">
-              Email hasn't changed much in decades. You still stare at a blank
-              compose window, rewrite the same sentences, and wonder if your
-              tone sounds right. <strong>Hermes</strong> changes that.
+              {t('posts.hermes.heroP1Pre')}<strong>{t('posts.hermes.heroP1Strong')}</strong>{t('posts.hermes.heroP1Post')}
             </p>
 
             <p className="blog__hero-text">
-              Hermes is a full-featured email client with Claude AI built
-              directly into the writing experience - not bolted on as an
-              afterthought. Connect Gmail, Outlook, or any IMAP account, and
-              let AI handle the hard parts of writing while you stay in control.
+              {t('posts.hermes.heroP2')}
             </p>
 
             <figure className="blog__figure blog__figure--hero">
@@ -71,16 +68,16 @@ const Hermes = () => {
 
           {/* TABLE OF CONTENTS */}
           <nav className="blog__toc card">
-            <h2 className="blog__toc-title">In this article</h2>
+            <h2 className="blog__toc-title">{t('blog.inThisArticle')}</h2>
             <ol className="blog__toc-list">
-              <li><a href="#multi-account">Multi-Account &amp; AI Provider</a></li>
-              <li><a href="#email-client">Full Email Client</a></li>
-              <li><a href="#ai-summary">AI Email Summary</a></li>
-              <li><a href="#ai-assist">AI Assist - 9 Writing Modes</a></li>
-              <li><a href="#ai-assistant">AI Assistant</a></li>
-              <li><a href="#smart-category">Smart Categories</a></li>
-              <li><a href="#desktop">Desktop &amp; Browser App</a></li>
-              <li><a href="#try-it">Try It Yourself</a></li>
+              <li><a href="#multi-account">{t('posts.hermes.tocMultiAccount')}</a></li>
+              <li><a href="#email-client">{t('posts.hermes.tocEmailClient')}</a></li>
+              <li><a href="#ai-summary">{t('posts.hermes.tocAiSummary')}</a></li>
+              <li><a href="#ai-assist">{t('posts.hermes.tocAiAssist')}</a></li>
+              <li><a href="#ai-assistant">{t('posts.hermes.tocAiAssistant')}</a></li>
+              <li><a href="#smart-category">{t('posts.hermes.tocSmartCategory')}</a></li>
+              <li><a href="#desktop">{t('posts.hermes.tocDesktop')}</a></li>
+              <li><a href="#try-it">{t('posts.hermes.tocTryIt')}</a></li>
             </ol>
           </nav>
 
@@ -89,257 +86,216 @@ const Hermes = () => {
 
             {/* MULTI-ACCOUNT & AI PROVIDER */}
             <section className="blog__section card" id="multi-account">
-              <h2 className="blog__heading">Multi-Account &amp; AI Provider</h2>
+              <h2 className="blog__heading">{t('posts.hermes.multiAccountHeading')}</h2>
 
               <p>
-                Most people have more than one email address. Hermes handles
-                all of them from a single interface.
+                {t('posts.hermes.multiAccountP1')}
               </p>
 
               <ul className="blog__list">
-                <li><strong>Gmail</strong> - connected via OAuth, no password stored</li>
-                <li><strong>Outlook</strong> - connected via OAuth, no password stored</li>
-                <li><strong>Any IMAP/SMTP server</strong> - custom mail servers, personal domains, or work accounts</li>
+                <li><strong>{t('posts.hermes.multiAccountItem1Label')}</strong> - {t('posts.hermes.multiAccountItem1Desc')}</li>
+                <li><strong>{t('posts.hermes.multiAccountItem2Label')}</strong> - {t('posts.hermes.multiAccountItem2Desc')}</li>
+                <li><strong>{t('posts.hermes.multiAccountItem3Label')}</strong> - {t('posts.hermes.multiAccountItem3Desc')}</li>
               </ul>
 
               <p>
-                Beyond email accounts, you can also choose your preferred AI
-                provider. Switch between different AI models to power the
-                writing assistant, summaries, and smart features.
+                {t('posts.hermes.multiAccountP2')}
               </p>
 
               <figure className="blog__figure blog__figure--full">
                 <img src={accountsImg} alt="Hermes account settings showing multiple email accounts and AI provider selection" className="blog__img" />
-                <figcaption className="blog__caption">Connect multiple email accounts and choose your AI provider</figcaption>
+                <figcaption className="blog__caption">{t('posts.hermes.multiAccountCaption')}</figcaption>
               </figure>
 
               <div className="blog__tip">
-                <h3 className="blog__tip-title">Why it matters</h3>
+                <h3 className="blog__tip-title">{t('posts.hermes.multiAccountTipTitle')}</h3>
                 <p className="blog__tip-text">
-                  Switch between accounts instantly without logging in and out.
-                  All your inboxes, one app - powered by the AI provider you trust.
+                  {t('posts.hermes.multiAccountTipText')}
                 </p>
               </div>
             </section>
 
             {/* FULL EMAIL CLIENT */}
             <section className="blog__section card" id="email-client">
-              <h2 className="blog__heading">Full Email Client</h2>
+              <h2 className="blog__heading">{t('posts.hermes.emailClientHeading')}</h2>
 
               <p>
-                Hermes isn't just an AI wrapper - it's a complete email
-                client. Everything you expect is there.
+                {t('posts.hermes.emailClientP1')}
               </p>
 
               <ul className="blog__list">
-                <li><strong>Read</strong> - view emails with full formatting support</li>
-                <li><strong>Compose</strong> - write new emails from scratch</li>
-                <li><strong>Reply</strong> - respond in-thread with full context</li>
-                <li><strong>Forward</strong> - pass emails along with your own message</li>
+                <li><strong>{t('posts.hermes.emailClientItem1Label')}</strong> - {t('posts.hermes.emailClientItem1Desc')}</li>
+                <li><strong>{t('posts.hermes.emailClientItem2Label')}</strong> - {t('posts.hermes.emailClientItem2Desc')}</li>
+                <li><strong>{t('posts.hermes.emailClientItem3Label')}</strong> - {t('posts.hermes.emailClientItem3Desc')}</li>
+                <li><strong>{t('posts.hermes.emailClientItem4Label')}</strong> - {t('posts.hermes.emailClientItem4Desc')}</li>
               </ul>
 
               <p>
-                The AI layer sits alongside these features - available when you
-                want it, invisible when you don't.
+                {t('posts.hermes.emailClientP2')}
               </p>
 
             </section>
 
             {/* AI EMAIL SUMMARY */}
             <section className="blog__section card" id="ai-summary">
-              <h2 className="blog__heading">AI Email Summary</h2>
+              <h2 className="blog__heading">{t('posts.hermes.aiSummaryHeading')}</h2>
 
               <p>
-                Long email threads can be exhausting to read through. Hermes
-                solves this with AI-powered summaries that give you the key
-                points of any email or conversation instantly.
+                {t('posts.hermes.aiSummaryP1')}
               </p>
 
               <p>
-                Open any email and the AI generates a concise summary of the
-                content - highlighting action items, key decisions, and
-                important details so you can respond faster without reading
-                every word.
+                {t('posts.hermes.aiSummaryP2')}
               </p>
 
               <figure className="blog__figure blog__figure--full">
                 <img src={aiSummaryImg} alt="Hermes AI email summary" className="blog__img" />
-                <figcaption className="blog__caption">AI-generated summary of email content</figcaption>
+                <figcaption className="blog__caption">{t('posts.hermes.aiSummaryCaption')}</figcaption>
               </figure>
             </section>
 
             {/* AI ASSIST */}
             <section className="blog__section card" id="ai-assist">
-              <h2 className="blog__heading">AI Assist - 9 Writing Modes</h2>
+              <h2 className="blog__heading">{t('posts.hermes.aiAssistHeading')}</h2>
 
               <p>
-                This is the core of Hermes. While composing any email, you can
-                activate AI Assist and choose from nine distinct modes, each
-                targeting a different writing problem.
+                {t('posts.hermes.aiAssistP1')}
               </p>
 
               <div className="blog__info-block">
-                <h3 className="blog__subheading">Polish &amp; Clarity</h3>
+                <h3 className="blog__subheading">{t('posts.hermes.aiAssistGroup1Heading')}</h3>
                 <ul className="blog__list">
                   <li>
-                    <strong>Improve</strong> - rewrites your draft to be more
-                    professional and clear, keeping your original intent intact
+                    <strong>{t('posts.hermes.aiAssistImproveLabel')}</strong> - {t('posts.hermes.aiAssistImproveDesc')}
                   </li>
                   <li>
-                    <strong>Concise</strong> - trims the email without losing
-                    meaning; ideal when you've written too much
+                    <strong>{t('posts.hermes.aiAssistConciseLabel')}</strong> - {t('posts.hermes.aiAssistConciseDesc')}
                   </li>
                   <li>
-                    <strong>Fix Grammar</strong> - corrects grammar and spelling
-                    while leaving your voice unchanged
+                    <strong>{t('posts.hermes.aiAssistGrammarLabel')}</strong> - {t('posts.hermes.aiAssistGrammarDesc')}
                   </li>
                 </ul>
               </div>
 
               <div className="blog__info-block">
-                <h3 className="blog__subheading">Tone Adjustment</h3>
+                <h3 className="blog__subheading">{t('posts.hermes.aiAssistGroup2Heading')}</h3>
                 <ul className="blog__list">
                   <li>
-                    <strong>Formal</strong> - rewrites in a professional,
-                    formal tone for stakeholders, clients, or executives
+                    <strong>{t('posts.hermes.aiAssistFormalLabel')}</strong> - {t('posts.hermes.aiAssistFormalDesc')}
                   </li>
                   <li>
-                    <strong>Friendly</strong> - adds warmth and approachability,
-                    great for teammates or casual contacts
+                    <strong>{t('posts.hermes.aiAssistFriendlyLabel')}</strong> - {t('posts.hermes.aiAssistFriendlyDesc')}
                   </li>
                 </ul>
               </div>
 
               <div className="blog__info-block">
-                <h3 className="blog__subheading">Generation</h3>
+                <h3 className="blog__subheading">{t('posts.hermes.aiAssistGroup3Heading')}</h3>
                 <ul className="blog__list">
                   <li>
-                    <strong>Complete</strong> - finishes what you started; write
-                    the first sentence and let AI continue
+                    <strong>{t('posts.hermes.aiAssistCompleteLabel')}</strong> - {t('posts.hermes.aiAssistCompleteDesc')}
                   </li>
                   <li>
-                    <strong>Subject Ideas</strong> - generates subject line
-                    options based on your email content
+                    <strong>{t('posts.hermes.aiAssistSubjectLabel')}</strong> - {t('posts.hermes.aiAssistSubjectDesc')}
                   </li>
                   <li>
-                    <strong>Draft Reply</strong> - reads the email you received
-                    and writes a fitting response automatically
+                    <strong>{t('posts.hermes.aiAssistDraftLabel')}</strong> - {t('posts.hermes.aiAssistDraftDesc')}
                   </li>
                 </ul>
               </div>
 
               <div className="blog__info-block">
-                <h3 className="blog__subheading">Open-Ended</h3>
+                <h3 className="blog__subheading">{t('posts.hermes.aiAssistGroup4Heading')}</h3>
                 <ul className="blog__list">
                   <li>
-                    <strong>Custom</strong> - type any instruction and the AI
-                    follows it. "Make this more urgent." "Remove the last
-                    paragraph." "Translate to Spanish." Anything goes.
+                    <strong>{t('posts.hermes.aiAssistCustomLabel')}</strong> - {t('posts.hermes.aiAssistCustomDesc')}
                   </li>
                 </ul>
               </div>
 
               <figure className="blog__figure blog__figure--full">
                 <img src={aiPanelImg} alt="Hermes AI Assist panel showing 9 writing modes" className="blog__img" />
-                <figcaption className="blog__caption">The AI Assist panel with all 9 writing modes</figcaption>
+                <figcaption className="blog__caption">{t('posts.hermes.aiAssistCaption')}</figcaption>
               </figure>
 
               <div className="blog__tip">
-                <h3 className="blog__tip-title">Design philosophy</h3>
+                <h3 className="blog__tip-title">{t('posts.hermes.aiAssistTipTitle')}</h3>
                 <p className="blog__tip-text">
-                  Each mode is purpose-built for a real writing problem. Rather
-                  than one generic "improve" button, Hermes gives you the right
-                  tool for the job.
+                  {t('posts.hermes.aiAssistTipText')}
                 </p>
               </div>
             </section>
 
             {/* AI ASSISTANT */}
             <section className="blog__section card" id="ai-assistant">
-              <h2 className="blog__heading">AI Assistant</h2>
+              <h2 className="blog__heading">{t('posts.hermes.aiAssistantHeading')}</h2>
 
               <p>
-                Need to quickly understand an email thread or ask a question
-                about your inbox? Click the AI assistant icon in the corner
-                and a side panel opens up.
+                {t('posts.hermes.aiAssistantP1')}
               </p>
 
               <p>
-                Ask anything - summarize a conversation, find a specific
-                email, draft a quick response, or get context on a thread
-                you've been CC'd into. The assistant has full context of
-                your emails and responds in real time.
+                {t('posts.hermes.aiAssistantP2')}
               </p>
 
               <figure className="blog__figure blog__figure--full blog__figure--capped">
                 <img src={aiAssistantImg} alt="Hermes AI assistant side panel" className="blog__img" />
-                <figcaption className="blog__caption">The AI assistant panel - ask any question about your emails</figcaption>
+                <figcaption className="blog__caption">{t('posts.hermes.aiAssistantCaption')}</figcaption>
               </figure>
             </section>
 
             {/* SMART CATEGORIES */}
             <section className="blog__section card" id="smart-category">
-              <h2 className="blog__heading">Smart Categories</h2>
+              <h2 className="blog__heading">{t('posts.hermes.smartCategoryHeading')}</h2>
 
               <p>
-                Hermes uses AI to automatically categorize your incoming
-                emails, so you can focus on what matters most.
+                {t('posts.hermes.smartCategoryP1')}
               </p>
 
               <p>
-                Instead of manually sorting through your inbox, emails are
-                intelligently grouped by type - promotions, updates, personal
-                messages, and more. No rules to configure, no filters to
-                maintain. The AI handles it.
+                {t('posts.hermes.smartCategoryP2')}
               </p>
 
               <figure className="blog__figure blog__figure--full">
                 <img src={categoryImg} alt="Hermes smart email categories powered by AI" className="blog__img" />
-                <figcaption className="blog__caption">AI-powered smart categorization of emails</figcaption>
+                <figcaption className="blog__caption">{t('posts.hermes.smartCategoryCaption')}</figcaption>
               </figure>
             </section>
 
             {/* DESKTOP */}
             <section className="blog__section card" id="desktop">
-              <h2 className="blog__heading">Desktop &amp; Browser App</h2>
+              <h2 className="blog__heading">{t('posts.hermes.desktopHeading')}</h2>
 
               <p>
-                Hermes runs in two modes depending on how you want to use it.
+                {t('posts.hermes.desktopP1')}
               </p>
 
               <ul className="blog__list blog__list--spaced">
                 <li>
-                  <strong>Electron desktop app</strong> - installs as a native
-                  app on your machine. Sits in your dock or taskbar, launches
-                  instantly, works offline for reading cached emails.
+                  <strong>{t('posts.hermes.desktopItem1Label')}</strong> - {t('posts.hermes.desktopItem1Desc')}
                 </li>
                 <li>
-                  <strong>Browser</strong> - run it directly in any browser
-                  with no installation required.
+                  <strong>{t('posts.hermes.desktopItem2Label')}</strong> - {t('posts.hermes.desktopItem2Desc')}
                 </li>
               </ul>
 
               <p>
-                The same codebase powers both - no features are missing in
-                either mode.
+                {t('posts.hermes.desktopP2')}
               </p>
             </section>
 
             {/* TRY IT */}
             <section className="blog__section card" id="try-it">
-              <h2 className="blog__heading">Try It Yourself</h2>
+              <h2 className="blog__heading">{t('posts.hermes.tryItHeading')}</h2>
 
               <p>
-                Hermes is currently available as a private demo. If you want to
-                review the build, discuss the architecture, or see the source,
-                contact me and I can share the right access path.
+                {t('posts.hermes.tryItP1')}
               </p>
 
               <div className="blog__tip">
-                <h3 className="blog__tip-title">Request access</h3>
+                <h3 className="blog__tip-title">{t('posts.hermes.tryItTipTitle')}</h3>
                 <p className="blog__tip-text">
-                  Use the portfolio contact form with "Hermes demo" in your
-                  message and I will follow up with details.
+                  {t('posts.hermes.tryItTipText')}
                 </p>
               </div>
             </section>
@@ -352,11 +308,10 @@ const Hermes = () => {
               <span>J</span>
             </div>
             <div className="blog__author-info">
-              <p className="blog__author-label">Written by</p>
-              <p className="blog__author-name">Jim</p>
+              <p className="blog__author-label">{t('blog.writtenBy')}</p>
+              <p className="blog__author-name">{t('blog.authorName')}</p>
               <p className="blog__author-bio">
-                Developer passionate about building tools that make everyday
-                tasks faster and less frustrating.
+                {t('blog.authorBio')}
               </p>
             </div>
           </div>
@@ -370,7 +325,7 @@ const Hermes = () => {
           {/* BOTTOM BACK NAV */}
           <div className="blog__back-wrapper blog__back-wrapper--bottom">
             <Link to="/blog" className="blog__back-button">
-              {"<- Back to Blog"}
+              {t('blog.backToBlog')}
             </Link>
           </div>
 

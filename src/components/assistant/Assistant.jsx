@@ -1,19 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
 import './assistant.css';
-
-const STARTER_PROMPTS = [
-  "What projects has Jim built?",
-  "Summarize Jim's experience",
-  "What are Jim's main skills?",
-  'Tell me about Hermes',
-  'What certifications does Jim have?',
-  'How can I contact Jim?',
-];
+import { useLanguage } from '../../i18n/LanguageContext';
 
 const STORAGE_KEY = 'assistant_messages_v1';
 const MAX_STORED_MESSAGES = 20;
 
 export default function Assistant() {
+  const { lang, t } = useLanguage();
+  const starterPrompts = t('assistant.starters');
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -75,6 +69,7 @@ export default function Assistant() {
         body: JSON.stringify({
           message: userMessage,
           history: priorHistory,
+          lang,
         }),
       });
 
@@ -125,7 +120,7 @@ export default function Assistant() {
         ...prev,
         {
           role: 'assistant',
-          content: fullText || "I couldn't find a response. Please try again.",
+          content: fullText || t('assistant.fallback'),
         },
       ]);
     } catch (err) {
@@ -133,12 +128,11 @@ export default function Assistant() {
         console.error('[Assistant] Error:', err.message);
       }
       const detail = err.message || '';
-      let friendly = "Sorry, I couldn't get a response. Please try again.";
+      let friendly = t('assistant.errorGeneric');
       if (detail.includes('API key not configured')) {
-        friendly =
-          'The assistant is not configured in this environment. Add GEMINI_API_KEY to a .env file and restart the dev server.';
+        friendly = t('assistant.errorConfig');
       } else if (detail.includes('HTTP 404') || detail.includes('HTTP 405')) {
-        friendly = 'The assistant API is not available in this environment.';
+        friendly = t('assistant.errorUnavailable');
       }
       setMessages((prev) => [
         ...prev,
@@ -174,7 +168,7 @@ export default function Assistant() {
         type="button"
         className={`assistant__fab ${isOpen ? 'assistant__fab--open' : ''}`}
         onClick={() => setIsOpen((v) => !v)}
-        aria-label="Toggle AI assistant"
+        aria-label={t('assistant.toggle')}
         aria-expanded={isOpen}
       >
         {isOpen ? (
@@ -187,13 +181,13 @@ export default function Assistant() {
       </button>
 
       {isOpen && (
-        <div className="assistant__panel" role="dialog" aria-label="AI assistant">
+        <div className="assistant__panel" role="dialog" aria-label={t('assistant.name')}>
           <div className="assistant__header">
             <div className="assistant__header-info">
               <div className="assistant__avatar">J</div>
               <div>
-                <p className="assistant__name">Ask about Jim</p>
-                <p className="assistant__status">AI assistant powered by Gemini</p>
+                <p className="assistant__name">{t('assistant.name')}</p>
+                <p className="assistant__status">{t('assistant.status')}</p>
               </div>
             </div>
             <div className="assistant__actions">
@@ -202,15 +196,15 @@ export default function Assistant() {
                 className="assistant__clear"
                 onClick={clearMessages}
                 disabled={isStreaming || messages.length === 0}
-                aria-label="Clear chat"
+                aria-label={t('assistant.clearAria')}
               >
-                Clear
+                {t('assistant.clear')}
               </button>
               <button
                 type="button"
                 className="assistant__close"
                 onClick={() => setIsOpen(false)}
-                aria-label="Close"
+                aria-label={t('assistant.close')}
               >
                 X
               </button>
@@ -220,7 +214,7 @@ export default function Assistant() {
           <div className="assistant__messages" aria-live="polite">
             {allMessages.length === 0 && (
               <p className="assistant__welcome-text">
-                Ask about projects, skills, and experience. Answers are based on portfolio content.
+                {t('assistant.welcome')}
               </p>
             )}
             {allMessages.map((msg, i) => (
@@ -242,7 +236,7 @@ export default function Assistant() {
           </div>
 
           <div className="assistant__chips-bar">
-            {STARTER_PROMPTS.map((prompt) => (
+            {(Array.isArray(starterPrompts) ? starterPrompts : []).map((prompt) => (
               <button
                 type="button"
                 key={prompt}
@@ -260,7 +254,7 @@ export default function Assistant() {
               ref={inputRef}
               className="assistant__input"
               type="text"
-              placeholder="Ask something..."
+              placeholder={t('assistant.placeholder')}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -271,7 +265,7 @@ export default function Assistant() {
               className="assistant__send"
               onClick={() => sendMessage(input)}
               disabled={isStreaming || !input.trim()}
-              aria-label="Send"
+              aria-label={t('assistant.send')}
             >
               <i className="uil uil-message"></i>
             </button>

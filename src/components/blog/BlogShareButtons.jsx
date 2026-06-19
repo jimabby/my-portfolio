@@ -1,6 +1,9 @@
+import { useLanguage } from '../../i18n/LanguageContext';
+
 const SITE_URL = 'https://jimkong-portfolio.vercel.app';
 
 const BlogShareButtons = ({ title }) => {
+  const { t } = useLanguage();
   const url = encodeURIComponent(`${SITE_URL}${window.location.pathname}`);
   const text = encodeURIComponent(title);
 
@@ -11,7 +14,7 @@ const BlogShareButtons = ({ title }) => {
   return (
     <div className="blog__share">
       <div className="blog__share-divider">
-        <span className="blog__share-heading">Share this article</span>
+        <span className="blog__share-heading">{t('blog.shareArticle')}</span>
       </div>
       <div className="blog__share-buttons">
         <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="blog__share-btn blog__share-btn--linkedin">

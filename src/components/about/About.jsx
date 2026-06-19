@@ -3,12 +3,14 @@ import "./about.css";
 import AboutImg from "../../assets/profile.webp";
 import CV from "../../assets/Software Developer - Jim.pdf";
 import Info from './Info';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 const About = () => {
+  const { t } = useLanguage();
   return (
     <section className='about section' id='about'>
-      <h2 className='section__title'>About me</h2>
-      <span className='section__subtitle'>My introduction</span>
+      <h2 className='section__title'>{t('about.title')}</h2>
+      <span className='section__subtitle'>{t('about.subtitle')}</span>
 
       <div className='about__container container grid'>
         <img src={AboutImg} alt='Jim Kong' className='about__img' />
@@ -16,10 +18,9 @@ const About = () => {
         <div className='about__data'>
           <Info />
           <p className='about__description'>
-            Full Stack developer, I create web pages with UI/UX user interface, 
-            I have years of experience and many clients are satisfied with the projects carried out.
+            {t('about.description')}
           </p>
-          <a download="" href={CV} className='button button--flex'>Download Resume
+          <a download="" href={CV} className='button button--flex'>{t('about.downloadResume')}
             <svg
                 className="button__icon"
                 xmlns="http://www.w3.org/2000/svg"

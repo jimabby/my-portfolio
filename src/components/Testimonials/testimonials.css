@@ -5,7 +5,7 @@
 }
 
 .testimonial__container {
-  width: 950px;
+  width: min(950px, 100%);
 }
 
 .testimonial__nav {

@@ -6,6 +6,7 @@ import BlogShareButtons from "./BlogShareButtons";
 import BlogPrevNext from "./BlogPrevNext";
 import BlogSEO from "./BlogSEO";
 import ScrollUp from "../scrollup/ScrollUp";
+import { useLanguage } from '../../i18n/LanguageContext';
 import heroImage from '../../assets/Nikon-Z8-m-mode.webp'
 import Mmode from "../../assets/m-mode.webp"
 import ShuuterSpeed from "../../assets/shutter-speed.webp"
@@ -18,6 +19,7 @@ import ManualMode from "../../assets/manual-mode.webp"
 import "./blog.css";
 
 const MMode = () => {
+  const { t } = useLanguage();
   return (
     <>
       <BlogSEO
@@ -35,49 +37,46 @@ const MMode = () => {
           {/* Back button */}
           <div className="blog__back-wrapper">
             <Link to="/blog" className="blog__back-button">
-              {"<- Back to Blog"}
+              {t('blog.backToBlog')}
             </Link>
           </div>
 
           {/* HERO */}
           <header className="blog__hero card">
             <div className="blog__post-meta">
-              <span className="blog__badge">Camera Basics</span>
+              <span className="blog__badge">{t('posts.mMode.badge')}</span>
               <span className="blog__meta-dot">|</span>
-              <time className="blog__meta-date">February 2025</time>
+              <time className="blog__meta-date">{t('posts.mMode.date')}</time>
               <span className="blog__meta-dot">|</span>
-              <span className="blog__meta-readtime">5 min read</span>
+              <span className="blog__meta-readtime">{t('posts.mMode.readTime')}</span>
             </div>
 
             <h1 className="blog__post-title">
-              Understanding M Mode
+              {t('posts.mMode.title')}
             </h1>
 
             <p className="blog__hero-text">
-              Manual Mode (<strong>M Mode</strong>) gives you full control of
-              your camera. Instead of letting the camera choose settings, you
-              decide how the image should look.
+              {t('posts.mMode.heroText1Pre')}<strong>{t('posts.mMode.heroText1Strong')}</strong>{t('posts.mMode.heroText1Post')}
             </p>
 
             <p className="blog__hero-text">
-              In this guide, you'll learn how shutter speed, aperture, and ISO
-              work together, with simple examples you can try immediately.
+              {t('posts.mMode.heroText2')}
             </p>
 
             <figure className="blog__figure blog__figure--hero">
-              <img src={heroImage} alt="Camera in M Mode" className="blog__img" />
+              <img src={heroImage} alt={t('posts.mMode.heroImageAlt')} className="blog__img" />
             </figure>
           </header>
 
           {/* TABLE OF CONTENTS */}
           <nav className="blog__toc card">
-            <h2 className="blog__toc-title">In this article</h2>
+            <h2 className="blog__toc-title">{t('blog.inThisArticle')}</h2>
             <ol className="blog__toc-list">
-              <li><a href="#step-1">Step 1 - Switch to M Mode</a></li>
-              <li><a href="#step-2">Step 2 - The Three Settings Explained</a></li>
-              <li><a href="#work-together">How They Work Together</a></li>
-              <li><a href="#examples">Example Settings to Try</a></li>
-              <li><a href="#final-tips">Final Tips</a></li>
+              <li><a href="#step-1">{t('posts.mMode.toc1')}</a></li>
+              <li><a href="#step-2">{t('posts.mMode.toc2')}</a></li>
+              <li><a href="#work-together">{t('posts.mMode.toc3')}</a></li>
+              <li><a href="#examples">{t('posts.mMode.toc4')}</a></li>
+              <li><a href="#final-tips">{t('posts.mMode.toc5')}</a></li>
             </ol>
           </nav>
 
@@ -86,31 +85,29 @@ const MMode = () => {
 
             {/* STEP 1 */}
             <section className="blog__section card" id="step-1">
-              <h2 className="blog__heading">Step 1 - Switch to M Mode</h2>
+              <h2 className="blog__heading">{t('posts.mMode.step1Heading')}</h2>
 
               <figure className="blog__figure blog__figure--aside">
-                <img src={Mmode} alt='Camera dial on M' className="blog__img" />
-                <figcaption className="blog__caption">Camera mode dial set to M</figcaption>
+                <img src={Mmode} alt={t('posts.mMode.step1DialAlt')} className="blog__img" />
+                <figcaption className="blog__caption">{t('posts.mMode.step1DialCaption')}</figcaption>
               </figure>
 
               <p>
-                Most cameras have a mode dial on top. Turn the dial until it
-                points to <strong>M</strong>.
+                {t('posts.mMode.step1Para1Pre')}<strong>{t('posts.mMode.step1Para1Strong')}</strong>{t('posts.mMode.step1Para1Post')}
               </p>
 
-              <p>Once you're in M Mode, you can control:</p>
+              <p>{t('posts.mMode.step1Para2')}</p>
 
               <ul className="blog__list">
-                <li>Shutter Speed</li>
-                <li>Aperture (f-number)</li>
-                <li>ISO</li>
+                <li>{t('posts.mMode.step1Item1')}</li>
+                <li>{t('posts.mMode.step1Item2')}</li>
+                <li>{t('posts.mMode.step1Item3')}</li>
               </ul>
 
               <div className="blog__tip">
-                <h3 className="blog__tip-title">Quick Tip</h3>
+                <h3 className="blog__tip-title">{t('posts.mMode.step1TipTitle')}</h3>
                 <p className="blog__tip-text">
-                  Don't worry if it feels confusing at first. The goal is to
-                  learn how each setting changes your photo.
+                  {t('posts.mMode.step1TipText')}
                 </p>
               </div>
             </section>
@@ -118,128 +115,128 @@ const MMode = () => {
             {/* STEP 2 */}
             <section className="blog__section card" id="step-2">
               <h2 className="blog__heading">
-                Step 2 - The Three Settings Explained
+                {t('posts.mMode.step2Heading')}
               </h2>
 
               {/* Shutter */}
               <div className="blog__info-block">
                 <figure className="blog__figure blog__figure--diagram">
-                  <img src={ShuuterSpeed} alt="Shutter Speed diagram" className="blog__img" />
-                  <figcaption className="blog__caption">Shutter speed</figcaption>
+                  <img src={ShuuterSpeed} alt={t('posts.mMode.shutterAlt')} className="blog__img" />
+                  <figcaption className="blog__caption">{t('posts.mMode.shutterCaption')}</figcaption>
                 </figure>
 
-                <h3 className="blog__subheading">Shutter Speed - Motion</h3>
+                <h3 className="blog__subheading">{t('posts.mMode.shutterSubheading')}</h3>
 
                 <ul className="blog__list">
-                  <li>Fast shutter (1/1000s): freezes action</li>
-                  <li>Slow shutter (1/10s): adds motion blur</li>
-                  <li>Very slow shutter: requires tripod</li>
+                  <li>{t('posts.mMode.shutterItem1')}</li>
+                  <li>{t('posts.mMode.shutterItem2')}</li>
+                  <li>{t('posts.mMode.shutterItem3')}</li>
                 </ul>
               </div>
 
               {/* Aperture */}
               <div className="blog__info-block">
                 <figure className="blog__figure blog__figure--diagram">
-                  <img src={Apertune} alt="Aperture diagram" className="blog__img" />
-                  <figcaption className="blog__caption">Aperture</figcaption>
+                  <img src={Apertune} alt={t('posts.mMode.apertureAlt')} className="blog__img" />
+                  <figcaption className="blog__caption">{t('posts.mMode.apertureCaption')}</figcaption>
                 </figure>
 
-                <h3 className="blog__subheading">Aperture - Depth of Field</h3>
+                <h3 className="blog__subheading">{t('posts.mMode.apertureSubheading')}</h3>
 
                 <ul className="blog__list">
-                  <li>Wide aperture (f/1.8): blurry background</li>
-                  <li>Narrow aperture (f/8-f/16): more in focus</li>
-                  <li>Common for portraits: f/1.8-f/2.8</li>
+                  <li>{t('posts.mMode.apertureItem1')}</li>
+                  <li>{t('posts.mMode.apertureItem2')}</li>
+                  <li>{t('posts.mMode.apertureItem3')}</li>
                 </ul>
               </div>
 
               {/* ISO */}
               <div className="blog__info-block">
                 <figure className="blog__figure blog__figure--diagram">
-                  <img src={ISO} alt="ISO diagram" className="blog__img" />
-                  <figcaption className="blog__caption">ISO</figcaption>
+                  <img src={ISO} alt={t('posts.mMode.isoAlt')} className="blog__img" />
+                  <figcaption className="blog__caption">{t('posts.mMode.isoCaption')}</figcaption>
                 </figure>
 
-                <h3 className="blog__subheading">ISO - Brightness &amp; Noise</h3>
+                <h3 className="blog__subheading">{t('posts.mMode.isoSubheading')}</h3>
 
                 <ul className="blog__list">
-                  <li>Low ISO (100-400): clean image</li>
-                  <li>High ISO (1600+): brighter but grainy</li>
-                  <li>Use ISO last, after setting shutter/aperture</li>
+                  <li>{t('posts.mMode.isoItem1')}</li>
+                  <li>{t('posts.mMode.isoItem2')}</li>
+                  <li>{t('posts.mMode.isoItem3')}</li>
                 </ul>
               </div>
             </section>
 
             {/* HOW THEY WORK TOGETHER */}
             <section className="blog__section card" id="work-together">
-              <h2 className="blog__heading">How They Work Together</h2>
+              <h2 className="blog__heading">{t('posts.mMode.workHeading')}</h2>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={exposureTriangle} alt="Exposure Triangle Diagram" className="blog__img" />
-                <figcaption className="blog__caption">Exposure Triangle Diagram</figcaption>
+                <img src={exposureTriangle} alt={t('posts.mMode.workTriangleAlt')} className="blog__img" />
+                <figcaption className="blog__caption">{t('posts.mMode.workTriangleCaption')}</figcaption>
               </figure>
 
               <ul className="blog__list">
-                <li><strong>Shutter</strong> - controls motion</li>
-                <li><strong>Aperture</strong> - controls background blur</li>
-                <li><strong>ISO</strong> - controls brightness</li>
+                <li><strong>{t('posts.mMode.workItem1Label')}</strong>{t('posts.mMode.workItem1Desc')}</li>
+                <li><strong>{t('posts.mMode.workItem2Label')}</strong>{t('posts.mMode.workItem2Desc')}</li>
+                <li><strong>{t('posts.mMode.workItem3Label')}</strong>{t('posts.mMode.workItem3Desc')}</li>
               </ul>
 
-              <p>To brighten your photo, you can:</p>
+              <p>{t('posts.mMode.workBrightenIntro')}</p>
 
               <ul className="blog__list">
-                <li>Use a slower shutter</li>
-                <li>Use a wider aperture (lower f-number)</li>
-                <li>Increase ISO</li>
+                <li>{t('posts.mMode.workBrightenItem1')}</li>
+                <li>{t('posts.mMode.workBrightenItem2')}</li>
+                <li>{t('posts.mMode.workBrightenItem3')}</li>
               </ul>
 
-              <p>To reduce brightness, do the opposite.</p>
+              <p>{t('posts.mMode.workReduce')}</p>
             </section>
 
             {/* EXAMPLES */}
             <section className="blog__section card" id="examples">
-              <h2 className="blog__heading">Example Settings to Try</h2>
+              <h2 className="blog__heading">{t('posts.mMode.examplesHeading')}</h2>
 
               <ul className="blog__list blog__list--spaced">
                 <li>
-                  <strong>Portrait:</strong> 1/125s, f/2.8, ISO 100-400
+                  <strong>{t('posts.mMode.examplePortraitLabel')}</strong>{t('posts.mMode.examplePortraitDesc')}
                 </li>
                 <li>
-                  <strong>Indoor:</strong> 1/60s, f/2.0, ISO 800-1600
+                  <strong>{t('posts.mMode.exampleIndoorLabel')}</strong>{t('posts.mMode.exampleIndoorDesc')}
                 </li>
                 <li>
-                  <strong>Sports:</strong> 1/1000s, f/4, ISO 400-800
+                  <strong>{t('posts.mMode.exampleSportsLabel')}</strong>{t('posts.mMode.exampleSportsDesc')}
                 </li>
                 <li>
-                  <strong>Night city (tripod):</strong> 1-5s, f/8, ISO 100
+                  <strong>{t('posts.mMode.exampleNightLabel')}</strong>{t('posts.mMode.exampleNightDesc')}
                 </li>
               </ul>
 
               <div className="blog__examples-grid">
                 <figure className="blog__figure">
-                  <img src={Portrait} alt="Portrait example" className="blog__img blog__img--cover" />
-                  <figcaption className="blog__caption">Portrait example</figcaption>
+                  <img src={Portrait} alt={t('posts.mMode.examplePortraitAlt')} className="blog__img blog__img--cover" />
+                  <figcaption className="blog__caption">{t('posts.mMode.examplePortraitCaption')}</figcaption>
                 </figure>
                 <figure className="blog__figure">
-                  <img src={longExposure} alt="Long-exposure night shot" className="blog__img blog__img--cover" />
-                  <figcaption className="blog__caption">Long-exposure night shot</figcaption>
+                  <img src={longExposure} alt={t('posts.mMode.exampleLongExpAlt')} className="blog__img blog__img--cover" />
+                  <figcaption className="blog__caption">{t('posts.mMode.exampleLongExpCaption')}</figcaption>
                 </figure>
               </div>
             </section>
 
             {/* FINAL TIPS */}
             <section className="blog__section card" id="final-tips">
-              <h2 className="blog__heading">Final Tips</h2>
+              <h2 className="blog__heading">{t('posts.mMode.finalHeading')}</h2>
 
               <ul className="blog__list">
-                <li>Start with Aperture Priority (A/Av) if M Mode feels too hard.</li>
-                <li>Watch your light meter for guidance.</li>
-                <li>Take 2-3 test shots whenever lighting changes.</li>
-                <li>Mistakes are the best teacher - keep experimenting.</li>
+                <li>{t('posts.mMode.finalItem1')}</li>
+                <li>{t('posts.mMode.finalItem2')}</li>
+                <li>{t('posts.mMode.finalItem3')}</li>
+                <li>{t('posts.mMode.finalItem4')}</li>
               </ul>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={ManualMode} alt="Photographer shooting in Manual Mode" className="blog__img" />
+                <img src={ManualMode} alt={t('posts.mMode.finalImageAlt')} className="blog__img" />
               </figure>
             </section>
 
@@ -251,11 +248,10 @@ const MMode = () => {
               <span>J</span>
             </div>
             <div className="blog__author-info">
-              <p className="blog__author-label">Written by</p>
-              <p className="blog__author-name">Jim</p>
+              <p className="blog__author-label">{t('blog.writtenBy')}</p>
+              <p className="blog__author-name">{t('blog.authorName')}</p>
               <p className="blog__author-bio">
-                Photographer and developer passionate about sharing techniques
-                that make complex ideas approachable.
+                {t('blog.authorBio')}
               </p>
             </div>
           </div>
@@ -269,7 +265,7 @@ const MMode = () => {
           {/* BOTTOM BACK NAV */}
           <div className="blog__back-wrapper blog__back-wrapper--bottom">
             <Link to="/blog" className="blog__back-button">
-              {"<- Back to Blog"}
+              {t('blog.backToBlog')}
             </Link>
           </div>
 

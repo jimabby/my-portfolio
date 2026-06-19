@@ -2,7 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  column-gap: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
   margin-bottom: var(--mb-2);
 }
 
@@ -27,7 +28,7 @@
 }
 
 .work__container {
-  grid-template-columns: repeat(3, 350px);
+  grid-template-columns: repeat(3, minmax(0, 350px));
   gap: 2rem;
   justify-content: center;
 }
@@ -99,6 +100,11 @@
   display: flex;
   align-items: center;
   column-gap: 0.25rem;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
 }
 
 .work__button-icon {
@@ -301,8 +307,8 @@
 
 @media screen and (max-width: 992px) {
   .work__container {
-    gap: 1.25rem;
-    grid-template-columns: repeat(3, 300px);
+    gap: 1.5rem;
+    grid-template-columns: repeat(2, minmax(0, 340px));
   }
 
   .work__card {
@@ -321,7 +327,7 @@
 
 @media screen and (max-width: 768px) {
   .work__container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .work__modal-body {
@@ -340,7 +346,7 @@
 
 @media screen and (max-width: 576px) {
   .work__container {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 420px);
   }
 
   .work__img {

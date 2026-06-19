@@ -1,21 +1,23 @@
 import React, { useRef, useState } from 'react'
 import './contact.css'
 import emailjs from '@emailjs/browser';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 const Contact = () => {
+  const { t } = useLanguage();
   const form = useRef();
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
   const [errors, setErrors] = useState({});
 
   const validate = (fields) => {
     const errs = {};
-    if (!fields.name.trim()) errs.name = 'Name is required.';
+    if (!fields.name.trim()) errs.name = t('contact.errName');
     if (!fields.email.trim()) {
-      errs.email = 'Email is required.';
+      errs.email = t('contact.errEmailReq');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email)) {
-      errs.email = 'Please enter a valid email.';
+      errs.email = t('contact.errEmailValid');
     }
-    if (!fields.message.trim()) errs.message = 'Message is required.';
+    if (!fields.message.trim()) errs.message = t('contact.errMessage');
     return errs;
   };
 
@@ -55,12 +57,12 @@ const Contact = () => {
 
   return (
     <section className='contact section' id='contact'>
-      <h2 className='section__title'>Get in Touch</h2>
-      <span className='section__subtitle'>Contact me</span>
+      <h2 className='section__title'>{t('contact.title')}</h2>
+      <span className='section__subtitle'>{t('contact.subtitle')}</span>
 
       <div className='contact__container container grid'>
         <div className='contact__content'>
-          <h3 className='contact__title'>Talk to me</h3>
+          <h3 className='contact__title'>{t('contact.talkToMe')}</h3>
 
           <div className='contact__info'>
 
@@ -68,24 +70,24 @@ const Contact = () => {
             <div className='contact__card'>
               <i className="bx bx-mail-send contact__card-icon"></i>
 
-              <h3 className='contact__card-title'>Email</h3>
+              <h3 className='contact__card-title'>{t('contact.email')}</h3>
               <span className='contact__card-data'>wksunshine@gmail.com</span>
 
               <a href='mailto:wksunshine@gmail.com' className='contact__button'>
-                Write me
+                {t('contact.writeMe')}
                 <i className='bx bx-right-arrow-alt contact__button-icon'></i>
               </a>
             </div>
-            
+
             {/** Whatsapp */}
             <div className='contact__card'>
               <i className="bx bxl-whatsapp contact__card-icon"></i>
 
-              <h3 className='contact__card-title'>Whatsapp</h3>
+              <h3 className='contact__card-title'>{t('contact.whatsapp')}</h3>
               <span className='contact__card-data'>+61-406-448-436</span>
 
               <a href='https://api.whatsapp.com/send?phone=61406448436&text=Hello%2C%20more%20information' target='_blank' rel='noopener noreferrer' className='contact__button'>
-                Write me
+                {t('contact.writeMe')}
                 <i className='bx bx-right-arrow-alt contact__button-icon'></i>
               </a>
             </div>
@@ -94,40 +96,40 @@ const Contact = () => {
             <div className='contact__card'>
               <i className="bx bxl-messenger contact__card-icon"></i>
 
-              <h3 className='contact__card-title'>Messenger</h3>
+              <h3 className='contact__card-title'>{t('contact.messenger')}</h3>
               <span className='contact__card-data'>Weidong Kong</span>
 
               <a href='https://m.me/weidongkong' target='_blank' rel='noopener noreferrer' className='contact__button'>
-                Write me
+                {t('contact.writeMe')}
                 <i className='bx bx-right-arrow-alt contact__button-icon'></i>
               </a>
             </div>
           </div>
         </div>
         <div className='contact__content'>
-          <h3 className='contact__title'>Write me your project</h3>
+          <h3 className='contact__title'>{t('contact.writeProject')}</h3>
 
           <form ref={form} onSubmit={sendEmail} className='contact__form'>
             <div className='contact__form-div'>
-              <label htmlFor='contact-name' className='contact__form-tag'>Name:</label>
-              <input type='text' name='name' id='contact-name' className='contact__form-input' placeholder='Please enter your name' onChange={clearFieldError} aria-invalid={!!errors.name} aria-describedby={errors.name ? 'contact-name-error' : undefined} />
+              <label htmlFor='contact-name' className='contact__form-tag'>{t('contact.nameLabel')}</label>
+              <input type='text' name='name' id='contact-name' className='contact__form-input' placeholder={t('contact.namePlaceholder')} onChange={clearFieldError} aria-invalid={!!errors.name} aria-describedby={errors.name ? 'contact-name-error' : undefined} />
             </div>
             {errors.name && <span id='contact-name-error' className='contact__form-error'>{errors.name}</span>}
 
             <div className='contact__form-div'>
-              <label htmlFor='contact-email' className='contact__form-tag'>Email:</label>
-              <input type='email' name='email' id='contact-email' className='contact__form-input' placeholder='Please enter your email' onChange={clearFieldError} aria-invalid={!!errors.email} aria-describedby={errors.email ? 'contact-email-error' : undefined} />
+              <label htmlFor='contact-email' className='contact__form-tag'>{t('contact.emailLabel')}</label>
+              <input type='email' name='email' id='contact-email' className='contact__form-input' placeholder={t('contact.emailPlaceholder')} onChange={clearFieldError} aria-invalid={!!errors.email} aria-describedby={errors.email ? 'contact-email-error' : undefined} />
             </div>
             {errors.email && <span id='contact-email-error' className='contact__form-error'>{errors.email}</span>}
 
             <div className='contact__form-div contact__form-area'>
-              <label htmlFor='contact-message' className='contact__form-tag'>Message:</label>
-              <textarea name='message' id='contact-message' cols='30' rows='10' className='contact__form-input' placeholder='Please enter your message.' onChange={clearFieldError} aria-invalid={!!errors.message} aria-describedby={errors.message ? 'contact-message-error' : undefined}></textarea>
+              <label htmlFor='contact-message' className='contact__form-tag'>{t('contact.messageLabel')}</label>
+              <textarea name='message' id='contact-message' cols='30' rows='10' className='contact__form-input' placeholder={t('contact.messagePlaceholder')} onChange={clearFieldError} aria-invalid={!!errors.message} aria-describedby={errors.message ? 'contact-message-error' : undefined}></textarea>
             </div>
             {errors.message && <span id='contact-message-error' className='contact__form-error'>{errors.message}</span>}
 
             <button type='submit' className='button button--flex' disabled={status === 'sending'}>
-              {status === 'sending' ? 'Sending...' : 'Send Message'}
+              {status === 'sending' ? t('contact.sending') : t('contact.send')}
               <svg
                 className="button__icon"
                 xmlns="http://www.w3.org/2000/svg"
@@ -148,8 +150,8 @@ const Contact = () => {
             </button>
 
             <div aria-live='polite' role='status'>
-              {status === 'sent' && <p className='contact__status contact__status--success'>Message sent successfully!</p>}
-              {status === 'error' && <p className='contact__status contact__status--error'>Failed to send. Please try again.</p>}
+              {status === 'sent' && <p className='contact__status contact__status--success'>{t('contact.sent')}</p>}
+              {status === 'error' && <p className='contact__status contact__status--error'>{t('contact.error')}</p>}
             </div>
           </form>
         </div>

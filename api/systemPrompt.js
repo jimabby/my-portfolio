@@ -65,6 +65,24 @@ Backend: Python (Advanced), Java (Advanced), PHP (Intermediate), Node.js (Advanc
 ## Contact
 Jim can be contacted via the contact form on this portfolio. Suggest scrolling to the contact section or clicking "Say Hello".`;
 
+// Append a language directive so the assistant replies in the visitor's
+// selected UI language. Defaults to English when the code is unknown.
+const LANGUAGE_NAMES = {
+  en: 'English',
+  'zh-Hans': 'Simplified Chinese (简体中文)',
+  'zh-Hant': 'Traditional Chinese (繁體中文)',
+  ja: 'Japanese (日本語)',
+};
+
+function buildSystemPrompt(lang = 'en') {
+  const name = LANGUAGE_NAMES[lang] || LANGUAGE_NAMES.en;
+  if (name === LANGUAGE_NAMES.en) return SYSTEM_PROMPT;
+  return `${SYSTEM_PROMPT}
+
+## Response Language
+Always reply in ${name}, regardless of the language the question is written in. Keep proper nouns (people's names, company names, product names like Hermes and Hiro, and technology names) in their original form.`;
+}
+
 // Map the client's message list into Gemini chat history, keeping the most
 // recent turns and ensuring the result starts on a `user` turn (the Gemini
 // API rejects history that begins with a model turn).
@@ -79,4 +97,4 @@ function buildChatHistory(history = [], limit = 10) {
   return trimmed;
 }
 
-module.exports = { SYSTEM_PROMPT, buildChatHistory };
+module.exports = { SYSTEM_PROMPT, buildSystemPrompt, buildChatHistory };

@@ -7,6 +7,7 @@ export const posts = [
   {
     id: 4,
     slug: 'grand-hotel-taipei',
+    key: 'grandHotelTaipei',
     title: 'Staying at the Grand Hotel Taipei',
     category: 'Travel',
     date: 'Apr 2026',
@@ -19,6 +20,7 @@ export const posts = [
   {
     id: 3,
     slug: 'hiro',
+    key: 'hiro',
     title: 'Hiro — The AI Job Application Agent',
     category: 'Project',
     date: 'Mar 2026',
@@ -31,6 +33,7 @@ export const posts = [
   {
     id: 1,
     slug: 'hermes',
+    key: 'hermes',
     title: 'Hermes — An AI-Powered Email Client',
     category: 'Project',
     date: 'Mar 2026',
@@ -43,6 +46,7 @@ export const posts = [
   {
     id: 2,
     slug: 'm-mode',
+    key: 'mMode',
     title: 'Understanding M Mode',
     category: 'Camera Basics',
     date: 'Feb 2025',

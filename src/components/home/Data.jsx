@@ -1,6 +1,8 @@
 import React from 'react'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 const Data = () => {
+  const { t } = useLanguage()
   return (
     <div className='home__data'>
       <h1 className='home__title'>
@@ -56,13 +58,13 @@ const Data = () => {
         </svg>
       </h1>
       <h3 className='home__subtitle'>
-        Web / Software Developer
+        {t('home.subtitle')}
       </h3>
       <p className='home__description'>
-        I am a Full Stack developer based in Sydney, and I'm very passionate and dedicated to my work.
+        {t('home.description')}
       </p>
       <a href='#contact' className='button button--flex'>
-        Say Hello
+        {t('home.sayHello')}
         <svg
                   className="button__icon"
                   xmlns="http://www.w3.org/2000/svg"

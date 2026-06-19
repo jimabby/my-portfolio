@@ -3,15 +3,17 @@ import "./home.css"
 import Social from './Social'
 import Data from './Data'
 import ScrollDown from './ScrollDown'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 const Home = () => {
+  const { t } = useLanguage()
   return (
     <section className='home section' id='home'>
       <div className='home__container container grid'>
         <div className='home__content grid'>
           <Social />
 
-          <div className='home__img' role="img" aria-label="Jim Kong profile photo"></div>
+          <div className='home__img' role="img" aria-label={t('home.profileAlt')}></div>
 
           <Data />
         </div>

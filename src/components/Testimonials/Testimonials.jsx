@@ -5,10 +5,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from 'swiper/modules';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 const CHAR_LIMIT = 200;
 
 const TestimonialCard = ({ image, title, description }) => {
+  const { t } = useLanguage();
   const [expanded, setExpanded] = useState(false);
   const isLong = description.length > CHAR_LIMIT;
   const displayText = !isLong || expanded ? description : description.slice(0, CHAR_LIMIT) + '...';
@@ -23,7 +25,7 @@ const TestimonialCard = ({ image, title, description }) => {
       <p className='testimonial__description'>{displayText}</p>
       {isLong && (
         <button type="button" className='testimonial__toggle' onClick={() => setExpanded(!expanded)} aria-expanded={expanded}>
-          {expanded ? 'Show less' : 'Read more'}
+          {expanded ? t('testimonials.showLess') : t('testimonials.readMore')}
         </button>
       )}
     </>
@@ -31,15 +33,16 @@ const TestimonialCard = ({ image, title, description }) => {
 };
 
 const Testimonials = () => {
+  const { t } = useLanguage();
   const swiperRef = useRef(null);
 
   return (
     <section className='testimonial container section' id="testimonial">
-      <h2 className='section__title'>What They Say</h2>
-      <span className='section__subtitle'>Colleagues & Leaders</span>
+      <h2 className='section__title'>{t('testimonials.title')}</h2>
+      <span className='section__subtitle'>{t('testimonials.subtitle')}</span>
 
       <div className='testimonial__wrapper'>
-        <button type="button" className='testimonial__nav testimonial__nav-prev' onClick={() => swiperRef.current?.slidePrev()} aria-label="Previous testimonial">
+        <button type="button" className='testimonial__nav testimonial__nav-prev' onClick={() => swiperRef.current?.slidePrev()} aria-label={t('testimonials.prev')}>
           <i className='uil uil-angle-left'></i>
         </button>
 
@@ -69,7 +72,7 @@ const Testimonials = () => {
           })}
         </Swiper>
 
-        <button type="button" className='testimonial__nav testimonial__nav-next' onClick={() => swiperRef.current?.slideNext()} aria-label="Next testimonial">
+        <button type="button" className='testimonial__nav testimonial__nav-next' onClick={() => swiperRef.current?.slideNext()} aria-label={t('testimonials.next')}>
           <i className='uil uil-angle-right'></i>
         </button>
       </div>

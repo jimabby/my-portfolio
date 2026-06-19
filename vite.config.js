@@ -5,7 +5,7 @@ import { createRequire } from 'node:module'
 // Reuse the same prompt + history shaping the production handler uses, so dev
 // and prod can never drift apart.
 const require = createRequire(import.meta.url)
-const { SYSTEM_PROMPT, buildChatHistory } = require('./api/systemPrompt.js')
+const { buildSystemPrompt, buildChatHistory } = require('./api/systemPrompt.js')
 
 function devChatApi(apiKey) {
   return {
@@ -27,7 +27,7 @@ function devChatApi(apiKey) {
               return res.end(JSON.stringify({ error: 'API key not configured' }))
             }
             const { GoogleGenerativeAI } = await import('@google/generative-ai')
-            const { message, history = [] } = JSON.parse(body)
+            const { message, history = [], lang = 'en' } = JSON.parse(body)
             if (!message?.trim()) {
               res.statusCode = 400
               res.setHeader('Content-Type', 'application/json')
@@ -41,7 +41,7 @@ function devChatApi(apiKey) {
             const genAI = new GoogleGenerativeAI(apiKey)
             const model = genAI.getGenerativeModel({
               model: 'gemini-2.5-flash',
-              systemInstruction: SYSTEM_PROMPT,
+              systemInstruction: buildSystemPrompt(lang),
             })
             const chat = model.startChat({ history: buildChatHistory(history) })
             res.setHeader('Content-Type', 'text/event-stream')

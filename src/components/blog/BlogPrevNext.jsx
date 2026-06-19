@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import { posts } from './postsData';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 const BlogPrevNext = ({ currentSlug }) => {
+  const { t } = useLanguage();
   const idx = posts.findIndex(p => p.slug === currentSlug);
   const next = posts[idx - 1];
   const prev = posts[idx + 1];
@@ -19,10 +21,10 @@ const BlogPrevNext = ({ currentSlug }) => {
           onClick={scrollToTop}
         >
           <span className="blog__prevnext-dir">
-            <i className="bx bx-arrow-back"></i> Previous
+            <i className="bx bx-arrow-back"></i> {t('blog.previous')}
           </span>
-          <span className="blog__prevnext-title">{prev.title}</span>
-          <span className="blog__prevnext-meta">{prev.date} - {prev.readTime}</span>
+          <span className="blog__prevnext-title">{t(`posts.${prev.key}.title`, prev.title)}</span>
+          <span className="blog__prevnext-meta">{t(`posts.${prev.key}.date`, prev.date)} - {t(`posts.${prev.key}.readTime`, prev.readTime)}</span>
         </Link>
       ) : <div />}
 
@@ -33,10 +35,10 @@ const BlogPrevNext = ({ currentSlug }) => {
           onClick={scrollToTop}
         >
           <span className="blog__prevnext-dir">
-            Next <i className="bx bx-right-arrow-alt"></i>
+            {t('blog.next')} <i className="bx bx-right-arrow-alt"></i>
           </span>
-          <span className="blog__prevnext-title">{next.title}</span>
-          <span className="blog__prevnext-meta">{next.date} - {next.readTime}</span>
+          <span className="blog__prevnext-title">{t(`posts.${next.key}.title`, next.title)}</span>
+          <span className="blog__prevnext-meta">{t(`posts.${next.key}.date`, next.date)} - {t(`posts.${next.key}.readTime`, next.readTime)}</span>
         </Link>
       ) : <div />}
     </div>

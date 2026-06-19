@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import "./header.css"
 import { Link, useLocation } from 'react-router-dom';
+import { useLanguage } from '../../i18n/LanguageContext';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const SECTIONS = ['home', 'about', 'skills', 'services', 'portfolio', 'testimonial', 'contact'];
 
@@ -14,6 +16,7 @@ const getStoredTheme = () => {
 
 const Header = () => {
   const location = useLocation();
+  const { t } = useLanguage();
 
   useEffect(() => {
     let ticking = false;
@@ -108,7 +111,7 @@ const Header = () => {
                 onClick={() => handleNavClick('#home')}
                 className={activeNav === '#home' ? 'nav__link active-link' : 'nav__link'}
               >
-                <i className='uil uil-estate nav__icon'></i>Home
+                <i className='uil uil-estate nav__icon'></i>{t('nav.home')}
               </Link>
             </li>
             <li className='nav__item'>
@@ -117,7 +120,7 @@ const Header = () => {
                 onClick={() => handleNavClick('#about')}
                 className={activeNav === '#about' ? 'nav__link active-link' : 'nav__link'}
               >
-                <i className='uil uil-user nav__icon'></i>About
+                <i className='uil uil-user nav__icon'></i>{t('nav.about')}
               </Link>
             </li>
             <li className='nav__item'>
@@ -126,7 +129,7 @@ const Header = () => {
                 onClick={() => handleNavClick('#skills')}
                 className={activeNav === '#skills' ? 'nav__link active-link' : 'nav__link'}
               >
-                <i className='uil uil-file nav__icon'></i>Skills
+                <i className='uil uil-file nav__icon'></i>{t('nav.skills')}
               </Link>
             </li>
             <li className='nav__item'>
@@ -135,7 +138,7 @@ const Header = () => {
                 onClick={() => handleNavClick('#services')}
                 className={activeNav === '#services' ? 'nav__link active-link' : 'nav__link'}
               >
-                <i className='uil uil-briefcase-alt nav__icon'></i>Services
+                <i className='uil uil-briefcase-alt nav__icon'></i>{t('nav.services')}
               </Link>
             </li>
             <li className='nav__item'>
@@ -144,7 +147,7 @@ const Header = () => {
                 onClick={() => handleNavClick('#portfolio')}
                 className={activeNav === '#portfolio' ? 'nav__link active-link' : 'nav__link'}
               >
-                <i className='uil uil-scenery nav__icon'></i>Portfolio
+                <i className='uil uil-scenery nav__icon'></i>{t('nav.portfolio')}
               </Link>
             </li>
             <li className="nav__item">
@@ -155,7 +158,7 @@ const Header = () => {
                   activeNav === "blog" ? "nav__link active-link" : "nav__link"
                 }
               >
-                <i className="uil uil-notes nav__icon"></i>Blog
+                <i className="uil uil-notes nav__icon"></i>{t('nav.blog')}
               </Link>
             </li>
             <li className='nav__item'>
@@ -164,22 +167,23 @@ const Header = () => {
                 onClick={() => handleNavClick('#contact')}
                 className={activeNav === '#contact' ? 'nav__link active-link' : 'nav__link'}
               >
-                <i className='uil uil-message nav__icon'></i>Contact
+                <i className='uil uil-message nav__icon'></i>{t('nav.contact')}
               </Link>
             </li>
           </ul>
 
-          <button type="button" className="nav__close" onClick={() => showMenu(false)} aria-label="Close menu">
+          <button type="button" className="nav__close" onClick={() => showMenu(false)} aria-label={t('nav.menuClose')}>
             <i className="uil uil-times"></i>
           </button>
         </div>
 
         <div className="nav__buttons">
+          <LanguageSwitcher />
           <button
             type="button"
             className="nav__theme-toggle"
             onClick={toggleTheme}
-            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            aria-label={theme === 'light' ? t('theme.toDark') : t('theme.toLight')}
             aria-pressed={theme === 'dark'}
           >
             <i className={theme === 'light' ? 'uil uil-moon' : 'uil uil-sun'}></i>
@@ -188,7 +192,7 @@ const Header = () => {
             type="button"
             className='nav__toggle'
             onClick={() => showMenu(!Toggle)}
-            aria-label={Toggle ? 'Close menu' : 'Open menu'}
+            aria-label={Toggle ? t('nav.menuClose') : t('nav.menuOpen')}
             aria-expanded={Toggle}
           >
             <i className='uil uil-apps'></i>
