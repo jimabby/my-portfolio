@@ -15,6 +15,10 @@ export default function Assistant() {
   const [streamText, setStreamText] = useState('');
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const abortRef = useRef(null);
+
+  // Abort any in-flight request if the component unmounts mid-stream.
+  useEffect(() => () => abortRef.current?.abort(), []);
 
   useEffect(() => {
     try {
@@ -62,6 +66,13 @@ export default function Assistant() {
     setIsStreaming(true);
     setStreamText('');
 
+    const controller = new AbortController();
+    abortRef.current = controller;
+    // Don't let a hung request leave the user stuck forever.
+    const timeoutId = setTimeout(() => controller.abort(), 30000);
+
+    let reader;
+    let fullText = '';
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -71,6 +82,7 @@ export default function Assistant() {
           history: priorHistory,
           lang,
         }),
+        signal: controller.signal,
       });
 
       if (!response.ok) {
@@ -82,10 +94,9 @@ export default function Assistant() {
         throw new Error('Streaming is not supported by this browser.');
       }
 
-      const reader = response.body.getReader();
+      reader = response.body.getReader();
       const decoder = new TextDecoder();
       let buffer = '';
-      let fullText = '';
 
       while (true) {
         const { done, value } = await reader.read();
@@ -124,24 +135,42 @@ export default function Assistant() {
         },
       ]);
     } catch (err) {
-      if (import.meta.env.DEV) {
-        console.error('[Assistant] Error:', err.message);
+      // User pressed stop (or the request timed out): keep whatever streamed
+      // so far rather than replacing it with an error.
+      if (err.name === 'AbortError') {
+        if (fullText) {
+          setMessages((prev) => [
+            ...prev,
+            { role: 'assistant', content: fullText },
+          ]);
+        }
+      } else {
+        if (import.meta.env.DEV) {
+          console.error('[Assistant] Error:', err.message);
+        }
+        const detail = err.message || '';
+        let friendly = t('assistant.errorGeneric');
+        if (detail.includes('API key not configured')) {
+          friendly = t('assistant.errorConfig');
+        } else if (detail.includes('HTTP 404') || detail.includes('HTTP 405')) {
+          friendly = t('assistant.errorUnavailable');
+        }
+        setMessages((prev) => [
+          ...prev,
+          { role: 'assistant', content: friendly },
+        ]);
       }
-      const detail = err.message || '';
-      let friendly = t('assistant.errorGeneric');
-      if (detail.includes('API key not configured')) {
-        friendly = t('assistant.errorConfig');
-      } else if (detail.includes('HTTP 404') || detail.includes('HTTP 405')) {
-        friendly = t('assistant.errorUnavailable');
-      }
-      setMessages((prev) => [
-        ...prev,
-        { role: 'assistant', content: friendly },
-      ]);
     } finally {
+      clearTimeout(timeoutId);
+      reader?.cancel().catch(() => {});
+      abortRef.current = null;
       setIsStreaming(false);
       setStreamText('');
     }
+  }
+
+  function stopStreaming() {
+    abortRef.current?.abort();
   }
 
   function handleKeyDown(e) {
@@ -181,7 +210,7 @@ export default function Assistant() {
       </button>
 
       {isOpen && (
-        <div className="assistant__panel" role="dialog" aria-label={t('assistant.name')}>
+        <div className="assistant__panel" role="dialog" aria-modal="true" aria-label={t('assistant.name')}>
           <div className="assistant__header">
             <div className="assistant__header-info">
               <div className="assistant__avatar">J</div>
@@ -260,15 +289,26 @@ export default function Assistant() {
               onKeyDown={handleKeyDown}
               disabled={isStreaming}
             />
-            <button
-              type="button"
-              className="assistant__send"
-              onClick={() => sendMessage(input)}
-              disabled={isStreaming || !input.trim()}
-              aria-label={t('assistant.send')}
-            >
-              <i className="uil uil-message"></i>
-            </button>
+            {isStreaming ? (
+              <button
+                type="button"
+                className="assistant__send assistant__send--stop"
+                onClick={stopStreaming}
+                aria-label={t('assistant.stop')}
+              >
+                <span className="assistant__stop-icon" />
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="assistant__send"
+                onClick={() => sendMessage(input)}
+                disabled={!input.trim()}
+                aria-label={t('assistant.send')}
+              >
+                <i className="uil uil-message"></i>
+              </button>
+            )}
           </div>
         </div>
       )}

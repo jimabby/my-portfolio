@@ -1,6 +1,5 @@
 {
   "name": "my-portfolio",
-  "homepage": "http://jimabby.github.io/my-portfolio",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -15,13 +14,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "predeploy": "vite build --mode ghpages",
-    "deploy": "gh-pages -d dist"
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
-    "gh-pages": "^6.1.1",
     "sharp": "^0.34.5",
     "vite": "^6.2.0"
   }

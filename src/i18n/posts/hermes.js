@@ -10,6 +10,7 @@ const en = {
     'A full-featured email client with Claude AI built in. Connect Gmail, Outlook, or any IMAP account and use 9 AI writing modes to compose better emails.',
   date: 'March 2026',
   readTime: '6 min read',
+  badge: 'Project',
 
   // Hero
   heroP1Pre:
@@ -157,6 +158,7 @@ const zhHans = {
     '一款内置 Claude AI 的全功能邮件客户端。连接 Gmail、Outlook 或任意 IMAP 账户，使用 9 种 AI 写作模式撰写更出色的邮件。',
   date: '2026 年 3 月',
   readTime: '阅读约 6 分钟',
+  badge: '项目',
 
   heroP1Pre:
     '几十年来，电子邮件几乎没有什么变化。你依然要面对空白的撰写窗口，反复重写同样的句子，还要担心自己的语气是否合适。',
@@ -285,6 +287,7 @@ const zhHant = {
     '一款內建 Claude AI 的全功能電郵用戶端。連接 Gmail、Outlook 或任意 IMAP 帳戶，使用 9 種 AI 寫作模式撰寫更出色的電郵。',
   date: '2026 年 3 月',
   readTime: '閱讀約 6 分鐘',
+  badge: '專案',
 
   heroP1Pre:
     '數十年來，電子郵件幾乎沒有什麼變化。你依然要面對空白的撰寫視窗，反覆重寫同樣的句子，還要擔心自己的語氣是否合適。',
@@ -413,6 +416,7 @@ const ja = {
     'Claude AI を組み込んだ多機能メールクライアント。Gmail、Outlook、または任意の IMAP アカウントを接続し、9 種類の AI ライティングモードでより良いメールを作成できます。',
   date: '2026年3月',
   readTime: '読了時間 6 分',
+  badge: 'プロジェクト',
 
   heroP1Pre:
     'メールはこの数十年、ほとんど変わっていません。今でも空白の作成画面を前に、同じ文章を何度も書き直し、自分の口調が適切かどうか悩むものです。',

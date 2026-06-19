@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import About from './components/about/About';
-import Blog from './components/blog/Blog';
 import Contact from './components/contact/Contact';
 import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
@@ -12,13 +11,18 @@ import ScrollUp from './components/scrollup/ScrollUp';
 import Services from './components/services/Services';
 import Skills from './components/skills/Skills';
 import Testimonials from './components/Testimonials/Testimonials';
-import { useEffect } from 'react';
-import MMode from './components/blog/MMode';
-import Hermes from './components/blog/Hermes';
-import Hiro from './components/blog/Hiro';
-import GrandHotelTaipei from './components/blog/GrandHotelTaipei';
-import Assistant from './components/assistant/Assistant';
+import { Suspense, lazy, useEffect } from 'react';
 import NotFound from './components/notfound/NotFound';
+
+// Route-level code splitting: the blog pages and the chat assistant pull in
+// heavy dependencies (long-form content, the Gemini SDK) that the landing page
+// doesn't need, so they load on demand instead of in the initial bundle.
+const Blog = lazy(() => import('./components/blog/Blog'));
+const MMode = lazy(() => import('./components/blog/MMode'));
+const Hermes = lazy(() => import('./components/blog/Hermes'));
+const Hiro = lazy(() => import('./components/blog/Hiro'));
+const GrandHotelTaipei = lazy(() => import('./components/blog/GrandHotelTaipei'));
+const Assistant = lazy(() => import('./components/assistant/Assistant'));
 
 function useSectionReveal() {
   useEffect(() => {
@@ -82,17 +86,20 @@ function App() {
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <div id="top"></div>
       <a href="#main-content" className="skip-link">Skip to main content</a>
-      <Routes>
-        <Route path="/" element={<PortfolioPage />} />
-        <Route path="/my-portfolio" element={<PortfolioPage />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/m-mode" element={<MMode />} />
-        <Route path="/blog/hermes" element={<Hermes />} />
-        <Route path="/blog/hiro" element={<Hiro />} />
-        <Route path="/blog/grand-hotel-taipei" element={<GrandHotelTaipei />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <Assistant />
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path="/" element={<PortfolioPage />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/m-mode" element={<MMode />} />
+          <Route path="/blog/hermes" element={<Hermes />} />
+          <Route path="/blog/hiro" element={<Hiro />} />
+          <Route path="/blog/grand-hotel-taipei" element={<GrandHotelTaipei />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
+      <Suspense fallback={null}>
+        <Assistant />
+      </Suspense>
     </BrowserRouter>
   );
 }

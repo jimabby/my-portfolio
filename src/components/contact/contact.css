@@ -170,3 +170,12 @@
     width: 100%;
   }
 }
+
+/* Honeypot: visually and interaction hidden, but still in the DOM for bots. */
+.contact__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

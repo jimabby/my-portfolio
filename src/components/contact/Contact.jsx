@@ -6,6 +6,7 @@ import { useLanguage } from '../../i18n/LanguageContext';
 const Contact = () => {
   const { t } = useLanguage();
   const form = useRef();
+  const renderedAt = useRef(Date.now());
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
   const [errors, setErrors] = useState({});
 
@@ -36,6 +37,16 @@ const Contact = () => {
     e.preventDefault();
 
     const data = Object.fromEntries(new FormData(form.current));
+
+    // Spam guard: a filled honeypot or a near-instant submit means a bot.
+    // Silently pretend success so the bot gets no signal, and send nothing.
+    if (data.company || Date.now() - renderedAt.current < 2000) {
+      setStatus('sent');
+      e.target.reset();
+      setTimeout(() => setStatus('idle'), 4000);
+      return;
+    }
+
     const errs = validate(data);
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
@@ -110,21 +121,27 @@ const Contact = () => {
           <h3 className='contact__title'>{t('contact.writeProject')}</h3>
 
           <form ref={form} onSubmit={sendEmail} className='contact__form'>
+            {/* Honeypot: hidden from real users, tempting to bots. */}
+            <div className='contact__hp' aria-hidden='true'>
+              <label htmlFor='contact-company'>Company</label>
+              <input type='text' name='company' id='contact-company' tabIndex={-1} autoComplete='off' />
+            </div>
+
             <div className='contact__form-div'>
               <label htmlFor='contact-name' className='contact__form-tag'>{t('contact.nameLabel')}</label>
-              <input type='text' name='name' id='contact-name' className='contact__form-input' placeholder={t('contact.namePlaceholder')} onChange={clearFieldError} aria-invalid={!!errors.name} aria-describedby={errors.name ? 'contact-name-error' : undefined} />
+              <input type='text' name='name' id='contact-name' maxLength={100} className='contact__form-input' placeholder={t('contact.namePlaceholder')} onChange={clearFieldError} aria-invalid={!!errors.name} aria-describedby={errors.name ? 'contact-name-error' : undefined} />
             </div>
             {errors.name && <span id='contact-name-error' className='contact__form-error'>{errors.name}</span>}
 
             <div className='contact__form-div'>
               <label htmlFor='contact-email' className='contact__form-tag'>{t('contact.emailLabel')}</label>
-              <input type='email' name='email' id='contact-email' className='contact__form-input' placeholder={t('contact.emailPlaceholder')} onChange={clearFieldError} aria-invalid={!!errors.email} aria-describedby={errors.email ? 'contact-email-error' : undefined} />
+              <input type='email' name='email' id='contact-email' maxLength={150} className='contact__form-input' placeholder={t('contact.emailPlaceholder')} onChange={clearFieldError} aria-invalid={!!errors.email} aria-describedby={errors.email ? 'contact-email-error' : undefined} />
             </div>
             {errors.email && <span id='contact-email-error' className='contact__form-error'>{errors.email}</span>}
 
             <div className='contact__form-div contact__form-area'>
               <label htmlFor='contact-message' className='contact__form-tag'>{t('contact.messageLabel')}</label>
-              <textarea name='message' id='contact-message' cols='30' rows='10' className='contact__form-input' placeholder={t('contact.messagePlaceholder')} onChange={clearFieldError} aria-invalid={!!errors.message} aria-describedby={errors.message ? 'contact-message-error' : undefined}></textarea>
+              <textarea name='message' id='contact-message' cols='30' rows='10' maxLength={2000} className='contact__form-input' placeholder={t('contact.messagePlaceholder')} onChange={clearFieldError} aria-invalid={!!errors.message} aria-describedby={errors.message ? 'contact-message-error' : undefined}></textarea>
             </div>
             {errors.message && <span id='contact-message-error' className='contact__form-error'>{errors.message}</span>}
 

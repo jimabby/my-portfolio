@@ -1,24 +1,26 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { buildSystemPrompt, buildChatHistory } = require('./systemPrompt');
+const { validateBody, isAllowedOrigin, isRateLimited } = require('./guard');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { message, history = [], lang = 'en' } = req.body || {};
-
-  if (!message?.trim()) {
-    return res.status(400).json({ error: 'Message is required' });
+  if (!isAllowedOrigin(req)) {
+    return res.status(403).json({ error: 'Forbidden' });
   }
 
-  if (message.length > 1000) {
-    return res.status(400).json({ error: 'Message is too long' });
+  if (isRateLimited(req)) {
+    res.setHeader('Retry-After', '60');
+    return res.status(429).json({ error: 'Too many requests. Please slow down.' });
   }
 
-  if (!Array.isArray(history)) {
-    return res.status(400).json({ error: 'History must be an array' });
+  const parsed = validateBody(req.body);
+  if (parsed.error) {
+    return res.status(parsed.status).json({ error: parsed.error });
   }
+  const { message, history, lang } = parsed;
 
   if (!process.env.GEMINI_API_KEY) {
     return res.status(500).json({ error: 'API key not configured' });
@@ -37,7 +39,7 @@ module.exports = async function handler(req, res) {
   res.setHeader('Connection', 'keep-alive');
 
   try {
-    const result = await chat.sendMessageStream(message.trim());
+    const result = await chat.sendMessageStream(message);
     for await (const chunk of result.stream) {
       const text = chunk.text();
       if (text) {

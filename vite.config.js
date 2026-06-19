@@ -6,6 +6,7 @@ import { createRequire } from 'node:module'
 // and prod can never drift apart.
 const require = createRequire(import.meta.url)
 const { buildSystemPrompt, buildChatHistory } = require('./api/systemPrompt.js')
+const { validateBody } = require('./api/guard.js')
 
 function devChatApi(apiKey) {
   return {
@@ -27,17 +28,13 @@ function devChatApi(apiKey) {
               return res.end(JSON.stringify({ error: 'API key not configured' }))
             }
             const { GoogleGenerativeAI } = await import('@google/generative-ai')
-            const { message, history = [], lang = 'en' } = JSON.parse(body)
-            if (!message?.trim()) {
-              res.statusCode = 400
+            const parsed = validateBody(JSON.parse(body))
+            if (parsed.error) {
+              res.statusCode = parsed.status
               res.setHeader('Content-Type', 'application/json')
-              return res.end(JSON.stringify({ error: 'Message is required' }))
+              return res.end(JSON.stringify({ error: parsed.error }))
             }
-            if (message.length > 1000 || !Array.isArray(history)) {
-              res.statusCode = 400
-              res.setHeader('Content-Type', 'application/json')
-              return res.end(JSON.stringify({ error: 'Invalid request' }))
-            }
+            const { message, history, lang } = parsed
             const genAI = new GoogleGenerativeAI(apiKey)
             const model = genAI.getGenerativeModel({
               model: 'gemini-2.5-flash',
@@ -46,7 +43,7 @@ function devChatApi(apiKey) {
             const chat = model.startChat({ history: buildChatHistory(history) })
             res.setHeader('Content-Type', 'text/event-stream')
             res.setHeader('Cache-Control', 'no-cache')
-            const result = await chat.sendMessageStream(message.trim())
+            const result = await chat.sendMessageStream(message)
             for await (const chunk of result.stream) {
               const text = chunk.text()
               if (text) res.write(`data: ${JSON.stringify({ text })}\n\n`)
@@ -70,9 +67,7 @@ function devChatApi(apiKey) {
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  const isGhPages = mode === 'ghpages'
   return {
     plugins: [react(), devChatApi(env.GEMINI_API_KEY)],
-    base: isGhPages ? '/my-portfolio/' : '/',
   }
 })

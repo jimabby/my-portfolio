@@ -45,7 +45,7 @@ const Header = () => {
 
   // Track active section via IntersectionObserver on portfolio page
   useEffect(() => {
-    if (location.pathname !== '/' && location.pathname !== '/my-portfolio') return;
+    if (location.pathname !== '/') return;
 
     const observers = [];
     const handleIntersect = (entries) => {

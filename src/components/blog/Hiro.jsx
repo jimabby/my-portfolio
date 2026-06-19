@@ -35,7 +35,7 @@ const Hiro = () => {
           {/* HERO */}
           <header className="blog__hero card">
             <div className="blog__post-meta">
-              <span className="blog__badge">Project</span>
+              <span className="blog__badge">{t('posts.hiro.badge')}</span>
               <span className="blog__meta-dot">|</span>
               <time className="blog__meta-date">{t('posts.hiro.date')}</time>
               <span className="blog__meta-dot">|</span>

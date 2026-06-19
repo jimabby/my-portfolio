@@ -172,6 +172,7 @@ const en = {
     portfolio: 'Portfolio',
     testimonials: 'Testimonials',
     rights: 'All rights reserved.',
+    socialAria: 'Jim Kong on {platform}',
   },
   notfound: {
     title: 'Page not found',
@@ -189,6 +190,7 @@ const en = {
     close: 'Close',
     placeholder: 'Ask something...',
     send: 'Send',
+    stop: 'Stop generating',
     fallback: "I couldn't find a response. Please try again.",
     errorGeneric: "Sorry, I couldn't get a response. Please try again.",
     errorConfig:
@@ -217,6 +219,7 @@ const en = {
     authorBio:
       'Developer passionate about building tools that make everyday tasks faster and less frustrating.',
     shareArticle: 'Share this article',
+    shareOn: 'Share on {platform}',
     previous: 'Previous',
     next: 'Next',
     categories: {
@@ -395,6 +398,7 @@ const zhHans = {
     portfolio: '作品',
     testimonials: '客户评价',
     rights: '版权所有。',
+    socialAria: 'Jim Kong 的 {platform}',
   },
   notfound: {
     title: '页面未找到',
@@ -411,6 +415,7 @@ const zhHans = {
     close: '关闭',
     placeholder: '问点什么…',
     send: '发送',
+    stop: '停止生成',
     fallback: '没有找到回复，请重试。',
     errorGeneric: '抱歉，我没能获取回复，请重试。',
     errorConfig:
@@ -438,6 +443,7 @@ const zhHans = {
     authorName: 'Jim',
     authorBio: '热衷于打造工具的开发者，让日常任务更快捷、更省心。',
     shareArticle: '分享这篇文章',
+    shareOn: '分享到 {platform}',
     previous: '上一篇',
     next: '下一篇',
     categories: {
@@ -616,6 +622,7 @@ const zhHant = {
     portfolio: '作品',
     testimonials: '客戶評價',
     rights: '版權所有。',
+    socialAria: 'Jim Kong 的 {platform}',
   },
   notfound: {
     title: '找不到頁面',
@@ -632,6 +639,7 @@ const zhHant = {
     close: '關閉',
     placeholder: '問點什麼…',
     send: '傳送',
+    stop: '停止生成',
     fallback: '找不到回覆，請重試。',
     errorGeneric: '抱歉，我沒能取得回覆，請重試。',
     errorConfig:
@@ -659,6 +667,7 @@ const zhHant = {
     authorName: 'Jim',
     authorBio: '熱衷於打造工具的開發者，讓日常任務更快捷、更省心。',
     shareArticle: '分享這篇文章',
+    shareOn: '分享到 {platform}',
     previous: '上一篇',
     next: '下一篇',
     categories: {
@@ -836,7 +845,8 @@ const ja = {
     about: '紹介',
     portfolio: '作品',
     testimonials: '推薦の声',
-    rights: 'All rights reserved.',
+    rights: '無断複写・転載を禁じます。',
+    socialAria: '{platform} の Jim Kong',
   },
   notfound: {
     title: 'ページが見つかりません',
@@ -854,6 +864,7 @@ const ja = {
     close: '閉じる',
     placeholder: '質問を入力…',
     send: '送信',
+    stop: '生成を停止',
     fallback: '回答が見つかりませんでした。もう一度お試しください。',
     errorGeneric: '申し訳ありません、回答を取得できませんでした。もう一度お試しください。',
     errorConfig:
@@ -881,6 +892,7 @@ const ja = {
     authorName: 'Jim',
     authorBio: '日々の作業をより速く快適にするツール作りに情熱を注ぐ開発者。',
     shareArticle: 'この記事をシェア',
+    shareOn: '{platform} で共有',
     previous: '前の記事',
     next: '次の記事',
     categories: {

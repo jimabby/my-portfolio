@@ -8,6 +8,7 @@ const en = {
     'An AI desktop agent that scrapes Seek, Indeed, and LinkedIn on a schedule, scores every job against your resume, tailors your application, and submits — all while you sleep.',
   date: 'March 2026',
   readTime: '8 min read',
+  badge: 'Project',
 
   // Hero
   heroPara1Pre:
@@ -192,6 +193,7 @@ const zhHans = {
     '一款 AI 桌面代理，按计划自动抓取 Seek、Indeed 和 LinkedIn 的职位，对照你的简历为每个职位打分，量身定制申请材料并自动投递——这一切都在你睡觉时完成。',
   date: '2026 年 3 月',
   readTime: '8 分钟阅读',
+  badge: '项目',
 
   heroPara1Pre:
     '找工作就是另一份全职工作。你不停刷新职位列表、复制粘贴简历、为每个职位重写求职信，最后却和其他人一样投出千篇一律的申请。',
@@ -353,6 +355,7 @@ const zhHant = {
     '一款 AI 桌面代理，按計劃自動抓取 Seek、Indeed 和 LinkedIn 的職缺，對照你的履歷為每個職缺評分，量身打造申請資料並自動投遞——這一切都在你睡覺時完成。',
   date: '2026 年 3 月',
   readTime: '8 分鐘閱讀',
+  badge: '專案',
 
   heroPara1Pre:
     '找工作就是另一份全職工作。你不停重新整理職缺列表、複製貼上履歷、為每個職缺重寫求職信，最後卻和其他人一樣投出千篇一律的申請。',
@@ -514,6 +517,7 @@ const ja = {
     'Seek、Indeed、LinkedIn をスケジュールに沿って巡回し、あなたの履歴書と照らして求人ごとにスコアを付け、応募書類を最適化して提出まで行う AI デスクトップエージェント——すべてあなたが眠っている間に。',
   date: '2026年3月',
   readTime: '8 分で読めます',
+  badge: 'プロジェクト',
 
   heroPara1Pre:
     '就職活動はもう一つの仕事です。求人を更新し、履歴書をコピー＆ペーストし、応募ごとにカバーレターを書き直しても、結局みんなと同じありきたりな応募書類を送ることになります。',

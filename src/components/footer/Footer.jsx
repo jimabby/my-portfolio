@@ -22,15 +22,15 @@ const Footer = () => {
         </ul>
 
         <div className='footer__social'>
-          <a href='https://www.facebook.com/weidong.kong/' className='footer__social-link' target='_blank' rel='noopener noreferrer' aria-label="Jim Kong on Facebook">
+          <a href='https://www.facebook.com/weidong.kong/' className='footer__social-link' target='_blank' rel='noopener noreferrer' aria-label={t('footer.socialAria').replace('{platform}', 'Facebook')}>
             <i className='bx bxl-facebook'></i>
           </a>
 
-          <a href='https://www.instagram.com/wkongjim/' className='footer__social-link' target='_blank' rel='noopener noreferrer' aria-label="Jim Kong on Instagram">
+          <a href='https://www.instagram.com/wkongjim/' className='footer__social-link' target='_blank' rel='noopener noreferrer' aria-label={t('footer.socialAria').replace('{platform}', 'Instagram')}>
             <i className='bx bxl-instagram'></i>
           </a>
 
-          <a href='https://x.com/Weidong_jim' className='footer__social-link' target='_blank' rel='noopener noreferrer' aria-label="Jim Kong on X">
+          <a href='https://x.com/Weidong_jim' className='footer__social-link' target='_blank' rel='noopener noreferrer' aria-label={t('footer.socialAria').replace('{platform}', 'X')}>
             <i className='bx bxl-twitter'></i>
           </a>
         </div>

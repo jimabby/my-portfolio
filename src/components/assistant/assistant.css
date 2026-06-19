@@ -334,6 +334,13 @@
   cursor: not-allowed;
 }
 
+.assistant__stop-icon {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background-color: #fff;
+}
+
 @media screen and (max-width: 480px) {
   .assistant__panel {
     right: 0.75rem;
