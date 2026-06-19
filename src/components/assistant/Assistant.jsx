@@ -15,6 +15,7 @@ export default function Assistant() {
   const [streamText, setStreamText] = useState('');
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const panelRef = useRef(null);
   const abortRef = useRef(null);
 
   // Abort any in-flight request if the component unmounts mid-stream.
@@ -48,7 +49,28 @@ export default function Assistant() {
     if (!isOpen) return;
     inputRef.current?.focus();
     const onKeyDown = (e) => {
-      if (e.key === 'Escape') setIsOpen(false);
+      if (e.key === 'Escape') {
+        setIsOpen(false);
+        return;
+      }
+      // Trap Tab focus inside the open dialog.
+      if (e.key === 'Tab' && panelRef.current) {
+        const focusable = Array.from(
+          panelRef.current.querySelectorAll(
+            'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => !el.disabled && el.offsetParent !== null);
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
@@ -210,7 +232,7 @@ export default function Assistant() {
       </button>
 
       {isOpen && (
-        <div className="assistant__panel" role="dialog" aria-modal="true" aria-label={t('assistant.name')}>
+        <div ref={panelRef} className="assistant__panel" role="dialog" aria-modal="true" aria-label={t('assistant.name')}>
           <div className="assistant__header">
             <div className="assistant__header-info">
               <div className="assistant__avatar">J</div>

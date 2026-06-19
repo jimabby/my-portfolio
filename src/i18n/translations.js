@@ -27,6 +27,7 @@ const en = {
     description:
       "I am a Full Stack developer based in Sydney, and I'm very passionate and dedicated to my work.",
     sayHello: 'Say Hello',
+    downloadCV: 'Download CV',
     scrollDown: 'Scroll Down',
     profileAlt: 'Jim Kong profile photo',
   },
@@ -179,6 +180,14 @@ const en = {
     text: "The page you're looking for doesn't exist or has been moved.",
     back: 'Back to Home',
   },
+  seo: {
+    homeTitle: 'Jim Kong | Full Stack Developer',
+    homeDesc:
+      'Sydney-based full stack developer building web apps, AI tools, and data-driven software. Explore projects, skills, and contact details.',
+    blogTitle: 'Blog | Jim Kong',
+    blogDesc: 'Writeups on AI projects, web development, and photography by Jim Kong.',
+    notFoundTitle: 'Page not found | Jim Kong',
+  },
   assistant: {
     toggle: 'Toggle AI assistant',
     name: 'Ask about Jim',
@@ -253,6 +262,7 @@ const zhHans = {
     description:
       '我是一名常驻悉尼的全栈开发工程师，对工作充满热情，全力以赴。',
     sayHello: '打个招呼',
+    downloadCV: '下载简历',
     scrollDown: '向下滚动',
     profileAlt: 'Jim Kong 个人照片',
   },
@@ -405,6 +415,14 @@ const zhHans = {
     text: '您访问的页面不存在或已被移动。',
     back: '返回首页',
   },
+  seo: {
+    homeTitle: 'Jim Kong | 全栈开发者',
+    homeDesc:
+      '位于悉尼的全栈开发者，构建 Web 应用、AI 工具和数据驱动的软件。浏览项目、技能与联系方式。',
+    blogTitle: '博客 | Jim Kong',
+    blogDesc: 'Jim Kong 关于 AI 项目、Web 开发与摄影的文章。',
+    notFoundTitle: '页面未找到 | Jim Kong',
+  },
   assistant: {
     toggle: '切换 AI 助手',
     name: '了解 Jim',
@@ -477,6 +495,7 @@ const zhHant = {
     description:
       '我是一名常駐雪梨的全端開發工程師，對工作充滿熱情，全力以赴。',
     sayHello: '打聲招呼',
+    downloadCV: '下載履歷',
     scrollDown: '向下捲動',
     profileAlt: 'Jim Kong 個人照片',
   },
@@ -629,6 +648,14 @@ const zhHant = {
     text: '您要找的頁面不存在或已被移動。',
     back: '返回首頁',
   },
+  seo: {
+    homeTitle: 'Jim Kong | 全端開發者',
+    homeDesc:
+      '位於雪梨的全端開發者，打造 Web 應用、AI 工具與資料驅動的軟體。瀏覽專案、技能與聯絡方式。',
+    blogTitle: '網誌 | Jim Kong',
+    blogDesc: 'Jim Kong 關於 AI 專案、Web 開發與攝影的文章。',
+    notFoundTitle: '找不到頁面 | Jim Kong',
+  },
   assistant: {
     toggle: '切換 AI 助理',
     name: '了解 Jim',
@@ -701,6 +728,7 @@ const ja = {
     description:
       'シドニーを拠点とするフルスタック開発者です。仕事に情熱を持ち、全力で取り組んでいます。',
     sayHello: 'ご挨拶',
+    downloadCV: '履歴書をダウンロード',
     scrollDown: 'スクロール',
     profileAlt: 'Jim Kong のプロフィール写真',
   },
@@ -852,6 +880,14 @@ const ja = {
     title: 'ページが見つかりません',
     text: 'お探しのページは存在しないか、移動された可能性があります。',
     back: 'ホームに戻る',
+  },
+  seo: {
+    homeTitle: 'Jim Kong | フルスタック開発者',
+    homeDesc:
+      'シドニーを拠点とするフルスタック開発者。Web アプリ、AI ツール、データ駆動型ソフトウェアを開発。プロジェクト、スキル、連絡先をご覧ください。',
+    blogTitle: 'ブログ | Jim Kong',
+    blogDesc: 'Jim Kong による AI プロジェクト、Web 開発、写真に関する記事。',
+    notFoundTitle: 'ページが見つかりません | Jim Kong',
   },
   assistant: {
     toggle: 'AI アシスタントの切り替え',

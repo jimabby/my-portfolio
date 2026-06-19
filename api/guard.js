@@ -64,19 +64,44 @@ function isAllowedOrigin(req) {
   return allowList.includes(origin);
 }
 
-// Best-effort per-IP rate limiting. In-memory, so it resets on cold starts and
-// is per-instance only — it curbs sustained abuse from a warm instance but is
-// not a hard guarantee. Swap for a shared store (e.g. Upstash) for strict caps.
-const hits = new Map();
-
 function getClientIp(req) {
   const fwd = req.headers['x-forwarded-for'];
   if (fwd) return fwd.split(',')[0].trim();
   return req.socket?.remoteAddress || 'unknown';
 }
 
-function isRateLimited(req) {
-  const ip = getClientIp(req);
+// Preferred path: a shared Upstash Redis store, so the limit is enforced across
+// all serverless instances and survives cold starts. Configured via env; the
+// client is built lazily and cached so the import cost is paid only once.
+let upstashLimiter;
+let upstashTried = false;
+
+async function getUpstashLimiter() {
+  if (upstashTried) return upstashLimiter;
+  upstashTried = true;
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return (upstashLimiter = null);
+  try {
+    const { Ratelimit } = await import('@upstash/ratelimit');
+    const { Redis } = await import('@upstash/redis');
+    upstashLimiter = new Ratelimit({
+      redis: new Redis({ url, token }),
+      limiter: Ratelimit.slidingWindow(RATE_LIMIT, `${RATE_WINDOW_MS / 1000} s`),
+      prefix: 'portfolio_chat',
+    });
+  } catch {
+    upstashLimiter = null; // package missing / init failed → fall back below
+  }
+  return upstashLimiter;
+}
+
+// Fallback path: best-effort per-IP limiting in memory. Resets on cold starts
+// and is per-instance only, but still curbs sustained abuse when Upstash isn't
+// configured (e.g. local dev).
+const hits = new Map();
+
+function inMemoryRateLimited(ip) {
   const now = Date.now();
   const recent = (hits.get(ip) || []).filter((t) => now - t < RATE_WINDOW_MS);
   recent.push(now);
@@ -89,6 +114,20 @@ function isRateLimited(req) {
     }
   }
   return recent.length > RATE_LIMIT;
+}
+
+async function isRateLimited(req) {
+  const ip = getClientIp(req);
+  const limiter = await getUpstashLimiter();
+  if (limiter) {
+    try {
+      const { success } = await limiter.limit(ip);
+      return !success;
+    } catch {
+      // Redis hiccup — degrade gracefully to the in-memory limiter.
+    }
+  }
+  return inMemoryRateLimited(ip);
 }
 
 module.exports = {

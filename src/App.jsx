@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import './App.css';
 import About from './components/about/About';
 import Contact from './components/contact/Contact';
@@ -10,19 +11,22 @@ import Qualification from './components/qualification/Qualification';
 import ScrollUp from './components/scrollup/ScrollUp';
 import Services from './components/services/Services';
 import Skills from './components/skills/Skills';
-import Testimonials from './components/Testimonials/Testimonials';
 import { Suspense, lazy, useEffect } from 'react';
 import NotFound from './components/notfound/NotFound';
+import ErrorBoundary from './components/ErrorBoundary';
+import Seo from './components/seo/Seo';
+import { useLanguage } from './i18n/LanguageContext';
 
-// Route-level code splitting: the blog pages and the chat assistant pull in
-// heavy dependencies (long-form content, the Gemini SDK) that the landing page
-// doesn't need, so they load on demand instead of in the initial bundle.
+// Code splitting: the blog pages, the chat assistant, and the testimonials
+// carousel (Swiper) pull in heavy dependencies the initial landing view doesn't
+// need up front, so they load on demand instead of in the main bundle.
 const Blog = lazy(() => import('./components/blog/Blog'));
 const MMode = lazy(() => import('./components/blog/MMode'));
 const Hermes = lazy(() => import('./components/blog/Hermes'));
 const Hiro = lazy(() => import('./components/blog/Hiro'));
 const GrandHotelTaipei = lazy(() => import('./components/blog/GrandHotelTaipei'));
 const Assistant = lazy(() => import('./components/assistant/Assistant'));
+const Testimonials = lazy(() => import('./components/Testimonials/Testimonials'));
 
 function useSectionReveal() {
   useEffect(() => {
@@ -44,6 +48,7 @@ function useSectionReveal() {
 
 function PortfolioPage() {
   const location = useLocation();
+  const { t } = useLanguage();
   useSectionReveal();
 
   useEffect(() => {
@@ -62,6 +67,7 @@ function PortfolioPage() {
 
   return (
     <>
+      <Seo title={t('seo.homeTitle')} description={t('seo.homeDesc')} path="/" />
       <Header />
 
       <main className="main" id="main-content">
@@ -71,7 +77,9 @@ function PortfolioPage() {
         <Services />
         <Qualification />
         <Portfolio />
-        <Testimonials />
+        <Suspense fallback={<div style={{ minHeight: '420px' }} />}>
+          <Testimonials />
+        </Suspense>
         <Contact />
       </main>
 
@@ -83,24 +91,27 @@ function PortfolioPage() {
 
 function App() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <div id="top"></div>
-      <a href="#main-content" className="skip-link">Skip to main content</a>
-      <Suspense fallback={null}>
-        <Routes>
-          <Route path="/" element={<PortfolioPage />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/m-mode" element={<MMode />} />
-          <Route path="/blog/hermes" element={<Hermes />} />
-          <Route path="/blog/hiro" element={<Hiro />} />
-          <Route path="/blog/grand-hotel-taipei" element={<GrandHotelTaipei />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
-      <Suspense fallback={null}>
-        <Assistant />
-      </Suspense>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
+        <div id="top"></div>
+        <a href="#main-content" className="skip-link">Skip to main content</a>
+        <Suspense fallback={null}>
+          <Routes>
+            <Route path="/" element={<PortfolioPage />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/m-mode" element={<MMode />} />
+            <Route path="/blog/hermes" element={<Hermes />} />
+            <Route path="/blog/hiro" element={<Hiro />} />
+            <Route path="/blog/grand-hotel-taipei" element={<GrandHotelTaipei />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+        <Suspense fallback={null}>
+          <Assistant />
+        </Suspense>
+        <Analytics />
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 }
 

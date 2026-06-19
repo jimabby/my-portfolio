@@ -11,7 +11,7 @@ module.exports = async function handler(req, res) {
     return res.status(403).json({ error: 'Forbidden' });
   }
 
-  if (isRateLimited(req)) {
+  if (await isRateLimited(req)) {
     res.setHeader('Retry-After', '60');
     return res.status(429).json({ error: 'Too many requests. Please slow down.' });
   }

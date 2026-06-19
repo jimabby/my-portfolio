@@ -66,11 +66,11 @@
 }
 
 .contact__form {
-  width: min(380px, 100%);
+  width: min(480px, 100%);
   background: var(--container-color);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 1.5rem;
+  padding: 2.5rem 2rem;
   box-shadow: var(--card-shadow);
 }
 

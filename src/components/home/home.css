@@ -56,6 +56,13 @@
   top: 0.95rem;
 }
 
+.home__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
 .home__description {
   max-width: 440px;
   margin-bottom: var(--mb-2-5);

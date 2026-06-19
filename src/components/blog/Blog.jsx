@@ -5,6 +5,7 @@ import Footer from '../footer/Footer';
 import ScrollUp from '../scrollup/ScrollUp';
 import { posts } from './postsData';
 import { useLanguage } from '../../i18n/LanguageContext';
+import Seo from '../seo/Seo';
 import './blog.css';
 
 const categories = ['All', ...Array.from(new Set(posts.map(p => p.category)))];
@@ -35,6 +36,7 @@ const Blog = () => {
 
   return (
     <>
+      <Seo title={t('seo.blogTitle')} description={t('seo.blogDesc')} path="/blog" />
       <Header />
       <section className="blog section" id="blog">
         <h2 className="section__title">{t('blog.title')}</h2>
