@@ -32,10 +32,18 @@ import SimbaEduRedesign2 from "../../assets/simba-edu-redesign2.webp";
 import SimbaEduRedesign3 from "../../assets/simba-edu-redesign3.webp";
 import SimbaEduRedesign4 from "../../assets/simba-edu-redesign4.webp";
 import SimbaEduRedesign5 from "../../assets/simba-edu-redesign5.webp";
-import SimbaHealth1 from "../../assets/simba-health-new1.webp";
-import SimbaHealth2 from "../../assets/simba-health-new2.webp";
-import SimbaHealth3 from "../../assets/simba-health-new3.webp";
-import SimbaHealth4 from "../../assets/simba-health-new4.webp";
+import SimbaHealthRedesign1 from "../../assets/simba-health-redesign1.webp";
+import SimbaHealthRedesign2 from "../../assets/simba-health-redesign2.webp";
+import SimbaHealthRedesign3 from "../../assets/simba-health-redesign3.webp";
+import SimbaHealthRedesign4 from "../../assets/simba-health-redesign4.webp";
+import SimbaHealth1 from "../../assets/simba-health1.webp";
+import SimbaHealth2 from "../../assets/simba-health2.webp";
+import SimbaHealth3 from "../../assets/simba-health3.webp";
+import SimbaHealth4 from "../../assets/simba-health4.webp";
+import SimbaHealth5 from "../../assets/simba-health5.webp";
+import SimbaHealth6 from "../../assets/simba-health6.webp";
+import SimbaHealth7 from "../../assets/simba-health7.webp";
+import SimbaHealth8 from "../../assets/simba-health8.webp";
 import SimbaHearing1 from "../../assets/simba-hearing1.webp";
 import SimbaHearing2 from "../../assets/simba-hearing2.webp";
 import SimbaHearing3 from "../../assets/simba-hearing3.webp";
@@ -204,18 +212,37 @@ export const projectsData = [
     ],
   },
   {
-    id: 15,
+    id: 17,
     image: SimbaHealth1,
+    title: 'Simba Health - Original',
+    category: 'Website',
+    link: '#',
+    summary: 'Original Simba Health website, later replaced by a custom rebuild.',
+    tags: ['Website', 'Healthcare', 'WordPress'],
+    gallery: [
+      SimbaHealth1,
+      SimbaHealth2,
+      SimbaHealth3,
+      SimbaHealth4,
+      SimbaHealth5,
+      SimbaHealth6,
+      SimbaHealth7,
+      SimbaHealth8,
+    ],
+  },
+  {
+    id: 15,
+    image: SimbaHealthRedesign1,
     title: 'Simba Health - Redesign',
     category: 'Website',
     link: '#',
     summary: 'Custom-built healthcare site replacing the legacy WordPress version.',
     tags: ['Website', 'Healthcare', 'Redesign'],
     gallery: [
-      SimbaHealth1,
-      SimbaHealth2,
-      SimbaHealth3,
-      SimbaHealth4,
+      SimbaHealthRedesign1,
+      SimbaHealthRedesign2,
+      SimbaHealthRedesign3,
+      SimbaHealthRedesign4,
     ],
   },
   {
