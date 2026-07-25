@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import BlogProgressBar from "./BlogProgressBar";
@@ -22,7 +22,7 @@ const Hiro = () => {
       <Header />
       <BlogProgressBar />
 
-      <main className="blog blog--single section" id="hiro">
+      <main className="blog blog--single section" id="main-content">
         <div className="blog__container container">
 
           {/* Back button */}

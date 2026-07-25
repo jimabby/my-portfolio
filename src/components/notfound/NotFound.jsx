@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import './notfound.css';
 import { useLanguage } from '../../i18n/LanguageContext';
 import Seo from '../seo/Seo';
@@ -6,7 +6,7 @@ import Seo from '../seo/Seo';
 const NotFound = () => {
   const { t } = useLanguage();
   return (
-    <section className="notfound section">
+    <main className="notfound section" id="main-content">
       <Seo title={t('seo.notFoundTitle')} description={t('notfound.text')} noindex />
       <div className="notfound__container container">
         <span className="notfound__code">404</span>
@@ -19,7 +19,7 @@ const NotFound = () => {
           <i className="uil uil-estate"></i>
         </Link>
       </div>
-    </section>
+    </main>
   );
 };
 

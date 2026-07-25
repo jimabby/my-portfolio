@@ -10,6 +10,7 @@ const BlogSEO = ({ title, description, ogImage, slug }) => {
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
+      <link rel="canonical" href={url} />
 
       {/* Open Graph — LinkedIn, Facebook */}
       <meta property="og:type"        content="article" />

@@ -3,11 +3,17 @@ import { projectsData, projectsNav } from './Data';
 import WorksItems from './WorksItems';
 import { useLanguage } from '../../i18n/LanguageContext';
 
+// Cards per page. The grid is 3 columns on desktop, so this fills three full
+// rows and keeps the section from running the length of the page.
+const PAGE_SIZE = 9;
+
 const Works = () => {
   const { t } = useLanguage();
   const [item, setItem] = useState({name:  "all"});
-  const [projects, setProjects] = useState([]);
   const [active, setActive] = useState(0);
+  const [page, setPage] = useState(1);
+  const gridRef = React.useRef(null);
+  const pageChangePendingRef = React.useRef(false);
   const [galleryState, setGalleryState] = useState({
     isOpen: false,
     title: '',
@@ -20,24 +26,50 @@ const Works = () => {
   const galleryImages = useMemo(() => galleryState.images, [galleryState.images]);
 
   const closeButtonRef = React.useRef(null);
+  const modalContentRef = React.useRef(null);
   const lastFocusedRef = React.useRef(null);
 
-  useEffect(() => {
-    if(item.name === "all"){
-      setProjects(projectsData);
-    }
-    else {
-      const newProjects = projectsData.filter((project) => {
-        return project.category.toLowerCase() === item.name;
-      });
-      setProjects(newProjects);
-    }
+  const projects = useMemo(() => {
+    if (item.name === 'all') return projectsData;
+    return projectsData.filter(
+      (project) => project.category.toLowerCase() === item.name
+    );
   }, [item]);
+
+  const totalPages = Math.max(1, Math.ceil(projects.length / PAGE_SIZE));
+  // Guard against a stale page number if the filtered set ever shrinks under
+  // the current page without going through handleClick.
+  const currentPage = Math.min(page, totalPages);
+  const visibleProjects = useMemo(
+    () => projects.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE),
+    [projects, currentPage]
+  );
+
+  useEffect(() => {
+    if (!pageChangePendingRef.current) return;
+    pageChangePendingRef.current = false;
+
+    const grid = gridRef.current;
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    grid?.scrollIntoView?.({
+      behavior: reduceMotion ? 'auto' : 'smooth',
+      block: 'start',
+    });
+    grid?.querySelector('.work__img-button')?.focus({ preventScroll: true });
+  }, [currentPage]);
 
   const handleClick = (name, index) => {
     setItem({ name: name.toLowerCase() });
     setActive(index);
+    setPage(1);
   }
+
+  const goToPage = (next) => {
+    const clamped = Math.min(Math.max(next, 1), totalPages);
+    if (clamped === currentPage) return;
+    pageChangePendingRef.current = true;
+    setPage(clamped);
+  };
 
   const openGallery = (project, startIndex = 0) => {
     lastFocusedRef.current = document.activeElement;
@@ -93,6 +125,24 @@ const Works = () => {
       if (e.key === 'Escape') closeGallery();
       if (e.key === 'ArrowLeft') showPrev();
       if (e.key === 'ArrowRight') showNext();
+      if (e.key === 'Tab' && modalContentRef.current) {
+        const focusable = Array.from(
+          modalContentRef.current.querySelectorAll(
+            'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((element) => !element.disabled);
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     document.addEventListener('keydown', onKeyDown);
     document.body.style.overflow = 'hidden';
@@ -113,7 +163,7 @@ const Works = () => {
 
   return (
     <div>
-      <div className='work__filters'>
+      <div className='work__filters' inert={galleryState.isOpen}>
         {projectsNav.map((nav, index) => {
           return (
             <button
@@ -129,18 +179,65 @@ const Works = () => {
         })}
       </div>
 
-      <div className='work__container container grid'>
-        {projects.map((item) => {
+      <div className='work__container container grid' ref={gridRef} inert={galleryState.isOpen}>
+        {visibleProjects.map((item) => {
           return (
             <WorksItems item={item} key={item.id} onOpenGallery={openGallery} />
           )
         })}
       </div>
 
+      {totalPages > 1 && (
+        <nav
+          className='work__pagination'
+          aria-label={t('portfolio.pagination.label')}
+          inert={galleryState.isOpen}
+        >
+          <button
+            type='button'
+            className='work__page work__page--arrow'
+            onClick={() => goToPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            aria-label={t('portfolio.pagination.prev')}
+          >
+            <i className='bx bx-chevron-left'></i>
+          </button>
+
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+            <button
+              type='button'
+              key={n}
+              className={`work__page${n === currentPage ? ' is-active' : ''}`}
+              onClick={() => goToPage(n)}
+              aria-label={t('portfolio.pagination.page').replace('{n}', n)}
+              aria-current={n === currentPage ? 'page' : undefined}
+            >
+              {n}
+            </button>
+          ))}
+
+          <button
+            type='button'
+            className='work__page work__page--arrow'
+            onClick={() => goToPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            aria-label={t('portfolio.pagination.next')}
+          >
+            <i className='bx bx-chevron-right'></i>
+          </button>
+
+          <span className='work__page-status' aria-live='polite'>
+            {t('portfolio.pagination.status')
+              .replace('{current}', currentPage)
+              .replace('{total}', totalPages)}
+          </span>
+        </nav>
+      )}
+
       {galleryState.isOpen && (
         <div className="work__modal" role="dialog" aria-modal="true" aria-label={`${galleryState.title} gallery`}>
           <div className="work__modal-backdrop" onClick={closeGallery} />
-          <div className="work__modal-content">
+          <div className="work__modal-content" ref={modalContentRef}>
             <button ref={closeButtonRef} type="button" className="work__modal-close" onClick={closeGallery} aria-label={t('portfolio.closeGallery')}>
               X
             </button>

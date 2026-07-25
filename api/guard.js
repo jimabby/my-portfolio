@@ -73,27 +73,31 @@ function getClientIp(req) {
 // Preferred path: a shared Upstash Redis store, so the limit is enforced across
 // all serverless instances and survives cold starts. Configured via env; the
 // client is built lazily and cached so the import cost is paid only once.
-let upstashLimiter;
-let upstashTried = false;
+const upstashLimiters = new Map();
 
-async function getUpstashLimiter() {
-  if (upstashTried) return upstashLimiter;
-  upstashTried = true;
+async function getUpstashLimiter({ prefix, limit, windowMs }) {
+  const key = `${prefix}:${limit}:${windowMs}`;
+  if (upstashLimiters.has(key)) return upstashLimiters.get(key);
   const url = process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.UPSTASH_REDIS_REST_TOKEN;
-  if (!url || !token) return (upstashLimiter = null);
+  if (!url || !token) {
+    upstashLimiters.set(key, null);
+    return null;
+  }
   try {
     const { Ratelimit } = await import('@upstash/ratelimit');
     const { Redis } = await import('@upstash/redis');
-    upstashLimiter = new Ratelimit({
+    const limiter = new Ratelimit({
       redis: new Redis({ url, token }),
-      limiter: Ratelimit.slidingWindow(RATE_LIMIT, `${RATE_WINDOW_MS / 1000} s`),
-      prefix: 'portfolio_chat',
+      limiter: Ratelimit.slidingWindow(limit, `${windowMs / 1000} s`),
+      prefix,
     });
+    upstashLimiters.set(key, limiter);
+    return limiter;
   } catch {
-    upstashLimiter = null; // package missing / init failed → fall back below
+    upstashLimiters.set(key, null);
+    return null;
   }
-  return upstashLimiter;
 }
 
 // Fallback path: best-effort per-IP limiting in memory. Resets on cold starts
@@ -101,24 +105,33 @@ async function getUpstashLimiter() {
 // configured (e.g. local dev).
 const hits = new Map();
 
-function inMemoryRateLimited(ip) {
+function inMemoryRateLimited(ip, { prefix, limit, windowMs }) {
   const now = Date.now();
-  const recent = (hits.get(ip) || []).filter((t) => now - t < RATE_WINDOW_MS);
+  const key = `${prefix}:${ip}`;
+  const record = hits.get(key);
+  const recent = (record?.times || []).filter((t) => now - t < windowMs);
   recent.push(now);
-  hits.set(ip, recent);
+  hits.set(key, { times: recent, windowMs });
 
   // Opportunistic cleanup so the map can't grow unbounded.
   if (hits.size > 5000) {
-    for (const [key, times] of hits) {
-      if (!times.some((t) => now - t < RATE_WINDOW_MS)) hits.delete(key);
+    for (const [storedKey, storedRecord] of hits) {
+      if (!storedRecord.times.some((t) => now - t < storedRecord.windowMs)) {
+        hits.delete(storedKey);
+      }
     }
   }
-  return recent.length > RATE_LIMIT;
+  return recent.length > limit;
 }
 
-async function isRateLimited(req) {
+async function isRateLimited(req, options = {}) {
+  const settings = {
+    prefix: options.prefix || 'portfolio_chat',
+    limit: options.limit || RATE_LIMIT,
+    windowMs: options.windowMs || RATE_WINDOW_MS,
+  };
   const ip = getClientIp(req);
-  const limiter = await getUpstashLimiter();
+  const limiter = await getUpstashLimiter(settings);
   if (limiter) {
     try {
       const { success } = await limiter.limit(ip);
@@ -127,7 +140,7 @@ async function isRateLimited(req) {
       // Redis hiccup — degrade gracefully to the in-memory limiter.
     }
   }
-  return inMemoryRateLimited(ip);
+  return inMemoryRateLimited(ip, settings);
 }
 
 module.exports = {

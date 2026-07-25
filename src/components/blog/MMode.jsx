@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import BlogProgressBar from "./BlogProgressBar";
@@ -31,7 +31,7 @@ const MMode = () => {
       <Header />
       <BlogProgressBar />
 
-      <main className="blog blog--single section" id="first-post">
+      <main className="blog blog--single section" id="main-content">
         <div className="blog__container container">
 
           {/* Back button */}
@@ -64,7 +64,7 @@ const MMode = () => {
             </p>
 
             <figure className="blog__figure blog__figure--hero">
-              <img src={heroImage} alt={t('posts.mMode.heroImageAlt')} className="blog__img" />
+              <img src={heroImage} alt={t('posts.mMode.heroImageAlt')} className="blog__img" fetchPriority="high" decoding="async" />
             </figure>
           </header>
 
@@ -88,7 +88,7 @@ const MMode = () => {
               <h2 className="blog__heading">{t('posts.mMode.step1Heading')}</h2>
 
               <figure className="blog__figure blog__figure--aside">
-                <img src={Mmode} alt={t('posts.mMode.step1DialAlt')} className="blog__img" />
+                <img src={Mmode} alt={t('posts.mMode.step1DialAlt')} className="blog__img" loading="lazy" decoding="async" />
                 <figcaption className="blog__caption">{t('posts.mMode.step1DialCaption')}</figcaption>
               </figure>
 
@@ -121,7 +121,7 @@ const MMode = () => {
               {/* Shutter */}
               <div className="blog__info-block">
                 <figure className="blog__figure blog__figure--diagram">
-                  <img src={ShuuterSpeed} alt={t('posts.mMode.shutterAlt')} className="blog__img" />
+                  <img src={ShuuterSpeed} alt={t('posts.mMode.shutterAlt')} className="blog__img" loading="lazy" decoding="async" />
                   <figcaption className="blog__caption">{t('posts.mMode.shutterCaption')}</figcaption>
                 </figure>
 
@@ -137,7 +137,7 @@ const MMode = () => {
               {/* Aperture */}
               <div className="blog__info-block">
                 <figure className="blog__figure blog__figure--diagram">
-                  <img src={Apertune} alt={t('posts.mMode.apertureAlt')} className="blog__img" />
+                  <img src={Apertune} alt={t('posts.mMode.apertureAlt')} className="blog__img" loading="lazy" decoding="async" />
                   <figcaption className="blog__caption">{t('posts.mMode.apertureCaption')}</figcaption>
                 </figure>
 
@@ -153,7 +153,7 @@ const MMode = () => {
               {/* ISO */}
               <div className="blog__info-block">
                 <figure className="blog__figure blog__figure--diagram">
-                  <img src={ISO} alt={t('posts.mMode.isoAlt')} className="blog__img" />
+                  <img src={ISO} alt={t('posts.mMode.isoAlt')} className="blog__img" loading="lazy" decoding="async" />
                   <figcaption className="blog__caption">{t('posts.mMode.isoCaption')}</figcaption>
                 </figure>
 
@@ -172,7 +172,7 @@ const MMode = () => {
               <h2 className="blog__heading">{t('posts.mMode.workHeading')}</h2>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={exposureTriangle} alt={t('posts.mMode.workTriangleAlt')} className="blog__img" />
+                <img src={exposureTriangle} alt={t('posts.mMode.workTriangleAlt')} className="blog__img" loading="lazy" decoding="async" />
                 <figcaption className="blog__caption">{t('posts.mMode.workTriangleCaption')}</figcaption>
               </figure>
 
@@ -214,11 +214,11 @@ const MMode = () => {
 
               <div className="blog__examples-grid">
                 <figure className="blog__figure">
-                  <img src={Portrait} alt={t('posts.mMode.examplePortraitAlt')} className="blog__img blog__img--cover" />
+                  <img src={Portrait} alt={t('posts.mMode.examplePortraitAlt')} className="blog__img blog__img--cover" loading="lazy" decoding="async" />
                   <figcaption className="blog__caption">{t('posts.mMode.examplePortraitCaption')}</figcaption>
                 </figure>
                 <figure className="blog__figure">
-                  <img src={longExposure} alt={t('posts.mMode.exampleLongExpAlt')} className="blog__img blog__img--cover" />
+                  <img src={longExposure} alt={t('posts.mMode.exampleLongExpAlt')} className="blog__img blog__img--cover" loading="lazy" decoding="async" />
                   <figcaption className="blog__caption">{t('posts.mMode.exampleLongExpCaption')}</figcaption>
                 </figure>
               </div>
@@ -236,7 +236,7 @@ const MMode = () => {
               </ul>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={ManualMode} alt={t('posts.mMode.finalImageAlt')} className="blog__img" />
+                <img src={ManualMode} alt={t('posts.mMode.finalImageAlt')} className="blog__img" loading="lazy" decoding="async" />
               </figure>
             </section>
 

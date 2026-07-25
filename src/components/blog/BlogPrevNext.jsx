@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { posts } from './postsData';
 import { useLanguage } from '../../i18n/LanguageContext';
 
@@ -10,7 +10,10 @@ const BlogPrevNext = ({ currentSlug }) => {
 
   if (!prev && !next) return null;
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  const scrollToTop = () => {
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  };
 
   return (
     <div className="blog__prevnext">

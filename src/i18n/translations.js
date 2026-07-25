@@ -16,11 +16,24 @@ const en = {
     contact: 'Contact',
     menuOpen: 'Open menu',
     menuClose: 'Close menu',
+    skipToContent: 'Skip to main content',
     language: 'Language',
   },
   theme: {
     toLight: 'Switch to light mode',
     toDark: 'Switch to dark mode',
+  },
+  updates: {
+    label: 'Site updates',
+    labelNew: 'Site updates, new items available',
+    title: "What's new",
+    badge: 'New',
+    empty: 'No updates yet.',
+    tags: {
+      project: 'Project',
+      blog: 'Blog',
+      feature: 'Feature',
+    },
   },
   home: {
     subtitle: 'Web / Software Developer',
@@ -134,6 +147,13 @@ const en = {
       website: 'Website',
       wordpress: 'Wordpress',
       app: 'App',
+    },
+    pagination: {
+      label: 'Portfolio pages',
+      prev: 'Previous page',
+      next: 'Next page',
+      page: 'Page {n}',
+      status: 'Page {current} of {total}',
     },
   },
   testimonials: {
@@ -251,11 +271,24 @@ const zhHans = {
     contact: '联系',
     menuOpen: '打开菜单',
     menuClose: '关闭菜单',
+    skipToContent: '跳到主要内容',
     language: '语言',
   },
   theme: {
     toLight: '切换到浅色模式',
     toDark: '切换到深色模式',
+  },
+  updates: {
+    label: '网站更新',
+    labelNew: '网站更新，有新内容',
+    title: '最近更新',
+    badge: '新',
+    empty: '暂无更新。',
+    tags: {
+      project: '项目',
+      blog: '博客',
+      feature: '功能',
+    },
   },
   home: {
     subtitle: '网页 / 软件开发工程师',
@@ -369,6 +402,13 @@ const zhHans = {
       website: '网站',
       wordpress: 'WordPress',
       app: '应用',
+    },
+    pagination: {
+      label: '作品分页',
+      prev: '上一页',
+      next: '下一页',
+      page: '第 {n} 页',
+      status: '第 {current} / {total} 页',
     },
   },
   testimonials: {
@@ -484,11 +524,24 @@ const zhHant = {
     contact: '聯絡',
     menuOpen: '開啟選單',
     menuClose: '關閉選單',
+    skipToContent: '跳至主要內容',
     language: '語言',
   },
   theme: {
     toLight: '切換至淺色模式',
     toDark: '切換至深色模式',
+  },
+  updates: {
+    label: '網站更新',
+    labelNew: '網站更新，有新內容',
+    title: '最近更新',
+    badge: '新',
+    empty: '暫無更新。',
+    tags: {
+      project: '專案',
+      blog: '網誌',
+      feature: '功能',
+    },
   },
   home: {
     subtitle: '網頁 / 軟體開發工程師',
@@ -602,6 +655,13 @@ const zhHant = {
       website: '網站',
       wordpress: 'WordPress',
       app: '應用程式',
+    },
+    pagination: {
+      label: '作品分頁',
+      prev: '上一頁',
+      next: '下一頁',
+      page: '第 {n} 頁',
+      status: '第 {current} / {total} 頁',
     },
   },
   testimonials: {
@@ -717,11 +777,24 @@ const ja = {
     contact: '連絡',
     menuOpen: 'メニューを開く',
     menuClose: 'メニューを閉じる',
+    skipToContent: 'メインコンテンツへ移動',
     language: '言語',
   },
   theme: {
     toLight: 'ライトモードに切り替え',
     toDark: 'ダークモードに切り替え',
+  },
+  updates: {
+    label: 'サイトの更新',
+    labelNew: 'サイトの更新、新着あり',
+    title: '最近の更新',
+    badge: 'New',
+    empty: '更新はまだありません。',
+    tags: {
+      project: 'プロジェクト',
+      blog: 'ブログ',
+      feature: '機能',
+    },
   },
   home: {
     subtitle: 'Web / ソフトウェア開発者',
@@ -835,6 +908,13 @@ const ja = {
       website: 'ウェブサイト',
       wordpress: 'WordPress',
       app: 'アプリ',
+    },
+    pagination: {
+      label: '作品のページ',
+      prev: '前のページ',
+      next: '次のページ',
+      page: '{n} ページ目',
+      status: '{total} ページ中 {current} ページ目',
     },
   },
   testimonials: {

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import BlogProgressBar from "./BlogProgressBar";
@@ -29,7 +29,7 @@ const Hermes = () => {
       <Header />
       <BlogProgressBar />
 
-      <main className="blog blog--single section" id="hermes">
+      <main className="blog blog--single section" id="main-content">
         <div className="blog__container container">
 
           {/* Back button */}
@@ -62,7 +62,7 @@ const Hermes = () => {
             </p>
 
             <figure className="blog__figure blog__figure--hero">
-              <img src={overviewImg} alt="Hermes app overview showing the inbox" className="blog__img" />
+              <img src={overviewImg} alt="Hermes app overview showing the inbox" className="blog__img" fetchPriority="high" decoding="async" />
             </figure>
           </header>
 
@@ -103,7 +103,7 @@ const Hermes = () => {
               </p>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={accountsImg} alt="Hermes account settings showing multiple email accounts and AI provider selection" className="blog__img" />
+                <img src={accountsImg} alt="Hermes account settings showing multiple email accounts and AI provider selection" className="blog__img" loading="lazy" decoding="async" />
                 <figcaption className="blog__caption">{t('posts.hermes.multiAccountCaption')}</figcaption>
               </figure>
 
@@ -149,7 +149,7 @@ const Hermes = () => {
               </p>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={aiSummaryImg} alt="Hermes AI email summary" className="blog__img" />
+                <img src={aiSummaryImg} alt="Hermes AI email summary" className="blog__img" loading="lazy" decoding="async" />
                 <figcaption className="blog__caption">{t('posts.hermes.aiSummaryCaption')}</figcaption>
               </figure>
             </section>
@@ -214,7 +214,7 @@ const Hermes = () => {
               </div>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={aiPanelImg} alt="Hermes AI Assist panel showing 9 writing modes" className="blog__img" />
+                <img src={aiPanelImg} alt="Hermes AI Assist panel showing 9 writing modes" className="blog__img" loading="lazy" decoding="async" />
                 <figcaption className="blog__caption">{t('posts.hermes.aiAssistCaption')}</figcaption>
               </figure>
 
@@ -239,7 +239,7 @@ const Hermes = () => {
               </p>
 
               <figure className="blog__figure blog__figure--full blog__figure--capped">
-                <img src={aiAssistantImg} alt="Hermes AI assistant side panel" className="blog__img" />
+                <img src={aiAssistantImg} alt="Hermes AI assistant side panel" className="blog__img" loading="lazy" decoding="async" />
                 <figcaption className="blog__caption">{t('posts.hermes.aiAssistantCaption')}</figcaption>
               </figure>
             </section>
@@ -257,7 +257,7 @@ const Hermes = () => {
               </p>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={categoryImg} alt="Hermes smart email categories powered by AI" className="blog__img" />
+                <img src={categoryImg} alt="Hermes smart email categories powered by AI" className="blog__img" loading="lazy" decoding="async" />
                 <figcaption className="blog__caption">{t('posts.hermes.smartCategoryCaption')}</figcaption>
               </figure>
             </section>

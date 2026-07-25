@@ -1,14 +1,21 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './contact.css'
-import emailjs from '@emailjs/browser';
 import { useLanguage } from '../../i18n/LanguageContext';
 
 const Contact = () => {
   const { t } = useLanguage();
   const form = useRef();
-  const renderedAt = useRef(Date.now());
+  const [renderedAt, setRenderedAt] = useState(() => Date.now());
+  const statusTimerRef = useRef(null);
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
   const [errors, setErrors] = useState({});
+
+  useEffect(() => () => clearTimeout(statusTimerRef.current), []);
+
+  const resetStatusLater = () => {
+    clearTimeout(statusTimerRef.current);
+    statusTimerRef.current = setTimeout(() => setStatus('idle'), 4000);
+  };
 
   const validate = (fields) => {
     const errs = {};
@@ -38,31 +45,34 @@ const Contact = () => {
 
     const data = Object.fromEntries(new FormData(form.current));
 
-    // Spam guard: a filled honeypot or a near-instant submit means a bot.
-    // Silently pretend success so the bot gets no signal, and send nothing.
-    if (data.company || Date.now() - renderedAt.current < 2000) {
-      setStatus('sent');
-      e.target.reset();
-      setTimeout(() => setStatus('idle'), 4000);
-      return;
-    }
-
     const errs = validate(data);
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
+      const firstInvalid = Object.keys(errs)[0];
+      form.current?.elements.namedItem(firstInvalid)?.focus();
       return;
     }
     setErrors({});
     setStatus('sending');
 
     try {
-      await emailjs.sendForm('service_rxvllnw', 'template_e9s4prq', form.current, 'RsMGDSFegXHpttgll');
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...data,
+          renderedAt,
+        }),
+      });
+      if (!response.ok) throw new Error(`Contact request failed: ${response.status}`);
+
       setStatus('sent');
       e.target.reset();
-      setTimeout(() => setStatus('idle'), 4000);
+      setRenderedAt(Date.now());
+      resetStatusLater();
     } catch {
       setStatus('error');
-      setTimeout(() => setStatus('idle'), 4000);
+      resetStatusLater();
     }
   }
 
@@ -120,7 +130,7 @@ const Contact = () => {
         <div className='contact__content'>
           <h3 className='contact__title'>{t('contact.writeProject')}</h3>
 
-          <form ref={form} onSubmit={sendEmail} className='contact__form'>
+          <form ref={form} onSubmit={sendEmail} className='contact__form' noValidate>
             {/* Honeypot: hidden from real users, tempting to bots. */}
             <div className='contact__hp' aria-hidden='true'>
               <label htmlFor='contact-company'>Company</label>
@@ -129,19 +139,19 @@ const Contact = () => {
 
             <div className='contact__form-div'>
               <label htmlFor='contact-name' className='contact__form-tag'>{t('contact.nameLabel')}</label>
-              <input type='text' name='name' id='contact-name' maxLength={100} className='contact__form-input' placeholder={t('contact.namePlaceholder')} onChange={clearFieldError} aria-invalid={!!errors.name} aria-describedby={errors.name ? 'contact-name-error' : undefined} />
+              <input type='text' name='name' id='contact-name' required autoComplete='name' maxLength={100} className='contact__form-input' placeholder={t('contact.namePlaceholder')} onChange={clearFieldError} aria-invalid={!!errors.name} aria-describedby={errors.name ? 'contact-name-error' : undefined} />
             </div>
             {errors.name && <span id='contact-name-error' className='contact__form-error'>{errors.name}</span>}
 
             <div className='contact__form-div'>
               <label htmlFor='contact-email' className='contact__form-tag'>{t('contact.emailLabel')}</label>
-              <input type='email' name='email' id='contact-email' maxLength={150} className='contact__form-input' placeholder={t('contact.emailPlaceholder')} onChange={clearFieldError} aria-invalid={!!errors.email} aria-describedby={errors.email ? 'contact-email-error' : undefined} />
+              <input type='email' name='email' id='contact-email' required autoComplete='email' maxLength={150} className='contact__form-input' placeholder={t('contact.emailPlaceholder')} onChange={clearFieldError} aria-invalid={!!errors.email} aria-describedby={errors.email ? 'contact-email-error' : undefined} />
             </div>
             {errors.email && <span id='contact-email-error' className='contact__form-error'>{errors.email}</span>}
 
             <div className='contact__form-div contact__form-area'>
               <label htmlFor='contact-message' className='contact__form-tag'>{t('contact.messageLabel')}</label>
-              <textarea name='message' id='contact-message' cols='30' rows='10' maxLength={2000} className='contact__form-input' placeholder={t('contact.messagePlaceholder')} onChange={clearFieldError} aria-invalid={!!errors.message} aria-describedby={errors.message ? 'contact-message-error' : undefined}></textarea>
+              <textarea name='message' id='contact-message' required cols='30' rows='10' maxLength={2000} className='contact__form-input' placeholder={t('contact.messagePlaceholder')} onChange={clearFieldError} aria-invalid={!!errors.message} aria-describedby={errors.message ? 'contact-message-error' : undefined}></textarea>
             </div>
             {errors.message && <span id='contact-message-error' className='contact__form-error'>{errors.message}</span>}
 

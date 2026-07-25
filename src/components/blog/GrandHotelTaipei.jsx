@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import BlogProgressBar from "./BlogProgressBar";
@@ -49,7 +49,7 @@ const GrandHotelTaipei = () => {
       <Header />
       <BlogProgressBar />
 
-      <main className="blog blog--single section" id="grand-hotel-taipei">
+      <main className="blog blog--single section" id="main-content">
         <div className="blog__container container">
 
           <div className="blog__back-wrapper">
@@ -80,7 +80,7 @@ const GrandHotelTaipei = () => {
             </p>
 
             <figure className="blog__figure blog__figure--hero">
-              <img src={heroImage} alt={t('posts.grandHotelTaipei.heroImgAlt')} className="blog__img" />
+              <img src={heroImage} alt={t('posts.grandHotelTaipei.heroImgAlt')} className="blog__img" fetchPriority="high" decoding="async" />
             </figure>
           </header>
 
@@ -113,7 +113,7 @@ const GrandHotelTaipei = () => {
               </p>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={gateImage} alt={t('posts.grandHotelTaipei.arrivalImgAlt')} className="blog__img" />
+                <img src={gateImage} alt={t('posts.grandHotelTaipei.arrivalImgAlt')} className="blog__img" loading="lazy" decoding="async" />
                 <figcaption className="blog__caption">{t('posts.grandHotelTaipei.arrivalCaption')}</figcaption>
               </figure>
             </section>
@@ -130,7 +130,7 @@ const GrandHotelTaipei = () => {
               </p>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={lobbyImage} alt={t('posts.grandHotelTaipei.lobbyImgAlt')} className="blog__img" />
+                <img src={lobbyImage} alt={t('posts.grandHotelTaipei.lobbyImgAlt')} className="blog__img" loading="lazy" decoding="async" />
                 <figcaption className="blog__caption">{t('posts.grandHotelTaipei.lobbyCaption')}</figcaption>
               </figure>
             </section>
@@ -147,7 +147,7 @@ const GrandHotelTaipei = () => {
               </p>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={corridorImage} alt={t('posts.grandHotelTaipei.stayImgAlt')} className="blog__img" />
+                <img src={corridorImage} alt={t('posts.grandHotelTaipei.stayImgAlt')} className="blog__img" loading="lazy" decoding="async" />
                 <figcaption className="blog__caption">{t('posts.grandHotelTaipei.stayCaption')}</figcaption>
               </figure>
             </section>
@@ -164,17 +164,17 @@ const GrandHotelTaipei = () => {
               </p>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={galleryImage10} alt={t('posts.grandHotelTaipei.roomImgAlt')} className="blog__img" />
+                <img src={galleryImage10} alt={t('posts.grandHotelTaipei.roomImgAlt')} className="blog__img" loading="lazy" decoding="async" />
                 <figcaption className="blog__caption">{t('posts.grandHotelTaipei.roomCaption')}</figcaption>
               </figure>
 
               <div className="blog__examples-grid">
                 <figure className="blog__figure">
-                  <img src={galleryImage11} alt={t('posts.grandHotelTaipei.roomBathImgAlt')} className="blog__img blog__img--cover" />
+                  <img src={galleryImage11} alt={t('posts.grandHotelTaipei.roomBathImgAlt')} className="blog__img blog__img--cover" loading="lazy" decoding="async" />
                   <figcaption className="blog__caption">{t('posts.grandHotelTaipei.roomBathCaption')}</figcaption>
                 </figure>
                 <figure className="blog__figure">
-                  <img src={galleryImage15} alt={t('posts.grandHotelTaipei.roomAmenitiesImgAlt')} className="blog__img blog__img--cover" />
+                  <img src={galleryImage15} alt={t('posts.grandHotelTaipei.roomAmenitiesImgAlt')} className="blog__img blog__img--cover" loading="lazy" decoding="async" />
                   <figcaption className="blog__caption">{t('posts.grandHotelTaipei.roomAmenitiesCaption')}</figcaption>
                 </figure>
               </div>
@@ -192,17 +192,17 @@ const GrandHotelTaipei = () => {
               </p>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={galleryImage7} alt={t('posts.grandHotelTaipei.diningImgAlt')} className="blog__img" />
+                <img src={galleryImage7} alt={t('posts.grandHotelTaipei.diningImgAlt')} className="blog__img" loading="lazy" decoding="async" />
                 <figcaption className="blog__caption">{t('posts.grandHotelTaipei.diningCaption')}</figcaption>
               </figure>
 
               <div className="blog__examples-grid">
                 <figure className="blog__figure">
-                  <img src={galleryImage6} alt={t('posts.grandHotelTaipei.diningDimsumImgAlt')} className="blog__img blog__img--cover" />
+                  <img src={galleryImage6} alt={t('posts.grandHotelTaipei.diningDimsumImgAlt')} className="blog__img blog__img--cover" loading="lazy" decoding="async" />
                   <figcaption className="blog__caption">{t('posts.grandHotelTaipei.diningDimsumCaption')}</figcaption>
                 </figure>
                 <figure className="blog__figure">
-                  <img src={galleryImage14} alt={t('posts.grandHotelTaipei.diningPlateImgAlt')} className="blog__img blog__img--cover" />
+                  <img src={galleryImage14} alt={t('posts.grandHotelTaipei.diningPlateImgAlt')} className="blog__img blog__img--cover" loading="lazy" decoding="async" />
                   <figcaption className="blog__caption">{t('posts.grandHotelTaipei.diningPlateCaption')}</figcaption>
                 </figure>
               </div>
@@ -220,7 +220,7 @@ const GrandHotelTaipei = () => {
               </p>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={dragonImage} alt={t('posts.grandHotelTaipei.detailsImgAlt')} className="blog__img" />
+                <img src={dragonImage} alt={t('posts.grandHotelTaipei.detailsImgAlt')} className="blog__img" loading="lazy" decoding="async" />
                 <figcaption className="blog__caption">{t('posts.grandHotelTaipei.detailsCaption')}</figcaption>
               </figure>
             </section>
@@ -237,12 +237,12 @@ const GrandHotelTaipei = () => {
               </p>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={galleryImage1} alt={t('posts.grandHotelTaipei.tunnelsImgAlt')} className="blog__img" />
+                <img src={galleryImage1} alt={t('posts.grandHotelTaipei.tunnelsImgAlt')} className="blog__img" loading="lazy" decoding="async" />
                 <figcaption className="blog__caption">{t('posts.grandHotelTaipei.tunnelsCaption')}</figcaption>
               </figure>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={galleryImage13} alt={t('posts.grandHotelTaipei.tunnelsSlideImgAlt')} className="blog__img" />
+                <img src={galleryImage13} alt={t('posts.grandHotelTaipei.tunnelsSlideImgAlt')} className="blog__img" loading="lazy" decoding="async" />
                 <figcaption className="blog__caption">{t('posts.grandHotelTaipei.tunnelsSlideCaption')}</figcaption>
               </figure>
             </section>
@@ -259,7 +259,7 @@ const GrandHotelTaipei = () => {
               </p>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={viewImage} alt={t('posts.grandHotelTaipei.viewsImgAlt')} className="blog__img" />
+                <img src={viewImage} alt={t('posts.grandHotelTaipei.viewsImgAlt')} className="blog__img" loading="lazy" decoding="async" />
                 <figcaption className="blog__caption">{t('posts.grandHotelTaipei.viewsCaption')}</figcaption>
               </figure>
             </section>
@@ -278,6 +278,8 @@ const GrandHotelTaipei = () => {
                       src={photo.src}
                       alt={photo.alt}
                       className="blog__img blog__img--cover"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <figcaption className="blog__caption">
                       {photo.alt}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import "./services.css"
 import { useLanguage } from '../../i18n/LanguageContext'
 
@@ -11,21 +11,52 @@ const SERVICES = [
 const Services = () => {
   const { t } = useLanguage()
   const [toggleState, setToggleState] = useState(0);
+  const modalRefs = useRef([]);
+  const lastFocusedRef = useRef(null);
 
-  const toggleTab = (index) => {
+  const openModal = (index) => {
+    lastFocusedRef.current = document.activeElement;
     setToggleState(index);
-  }
+  };
+
+  const closeModal = () => setToggleState(0);
 
   useEffect(() => {
     if (toggleState !== 0) {
       document.body.style.overflow = 'hidden';
+      const modal = modalRefs.current[toggleState];
+      modal?.querySelector('.services__model-close')?.focus();
+
       const onKeyDown = (e) => {
-        if (e.key === 'Escape') setToggleState(0);
+        if (e.key === 'Escape') {
+          closeModal();
+          return;
+        }
+        if (e.key !== 'Tab' || !modal) return;
+
+        const focusable = Array.from(
+          modal.querySelectorAll(
+            'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((element) => !element.disabled);
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       };
       document.addEventListener('keydown', onKeyDown);
       return () => {
         document.body.style.overflow = '';
         document.removeEventListener('keydown', onKeyDown);
+        lastFocusedRef.current?.focus?.();
+        lastFocusedRef.current = null;
       };
     } else {
       document.body.style.overflow = '';
@@ -49,23 +80,27 @@ const Services = () => {
                 <h3 className='services__title'>{t(`services.${service.key}.title`)}</h3>
               </div>
 
-              <button type="button" className='services__button' onClick={() => toggleTab(index)}>
+              <button type="button" className='services__button' onClick={() => openModal(index)}>
                 {t('services.viewMore')}
                 <i className="uil uil-arrow-right services__button-icon"></i>
               </button>
 
               <div
                 className={toggleState === index ? "services__model active-model" : "services__model"}
-                onClick={() => toggleTab(0)}
+                aria-hidden={toggleState !== index}
+                onClick={closeModal}
               >
                 <div
+                  ref={(element) => {
+                    modalRefs.current[index] = element;
+                  }}
                   className='services__model-content'
                   role="dialog"
                   aria-modal="true"
                   aria-labelledby={`services-modal-title-${index}`}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <button type="button" onClick={() => toggleTab(0)} className="services__model-close" aria-label={t('services.closeModal')}>
+                  <button type="button" onClick={closeModal} className="services__model-close" aria-label={t('services.closeModal')}>
                     <i className="uil uil-times"></i>
                   </button>
 

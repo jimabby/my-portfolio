@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import './App.css';
@@ -82,11 +82,12 @@ function PortfolioPage() {
       return;
     }
     // Wait one frame so the DOM is laid out before scrolling.
-    const id = requestAnimationFrame(() => {
-      const el = document.querySelector(hash);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    const frameId = requestAnimationFrame(() => {
+      const el = document.getElementById(hash.slice(1));
+      const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+      if (el) el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
     });
-    return () => cancelAnimationFrame(id);
+    return () => cancelAnimationFrame(frameId);
   }, [location.hash, location.pathname]);
 
   return (
@@ -113,12 +114,25 @@ function PortfolioPage() {
   );
 }
 
+function RouteScrollManager() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [pathname]);
+
+  return null;
+}
+
 function App() {
+  const { t } = useLanguage();
+
   return (
     <ErrorBoundary>
       <BrowserRouter basename={import.meta.env.BASE_URL}>
         <div id="top"></div>
-        <a href="#main-content" className="skip-link">Skip to main content</a>
+        <a href="#main-content" className="skip-link">{t('nav.skipToContent')}</a>
+        <RouteScrollManager />
         <Suspense fallback={null}>
           <Routes>
             <Route path="/" element={<PortfolioPage />} />

@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import ScrollUp from '../scrollup/ScrollUp';
@@ -15,7 +15,10 @@ const Blog = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [query, setQuery] = useState('');
 
-  const catLabel = (cat) => t(`blog.categories.${cat}`, cat);
+  const catLabel = useCallback(
+    (cat) => t(`blog.categories.${cat}`, cat),
+    [t]
+  );
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
@@ -32,13 +35,13 @@ const Blog = () => {
       const haystack = `${p.title} ${p.excerpt} ${title} ${excerpt} ${p.category} ${catLabel(p.category)} ${p.tags.join(' ')}`.toLowerCase();
       return words.every(word => haystack.includes(word));
     });
-  }, [activeCategory, query, t]);
+  }, [activeCategory, catLabel, query, t]);
 
   return (
     <>
       <Seo title={t('seo.blogTitle')} description={t('seo.blogDesc')} path="/blog" />
       <Header />
-      <section className="blog section" id="blog">
+      <main className="blog section" id="main-content">
         <h2 className="section__title">{t('blog.title')}</h2>
         <span className="section__subtitle">{t('blog.subtitle')}</span>
 
@@ -77,7 +80,7 @@ const Blog = () => {
           {filtered.map(post => (
             <article className="blog__card" key={post.id}>
               {post.thumbnail && (
-                <img src={post.thumbnail} alt={t(`posts.${post.key}.title`, post.title)} className="blog__card-thumb" />
+                <img src={post.thumbnail} alt={t(`posts.${post.key}.title`, post.title)} className="blog__card-thumb" loading="lazy" decoding="async" />
               )}
 
               <div className="blog__card-meta">
@@ -105,7 +108,7 @@ const Blog = () => {
             </article>
           ))}
         </div>
-      </section>
+      </main>
       <Footer />
       <ScrollUp />
     </>

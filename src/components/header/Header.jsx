@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import "./header.css"
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 import { useLanguage } from '../../i18n/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
+import UpdatesDot from './UpdatesDot';
 
 const SECTIONS = ['home', 'about', 'skills', 'services', 'portfolio', 'testimonial', 'contact'];
 
@@ -70,12 +71,7 @@ const Header = () => {
     return () => observers.forEach((o) => o.disconnect());
   }, [location.pathname]);
 
-  // Set blog as active when on blog routes
-  useEffect(() => {
-    if (location.pathname.startsWith('/blog')) {
-      setActiveNav('blog');
-    }
-  }, [location.pathname]);
+  const currentActiveNav = location.pathname.startsWith('/blog') ? 'blog' : activeNav;
 
   // Dark mode
   const [theme, setTheme] = useState(getStoredTheme);
@@ -109,7 +105,7 @@ const Header = () => {
               <Link
                 to="/#home"
                 onClick={() => handleNavClick('#home')}
-                className={activeNav === '#home' ? 'nav__link active-link' : 'nav__link'}
+                className={currentActiveNav === '#home' ? 'nav__link active-link' : 'nav__link'}
               >
                 <i className='uil uil-estate nav__icon'></i>{t('nav.home')}
               </Link>
@@ -118,7 +114,7 @@ const Header = () => {
               <Link
                 to="/#about"
                 onClick={() => handleNavClick('#about')}
-                className={activeNav === '#about' ? 'nav__link active-link' : 'nav__link'}
+                className={currentActiveNav === '#about' ? 'nav__link active-link' : 'nav__link'}
               >
                 <i className='uil uil-user nav__icon'></i>{t('nav.about')}
               </Link>
@@ -127,7 +123,7 @@ const Header = () => {
               <Link
                 to="/#skills"
                 onClick={() => handleNavClick('#skills')}
-                className={activeNav === '#skills' ? 'nav__link active-link' : 'nav__link'}
+                className={currentActiveNav === '#skills' ? 'nav__link active-link' : 'nav__link'}
               >
                 <i className='uil uil-file nav__icon'></i>{t('nav.skills')}
               </Link>
@@ -136,7 +132,7 @@ const Header = () => {
               <Link
                 to="/#services"
                 onClick={() => handleNavClick('#services')}
-                className={activeNav === '#services' ? 'nav__link active-link' : 'nav__link'}
+                className={currentActiveNav === '#services' ? 'nav__link active-link' : 'nav__link'}
               >
                 <i className='uil uil-briefcase-alt nav__icon'></i>{t('nav.services')}
               </Link>
@@ -145,7 +141,7 @@ const Header = () => {
               <Link
                 to="/#portfolio"
                 onClick={() => handleNavClick('#portfolio')}
-                className={activeNav === '#portfolio' ? 'nav__link active-link' : 'nav__link'}
+                className={currentActiveNav === '#portfolio' ? 'nav__link active-link' : 'nav__link'}
               >
                 <i className='uil uil-scenery nav__icon'></i>{t('nav.portfolio')}
               </Link>
@@ -155,7 +151,7 @@ const Header = () => {
                 to="/blog"
                 onClick={() => handleNavClick("blog")}
                 className={
-                  activeNav === "blog" ? "nav__link active-link" : "nav__link"
+                  currentActiveNav === "blog" ? "nav__link active-link" : "nav__link"
                 }
               >
                 <i className="uil uil-notes nav__icon"></i>{t('nav.blog')}
@@ -165,7 +161,7 @@ const Header = () => {
               <Link
                 to="/#contact"
                 onClick={() => handleNavClick('#contact')}
-                className={activeNav === '#contact' ? 'nav__link active-link' : 'nav__link'}
+                className={currentActiveNav === '#contact' ? 'nav__link active-link' : 'nav__link'}
               >
                 <i className='uil uil-message nav__icon'></i>{t('nav.contact')}
               </Link>
@@ -178,6 +174,7 @@ const Header = () => {
         </div>
 
         <div className="nav__buttons">
+          <UpdatesDot />
           <LanguageSwitcher />
           <button
             type="button"

@@ -7,10 +7,12 @@ import { createRequire } from 'node:module'
 const require = createRequire(import.meta.url)
 const { buildSystemPrompt, buildChatHistory } = require('./api/systemPrompt.js')
 const { validateBody } = require('./api/guard.js')
+const { validateContactBody, sendContactEmail } = require('./api/contactService.js')
 
-function devChatApi(apiKey) {
+function devApi(env) {
+  const apiKey = env.GEMINI_API_KEY
   return {
-    name: 'dev-chat-api',
+    name: 'dev-api',
     apply: 'serve',
     configureServer(server) {
       server.middlewares.use('/api/chat', (req, res) => {
@@ -61,6 +63,31 @@ function devChatApi(apiKey) {
           }
         })
       })
+
+      server.middlewares.use('/api/contact', (req, res) => {
+        if (req.method !== 'POST') {
+          res.statusCode = 405
+          return res.end()
+        }
+        let body = ''
+        req.on('data', (chunk) => (body += chunk))
+        req.on('end', async () => {
+          res.setHeader('Content-Type', 'application/json')
+          try {
+            const parsed = validateContactBody(JSON.parse(body))
+            if (parsed.spam) return res.end(JSON.stringify({ ok: true }))
+            if (parsed.error) {
+              res.statusCode = parsed.status
+              return res.end(JSON.stringify({ error: parsed.error }))
+            }
+            await sendContactEmail(parsed.fields, env)
+            return res.end(JSON.stringify({ ok: true }))
+          } catch {
+            res.statusCode = 500
+            return res.end(JSON.stringify({ error: 'Unable to send message' }))
+          }
+        })
+      })
     },
   }
 }
@@ -68,7 +95,7 @@ function devChatApi(apiKey) {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return {
-    plugins: [react(), devChatApi(env.GEMINI_API_KEY)],
+    plugins: [react(), devApi(env)],
     test: {
       environment: 'jsdom',
       globals: true,

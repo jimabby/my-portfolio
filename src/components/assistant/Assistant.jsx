@@ -5,33 +5,38 @@ import { useLanguage } from '../../i18n/LanguageContext';
 const STORAGE_KEY = 'assistant_messages_v1';
 const MAX_STORED_MESSAGES = 20;
 
+const loadStoredMessages = () => {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .filter(
+        (message) =>
+          (message?.role === 'user' || message?.role === 'assistant') &&
+          typeof message.content === 'string'
+      )
+      .slice(-MAX_STORED_MESSAGES);
+  } catch {
+    return [];
+  }
+};
+
 export default function Assistant() {
   const { lang, t } = useLanguage();
   const starterPrompts = t('assistant.starters');
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(loadStoredMessages);
   const [input, setInput] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
   const [streamText, setStreamText] = useState('');
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const panelRef = useRef(null);
+  const fabRef = useRef(null);
   const abortRef = useRef(null);
 
   // Abort any in-flight request if the component unmounts mid-stream.
   useEffect(() => () => abortRef.current?.abort(), []);
-
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) setMessages(parsed);
-      }
-    } catch {
-      // ignore storage errors
-    }
-  }, []);
 
   useEffect(() => {
     try {
@@ -42,11 +47,15 @@ export default function Assistant() {
   }, [messages]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    messagesEndRef.current?.scrollIntoView({
+      behavior: reduceMotion ? 'auto' : 'smooth',
+    });
   }, [messages, streamText]);
 
   useEffect(() => {
     if (!isOpen) return;
+    const fab = fabRef.current;
     inputRef.current?.focus();
     const onKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -73,7 +82,10 @@ export default function Assistant() {
       }
     };
     document.addEventListener('keydown', onKeyDown);
-    return () => document.removeEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      fab?.focus();
+    };
   }, [isOpen]);
 
   async function sendMessage(text) {
@@ -216,6 +228,7 @@ export default function Assistant() {
   return (
     <>
       <button
+        ref={fabRef}
         type="button"
         className={`assistant__fab ${isOpen ? 'assistant__fab--open' : ''}`}
         onClick={() => setIsOpen((v) => !v)}

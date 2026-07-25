@@ -163,11 +163,161 @@
   color: var(--container-color);
 }
 
-/* When the header sits at the bottom on mobile, the menu must open upward. */
+/* ─── Update dot ─── */
+.updates {
+  position: relative;
+  display: flex;
+}
+
+.updates__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.35rem;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.updates__toggle:hover {
+  background: var(--soft-surface);
+}
+
+.updates__dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--text-color);
+  opacity: 0.55;
+  transition: background-color 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.updates__toggle:hover .updates__dot {
+  opacity: 1;
+}
+
+/* Red only while an unread entry sits at the top of the list. */
+.updates__toggle.has-new .updates__dot {
+  background: hsl(0, 78%, 52%);
+  opacity: 1;
+  box-shadow: 0 0 0 0 hsla(0, 78%, 52%, 0.55);
+  animation: updates-pulse 2.4s ease-out infinite;
+}
+
+[data-theme='dark'] .updates__toggle.has-new .updates__dot {
+  background: hsl(0, 84%, 62%);
+}
+
+@keyframes updates-pulse {
+  0% {
+    box-shadow: 0 0 0 0 hsla(0, 78%, 52%, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 0.4rem hsla(0, 78%, 52%, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 hsla(0, 78%, 52%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .updates__toggle.has-new .updates__dot {
+    animation: none;
+  }
+}
+
+.updates__panel {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  width: min(20rem, calc(100vw - 2.5rem));
+  max-height: min(24rem, 60vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--container-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--card-shadow);
+  padding: 1rem;
+  z-index: var(--z-fixed);
+}
+
+.updates__title {
+  font-size: var(--small-font-size);
+  font-weight: var(--font-semi-bold);
+  color: var(--title-color);
+  margin-bottom: 0.75rem;
+}
+
+.updates__empty {
+  font-size: var(--smaller-font-size);
+  color: var(--text-color);
+}
+
+.updates__list {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.updates__item {
+  display: grid;
+  gap: 0.2rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--border-color);
+}
+
+.updates__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.updates__tag {
+  font-size: var(--tiny-font-size);
+  font-weight: var(--font-medium);
+  color: var(--title-color);
+  background: var(--soft-surface);
+  border-radius: var(--radius-sm);
+  padding: 0.1rem 0.4rem;
+}
+
+.updates__date {
+  font-size: var(--tiny-font-size);
+  color: var(--text-color);
+}
+
+.updates__badge {
+  font-size: var(--tiny-font-size);
+  font-weight: var(--font-semi-bold);
+  color: #fff;
+  background: hsl(0, 78%, 52%);
+  border-radius: var(--radius-sm);
+  padding: 0.1rem 0.4rem;
+  line-height: 1.4;
+}
+
+.updates__text {
+  font-size: var(--smaller-font-size);
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+/* When the header sits at the bottom on mobile, menus must open upward. */
 @media screen and (max-width: 768px) {
   .lang-switcher__menu {
     top: auto;
     bottom: calc(100% + 0.5rem);
+  }
+
+  .updates__panel {
+    top: auto;
+    bottom: calc(100% + 0.5rem);
+    /* The dot sits near the right edge of a narrow viewport, so pin the panel
+       to the nav container instead of letting it overflow off-screen. */
+    right: -0.5rem;
   }
 }
 
