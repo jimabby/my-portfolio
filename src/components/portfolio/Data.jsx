@@ -48,6 +48,20 @@ import SimbaHearing1 from "../../assets/simba-hearing1.webp";
 import SimbaHearing2 from "../../assets/simba-hearing2.webp";
 import SimbaHearing3 from "../../assets/simba-hearing3.webp";
 import SimbaHearing4 from "../../assets/simba-hearing4.webp";
+import AirbestHero from "../../assets/airbest-hero.webp";
+import AirbestImg from "../../assets/airbest.webp";
+import AirbestImg1 from "../../assets/airbest1.webp";
+import AirbestImg2 from "../../assets/airbest2.webp";
+import AirbestImg3 from "../../assets/airbest3.webp";
+import AusGlobalHero from "../../assets/austglobaltrading-hero.webp";
+import AusGlobalImg from "../../assets/austglobaltrading.webp";
+import AusGlobalImg1 from "../../assets/austglobaltrading1.webp";
+import AusGlobalImg2 from "../../assets/austglobaltrading2.webp";
+import AirconSolutionsHero from "../../assets/airconsolutions-hero.webp";
+import AirconSolutionsImg from "../../assets/airconsolutions.webp";
+import AirconSolutionsImg1 from "../../assets/airconsolutions1.webp";
+import AirconSolutionsImg2 from "../../assets/airconsolutions2.webp";
+import AirconSolutionsImg3 from "../../assets/airconsolutions3.webp";
 
 export const projectsData = [
   {
@@ -258,6 +272,42 @@ export const projectsData = [
       SimbaHearing2,
       SimbaHearing3,
       SimbaHearing4,
+    ],
+  },
+  {
+    id: 18,
+    image: AirbestHero,
+    title: 'Airbest',
+    category: 'Website',
+    link: 'https://airbest.com.au/',
+    summary: 'Trade-only HVAC wholesaler site with a searchable SKU catalogue and live stock levels.',
+    tags: ['Website', 'HVAC', 'Bilingual'],
+    gallery: [AirbestHero, AirbestImg, AirbestImg1, AirbestImg2, AirbestImg3],
+  },
+  {
+    id: 19,
+    image: AusGlobalHero,
+    title: 'Aus Global Trading',
+    category: 'Website',
+    link: 'https://austglobaltrading.com.au/',
+    summary: 'Export wholesaler shipping HVAC parts to 60+ countries, with a bilingual FOB/CIF catalogue.',
+    tags: ['Website', 'Export', 'Bilingual'],
+    gallery: [AusGlobalHero, AusGlobalImg, AusGlobalImg1, AusGlobalImg2],
+  },
+  {
+    id: 20,
+    image: AirconSolutionsHero,
+    title: 'Aircon Solutions Australia',
+    category: 'Website',
+    link: 'https://airconsolutionsaustralia.com/',
+    summary: 'Licensed HVAC contractor site covering services, equipment range, and completed project work.',
+    tags: ['Website', 'HVAC', 'Services'],
+    gallery: [
+      AirconSolutionsHero,
+      AirconSolutionsImg,
+      AirconSolutionsImg1,
+      AirconSolutionsImg2,
+      AirconSolutionsImg3,
     ],
   },
 ]

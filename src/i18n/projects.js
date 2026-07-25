@@ -21,6 +21,9 @@ export const projectSummaries = {
     14: 'Refreshed visual identity and layout for the Simba Education brand.',
     15: 'Custom-built healthcare site replacing the legacy WordPress version.',
     16: 'Audiology and hearing services site with a clean, trustworthy feel.',
+    18: 'Trade-only HVAC wholesaler site with a searchable SKU catalogue and live stock levels.',
+    19: 'Export wholesaler shipping HVAC parts to 60+ countries, with a bilingual FOB/CIF catalogue.',
+    20: 'Licensed HVAC contractor site covering services, equipment range, and completed project work.',
   },
   'zh-Hans': {
     0: '由 AI 驱动的邮件客户端，提供智能写作模式与摘要。',
@@ -40,6 +43,9 @@ export const projectSummaries = {
     14: '为 Simba Education 品牌焕新视觉形象与版式。',
     15: '定制开发的医疗网站，取代原有的 WordPress 版本。',
     16: '听力与助听服务网站，风格简洁、值得信赖。',
+    18: '面向同行的暖通空调批发网站，支持型号搜索与实时库存查询。',
+    19: '出口批发商网站，暖通空调配件发往 60 多个国家，提供双语 FOB/CIF 产品目录。',
+    20: '持牌暖通空调工程商网站，涵盖服务范围、设备产品与过往项目案例。',
   },
   'zh-Hant': {
     0: '由 AI 驅動的郵件用戶端，提供智慧寫作模式與摘要。',
@@ -59,6 +65,9 @@ export const projectSummaries = {
     14: '為 Simba Education 品牌煥新視覺形象與版式。',
     15: '客製開發的醫療網站，取代原有的 WordPress 版本。',
     16: '聽力與助聽服務網站，風格簡潔、值得信賴。',
+    18: '面向同行的暖通空調批發網站，支援型號搜尋與即時庫存查詢。',
+    19: '出口批發商網站，暖通空調配件發往 60 多個國家，提供雙語 FOB/CIF 產品目錄。',
+    20: '持牌暖通空調工程商網站，涵蓋服務範圍、設備產品與過往專案案例。',
   },
   ja: {
     0: 'スマートな文章作成モードと要約を備えた AI メールクライアント。',
@@ -78,5 +87,8 @@ export const projectSummaries = {
     14: 'Simba Education ブランドのビジュアルとレイアウトを刷新。',
     15: '従来の WordPress 版を置き換える、フルカスタムのヘルスケアサイト。',
     16: '清潔感と信頼感のある聴覚・補聴サービスサイト。',
+    18: '型番検索とリアルタイム在庫を備えた、業者専用の空調卸売サイト。',
+    19: '空調部材を 60 か国以上へ輸出する卸売業者のサイト。FOB/CIF 対応の二言語カタログを掲載。',
+    20: '有資格の空調工事業者のサイト。サービス内容、取扱機器、施工実績を掲載。',
   },
 };
