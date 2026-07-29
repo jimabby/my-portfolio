@@ -1,67 +1,90 @@
-import HermesImg from "../../assets/Hermes_ai-panel.webp";
-import HermesOverview from "../../assets/Hermes_overview.webp";
-import HermesSummary from "../../assets/Hermes_ai-summary.webp";
-import HermesAssistant from "../../assets/Hermes_ai-assistant.webp";
-import HermesCategory from "../../assets/Hermes_ai-category.webp";
-import HermesAccounts from "../../assets/Hermes_accounts.webp";
-import Work1 from "../../assets/Takeaway.webp";
-import Work2 from "../../assets/sociopedia.webp";
-import Work3 from "../../assets/gym.webp";
-import Work4 from "../../assets/icase.webp";
-import Work5 from "../../assets/idesign.webp";
-import Work6 from "../../assets/earrelief.webp";
-import Work7 from "../../assets/maxmise.webp";
-import Work8 from "../../assets/medirecords.webp";
-import Work9 from "../../assets/myownvet.webp";
-import HousedImg from "../../assets/Housed.webp";
-import HousedImg1 from "../../assets/Housed1.webp";
-import HousedImg2 from "../../assets/Housed2.webp";
-import OnsenImg from "../../assets/onsen.webp";
-import OnsenImg1 from "../../assets/onsen1.webp";
-import SimbaImg from "../../assets/simbaeducation.webp";
-import SimbaImg1 from "../../assets/simbaeducation1.webp";
-import SimbaImg2 from "../../assets/simbaeducation2.webp";
-import SimbaEduNew1 from "../../assets/simba-edu-new1.webp";
-import SimbaEduNew2 from "../../assets/simba-edu-new2.webp";
-import SimbaEduNew3 from "../../assets/simba-edu-new3.webp";
-import SimbaEduNew4 from "../../assets/simba-edu-new4.webp";
-import SimbaEduNew5 from "../../assets/simba-edu-new5.webp";
-import SimbaEduNew6 from "../../assets/simba-edu-new6.webp";
-import SimbaEduRedesign1 from "../../assets/simba-edu-redesign1.webp";
-import SimbaEduRedesign2 from "../../assets/simba-edu-redesign2.webp";
-import SimbaEduRedesign3 from "../../assets/simba-edu-redesign3.webp";
-import SimbaEduRedesign4 from "../../assets/simba-edu-redesign4.webp";
-import SimbaEduRedesign5 from "../../assets/simba-edu-redesign5.webp";
-import SimbaHealthRedesign1 from "../../assets/simba-health-redesign1.webp";
-import SimbaHealthRedesign2 from "../../assets/simba-health-redesign2.webp";
-import SimbaHealthRedesign3 from "../../assets/simba-health-redesign3.webp";
-import SimbaHealthRedesign4 from "../../assets/simba-health-redesign4.webp";
-import SimbaHealth1 from "../../assets/simba-health1.webp";
-import SimbaHealth2 from "../../assets/simba-health2.webp";
-import SimbaHealth3 from "../../assets/simba-health3.webp";
-import SimbaHealth4 from "../../assets/simba-health4.webp";
-import SimbaHealth5 from "../../assets/simba-health5.webp";
-import SimbaHealth6 from "../../assets/simba-health6.webp";
-import SimbaHealth7 from "../../assets/simba-health7.webp";
-import SimbaHealth8 from "../../assets/simba-health8.webp";
-import SimbaHearing1 from "../../assets/simba-hearing1.webp";
-import SimbaHearing2 from "../../assets/simba-hearing2.webp";
-import SimbaHearing3 from "../../assets/simba-hearing3.webp";
-import SimbaHearing4 from "../../assets/simba-hearing4.webp";
-import AirbestHero from "../../assets/airbest-hero.webp";
-import AirbestImg from "../../assets/airbest.webp";
-import AirbestImg1 from "../../assets/airbest1.webp";
-import AirbestImg2 from "../../assets/airbest2.webp";
-import AirbestImg3 from "../../assets/airbest3.webp";
-import AusGlobalHero from "../../assets/austglobaltrading-hero.webp";
-import AusGlobalImg from "../../assets/austglobaltrading.webp";
-import AusGlobalImg1 from "../../assets/austglobaltrading1.webp";
-import AusGlobalImg2 from "../../assets/austglobaltrading2.webp";
-import AirconSolutionsHero from "../../assets/airconsolutions-hero.webp";
-import AirconSolutionsImg from "../../assets/airconsolutions.webp";
-import AirconSolutionsImg1 from "../../assets/airconsolutions1.webp";
-import AirconSolutionsImg2 from "../../assets/airconsolutions2.webp";
-import AirconSolutionsImg3 from "../../assets/airconsolutions3.webp";
+import HermesImg from "../../assets/hermes/Hermes_ai-panel.webp";
+import HermesOverview from "../../assets/hermes/Hermes_overview.webp";
+import HermesSummary from "../../assets/hermes/Hermes_ai-summary.webp";
+import HermesAssistant from "../../assets/hermes/Hermes_ai-assistant.webp";
+import HermesCategory from "../../assets/hermes/Hermes_ai-category.webp";
+import HermesAccounts from "../../assets/hermes/Hermes_accounts.webp";
+import Work1 from "../../assets/takeaway/Takeaway.webp";
+import Work2 from "../../assets/sociopedia/sociopedia.webp";
+import Work3 from "../../assets/gym/gym.webp";
+import Work4 from "../../assets/icase/icase.webp";
+import Work5 from "../../assets/idesign/idesign.webp";
+import Work6 from "../../assets/earrelief/earrelief.webp";
+import Work7 from "../../assets/maxmise/maxmise.webp";
+import Work8 from "../../assets/medirecords/medirecords.webp";
+import Work9 from "../../assets/myownvet/myownvet.webp";
+import HousedHome from "../../assets/housed/housed-home.webp";
+import HousedPilates from "../../assets/housed/housed-pilates.webp";
+import HousedGoals from "../../assets/housed/housed-goals.webp";
+import HousedWellness from "../../assets/housed/housed-wellness.webp";
+import HousedServices from "../../assets/housed/housed-services.webp";
+import HousedAbout from "../../assets/housed/housed-about.webp";
+import HousedBlog from "../../assets/housed/housed-blog.webp";
+import HousedPartnerships from "../../assets/housed/housed-partnerships.webp";
+import HousedAmbassadors from "../../assets/housed/housed-ambassadors.webp";
+import OnsenImg from "../../assets/onsen/onsen.webp";
+import OnsenImg1 from "../../assets/onsen/onsen1.webp";
+import SimbaImg from "../../assets/simba-education/simbaeducation.webp";
+import SimbaImg1 from "../../assets/simba-education/simbaeducation1.webp";
+import SimbaImg2 from "../../assets/simba-education/simbaeducation2.webp";
+import SimbaEduNew1 from "../../assets/simba-edu-new/simba-edu-new1.webp";
+import SimbaEduNew2 from "../../assets/simba-edu-new/simba-edu-new2.webp";
+import SimbaEduNew3 from "../../assets/simba-edu-new/simba-edu-new3.webp";
+import SimbaEduNew4 from "../../assets/simba-edu-new/simba-edu-new4.webp";
+import SimbaEduNew5 from "../../assets/simba-edu-new/simba-edu-new5.webp";
+import SimbaEduNew6 from "../../assets/simba-edu-new/simba-edu-new6.webp";
+import SimbaEduRedesign1 from "../../assets/simba-edu-redesign/simba-edu-redesign1.webp";
+import SimbaEduRedesign2 from "../../assets/simba-edu-redesign/simba-edu-redesign2.webp";
+import SimbaEduRedesign3 from "../../assets/simba-edu-redesign/simba-edu-redesign3.webp";
+import SimbaEduRedesign4 from "../../assets/simba-edu-redesign/simba-edu-redesign4.webp";
+import SimbaEduRedesign5 from "../../assets/simba-edu-redesign/simba-edu-redesign5.webp";
+import SimbaHealthRedesign1 from "../../assets/simba-health-redesign/simba-health-redesign1.webp";
+import SimbaHealthRedesign2 from "../../assets/simba-health-redesign/simba-health-redesign2.webp";
+import SimbaHealthRedesign3 from "../../assets/simba-health-redesign/simba-health-redesign3.webp";
+import SimbaHealthRedesign4 from "../../assets/simba-health-redesign/simba-health-redesign4.webp";
+import SimbaHealth1 from "../../assets/simba-health/simba-health1.webp";
+import SimbaHealth2 from "../../assets/simba-health/simba-health2.webp";
+import SimbaHealth3 from "../../assets/simba-health/simba-health3.webp";
+import SimbaHealth4 from "../../assets/simba-health/simba-health4.webp";
+import SimbaHealth5 from "../../assets/simba-health/simba-health5.webp";
+import SimbaHealth6 from "../../assets/simba-health/simba-health6.webp";
+import SimbaHealth7 from "../../assets/simba-health/simba-health7.webp";
+import SimbaHealth8 from "../../assets/simba-health/simba-health8.webp";
+import SimbaHearing1 from "../../assets/simba-hearing/simba-hearing1.webp";
+import SimbaHearing2 from "../../assets/simba-hearing/simba-hearing2.webp";
+import SimbaHearing3 from "../../assets/simba-hearing/simba-hearing3.webp";
+import SimbaHearing4 from "../../assets/simba-hearing/simba-hearing4.webp";
+import AirbestHero from "../../assets/airbest/airbest-hero.webp";
+import AirbestImg from "../../assets/airbest/airbest.webp";
+import AirbestImg1 from "../../assets/airbest/airbest1.webp";
+import AirbestImg2 from "../../assets/airbest/airbest2.webp";
+import AirbestImg3 from "../../assets/airbest/airbest3.webp";
+import AusGlobalHero from "../../assets/austglobaltrading/austglobaltrading-hero.webp";
+import AusGlobalImg from "../../assets/austglobaltrading/austglobaltrading.webp";
+import AusGlobalImg1 from "../../assets/austglobaltrading/austglobaltrading1.webp";
+import AusGlobalImg2 from "../../assets/austglobaltrading/austglobaltrading2.webp";
+import AirconSolutionsHero from "../../assets/airconsolutions/airconsolutions-hero.webp";
+import AirconSolutionsImg from "../../assets/airconsolutions/airconsolutions.webp";
+import AirconSolutionsImg1 from "../../assets/airconsolutions/airconsolutions1.webp";
+import AirconSolutionsImg2 from "../../assets/airconsolutions/airconsolutions2.webp";
+import AirconSolutionsImg3 from "../../assets/airconsolutions/airconsolutions3.webp";
+import PockytDashboard from "../../assets/pockyt/pockyt-dashboard.webp";
+import PockytTransactions from "../../assets/pockyt/pockyt-transactions.webp";
+import PockytWallet from "../../assets/pockyt/pockyt-wallet.webp";
+import PockytAiCoach from "../../assets/pockyt/pockyt-ai-coach.webp";
+import PockytReceipts from "../../assets/pockyt/pockyt-receipts.webp";
+import PockytGoals from "../../assets/pockyt/pockyt-goals.webp";
+import PockytChallenges from "../../assets/pockyt/pockyt-challenges.webp";
+import PockytTrophies from "../../assets/pockyt/pockyt-trophies.webp";
+import PockytHeatmap from "../../assets/pockyt/pockyt-heatmap.webp";
+import PockytCashback from "../../assets/pockyt/pockyt-cashback.webp";
+import OncoraYourDay from "../../assets/oncora/oncora-your-day.webp";
+import OncoraTrackNodes from "../../assets/oncora/oncora-track-nodes.webp";
+import OncoraSeePatterns from "../../assets/oncora/oncora-see-patterns.webp";
+import OncoraCareToolkit from "../../assets/oncora/oncora-care-toolkit.webp";
+import OncoraDoctorReport from "../../assets/oncora/oncora-doctor-report.webp";
+import OncoraUnderstand from "../../assets/oncora/oncora-understand.webp";
+import OncoraAiCompanion from "../../assets/oncora/oncora-ai-companion.webp";
 
 export const projectsData = [
   {
@@ -137,13 +160,23 @@ export const projectsData = [
   },
   {
     id: 7,
-    image: HousedImg,
+    image: HousedHome,
     title: 'Housed',
     category: 'Website',
     link: 'https://housed.com.au/',
     summary: 'Gym website showcasing classes, trainers, and memberships.',
     tags: ['Website', 'Fitness', 'UI'],
-    gallery: [HousedImg, HousedImg1, HousedImg2],
+    gallery: [
+      HousedHome,
+      HousedPilates,
+      HousedGoals,
+      HousedWellness,
+      HousedServices,
+      HousedAbout,
+      HousedBlog,
+      HousedPartnerships,
+      HousedAmbassadors,
+    ],
   },
   {
     id: 8,
@@ -308,6 +341,45 @@ export const projectsData = [
       AirconSolutionsImg1,
       AirconSolutionsImg2,
       AirconSolutionsImg3,
+    ],
+  },
+  {
+    id: 21,
+    image: PockytDashboard,
+    title: 'Pockyt',
+    category: 'App',
+    link: '#',
+    summary: 'React Native finance tracker with receipt scanning, cashback optimisation, and an AI coach.',
+    tags: ['React Native', 'Finance', 'AI'],
+    gallery: [
+      PockytDashboard,
+      PockytTransactions,
+      PockytWallet,
+      PockytAiCoach,
+      PockytReceipts,
+      PockytGoals,
+      PockytChallenges,
+      PockytTrophies,
+      PockytHeatmap,
+      PockytCashback,
+    ],
+  },
+  {
+    id: 22,
+    image: OncoraYourDay,
+    title: 'Oncora',
+    category: 'App',
+    link: '#',
+    summary: 'Cancer companion app for tracking symptoms, treatment cycles, and reports to share with a care team.',
+    tags: ['React Native', 'Healthcare', 'AI'],
+    gallery: [
+      OncoraYourDay,
+      OncoraTrackNodes,
+      OncoraSeePatterns,
+      OncoraCareToolkit,
+      OncoraDoctorReport,
+      OncoraUnderstand,
+      OncoraAiCompanion,
     ],
   },
 ]

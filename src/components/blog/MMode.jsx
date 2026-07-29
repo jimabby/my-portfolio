@@ -7,15 +7,15 @@ import BlogPrevNext from "./BlogPrevNext";
 import BlogSEO from "./BlogSEO";
 import ScrollUp from "../scrollup/ScrollUp";
 import { useLanguage } from '../../i18n/LanguageContext';
-import heroImage from '../../assets/Nikon-Z8-m-mode.webp'
-import Mmode from "../../assets/m-mode.webp"
-import ShuuterSpeed from "../../assets/shutter-speed.webp"
-import Apertune from "../../assets/apertune.webp"
-import ISO from "../../assets/iso.webp"
-import exposureTriangle from "../../assets/exposure-triangle.webp"
-import Portrait from "../../assets/portrait.webp"
-import longExposure from "../../assets/long-exposure.webp"
-import ManualMode from "../../assets/manual-mode.webp"
+import heroImage from '../../assets/m-mode/Nikon-Z8-m-mode.webp'
+import Mmode from "../../assets/m-mode/m-mode.webp"
+import ShuuterSpeed from "../../assets/m-mode/shutter-speed.webp"
+import Apertune from "../../assets/m-mode/apertune.webp"
+import ISO from "../../assets/m-mode/iso.webp"
+import exposureTriangle from "../../assets/m-mode/exposure-triangle.webp"
+import Portrait from "../../assets/m-mode/portrait.webp"
+import longExposure from "../../assets/m-mode/long-exposure.webp"
+import ManualMode from "../../assets/m-mode/manual-mode.webp"
 import "./blog.css";
 
 const MMode = () => {

@@ -9,12 +9,12 @@ import ScrollUp from "../scrollup/ScrollUp";
 import { useLanguage } from '../../i18n/LanguageContext';
 import "./blog.css";
 
-import overviewImg    from '../../assets/Hermes_overview.webp';
-import aiSummaryImg   from '../../assets/Hermes_ai-summary.webp';
-import aiPanelImg     from '../../assets/Hermes_ai-panel.webp';
-import aiAssistantImg from '../../assets/Hermes_ai-assistant.webp';
-import categoryImg    from '../../assets/Hermes_ai-category.webp';
-import accountsImg    from '../../assets/Hermes_accounts.webp';
+import overviewImg    from '../../assets/hermes/Hermes_overview.webp';
+import aiSummaryImg   from '../../assets/hermes/Hermes_ai-summary.webp';
+import aiPanelImg     from '../../assets/hermes/Hermes_ai-panel.webp';
+import aiAssistantImg from '../../assets/hermes/Hermes_ai-assistant.webp';
+import categoryImg    from '../../assets/hermes/Hermes_ai-category.webp';
+import accountsImg    from '../../assets/hermes/Hermes_accounts.webp';
 
 const Hermes = () => {
   const { t } = useLanguage();

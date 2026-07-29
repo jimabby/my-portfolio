@@ -1,7 +1,7 @@
-import DorinBlaga from '../../assets/Dorin-Blaga.webp';
-import BenRadcliffe from '../../assets/Ben-Radcliffe.webp';
-import ZhongtaoLi from '../../assets/Zhongtao-Li.webp';
-import JamesXabregas from '../../assets/James-Xabregas.webp';
+import DorinBlaga from '../../assets/testimonials/Dorin-Blaga.webp';
+import BenRadcliffe from '../../assets/testimonials/Ben-Radcliffe.webp';
+import ZhongtaoLi from '../../assets/testimonials/Zhongtao-Li.webp';
+import JamesXabregas from '../../assets/testimonials/James-Xabregas.webp';
 
 const Data = [
   {

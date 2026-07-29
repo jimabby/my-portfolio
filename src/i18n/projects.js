@@ -25,6 +25,8 @@ export const projectSummaries = {
     18: 'Trade-only HVAC wholesaler site with a searchable SKU catalogue and live stock levels.',
     19: 'Export wholesaler shipping HVAC parts to 60+ countries, with a bilingual FOB/CIF catalogue.',
     20: 'Licensed HVAC contractor site covering services, equipment range, and completed project work.',
+    21: 'React Native finance tracker with receipt scanning, cashback optimisation, and an AI coach.',
+    22: 'Cancer companion app for tracking symptoms, treatment cycles, and reports to share with a care team.',
   },
   'zh-Hans': {
     0: '由 AI 驱动的邮件客户端，提供智能写作模式与摘要。',
@@ -48,6 +50,8 @@ export const projectSummaries = {
     18: '面向同行的暖通空调批发网站，支持型号搜索与实时库存查询。',
     19: '出口批发商网站，暖通空调配件发往 60 多个国家，提供双语 FOB/CIF 产品目录。',
     20: '持牌暖通空调工程商网站，涵盖服务范围、设备产品与过往项目案例。',
+    21: 'React Native 记账应用，支持小票扫描、返现优化与 AI 理财助手。',
+    22: '癌症陪伴应用，记录症状与治疗周期，并生成可交给医疗团队的报告。',
   },
   'zh-Hant': {
     0: '由 AI 驅動的郵件用戶端，提供智慧寫作模式與摘要。',
@@ -71,6 +75,8 @@ export const projectSummaries = {
     18: '面向同行的暖通空調批發網站，支援型號搜尋與即時庫存查詢。',
     19: '出口批發商網站，暖通空調配件發往 60 多個國家，提供雙語 FOB/CIF 產品目錄。',
     20: '持牌暖通空調工程商網站，涵蓋服務範圍、設備產品與過往專案案例。',
+    21: 'React Native 記帳應用，支援收據掃描、回饋優化與 AI 理財助理。',
+    22: '癌症陪伴應用，記錄症狀與治療週期，並產生可交給醫療團隊的報告。',
   },
   ja: {
     0: 'スマートな文章作成モードと要約を備えた AI メールクライアント。',
@@ -94,5 +100,7 @@ export const projectSummaries = {
     18: '型番検索とリアルタイム在庫を備えた、業者専用の空調卸売サイト。',
     19: '空調部材を 60 か国以上へ輸出する卸売業者のサイト。FOB/CIF 対応の二言語カタログを掲載。',
     20: '有資格の空調工事業者のサイト。サービス内容、取扱機器、施工実績を掲載。',
+    21: 'レシート読取・キャッシュバック最適化・AIコーチを備えた React Native 家計簿アプリ。',
+    22: '症状と治療サイクルを記録し、医療チームに共有できるレポートを作成するがん伴走アプリ。',
   },
 };

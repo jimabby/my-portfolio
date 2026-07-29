@@ -1,7 +1,7 @@
-import hermesThumb  from '../../assets/Hermes_ai-panel.webp';
-import mmodeThumb   from '../../assets/Nikon-Z8-m-mode.webp';
+import hermesThumb  from '../../assets/hermes/Hermes_ai-panel.webp';
+import mmodeThumb   from '../../assets/m-mode/Nikon-Z8-m-mode.webp';
 import grandHotelTaipeiThumb from '../../assets/taipei-taoyuan/taipei-taoyuan-9.webp';
-import hiroThumb from '../../assets/hiro.webp';
+import hiroThumb from '../../assets/hiro/hiro.webp';
 
 export const posts = [
   {
