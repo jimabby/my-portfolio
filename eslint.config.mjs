@@ -33,7 +33,13 @@ export default [
       }],
       'react-refresh/only-export-components': ['warn', {
         allowConstantExport: true,
-        allowExportNames: ['LANGUAGES', 'useLanguage'],
+        allowExportNames: [
+          'LANGUAGES',
+          'useLanguage',
+          'registerDictionary',
+          'detectBrowserLang',
+          'readStoredLang',
+        ],
       }],
     },
   },

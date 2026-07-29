@@ -8,7 +8,7 @@ const validBody = () => ({
   email: 'jim@example.com',
   message: 'Hello there',
   company: '',
-  renderedAt: Date.now() - 3000,
+  elapsedMs: 3000,
 });
 
 describe('contact request validation', () => {
@@ -24,7 +24,16 @@ describe('contact request validation', () => {
 
   it('silently identifies honeypot and instant submissions as spam', () => {
     expect(validateContactBody({ ...validBody(), company: 'Bot Ltd' }).spam).toBe(true);
-    expect(validateContactBody({ ...validBody(), renderedAt: Date.now() }).spam).toBe(true);
+    expect(validateContactBody({ ...validBody(), elapsedMs: 0 }).spam).toBe(true);
+    expect(validateContactBody({ ...validBody(), elapsedMs: undefined }).spam).toBe(true);
+  });
+
+  // Regression: the check used to compare the visitor's wall clock against the
+  // server's, so a device clock running fast made every submission look instant
+  // and the message was dropped while the UI still reported success.
+  it('accepts a slow fill regardless of how skewed the visitor clock is', () => {
+    expect(validateContactBody({ ...validBody(), elapsedMs: 2500 }).ok).toBe(true);
+    expect(validateContactBody({ ...validBody(), elapsedMs: 9_000_000 }).ok).toBe(true);
   });
 
   it('rejects invalid or oversized fields', () => {

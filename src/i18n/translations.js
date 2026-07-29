@@ -1,8 +1,11 @@
 // UI string dictionary for all four supported languages.
 // Proper nouns (people, companies, schools, product/brand names, tech names)
-// are intentionally left untranslated. Long-form blog article bodies live in
-// ./posts/* and are merged in below.
-import { postsContent } from './posts';
+// are intentionally left untranslated.
+//
+// Long-form blog article bodies deliberately live OUTSIDE this file, in
+// ./posts/*. They are registered with the language context by the blog chunk
+// (see ./posts/register.js) so they load only when someone opens the blog,
+// instead of riding along in the entry bundle for every visitor.
 import { projectSummaries } from './projects';
 
 const en = {
@@ -137,6 +140,7 @@ const en = {
     title: 'Portfolio',
     subtitle: 'Most recent works',
     viewGallery: 'View gallery',
+    caseStudy: 'Case study',
     moreDetails: 'More details',
     openGallery: 'Open {title} gallery',
     closeGallery: 'Close gallery',
@@ -208,6 +212,14 @@ const en = {
     blogDesc: 'Writeups on AI projects, web development, and photography by Jim Kong.',
     notFoundTitle: 'Page not found | Jim Kong',
   },
+  casestudy: {
+    backToWork: '← Back to work',
+    visit: 'Visit the site',
+    galleryLabel: 'Project screenshots',
+    moreWork: 'More work',
+    previous: 'Previous',
+    next: 'Next',
+  },
   assistant: {
     toggle: 'Toggle AI assistant',
     name: 'Ask about Jim',
@@ -220,6 +232,7 @@ const en = {
     placeholder: 'Ask something...',
     send: 'Send',
     stop: 'Stop generating',
+    thinking: 'Assistant is replying...',
     fallback: "I couldn't find a response. Please try again.",
     errorGeneric: "Sorry, I couldn't get a response. Please try again.",
     errorConfig:
@@ -392,6 +405,7 @@ const zhHans = {
     title: '作品',
     subtitle: '最新作品',
     viewGallery: '查看图集',
+    caseStudy: '项目详情',
     moreDetails: '了解更多',
     openGallery: '打开 {title} 图集',
     closeGallery: '关闭图集',
@@ -463,6 +477,14 @@ const zhHans = {
     blogDesc: 'Jim Kong 关于 AI 项目、Web 开发与摄影的文章。',
     notFoundTitle: '页面未找到 | Jim Kong',
   },
+  casestudy: {
+    backToWork: '← 返回作品',
+    visit: '访问网站',
+    galleryLabel: '项目截图',
+    moreWork: '更多作品',
+    previous: '上一个',
+    next: '下一个',
+  },
   assistant: {
     toggle: '切换 AI 助手',
     name: '了解 Jim',
@@ -474,6 +496,7 @@ const zhHans = {
     placeholder: '问点什么…',
     send: '发送',
     stop: '停止生成',
+    thinking: '助手正在回复…',
     fallback: '没有找到回复，请重试。',
     errorGeneric: '抱歉，我没能获取回复，请重试。',
     errorConfig:
@@ -645,6 +668,7 @@ const zhHant = {
     title: '作品',
     subtitle: '最新作品',
     viewGallery: '檢視圖庫',
+    caseStudy: '專案詳情',
     moreDetails: '了解更多',
     openGallery: '開啟 {title} 圖庫',
     closeGallery: '關閉圖庫',
@@ -716,6 +740,14 @@ const zhHant = {
     blogDesc: 'Jim Kong 關於 AI 專案、Web 開發與攝影的文章。',
     notFoundTitle: '找不到頁面 | Jim Kong',
   },
+  casestudy: {
+    backToWork: '← 返回作品',
+    visit: '造訪網站',
+    galleryLabel: '專案截圖',
+    moreWork: '更多作品',
+    previous: '上一個',
+    next: '下一個',
+  },
   assistant: {
     toggle: '切換 AI 助理',
     name: '了解 Jim',
@@ -727,6 +759,7 @@ const zhHant = {
     placeholder: '問點什麼…',
     send: '傳送',
     stop: '停止生成',
+    thinking: '助理正在回覆…',
     fallback: '找不到回覆，請重試。',
     errorGeneric: '抱歉，我沒能取得回覆，請重試。',
     errorConfig:
@@ -898,6 +931,7 @@ const ja = {
     title: '作品',
     subtitle: '最新の作品',
     viewGallery: 'ギャラリーを見る',
+    caseStudy: 'ケーススタディ',
     moreDetails: '詳細を見る',
     openGallery: '{title} のギャラリーを開く',
     closeGallery: 'ギャラリーを閉じる',
@@ -969,6 +1003,14 @@ const ja = {
     blogDesc: 'Jim Kong による AI プロジェクト、Web 開発、写真に関する記事。',
     notFoundTitle: 'ページが見つかりません | Jim Kong',
   },
+  casestudy: {
+    backToWork: '← 作品一覧に戻る',
+    visit: 'サイトを見る',
+    galleryLabel: 'プロジェクトのスクリーンショット',
+    moreWork: 'その他の作品',
+    previous: '前へ',
+    next: '次へ',
+  },
   assistant: {
     toggle: 'AI アシスタントの切り替え',
     name: 'Jim について聞く',
@@ -981,6 +1023,7 @@ const ja = {
     placeholder: '質問を入力…',
     send: '送信',
     stop: '生成を停止',
+    thinking: 'アシスタントが回答中…',
     fallback: '回答が見つかりませんでした。もう一度お試しください。',
     errorGeneric: '申し訳ありません、回答を取得できませんでした。もう一度お試しください。',
     errorConfig:
@@ -1019,12 +1062,6 @@ const ja = {
     },
   },
 };
-
-// Merge the long-form blog article content (per language) into each dictionary.
-en.posts = postsContent.en;
-zhHans.posts = postsContent['zh-Hans'];
-zhHant.posts = postsContent['zh-Hant'];
-ja.posts = postsContent.ja;
 
 // Merge portfolio project summaries (keyed by project id).
 en.projects = projectSummaries.en;

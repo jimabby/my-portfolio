@@ -2,10 +2,18 @@ import React, { useEffect, useRef, useState } from 'react'
 import './contact.css'
 import { useLanguage } from '../../i18n/LanguageContext';
 
+const now = () =>
+  typeof performance !== 'undefined' && typeof performance.now === 'function'
+    ? performance.now()
+    : Date.now();
+
 const Contact = () => {
   const { t } = useLanguage();
   const form = useRef();
-  const [renderedAt, setRenderedAt] = useState(() => Date.now());
+  // Monotonic clock, so how long the form has been open is measured locally and
+  // sent as a duration. An absolute timestamp compared against the server's
+  // clock would silently classify anyone whose device clock runs fast as a bot.
+  const renderedAtRef = useRef(now());
   const statusTimerRef = useRef(null);
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
   const [errors, setErrors] = useState({});
@@ -61,14 +69,14 @@ const Contact = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...data,
-          renderedAt,
+          elapsedMs: Math.round(now() - renderedAtRef.current),
         }),
       });
       if (!response.ok) throw new Error(`Contact request failed: ${response.status}`);
 
       setStatus('sent');
       e.target.reset();
-      setRenderedAt(Date.now());
+      renderedAtRef.current = now();
       resetStatusLater();
     } catch {
       setStatus('error');

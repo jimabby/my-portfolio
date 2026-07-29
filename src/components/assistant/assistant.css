@@ -206,11 +206,69 @@
   border-bottom-right-radius: 4px;
 }
 
-.assistant__message--assistant .assistant__message-text {
+/* Assistant replies are Markdown, so the bubble moves out to the wrapper and
+   the blocks inside it lay out as ordinary prose. */
+.assistant__message-body {
+  padding: 0.625rem 0.875rem;
+  border-radius: 12px;
+  border-bottom-left-radius: 4px;
   background-color: var(--container-color);
   color: var(--title-color);
   border: 1px solid var(--border-color);
-  border-bottom-left-radius: 4px;
+  font-size: var(--small-font-size);
+  line-height: 1.55;
+  word-break: break-word;
+}
+
+.assistant__message-body .assistant__message-text {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  border: none;
+  white-space: normal;
+}
+
+.assistant__message-body > * + * {
+  margin-top: 0.5rem;
+}
+
+.assistant__message-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.assistant__message-body code {
+  background-color: var(--body-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.05rem 0.3rem;
+  font-size: 0.9em;
+}
+
+.assistant__link {
+  color: var(--title-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: var(--font-medium);
+}
+
+.assistant__link:hover {
+  color: var(--primary-color);
+}
+
+/* Announced by assistive tech, never shown. */
+.assistant__sr-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .assistant__cursor {

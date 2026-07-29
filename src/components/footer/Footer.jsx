@@ -1,23 +1,23 @@
 import React from 'react'
-import { Link } from 'react-router'
 import "./footer.css"
 import { useLanguage } from '../../i18n/LanguageContext'
+import LocaleLink from "../../i18n/LocaleLink";
 
 const Footer = () => {
   const { t } = useLanguage()
   return (
     <footer className='footer'>
       <div className='footer__container container'>
-        <Link to="/" className='footer__title'>Jim</Link>
+        <LocaleLink to="/" className='footer__title'>Jim</LocaleLink>
         <ul className='footer__list'>
           <li>
-            <Link to="/#about" className='footer__link'>{t('footer.about')}</Link>
+            <LocaleLink to="/#about" className='footer__link'>{t('footer.about')}</LocaleLink>
           </li>
           <li>
-            <Link to="/#portfolio" className='footer__link'>{t('footer.portfolio')}</Link>
+            <LocaleLink to="/#portfolio" className='footer__link'>{t('footer.portfolio')}</LocaleLink>
           </li>
           <li>
-            <Link to="/#testimonial" className='footer__link'>{t('footer.testimonials')}</Link>
+            <LocaleLink to="/#testimonial" className='footer__link'>{t('footer.testimonials')}</LocaleLink>
           </li>
         </ul>
 

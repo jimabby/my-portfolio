@@ -1,8 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 import { LANGUAGES, useLanguage } from '../../i18n/LanguageContext';
+import { localizedPath, splitLocalePath } from '../../i18n/routes';
 
 const LanguageSwitcher = () => {
   const { lang, setLang, t } = useLanguage();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -24,9 +28,18 @@ const LanguageSwitcher = () => {
     };
   }, [open]);
 
+  // Switching language changes the URL, because the URL is what decides which
+  // language renders. Staying on the same page keeps the hash so the visitor
+  // does not lose their place in the one-page scroll.
   const choose = (code) => {
-    setLang(code);
     setOpen(false);
+    if (code === lang) return;
+    setLang(code);
+    const { path } = splitLocalePath(location.pathname);
+    navigate(
+      { pathname: localizedPath(code, path), hash: location.hash, search: location.search },
+      { replace: true }
+    );
   };
 
   return (

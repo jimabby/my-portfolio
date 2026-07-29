@@ -1,13 +1,17 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { fireEvent, render, screen, within } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 import Works from '../components/portfolio/Works.jsx';
 import { LanguageProvider } from '../i18n/LanguageContext.jsx';
 
+// Project cards link to their case-study page, so a router is required.
 const renderWorks = () =>
   render(
-    <LanguageProvider>
-      <Works />
-    </LanguageProvider>
+    <MemoryRouter>
+      <LanguageProvider>
+        <Works />
+      </LanguageProvider>
+    </MemoryRouter>
   );
 
 describe('Works pagination', () => {

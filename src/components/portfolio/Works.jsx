@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { projectsData, projectsNav } from './Data';
 import WorksItems from './WorksItems';
 import { useLanguage } from '../../i18n/LanguageContext';
+import Img from '../image/Img';
 
 // Cards per page. The grid is 3 columns on desktop, so this fills three full
 // rows and keeps the section from running the length of the page.
@@ -269,11 +270,11 @@ const Works = () => {
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchEnd}
               >
-                <img
+                <Img
                   src={galleryImages[galleryState.index]}
                   alt={`${galleryState.title} screenshot ${galleryState.index + 1}`}
                   className="work__modal-img"
-                />
+                 sizes="(max-width: 992px) 92vw, 860px"/>
                 {galleryImages.length > 1 && (
                   <span className="work__modal-count">
                     {galleryState.index + 1} / {galleryImages.length}
@@ -296,7 +297,7 @@ const Works = () => {
                     onClick={() => setGalleryState((prev) => ({ ...prev, index: idx }))}
                     aria-label={`View image ${idx + 1}`}
                   >
-                    <img src={img} alt="" />
+                    <Img src={img} alt="" />
                   </button>
                 ))}
               </div>

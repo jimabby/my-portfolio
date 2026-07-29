@@ -1,5 +1,7 @@
+/* Leaves room for the header now sitting above it, so the block stays
+   optically centred instead of being pushed below the fold. */
 .notfound {
-  min-height: 100vh;
+  min-height: calc(100vh - 7rem);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,4 +30,11 @@
   max-width: 360px;
   color: var(--text-color);
   margin-bottom: var(--mb-1);
+}
+
+.notfound__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
 }

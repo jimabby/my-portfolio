@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import './assistant.css';
 import { useLanguage } from '../../i18n/LanguageContext';
+import { renderMarkdown } from './markdown';
 
 const STORAGE_KEY = 'assistant_messages_v1';
 const MAX_STORED_MESSAGES = 20;
@@ -23,6 +25,7 @@ const loadStoredMessages = () => {
 
 export default function Assistant() {
   const { lang, t } = useLanguage();
+  const navigate = useNavigate();
   const starterPrompts = t('assistant.starters');
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState(loadStoredMessages);
@@ -93,8 +96,10 @@ export default function Assistant() {
     if (!userMessage || isStreaming) return;
 
     // `messages` holds the prior turns only; the new message is sent
-    // separately so the server doesn't receive it twice.
-    const priorHistory = messages;
+    // separately so the server doesn't receive it twice. Locally generated
+    // error notices are stripped: they were never the model's output, and
+    // feeding them back makes it apologise for failures it didn't have.
+    const priorHistory = messages.filter((m) => !m.localOnly);
     setMessages([...messages, { role: 'user', content: userMessage }]);
     setInput('');
     setIsStreaming(true);
@@ -191,7 +196,7 @@ export default function Assistant() {
         }
         setMessages((prev) => [
           ...prev,
-          { role: 'assistant', content: friendly },
+          { role: 'assistant', content: friendly, localOnly: true },
         ]);
       }
     } finally {
@@ -214,6 +219,20 @@ export default function Assistant() {
     }
   }
 
+  // Links the assistant offers into the site itself route in-place and close
+  // the panel, so "show me the contact form" actually lands the visitor there
+  // instead of reloading the page underneath them.
+  function handleInternalLink(e, href) {
+    e.preventDefault();
+    setIsOpen(false);
+    if (href.startsWith('#')) {
+      navigate({ pathname: '/', hash: href });
+    } else {
+      const [pathname, hash] = href.split('#');
+      navigate({ pathname: pathname || '/', hash: hash ? `#${hash}` : '' });
+    }
+  }
+
   function clearMessages() {
     if (isStreaming) return;
     setMessages([]);
@@ -224,6 +243,10 @@ export default function Assistant() {
   const allMessages = isStreaming
     ? [...messages, { role: 'assistant', content: streamText, streaming: true }]
     : messages;
+
+  const lastMessage = messages[messages.length - 1];
+  const lastAssistantMessage =
+    lastMessage?.role === 'assistant' ? lastMessage.content : '';
 
   return (
     <>
@@ -275,7 +298,11 @@ export default function Assistant() {
             </div>
           </div>
 
-          <div className="assistant__messages" aria-live="polite">
+          {/* The transcript itself is not a live region: while streaming it
+              changes on every token, which makes a screen reader restart the
+              whole reply continuously. Only the finished reply is announced,
+              from the dedicated status node below. */}
+          <div className="assistant__messages">
             {allMessages.length === 0 && (
               <p className="assistant__welcome-text">
                 {t('assistant.welcome')}
@@ -283,10 +310,14 @@ export default function Assistant() {
             )}
             {allMessages.map((msg, i) => (
               <div key={i} className={`assistant__message assistant__message--${msg.role}`}>
-                <p className="assistant__message-text">
-                  {msg.content}
-                  {msg.streaming && <span className="assistant__cursor" />}
-                </p>
+                {msg.role === 'assistant' ? (
+                  <div className="assistant__message-body">
+                    {renderMarkdown(msg.content, handleInternalLink)}
+                    {msg.streaming && <span className="assistant__cursor" />}
+                  </div>
+                ) : (
+                  <p className="assistant__message-text">{msg.content}</p>
+                )}
               </div>
             ))}
             {isStreaming && streamText === '' && (
@@ -298,6 +329,12 @@ export default function Assistant() {
             )}
             <div ref={messagesEndRef} />
           </div>
+
+          {/* Announces only settled state: the reply once it has finished
+              streaming, so assistive tech reads it exactly once. */}
+          <p className="assistant__sr-status" role="status" aria-live="polite">
+            {isStreaming ? t('assistant.thinking') : lastAssistantMessage}
+          </p>
 
           <div className="assistant__chips-bar">
             {(Array.isArray(starterPrompts) ? starterPrompts : []).map((prompt) => (

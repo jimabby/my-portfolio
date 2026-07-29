@@ -4,6 +4,7 @@ import AboutImg from "../../assets/profile.webp";
 import CV from "../../assets/Software Developer - Jim.pdf";
 import Info from './Info';
 import { useLanguage } from '../../i18n/LanguageContext';
+import Img from '../image/Img';
 
 const About = () => {
   const { t } = useLanguage();
@@ -13,7 +14,7 @@ const About = () => {
       <span className='section__subtitle'>{t('about.subtitle')}</span>
 
       <div className='about__container container grid'>
-        <img src={AboutImg} alt='Jim Kong' className='about__img' />
+        <Img src={AboutImg} alt='Jim Kong' className='about__img'  sizes="(max-width: 768px) 220px, 350px"/>
 
         <div className='about__data'>
           <Info />

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router';
+import { BrowserRouter, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import './App.css';
@@ -16,7 +16,8 @@ import { Suspense, lazy, useEffect } from 'react';
 import NotFound from './components/notfound/NotFound';
 import ErrorBoundary from './components/ErrorBoundary';
 import Seo from './components/seo/Seo';
-import { useLanguage } from './i18n/LanguageContext';
+import { detectBrowserLang, useLanguage } from './i18n/LanguageContext';
+import { DEFAULT_LANG, PREFIXED_LOCALES, localizedPath, splitLocalePath } from './i18n/routes';
 
 // Code splitting: the blog pages, the chat assistant, and the testimonials
 // carousel (Swiper) pull in heavy dependencies the initial landing view doesn't
@@ -28,6 +29,7 @@ const Hiro = lazy(() => import('./components/blog/Hiro'));
 const GrandHotelTaipei = lazy(() => import('./components/blog/GrandHotelTaipei'));
 const Assistant = lazy(() => import('./components/assistant/Assistant'));
 const Testimonials = lazy(() => import('./components/Testimonials/Testimonials'));
+const CaseStudy = lazy(() => import('./components/portfolio/CaseStudy'));
 
 function useSectionReveal() {
   useEffect(() => {
@@ -124,29 +126,86 @@ function RouteScrollManager() {
   return null;
 }
 
-function App() {
+// The URL decides the language, not localStorage — otherwise a shared link
+// renders in whatever language the recipient last used, and every translation
+// is unreachable to a crawler.
+//
+// The one exception is a first-ever visit to a bare English URL: if the browser
+// asks for a language we publish and the visitor has never chosen one, we
+// forward to that translation once. `replace` keeps it out of history, and it
+// cannot loop because the destination is a prefixed path.
+function LocaleRoute() {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { lang, setLang, hasStoredPreference } = useLanguage();
+  const urlLang = splitLocalePath(pathname).lang;
+
+  useEffect(() => {
+    if (urlLang !== lang) setLang(urlLang, { persist: false });
+  }, [urlLang, lang, setLang]);
+
+  useEffect(() => {
+    if (urlLang !== DEFAULT_LANG || hasStoredPreference) return;
+    const preferred = detectBrowserLang();
+    if (preferred === DEFAULT_LANG) return;
+    const { path } = splitLocalePath(pathname);
+    navigate(localizedPath(preferred, path), { replace: true });
+    // Runs only on the first render at an unprefixed URL.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return <Outlet />;
+}
+
+// The same page tree is mounted once per language: at the bare path for
+// English and under /zh-Hans, /zh-Hant and /ja for the rest. LocaleRoute makes
+// the URL the single source of truth for which language renders.
+// Called once per language so each mount gets its own element instances.
+const localePages = () => (
+  <Route element={<LocaleRoute />}>
+    <Route index element={<PortfolioPage />} />
+    <Route path="blog" element={<Blog />} />
+    <Route path="blog/m-mode" element={<MMode />} />
+    <Route path="blog/hermes" element={<Hermes />} />
+    <Route path="blog/hiro" element={<Hiro />} />
+    <Route path="blog/grand-hotel-taipei" element={<GrandHotelTaipei />} />
+    <Route path="work/:slug" element={<CaseStudy />} />
+    <Route path="*" element={<NotFound />} />
+  </Route>
+);
+
+// Everything inside the router, so tests can mount the same tree under a
+// MemoryRouter and exercise real URLs.
+export function AppRoutes() {
   const { t } = useLanguage();
 
   return (
+    <>
+      <div id="top"></div>
+      <a href="#main-content" className="skip-link">{t('nav.skipToContent')}</a>
+      <RouteScrollManager />
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path="/">{localePages()}</Route>
+          {PREFIXED_LOCALES.map((locale) => (
+            <Route key={locale} path={`/${locale}`}>
+              {localePages()}
+            </Route>
+          ))}
+        </Routes>
+      </Suspense>
+      <Suspense fallback={null}>
+        <Assistant />
+      </Suspense>
+    </>
+  );
+}
+
+function App() {
+  return (
     <ErrorBoundary>
       <BrowserRouter basename={import.meta.env.BASE_URL}>
-        <div id="top"></div>
-        <a href="#main-content" className="skip-link">{t('nav.skipToContent')}</a>
-        <RouteScrollManager />
-        <Suspense fallback={null}>
-          <Routes>
-            <Route path="/" element={<PortfolioPage />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/m-mode" element={<MMode />} />
-            <Route path="/blog/hermes" element={<Hermes />} />
-            <Route path="/blog/hiro" element={<Hiro />} />
-            <Route path="/blog/grand-hotel-taipei" element={<GrandHotelTaipei />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-        <Suspense fallback={null}>
-          <Assistant />
-        </Suspense>
+        <AppRoutes />
         <Analytics />
         <SpeedInsights />
       </BrowserRouter>

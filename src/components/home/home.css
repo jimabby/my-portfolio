@@ -68,11 +68,12 @@
   margin-bottom: var(--mb-2-5);
 }
 
+/* A real <img>, not a CSS background: as the largest element on first paint it
+   is the LCP, and only a genuine element is visible to the browser's preload
+   scanner. A background-image can't be found until the stylesheet has been
+   downloaded and parsed, which delayed it by a whole round trip. */
 .home__img {
-  background: url(../../assets/profile.webp);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  object-fit: cover;
   border: 6px solid rgba(255, 255, 255, 0.7);
   box-shadow: var(--card-shadow);
   order: 1;

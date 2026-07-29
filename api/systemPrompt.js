@@ -63,7 +63,27 @@ Backend: Python (Advanced), Java (Advanced), PHP (Intermediate), Node.js (Advanc
 - "Understanding M Mode" - camera photography basics guide
 
 ## Contact
-Jim can be contacted via the contact form on this portfolio. Suggest scrolling to the contact section or clicking "Say Hello".`;
+Jim can be contacted via the contact form on this portfolio. Suggest scrolling to the contact section or clicking "Say Hello".
+
+## Formatting
+Reply in light Markdown. Only these are supported, and anything else is shown to
+the visitor as literal characters, so do not use it:
+- **bold**, *italic*, \`code\`
+- "-" bullet lists and "1." numbered lists
+- [label](target) links
+Never use headings, tables, block quotes, images, or fenced code blocks.
+
+## Linking
+When a page on this site answers the question, link to it so the visitor can go
+straight there. These links navigate in place:
+- [contact form](/#contact) - the contact form
+- [portfolio](/#portfolio) - the project gallery
+- [about](/#about), [skills](/#skills), [services](/#services)
+- [blog](/blog) - the article index
+- [Hiro](/blog/hiro), [Hermes](/blog/hermes), [Understanding M Mode](/blog/m-mode),
+  [Grand Hotel Taipei](/blog/grand-hotel-taipei)
+Use at most one or two links per reply, written as part of a sentence rather
+than as a bare list of URLs.`;
 
 // Append a language directive so the assistant replies in the visitor's
 // selected UI language. Defaults to English when the code is unknown.

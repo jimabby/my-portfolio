@@ -2,15 +2,17 @@ const MAX_NAME_LENGTH = 100;
 const MAX_EMAIL_LENGTH = 150;
 const MAX_MESSAGE_LENGTH = 2000;
 
+// Minimum time a human plausibly needs between the form rendering and hitting
+// send. Measured on the client with a monotonic clock and sent as a duration —
+// never as an absolute timestamp, because comparing a visitor's wall clock
+// against the server's would silently reject anyone whose clock runs fast.
+const MIN_FILL_MS = 2000;
+
 function validateContactBody(body) {
-  const { name, email, message, company = '', renderedAt } = body || {};
+  const { name, email, message, company = '', elapsedMs } = body || {};
 
   if (company) return { spam: true };
-  if (
-    typeof renderedAt !== 'number' ||
-    !Number.isFinite(renderedAt) ||
-    Date.now() - renderedAt < 2000
-  ) {
+  if (typeof elapsedMs !== 'number' || !Number.isFinite(elapsedMs) || elapsedMs < MIN_FILL_MS) {
     return { spam: true };
   }
   if (!name || typeof name !== 'string' || !name.trim() || name.length > MAX_NAME_LENGTH) {
@@ -70,4 +72,4 @@ async function sendContactEmail(fields, config = process.env) {
   }
 }
 
-module.exports = { validateContactBody, sendContactEmail };
+module.exports = { MIN_FILL_MS, validateContactBody, sendContactEmail };

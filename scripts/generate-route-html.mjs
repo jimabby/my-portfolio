@@ -1,73 +1,68 @@
+// Writes a static <head> for every route, in every language, so link previews
+// and crawlers get correct metadata without executing the SPA.
+//
+// Also emits sitemap.xml and the blog's RSS feed from the same route table
+// (scripts/site-routes.mjs), which is why they can no longer drift apart the
+// way the hand-maintained sitemap did.
+
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
+import {
+  AUTHOR,
+  BLOG_POSTS,
+  LOCALES,
+  NOINDEX_ROUTES,
+  SITE_URL,
+  allRoutes,
+  localizedPath,
+} from './site-routes.mjs';
 
-const SITE_URL = 'https://jimkong-portfolio.vercel.app';
 const DIST_DIR = join(process.cwd(), 'dist');
 
-const routes = [
-  {
-    path: '/blog',
-    title: 'Jim Kong | Blog',
-    description: 'Articles about software projects, AI, photography, and travel by Jim Kong.',
-    image: '/og/hermes.webp',
-    type: 'website',
-  },
-  {
-    path: '/blog/grand-hotel-taipei',
-    title: 'Staying at the Grand Hotel Taipei',
-    description:
-      'A personal April stay at the Grand Hotel Taipei, from the red-pillared entrance and grand lobby to quiet corridors, city views, and slow moments around the grounds.',
-    image: '/og/grand-hotel-taipei.webp',
-    type: 'article',
-  },
-  {
-    path: '/blog/hiro',
-    title: 'Hiro - The AI Job Application Agent',
-    description:
-      'Hiro scrapes Seek, Indeed, and LinkedIn on a schedule, scores every job against your resume, tailors your application, and submits - all while you sleep.',
-    image: '/og/hiro.webp',
-    type: 'article',
-  },
-  {
-    path: '/blog/hermes',
-    title: 'Hermes - An AI-Powered Email Client',
-    description:
-      'A full-featured email client with Claude AI built in. Connect Gmail, Outlook, or any IMAP account and use 9 AI writing modes to compose better emails.',
-    image: '/og/hermes.webp',
-    type: 'article',
-  },
-  {
-    path: '/blog/m-mode',
-    title: 'Understanding M Mode',
-    description:
-      'Learn how shutter speed, aperture, and ISO work together to give you full creative control over your camera - with practical examples you can try right away.',
-    image: '/og/m-mode.webp',
-    type: 'article',
-  },
-  {
-    path: '/404',
-    title: 'Page Not Found | Jim Kong',
-    description: 'The requested page could not be found.',
-    image: '/og/hermes.webp',
-    type: 'website',
-    noindex: true,
-  },
-];
+const HREFLANG = { en: 'en', 'zh-Hans': 'zh-Hans', 'zh-Hant': 'zh-Hant', ja: 'ja' };
+const OG_LOCALE = { en: 'en_US', 'zh-Hans': 'zh_CN', 'zh-Hant': 'zh_TW', ja: 'ja_JP' };
 
 const escapeAttribute = (value) =>
-  value
+  String(value)
     .replaceAll('&', '&amp;')
     .replaceAll('"', '&quot;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;');
 
-const replaceMeta = (html, route) => {
-  const url = `${SITE_URL}${route.path}`;
+const escapeXml = (value) =>
+  String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&apos;');
+
+const replaceMeta = (html, route, lang) => {
+  const url = `${SITE_URL}${localizedPath(lang, route.path)}`;
   const image = `${SITE_URL}${route.image}`;
   const title = escapeAttribute(route.title);
   const description = escapeAttribute(route.description);
 
-  const result = html
+  // Alternates for every translation of this route, plus x-default.
+  const alternates = route.noindex
+    ? ''
+    : `\n    ${[
+        ...LOCALES.map(
+          (code) =>
+            `<link rel="alternate" hreflang="${HREFLANG[code]}" href="${SITE_URL}${localizedPath(code, route.path)}" />`
+        ),
+        `<link rel="alternate" hreflang="x-default" href="${SITE_URL}${localizedPath('en', route.path)}" />`,
+      ].join('\n    ')}`;
+
+  const ogLocales = `\n    ${[
+    `<meta property="og:locale" content="${OG_LOCALE[lang]}" />`,
+    ...LOCALES.filter((code) => code !== lang).map(
+      (code) => `<meta property="og:locale:alternate" content="${OG_LOCALE[code]}" />`
+    ),
+  ].join('\n    ')}`;
+
+  let result = html
+    .replace(/<html lang="[^"]*">/, `<html lang="${HREFLANG[lang]}">`)
     .replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
     .replace(
       /<meta[^>]+name="description"[^>]*>/,
@@ -75,7 +70,7 @@ const replaceMeta = (html, route) => {
     )
     .replace(
       /<link[^>]+rel="canonical"[^>]*>/,
-      `<link rel="canonical" href="${url}" />`
+      `<link rel="canonical" href="${url}" />${alternates}`
     )
     .replace(
       /<meta[^>]+property="og:type"[^>]*>/,
@@ -83,7 +78,7 @@ const replaceMeta = (html, route) => {
     )
     .replace(
       /<meta[^>]+property="og:url"[^>]*>/,
-      `<meta property="og:url" content="${url}" />`
+      `<meta property="og:url" content="${url}" />${ogLocales}`
     )
     .replace(
       /<meta[^>]+property="og:title"[^>]*>/,
@@ -110,26 +105,119 @@ const replaceMeta = (html, route) => {
       `<meta name="twitter:image" content="${image}" />`
     );
 
-  return route.noindex
-    ? result.replace(
-        /<meta[^>]+name="robots"[^>]*>/,
-        '<meta name="robots" content="noindex, follow" />'
-      )
-    : result;
+  if (route.noindex) {
+    result = result.replace(
+      /<meta[^>]+name="robots"[^>]*>/,
+      '<meta name="robots" content="noindex, follow" />'
+    );
+  }
+
+  return result;
 };
 
-const baseHtml = await readFile(join(DIST_DIR, 'index.html'), 'utf8');
+const writeRoute = async (baseHtml, route, lang) => {
+  const html = replaceMeta(baseHtml, route, lang);
+  const path = localizedPath(lang, route.path);
 
-for (const route of routes) {
-  const routeHtml = replaceMeta(baseHtml, route);
-  const cleanUrlOutput = join(DIST_DIR, `${route.path.slice(1)}.html`);
-  const trailingSlashOutput = join(DIST_DIR, route.path.slice(1), 'index.html');
+  if (path === '/') {
+    await writeFile(join(DIST_DIR, 'index.html'), html, 'utf8');
+    return;
+  }
+
+  // Both spellings, so the route resolves with or without a trailing slash.
+  const cleanUrlOutput = join(DIST_DIR, `${path.slice(1)}.html`);
+  const trailingSlashOutput = join(DIST_DIR, path.slice(1), 'index.html');
   await mkdir(dirname(cleanUrlOutput), { recursive: true });
   await mkdir(dirname(trailingSlashOutput), { recursive: true });
   await Promise.all([
-    writeFile(cleanUrlOutput, routeHtml, 'utf8'),
-    writeFile(trailingSlashOutput, routeHtml, 'utf8'),
+    writeFile(cleanUrlOutput, html, 'utf8'),
+    writeFile(trailingSlashOutput, html, 'utf8'),
   ]);
+};
+
+const buildSitemap = (routes) => {
+  const today = new Date().toISOString().slice(0, 10);
+
+  const entries = routes.flatMap((route) =>
+    LOCALES.map((lang) => {
+      const loc = `${SITE_URL}${localizedPath(lang, route.path)}`;
+      // Each URL declares every translation of itself, which is what tells
+      // Google the four versions are one page rather than duplicates.
+      const alternates = [
+        ...LOCALES.map(
+          (code) =>
+            `    <xhtml:link rel="alternate" hreflang="${HREFLANG[code]}" href="${SITE_URL}${localizedPath(code, route.path)}" />`
+        ),
+        `    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${localizedPath('en', route.path)}" />`,
+      ].join('\n');
+
+      return `  <url>
+    <loc>${escapeXml(loc)}</loc>
+${alternates}
+    <lastmod>${route.published ?? today}</lastmod>
+    <changefreq>${route.changefreq}</changefreq>
+    <priority>${route.priority}</priority>
+  </url>`;
+    })
+  );
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${entries.join('\n')}
+</urlset>
+`;
+};
+
+const buildFeed = () => {
+  const items = BLOG_POSTS.map((post) => {
+    const url = `${SITE_URL}${post.path}`;
+    return `    <item>
+      <title>${escapeXml(post.title)}</title>
+      <link>${escapeXml(url)}</link>
+      <guid isPermaLink="true">${escapeXml(url)}</guid>
+      <description>${escapeXml(post.description)}</description>
+      <pubDate>${new Date(`${post.published}T00:00:00Z`).toUTCString()}</pubDate>
+    </item>`;
+  });
+
+  const latest = BLOG_POSTS.reduce(
+    (newest, post) => (post.published > newest ? post.published : newest),
+    BLOG_POSTS[0].published
+  );
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>${escapeXml(`${AUTHOR} | Blog`)}</title>
+    <link>${SITE_URL}/blog</link>
+    <description>Articles about software projects, AI, photography, and travel by ${escapeXml(AUTHOR)}.</description>
+    <language>en</language>
+    <lastBuildDate>${new Date(`${latest}T00:00:00Z`).toUTCString()}</lastBuildDate>
+    <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />
+${items.join('\n')}
+  </channel>
+</rss>
+`;
+};
+
+const baseHtml = await readFile(join(DIST_DIR, 'index.html'), 'utf8');
+const routes = await allRoutes();
+
+for (const route of routes) {
+  for (const lang of LOCALES) {
+    await writeRoute(baseHtml, route, lang);
+  }
 }
 
-console.log(`Generated static metadata for ${routes.length} routes.`);
+// The 404 shell is language-neutral: Vercel serves it for any unmatched path,
+// and the SPA renders the right language once it boots.
+for (const route of NOINDEX_ROUTES) {
+  await writeRoute(baseHtml, route, 'en');
+}
+
+await writeFile(join(DIST_DIR, 'sitemap.xml'), buildSitemap(routes), 'utf8');
+await writeFile(join(DIST_DIR, 'rss.xml'), buildFeed(), 'utf8');
+
+console.log(
+  `Generated ${routes.length} routes x ${LOCALES.length} languages, plus sitemap.xml and rss.xml.`
+);

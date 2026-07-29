@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from 'swiper/modules';
 import { useLanguage } from '../../i18n/LanguageContext';
+import Img from '../image/Img';
 
 const CHAR_LIMIT = 200;
 
@@ -18,7 +19,7 @@ const TestimonialCard = ({ image, title, description }) => {
   return (
     <>
       {image
-        ? <img src={image} alt={`${title}'s photo`} className='testimonial__img' />
+        ? <Img src={image} alt={`${title}'s photo`} className='testimonial__img'  sizes="60px"/>
         : <div className='testimonial__img testimonial__img-placeholder'><i className='uil uil-user'></i></div>
       }
       <h3 className='testimonial__name'>{title}</h3>

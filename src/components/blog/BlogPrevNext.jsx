@@ -1,6 +1,8 @@
-import { Link } from 'react-router';
 import { posts } from './postsData';
 import { useLanguage } from '../../i18n/LanguageContext';
+// Pulls the article prose into this chunk instead of the entry bundle.
+import '../../i18n/posts/register';
+import LocaleLink from "../../i18n/LocaleLink";
 
 const BlogPrevNext = ({ currentSlug }) => {
   const { t } = useLanguage();
@@ -18,7 +20,7 @@ const BlogPrevNext = ({ currentSlug }) => {
   return (
     <div className="blog__prevnext">
       {prev ? (
-        <Link
+        <LocaleLink
           to={`/blog/${prev.slug}`}
           className="blog__prevnext-link blog__prevnext-link--prev"
           onClick={scrollToTop}
@@ -28,11 +30,11 @@ const BlogPrevNext = ({ currentSlug }) => {
           </span>
           <span className="blog__prevnext-title">{t(`posts.${prev.key}.title`, prev.title)}</span>
           <span className="blog__prevnext-meta">{t(`posts.${prev.key}.date`, prev.date)} - {t(`posts.${prev.key}.readTime`, prev.readTime)}</span>
-        </Link>
+        </LocaleLink>
       ) : <div />}
 
       {next ? (
-        <Link
+        <LocaleLink
           to={`/blog/${next.slug}`}
           className="blog__prevnext-link blog__prevnext-link--next"
           onClick={scrollToTop}
@@ -42,7 +44,7 @@ const BlogPrevNext = ({ currentSlug }) => {
           </span>
           <span className="blog__prevnext-title">{t(`posts.${next.key}.title`, next.title)}</span>
           <span className="blog__prevnext-meta">{t(`posts.${next.key}.date`, next.date)} - {t(`posts.${next.key}.readTime`, next.readTime)}</span>
-        </Link>
+        </LocaleLink>
       ) : <div />}
     </div>
   );

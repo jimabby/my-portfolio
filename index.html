@@ -12,6 +12,12 @@
     <meta name="author" content="Jim Kong" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://jimkong-portfolio.vercel.app/" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Jim Kong | Blog"
+      href="https://jimkong-portfolio.vercel.app/rss.xml"
+    />
     <link rel="manifest" href="/manifest.json" />
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
@@ -55,7 +61,7 @@
   </head>
   <body>
     <script>
-      (function(){try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark')}catch(e){}})();
+      (function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)}catch(e){}})();
     </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>

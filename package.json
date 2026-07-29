@@ -19,7 +19,10 @@
   },
   "scripts": {
     "dev": "vite",
+    "predev": "node scripts/generate-responsive-images.mjs",
     "build": "vite build && node scripts/generate-route-html.mjs",
+    "prebuild": "node scripts/generate-responsive-images.mjs",
+    "images": "node scripts/generate-responsive-images.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",

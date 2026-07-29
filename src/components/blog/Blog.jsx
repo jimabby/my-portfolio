@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import ScrollUp from '../scrollup/ScrollUp';
 import { posts } from './postsData';
 import { useLanguage } from '../../i18n/LanguageContext';
+// Pulls the article prose into this chunk instead of the entry bundle.
+import '../../i18n/posts/register';
 import Seo from '../seo/Seo';
 import './blog.css';
+import Img from '../image/Img';
+import LocaleLink from "../../i18n/LocaleLink";
 
 const categories = ['All', ...Array.from(new Set(posts.map(p => p.category)))];
 
@@ -80,7 +83,7 @@ const Blog = () => {
           {filtered.map(post => (
             <article className="blog__card" key={post.id}>
               {post.thumbnail && (
-                <img src={post.thumbnail} alt={t(`posts.${post.key}.title`, post.title)} className="blog__card-thumb" loading="lazy" decoding="async" />
+                <Img src={post.thumbnail} alt={t(`posts.${post.key}.title`, post.title)} className="blog__card-thumb" loading="lazy" decoding="async"  sizes="(max-width: 768px) 100vw, 400px"/>
               )}
 
               <div className="blog__card-meta">
@@ -101,9 +104,9 @@ const Blog = () => {
                     <span key={tag} className="blog__tag">{tag}</span>
                   ))}
                 </div>
-                <Link to={`/blog/${post.slug}`} className="blog__card-link">
+                <LocaleLink to={`/blog/${post.slug}`} className="blog__card-link">
                   {t('blog.readArticle')} <span className="blog__card-arrow">&rarr;</span>
-                </Link>
+                </LocaleLink>
               </div>
             </article>
           ))}

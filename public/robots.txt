@@ -2,3 +2,5 @@
 User-agent: *
 Disallow:
 Sitemap: https://jimkong-portfolio.vercel.app/sitemap.xml
+
+# sitemap.xml and rss.xml are generated at build time from scripts/site-routes.mjs

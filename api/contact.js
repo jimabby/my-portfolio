@@ -20,7 +20,12 @@ module.exports = async function handler(req, res) {
   }
 
   const parsed = validateContactBody(req.body);
-  if (parsed.spam) return res.status(200).json({ ok: true });
+  if (parsed.spam) {
+    // Answer 200 so bots can't tell they were filtered, but leave a trace —
+    // a silent drop that is also unlogged is indistinguishable from a bug.
+    console.warn('Contact submission rejected as spam');
+    return res.status(200).json({ ok: true });
+  }
   if (parsed.error) return res.status(parsed.status).json({ error: parsed.error });
 
   try {

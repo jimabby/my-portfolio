@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import "./header.css"
-import { Link, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
+import { splitLocalePath } from '../../i18n/routes';
 import { useLanguage } from '../../i18n/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
 import UpdatesDot from './UpdatesDot';
+import LocaleLink from "../../i18n/LocaleLink";
 
 const SECTIONS = ['home', 'about', 'skills', 'services', 'portfolio', 'testimonial', 'contact'];
 
+// An explicit choice always wins; otherwise follow the OS setting so a visitor
+// browsing in dark mode isn't hit with a white page. Kept in sync with the
+// inline bootstrap script in index.html, which applies the same rule before
+// first paint to avoid a flash of the wrong theme.
 const getStoredTheme = () => {
   try {
-    return localStorage.getItem('theme') || 'light';
+    const stored = localStorage.getItem('theme');
+    if (stored === 'light' || stored === 'dark') return stored;
   } catch {
-    return 'light';
+    // Ignore storage errors in restricted contexts.
   }
+  return window.matchMedia?.('(prefers-color-scheme: dark)')?.matches ? 'dark' : 'light';
 };
 
 const Header = () => {
@@ -44,9 +52,13 @@ const Header = () => {
   const [Toggle, showMenu] = useState(false);
   const [activeNav, setActiveNav] = useState("#home");
 
+  // Compare against the language-independent path: the portfolio page lives at
+  // "/" in English but at "/ja", "/zh-Hans" and "/zh-Hant" in the others.
+  const path = splitLocalePath(location.pathname).path;
+
   // Track active section via IntersectionObserver on portfolio page
   useEffect(() => {
-    if (location.pathname !== '/') return;
+    if (path !== '/') return;
 
     const observers = [];
     const handleIntersect = (entries) => {
@@ -69,9 +81,9 @@ const Header = () => {
     });
 
     return () => observers.forEach((o) => o.disconnect());
-  }, [location.pathname]);
+  }, [path]);
 
-  const currentActiveNav = location.pathname.startsWith('/blog') ? 'blog' : activeNav;
+  const currentActiveNav = path.startsWith('/blog') ? 'blog' : activeNav;
 
   // Dark mode
   const [theme, setTheme] = useState(getStoredTheme);
@@ -97,57 +109,57 @@ const Header = () => {
   return (
     <header className='header'>
       <nav className='nav container'>
-        <Link to="/" className="nav__logo">Jim</Link>
+        <LocaleLink to="/" className="nav__logo">Jim</LocaleLink>
 
         <div className={Toggle ? "nav__menu show-menu": "nav__menu"}>
           <ul className='nav__list grid'>
             <li className='nav__item'>
-              <Link
+              <LocaleLink
                 to="/#home"
                 onClick={() => handleNavClick('#home')}
                 className={currentActiveNav === '#home' ? 'nav__link active-link' : 'nav__link'}
               >
                 <i className='uil uil-estate nav__icon'></i>{t('nav.home')}
-              </Link>
+              </LocaleLink>
             </li>
             <li className='nav__item'>
-              <Link
+              <LocaleLink
                 to="/#about"
                 onClick={() => handleNavClick('#about')}
                 className={currentActiveNav === '#about' ? 'nav__link active-link' : 'nav__link'}
               >
                 <i className='uil uil-user nav__icon'></i>{t('nav.about')}
-              </Link>
+              </LocaleLink>
             </li>
             <li className='nav__item'>
-              <Link
+              <LocaleLink
                 to="/#skills"
                 onClick={() => handleNavClick('#skills')}
                 className={currentActiveNav === '#skills' ? 'nav__link active-link' : 'nav__link'}
               >
                 <i className='uil uil-file nav__icon'></i>{t('nav.skills')}
-              </Link>
+              </LocaleLink>
             </li>
             <li className='nav__item'>
-              <Link
+              <LocaleLink
                 to="/#services"
                 onClick={() => handleNavClick('#services')}
                 className={currentActiveNav === '#services' ? 'nav__link active-link' : 'nav__link'}
               >
                 <i className='uil uil-briefcase-alt nav__icon'></i>{t('nav.services')}
-              </Link>
+              </LocaleLink>
             </li>
             <li className='nav__item'>
-              <Link
+              <LocaleLink
                 to="/#portfolio"
                 onClick={() => handleNavClick('#portfolio')}
                 className={currentActiveNav === '#portfolio' ? 'nav__link active-link' : 'nav__link'}
               >
                 <i className='uil uil-scenery nav__icon'></i>{t('nav.portfolio')}
-              </Link>
+              </LocaleLink>
             </li>
             <li className="nav__item">
-              <Link
+              <LocaleLink
                 to="/blog"
                 onClick={() => handleNavClick("blog")}
                 className={
@@ -155,16 +167,16 @@ const Header = () => {
                 }
               >
                 <i className="uil uil-notes nav__icon"></i>{t('nav.blog')}
-              </Link>
+              </LocaleLink>
             </li>
             <li className='nav__item'>
-              <Link
+              <LocaleLink
                 to="/#contact"
                 onClick={() => handleNavClick('#contact')}
                 className={currentActiveNav === '#contact' ? 'nav__link active-link' : 'nav__link'}
               >
                 <i className='uil uil-message nav__icon'></i>{t('nav.contact')}
-              </Link>
+              </LocaleLink>
             </li>
           </ul>
 

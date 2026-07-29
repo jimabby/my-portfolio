@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import BlogProgressBar from "./BlogProgressBar";
@@ -7,6 +6,8 @@ import BlogPrevNext from "./BlogPrevNext";
 import BlogSEO from "./BlogSEO";
 import ScrollUp from "../scrollup/ScrollUp";
 import { useLanguage } from '../../i18n/LanguageContext';
+// Pulls the article prose into this chunk instead of the entry bundle.
+import '../../i18n/posts/register';
 import "./blog.css";
 
 import overviewImg    from '../../assets/hermes/Hermes_overview.webp';
@@ -15,6 +16,8 @@ import aiPanelImg     from '../../assets/hermes/Hermes_ai-panel.webp';
 import aiAssistantImg from '../../assets/hermes/Hermes_ai-assistant.webp';
 import categoryImg    from '../../assets/hermes/Hermes_ai-category.webp';
 import accountsImg    from '../../assets/hermes/Hermes_accounts.webp';
+import Img from '../image/Img';
+import LocaleLink from "../../i18n/LocaleLink";
 
 const Hermes = () => {
   const { t } = useLanguage();
@@ -34,9 +37,9 @@ const Hermes = () => {
 
           {/* Back button */}
           <div className="blog__back-wrapper">
-            <Link to="/blog" className="blog__back-button">
+            <LocaleLink to="/blog" className="blog__back-button">
               {t('blog.backToBlog')}
-            </Link>
+            </LocaleLink>
           </div>
 
           {/* HERO */}
@@ -62,7 +65,7 @@ const Hermes = () => {
             </p>
 
             <figure className="blog__figure blog__figure--hero">
-              <img src={overviewImg} alt="Hermes app overview showing the inbox" className="blog__img" fetchPriority="high" decoding="async" />
+              <Img src={overviewImg} alt="Hermes app overview showing the inbox" className="blog__img" fetchPriority="high" decoding="async"  sizes="(max-width: 820px) 100vw, 780px"/>
             </figure>
           </header>
 
@@ -103,7 +106,7 @@ const Hermes = () => {
               </p>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={accountsImg} alt="Hermes account settings showing multiple email accounts and AI provider selection" className="blog__img" loading="lazy" decoding="async" />
+                <Img src={accountsImg} alt="Hermes account settings showing multiple email accounts and AI provider selection" className="blog__img" loading="lazy" decoding="async"  sizes="(max-width: 820px) 100vw, 780px"/>
                 <figcaption className="blog__caption">{t('posts.hermes.multiAccountCaption')}</figcaption>
               </figure>
 
@@ -149,7 +152,7 @@ const Hermes = () => {
               </p>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={aiSummaryImg} alt="Hermes AI email summary" className="blog__img" loading="lazy" decoding="async" />
+                <Img src={aiSummaryImg} alt="Hermes AI email summary" className="blog__img" loading="lazy" decoding="async"  sizes="(max-width: 820px) 100vw, 780px"/>
                 <figcaption className="blog__caption">{t('posts.hermes.aiSummaryCaption')}</figcaption>
               </figure>
             </section>
@@ -214,7 +217,7 @@ const Hermes = () => {
               </div>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={aiPanelImg} alt="Hermes AI Assist panel showing 9 writing modes" className="blog__img" loading="lazy" decoding="async" />
+                <Img src={aiPanelImg} alt="Hermes AI Assist panel showing 9 writing modes" className="blog__img" loading="lazy" decoding="async"  sizes="(max-width: 820px) 100vw, 780px"/>
                 <figcaption className="blog__caption">{t('posts.hermes.aiAssistCaption')}</figcaption>
               </figure>
 
@@ -239,7 +242,7 @@ const Hermes = () => {
               </p>
 
               <figure className="blog__figure blog__figure--full blog__figure--capped">
-                <img src={aiAssistantImg} alt="Hermes AI assistant side panel" className="blog__img" loading="lazy" decoding="async" />
+                <Img src={aiAssistantImg} alt="Hermes AI assistant side panel" className="blog__img" loading="lazy" decoding="async"  sizes="(max-width: 820px) 100vw, 780px"/>
                 <figcaption className="blog__caption">{t('posts.hermes.aiAssistantCaption')}</figcaption>
               </figure>
             </section>
@@ -257,7 +260,7 @@ const Hermes = () => {
               </p>
 
               <figure className="blog__figure blog__figure--full">
-                <img src={categoryImg} alt="Hermes smart email categories powered by AI" className="blog__img" loading="lazy" decoding="async" />
+                <Img src={categoryImg} alt="Hermes smart email categories powered by AI" className="blog__img" loading="lazy" decoding="async"  sizes="(max-width: 820px) 100vw, 780px"/>
                 <figcaption className="blog__caption">{t('posts.hermes.smartCategoryCaption')}</figcaption>
               </figure>
             </section>
@@ -324,9 +327,9 @@ const Hermes = () => {
 
           {/* BOTTOM BACK NAV */}
           <div className="blog__back-wrapper blog__back-wrapper--bottom">
-            <Link to="/blog" className="blog__back-button">
+            <LocaleLink to="/blog" className="blog__back-button">
               {t('blog.backToBlog')}
-            </Link>
+            </LocaleLink>
           </div>
 
         </div>

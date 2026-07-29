@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import BlogProgressBar from "./BlogProgressBar";
@@ -7,7 +6,10 @@ import BlogPrevNext from "./BlogPrevNext";
 import BlogSEO from "./BlogSEO";
 import ScrollUp from "../scrollup/ScrollUp";
 import { useLanguage } from "../../i18n/LanguageContext";
+// Pulls the article prose into this chunk instead of the entry bundle.
+import "../../i18n/posts/register";
 import "./blog.css";
+import LocaleLink from "../../i18n/LocaleLink";
 
 const Hiro = () => {
   const { t } = useLanguage();
@@ -27,9 +29,9 @@ const Hiro = () => {
 
           {/* Back button */}
           <div className="blog__back-wrapper">
-            <Link to="/blog" className="blog__back-button">
+            <LocaleLink to="/blog" className="blog__back-button">
               {t('blog.backToBlog')}
-            </Link>
+            </LocaleLink>
           </div>
 
           {/* HERO */}
@@ -378,9 +380,9 @@ const Hiro = () => {
 
           {/* BOTTOM BACK NAV */}
           <div className="blog__back-wrapper blog__back-wrapper--bottom">
-            <Link to="/blog" className="blog__back-button">
+            <LocaleLink to="/blog" className="blog__back-button">
               {t('blog.backToBlog')}
-            </Link>
+            </LocaleLink>
           </div>
 
         </div>
