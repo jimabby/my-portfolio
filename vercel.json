@@ -1,6 +1,18 @@
 {
   "outputDirectory": "dist",
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/work/hermes-ai-email-client",
+      "destination": "/blog/hermes",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(zh-Hans|zh-Hant|ja)/work/hermes-ai-email-client",
+      "destination": "/:locale/blog/hermes",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

@@ -9,6 +9,28 @@
 
 export const UPDATES = [
   {
+    id: '2026-07-30-case-study-notes',
+    date: '2026-07-30',
+    tag: 'feature',
+    title: {
+      en: 'Every case study screenshot now comes with a note on what it shows and why.',
+      'zh-Hans': '项目详情页的每张截图，现在都配有说明：画面内容以及这样设计的原因。',
+      'zh-Hant': '專案詳情頁的每張截圖，現在都配有說明：畫面內容以及這樣設計的原因。',
+      ja: 'ケーススタディの各スクリーンショットに、何を映し、なぜそうしたかの解説を追加しました。',
+    },
+  },
+  {
+    id: '2026-07-29-case-studies',
+    date: '2026-07-29',
+    tag: 'project',
+    title: {
+      en: 'Each project now has its own page, so any piece of work can be linked and shared.',
+      'zh-Hans': '每个项目都拥有独立页面，任何一件作品都可以单独链接与分享。',
+      'zh-Hant': '每個專案都擁有獨立頁面，任何一件作品都可以單獨連結與分享。',
+      ja: '各プロジェクトに専用ページを用意し、個々の作品をリンク・共有できるようになりました。',
+    },
+  },
+  {
     id: '2026-07-26-hvac-projects',
     date: '2026-07-26',
     tag: 'project',

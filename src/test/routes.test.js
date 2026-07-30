@@ -1,4 +1,6 @@
 import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { parseProjects } from '../../scripts/site-routes.mjs';
 import {
   DEFAULT_LANG,
   LOCALE_CODES,
@@ -6,7 +8,7 @@ import {
   localizedPath,
   splitLocalePath,
 } from '../i18n/routes';
-import { projectsData } from '../components/portfolio/Data';
+import { projectsData, projectPath } from '../components/portfolio/Data';
 import { posts } from '../components/blog/postsData';
 
 describe('locale paths', () => {
@@ -49,11 +51,55 @@ describe('locale paths', () => {
   });
 });
 
+// The sitemap, RSS feed and prerendered HTML are built from the routes derived
+// from this text, so a parse that drifts from the real data is invisible until
+// something is missing from search.
+describe('project data parsed for the sitemap', () => {
+  // Relative to the project root, where vitest runs.
+  const source = readFileSync('src/components/portfolio/Data.jsx', 'utf8');
+
+  it('reads back exactly what the app renders', () => {
+    expect(parseProjects(source)).toEqual(
+      projectsData.map((project) => ({
+        title: project.title,
+        slug: project.slug,
+        summary: project.summary,
+        article: project.article,
+      }))
+    );
+  });
+});
+
 describe('project data', () => {
   it('gives every project a unique slug', () => {
     const slugs = projectsData.map((p) => p.slug);
     expect(slugs.every(Boolean)).toBe(true);
     expect(new Set(slugs).size).toBe(slugs.length);
+  });
+
+  // A project either has a case study page or points at a blog post, never
+  // both: two URLs for one project split the ranking and duplicate content.
+  it('points every project at exactly one write-up that exists', () => {
+    const postPaths = new Set(posts.map((post) => `/blog/${post.slug}`));
+    for (const project of projectsData) {
+      if (project.article) {
+        expect(postPaths, `${project.slug} links to a missing post`).toContain(project.article);
+        expect(projectPath(project)).toBe(project.article);
+      } else {
+        expect(projectPath(project)).toBe(`/work/${project.slug}`);
+      }
+    }
+  });
+
+  // The article path replaced a `link` back to the blog on the same origin,
+  // which opened the site in a new tab and dropped the language prefix.
+  it('keeps project links pointing off-site', () => {
+    for (const project of projectsData) {
+      if (!project.link || project.link === '#') continue;
+      expect(project.link, `${project.slug} links to itself`).not.toMatch(
+        /jimkong-portfolio\.vercel\.app/
+      );
+    }
   });
 
   it('gives every post a machine-readable date for JSON-LD and RSS', () => {

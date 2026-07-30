@@ -1,4 +1,4 @@
-import { useParams } from 'react-router';
+import { Navigate, useParams } from 'react-router';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import ScrollUp from '../scrollup/ScrollUp';
@@ -6,8 +6,11 @@ import Img from '../image/Img';
 import Seo from '../seo/Seo';
 import LocaleLink from '../../i18n/LocaleLink';
 import { useLanguage } from '../../i18n/LanguageContext';
-import { projectsData } from './Data';
+import { useLocalePath } from '../../i18n/useLocalePath';
+import { projectsData, projectPath } from './Data';
 import NotFound from '../notfound/NotFound';
+// Registers the per-image captions into this chunk. Import for side effect.
+import '../../i18n/captions/register';
 import './casestudy.css';
 
 // A linkable, indexable page per project. The gallery modal on the home page
@@ -16,12 +19,17 @@ import './casestudy.css';
 const CaseStudy = () => {
   const { slug } = useParams();
   const { t } = useLanguage();
+  const withLocale = useLocalePath();
 
   const index = projectsData.findIndex((project) => project.slug === slug);
   const project = projectsData[index];
 
   // An unknown slug is a genuine 404, not an empty case study.
   if (!project) return <NotFound />;
+
+  // Projects written up on the blog own that URL instead. Vercel 301s this
+  // path for real visitors; this covers in-app navigation to a stale link.
+  if (project.article) return <Navigate to={withLocale(project.article)} replace />;
 
   const previous = projectsData[index - 1];
   const next = projectsData[index + 1];
@@ -30,6 +38,7 @@ const CaseStudy = () => {
   const images = project.gallery?.length > 0 ? project.gallery : [project.image];
   const hasExternalLink = project.link && project.link !== '#';
   const categoryLabel = t(`portfolio.filters.${project.category.toLowerCase()}`, project.category);
+  const roleLabel = project.role && t(`casestudy.roles.${project.role}`, project.role);
 
   return (
     <>
@@ -55,6 +64,31 @@ const CaseStudy = () => {
             <h1 className="casestudy__title">{project.title}</h1>
             {summary && <p className="casestudy__summary">{summary}</p>}
 
+            {/* Role, year and stack: a page of screenshots and one line of
+                text is thin enough that search engines may skip it. */}
+            {(roleLabel || project.year || project.stack?.length > 0) && (
+              <dl className="casestudy__facts">
+                {roleLabel && (
+                  <div className="casestudy__fact">
+                    <dt className="casestudy__fact-label">{t('casestudy.roleLabel')}</dt>
+                    <dd className="casestudy__fact-value">{roleLabel}</dd>
+                  </div>
+                )}
+                {project.year && (
+                  <div className="casestudy__fact">
+                    <dt className="casestudy__fact-label">{t('casestudy.yearLabel')}</dt>
+                    <dd className="casestudy__fact-value">{project.year}</dd>
+                  </div>
+                )}
+                {project.stack?.length > 0 && (
+                  <div className="casestudy__fact">
+                    <dt className="casestudy__fact-label">{t('casestudy.stackLabel')}</dt>
+                    <dd className="casestudy__fact-value">{project.stack.join(', ')}</dd>
+                  </div>
+                )}
+              </dl>
+            )}
+
             {project.tags?.length > 0 && (
               <ul className="casestudy__tags">
                 {project.tags.map((tag) => (
@@ -79,26 +113,37 @@ const CaseStudy = () => {
           </header>
 
           <section className="casestudy__gallery" aria-label={t('casestudy.galleryLabel')}>
-            {images.map((image, i) => (
-              <figure key={image} className="casestudy__figure">
-                <Img
-                  src={image}
-                  alt={`${project.title} — ${i + 1}`}
-                  className="casestudy__img"
-                  loading={i === 0 ? undefined : 'lazy'}
-                  fetchPriority={i === 0 ? 'high' : undefined}
-                  decoding="async"
-                  sizes="(max-width: 820px) 100vw, 780px"
-                />
-              </figure>
-            ))}
+            {images.map((image, i) => {
+              // Captions are index-aligned with the gallery; a test keeps the
+              // two in step. The alt text stays a plain identifier so a screen
+              // reader doesn't read the same sentence twice.
+              const caption = t(`captions.${project.id}.${i}`, '');
+
+              return (
+                <figure key={image} className="casestudy__figure">
+                  <Img
+                    src={image}
+                    alt={t('casestudy.imageAlt')
+                      .replace('{title}', project.title)
+                      .replace('{n}', i + 1)
+                      .replace('{total}', images.length)}
+                    className="casestudy__img"
+                    loading={i === 0 ? undefined : 'lazy'}
+                    fetchPriority={i === 0 ? 'high' : undefined}
+                    decoding="async"
+                    sizes="(max-width: 820px) 100vw, 780px"
+                  />
+                  {caption && <figcaption className="casestudy__caption">{caption}</figcaption>}
+                </figure>
+              );
+            })}
           </section>
 
           {(previous || next) && (
             <nav className="casestudy__prevnext" aria-label={t('casestudy.moreWork')}>
               {previous ? (
                 <LocaleLink
-                  to={`/work/${previous.slug}`}
+                  to={projectPath(previous)}
                   className="casestudy__prevnext-link casestudy__prevnext-link--prev"
                 >
                   <span className="casestudy__prevnext-dir">
@@ -112,7 +157,7 @@ const CaseStudy = () => {
 
               {next ? (
                 <LocaleLink
-                  to={`/work/${next.slug}`}
+                  to={projectPath(next)}
                   className="casestudy__prevnext-link casestudy__prevnext-link--next"
                 >
                   <span className="casestudy__prevnext-dir">

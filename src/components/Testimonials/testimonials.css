@@ -39,6 +39,18 @@
   margin-bottom: var(--mb-3);
 }
 
+/* Swiper ships `.swiper-slide { height: 100%; display: block }` and its
+   stylesheet is imported after this one, so it needs out-specifying. Left as
+   Swiper has it, each card stops at its own text: two quotes of different
+   lengths side by side ended at different heights, with a ragged bottom edge
+   and their "Read more" buttons on different lines. `height: auto` lets the
+   flex wrapper stretch every card in a row to the tallest one. */
+.testimonial__container .testimonial__card {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
 .testimonial__img {
   width: 60px;
   border-radius: 3rem;
@@ -73,8 +85,12 @@
   font-size: var(--smaller-font-size);
   font-weight: var(--font-medium);
   cursor: pointer;
-  padding: 0;
-  margin-top: var(--mb-0-5);
+  /* Sits on the card's bottom edge so the buttons line up across a row
+     however long the quote above is. align-self keeps the button its own
+     width instead of stretching, which would centre its label. */
+  align-self: flex-start;
+  margin-top: auto;
+  padding: var(--mb-0-5) 0 0;
 }
 
 .testimonial__toggle:hover {

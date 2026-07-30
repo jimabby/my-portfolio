@@ -36,6 +36,18 @@ describe('Works pagination', () => {
     expect(document.activeElement).toHaveClass('work__img-button');
   });
 
+  // Hermes is written up on the blog, so its card links there instead of to a
+  // near-empty case study page that would compete with the post in search.
+  it('sends a project with a blog article to the post', () => {
+    renderWorks();
+
+    expect(screen.getByRole('link', { name: /Read the story/ })).toHaveAttribute(
+      'href',
+      '/blog/hermes'
+    );
+    expect(screen.getAllByRole('link', { name: /Case study/ }).length).toBeGreaterThan(0);
+  });
+
   it('resets to the first page when a filter is selected', () => {
     const { container } = renderWorks();
     const pagination = screen.getByRole('navigation', { name: 'Portfolio pages' });

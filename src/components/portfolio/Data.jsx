@@ -86,6 +86,16 @@ import OncoraDoctorReport from "../../assets/oncora/oncora-doctor-report.webp";
 import OncoraUnderstand from "../../assets/oncora/oncora-understand.webp";
 import OncoraAiCompanion from "../../assets/oncora/oncora-ai-companion.webp";
 
+// Required per project: id, image, title, slug, category, summary, tags.
+// Optional:
+//   gallery  extra screenshots; falls back to `image` alone
+//   link     the live site or repo, shown as "Visit"; '#' or absent hides it
+//   article  a blog post that already tells this project's story. The card
+//            links straight there and no /work/<slug> page is generated, so
+//            one project never gets two competing URLs.
+//   role     what you did — a key under casestudy.roles, or free text
+//   year     when it shipped, e.g. '2025' or '2024 - 2025'
+//   stack    the tools it was built with, e.g. ['React', 'Node']
 export const projectsData = [
   {
     id: 0,
@@ -93,7 +103,7 @@ export const projectsData = [
     title: 'Hermes - AI Email Client',
     slug: 'hermes-ai-email-client',
     category: 'App',
-    link: 'https://jimkong-portfolio.vercel.app/blog/hermes',
+    article: '/blog/hermes',
     summary: 'AI-powered email client with smart writing modes and summaries.',
     tags: ['AI', 'Email', 'Product'],
     gallery: [
@@ -406,6 +416,10 @@ export const projectsData = [
     ],
   },
 ]
+
+// Where a project's write-up lives: its own case study, or the blog post that
+// replaced it. Canonical (unprefixed) — pass it through <LocaleLink>.
+export const projectPath = (project) => project.article ?? `/work/${project.slug}`;
 
 export const projectsNav = [
   {

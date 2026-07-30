@@ -87,6 +87,24 @@ const CONTENT_ROUTES = [
   })),
 ];
 
+// Data.jsx imports .webp assets, so it cannot simply be imported here. Read
+// each project as the block of text from its title up to the next entry's
+// `id:`, so an optional field is always attributed to the project it actually
+// belongs to rather than to whichever one happened to come first.
+export function parseProjects(source) {
+  const entries = source.matchAll(
+    /title: '([^']+)',\s*slug: '([^']+)',([\s\S]*?)(?=\n\s*id: \d|\n\]|$)/g
+  );
+
+  return [...entries].map(([, title, slug, body]) => ({
+    title,
+    slug,
+    summary: body.match(/summary: '([^']*)'/)?.[1],
+    // A project written up on the blog has no case study page of its own.
+    article: body.match(/article: '([^']*)'/)?.[1],
+  }));
+}
+
 // Project case studies. Slugs are read from the app's own project data so a new
 // project appears in the sitemap without anyone remembering to add it here.
 export async function caseStudyRoutes() {
@@ -94,20 +112,17 @@ export async function caseStudyRoutes() {
     fs.readFile(new URL('../src/components/portfolio/Data.jsx', import.meta.url), 'utf8')
   );
 
-  const entries = [...source.matchAll(/title: '([^']+)',\s*slug: '([^']+)',/g)];
-  const summaries = new Map(
-    [...source.matchAll(/slug: '([^']+)',[\s\S]*?summary: '([^']*)'/g)].map((m) => [m[1], m[2]])
-  );
-
-  return entries.map(([, title, slug]) => ({
-    path: `/work/${slug}`,
-    title: `${title} | ${AUTHOR}`,
-    description: summaries.get(slug) || `${title} — a project by ${AUTHOR}.`,
-    image: '/og/hermes.webp',
-    type: 'article',
-    priority: '0.6',
-    changefreq: 'yearly',
-  }));
+  return parseProjects(source)
+    .filter((project) => !project.article)
+    .map(({ title, slug, summary }) => ({
+      path: `/work/${slug}`,
+      title: `${title} | ${AUTHOR}`,
+      description: summary || `${title} — a project by ${AUTHOR}.`,
+      image: '/og/hermes.webp',
+      type: 'article',
+      priority: '0.6',
+      changefreq: 'yearly',
+    }));
 }
 
 // Every indexable route, in every language.
