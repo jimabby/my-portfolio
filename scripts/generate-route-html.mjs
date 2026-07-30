@@ -1,6 +1,10 @@
 // Writes a static <head> for every route, in every language, so link previews
 // and crawlers get correct metadata without executing the SPA.
 //
+// Case study routes additionally get their text written into the root element:
+// title, summary and the caption for every screenshot. See renderCaseStudy
+// below for why that markup is worth the trouble.
+//
 // Also emits sitemap.xml and the blog's RSS feed from the same route table
 // (scripts/site-routes.mjs), which is why they can no longer drift apart the
 // way the hand-maintained sitemap did.
@@ -16,6 +20,10 @@ import {
   allRoutes,
   localizedPath,
 } from './site-routes.mjs';
+// Both are plain string dictionaries with no asset imports, so the build can
+// read them directly rather than parsing them the way Data.jsx has to be.
+import { projectSummaries } from '../src/i18n/projects.js';
+import { projectCaptions } from '../src/i18n/captions/index.js';
 
 const DIST_DIR = join(process.cwd(), 'dist');
 
@@ -37,11 +45,44 @@ const escapeXml = (value) =>
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&apos;');
 
+const escapeText = (value) =>
+  String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+
+// The app mounts with createRoot, which empties #root on its first render — so
+// anything written here is a pre-JavaScript stand-in, not markup React
+// hydrates. It exists because the case study text (the summary, and one or two
+// sentences per screenshot) was otherwise reachable only by executing the
+// bundle: correct for a browser, invisible to anything that reads HTML and
+// stops. The wording is the same text the mounted page renders, in the same
+// language as the rest of the document.
+//
+// It is deliberately plain and visible. Hiding it would be cloaking, and the
+// container/section classes come from the entry stylesheet, which is already
+// loaded by the time this parses, so the stand-in is legible rather than raw.
+const renderCaseStudy = (route, lang) => {
+  const { id, title } = route.project;
+  const summary = projectSummaries[lang]?.[id] ?? projectSummaries.en[id] ?? '';
+  const captions = projectCaptions[lang]?.[id] ?? projectCaptions.en[id] ?? [];
+
+  const paragraphs = [summary, ...captions]
+    .filter(Boolean)
+    .map((text) => `      <p>${escapeText(text)}</p>`)
+    .join('\n');
+
+  return `<div class="container section">
+      <h1>${escapeText(title)}</h1>
+${paragraphs}
+    </div>`;
+};
+
 const replaceMeta = (html, route, lang) => {
   const url = `${SITE_URL}${localizedPath(lang, route.path)}`;
   const image = `${SITE_URL}${route.image}`;
   const title = escapeAttribute(route.title);
-  const description = escapeAttribute(route.description);
+  // A case study can describe itself in the language of the page it is on;
+  // the hand-written routes only have their English copy to offer.
+  const localized = route.project ? projectSummaries[lang]?.[route.project.id] : undefined;
+  const description = escapeAttribute(localized || route.description);
 
   // Alternates for every translation of this route, plus x-default.
   const alternates = route.noindex
@@ -109,6 +150,13 @@ const replaceMeta = (html, route, lang) => {
     result = result.replace(
       /<meta[^>]+name="robots"[^>]*>/,
       '<meta name="robots" content="noindex, follow" />'
+    );
+  }
+
+  if (route.project) {
+    result = result.replace(
+      '<div id="root"></div>',
+      `<div id="root">${renderCaseStudy(route, lang)}</div>`
     );
   }
 

@@ -93,10 +93,11 @@ const CONTENT_ROUTES = [
 // belongs to rather than to whichever one happened to come first.
 export function parseProjects(source) {
   const entries = source.matchAll(
-    /title: '([^']+)',\s*slug: '([^']+)',([\s\S]*?)(?=\n\s*id: \d|\n\]|$)/g
+    /id: (\d+),[\s\S]*?title: '([^']+)',\s*slug: '([^']+)',([\s\S]*?)(?=\n\s*id: \d|\n\]|$)/g
   );
 
-  return [...entries].map(([, title, slug, body]) => ({
+  return [...entries].map(([, id, title, slug, body]) => ({
+    id: Number(id),
     title,
     slug,
     summary: body.match(/summary: '([^']*)'/)?.[1],
@@ -107,14 +108,13 @@ export function parseProjects(source) {
 
 // Project case studies. Slugs are read from the app's own project data so a new
 // project appears in the sitemap without anyone remembering to add it here.
-export async function caseStudyRoutes() {
-  const source = await import('node:fs/promises').then((fs) =>
-    fs.readFile(new URL('../src/components/portfolio/Data.jsx', import.meta.url), 'utf8')
-  );
-
+// Split from the file read so tests can exercise the mapping without depending
+// on `import.meta.url` resolving to a real file path, which it does not under
+// the test runner's module loader.
+export function caseStudyRoutesFrom(source) {
   return parseProjects(source)
     .filter((project) => !project.article)
-    .map(({ title, slug, summary }) => ({
+    .map(({ id, title, slug, summary }) => ({
       path: `/work/${slug}`,
       title: `${title} | ${AUTHOR}`,
       description: summary || `${title} — a project by ${AUTHOR}.`,
@@ -122,7 +122,18 @@ export async function caseStudyRoutes() {
       type: 'article',
       priority: '0.6',
       changefreq: 'yearly',
+      // Lets the HTML generator pull this project's translated summary and
+      // its per-image captions out of the app's own dictionaries.
+      project: { id, title },
     }));
+}
+
+export async function caseStudyRoutes() {
+  const source = await import('node:fs/promises').then((fs) =>
+    fs.readFile(new URL('../src/components/portfolio/Data.jsx', import.meta.url), 'utf8')
+  );
+
+  return caseStudyRoutesFrom(source);
 }
 
 // Every indexable route, in every language.

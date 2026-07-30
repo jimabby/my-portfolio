@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { parseProjects } from '../../scripts/site-routes.mjs';
+import { caseStudyRoutesFrom, parseProjects } from '../../scripts/site-routes.mjs';
 import {
   DEFAULT_LANG,
   LOCALE_CODES,
@@ -61,12 +61,25 @@ describe('project data parsed for the sitemap', () => {
   it('reads back exactly what the app renders', () => {
     expect(parseProjects(source)).toEqual(
       projectsData.map((project) => ({
+        id: project.id,
         title: project.title,
         slug: project.slug,
         summary: project.summary,
         article: project.article,
       }))
     );
+  });
+
+  // The generated HTML looks the project up by id to write its translated
+  // summary and captions into the page body; a route without one silently
+  // falls back to an empty shell.
+  it('carries the project reference the static HTML needs', () => {
+    for (const route of caseStudyRoutesFrom(source)) {
+      const project = projectsData.find((p) => p.id === route.project?.id);
+      expect(project, `${route.path} has no usable project reference`).toBeDefined();
+      expect(route.path).toBe(`/work/${project.slug}`);
+      expect(route.project.title).toBe(project.title);
+    }
   });
 });
 

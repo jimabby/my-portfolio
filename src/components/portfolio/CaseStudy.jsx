@@ -3,6 +3,7 @@ import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import ScrollUp from '../scrollup/ScrollUp';
 import Img from '../image/Img';
+import { manifestKeyFor, metadataFor } from '../image/srcset';
 import Seo from '../seo/Seo';
 import LocaleLink from '../../i18n/LocaleLink';
 import { useLanguage } from '../../i18n/LanguageContext';
@@ -57,7 +58,7 @@ const CaseStudy = () => {
             </LocaleLink>
           </div>
 
-          <header className="casestudy__hero card">
+          <header className="casestudy__hero">
             <div className="casestudy__meta">
               <span className="casestudy__badge">{categoryLabel}</span>
             </div>
@@ -119,8 +120,16 @@ const CaseStudy = () => {
               // reader doesn't read the same sentence twice.
               const caption = t(`captions.${project.id}.${i}`, '');
 
+              // A phone screenshot (900x1948) at the full column width would
+              // render nearly 1700px tall, so tall shots sit two to a row.
+              const size = metadataFor(manifestKeyFor(image));
+              const portrait = size ? size.h / size.w > 1.2 : false;
+
               return (
-                <figure key={image} className="casestudy__figure">
+                <figure
+                  key={image}
+                  className={`casestudy__figure${portrait ? ' casestudy__figure--portrait' : ''}`}
+                >
                   <Img
                     src={image}
                     alt={t('casestudy.imageAlt')
@@ -131,9 +140,20 @@ const CaseStudy = () => {
                     loading={i === 0 ? undefined : 'lazy'}
                     fetchPriority={i === 0 ? 'high' : undefined}
                     decoding="async"
-                    sizes="(max-width: 820px) 100vw, 780px"
+                    sizes={
+                      portrait
+                        ? '(max-width: 640px) 100vw, 400px'
+                        : '(max-width: 860px) 100vw, 820px'
+                    }
                   />
-                  {caption && <figcaption className="casestudy__caption">{caption}</figcaption>}
+                  {caption && (
+                    <figcaption className="casestudy__caption">
+                      <span className="casestudy__caption-index" aria-hidden="true">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span className="casestudy__caption-text">{caption}</span>
+                    </figcaption>
+                  )}
                 </figure>
               );
             })}

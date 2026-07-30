@@ -5,7 +5,7 @@
 .casestudy__container {
   max-width: 820px;
   display: grid;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .casestudy__back-wrapper {
@@ -29,15 +29,14 @@
   background-color: var(--container-color);
 }
 
+/* An open page header rather than a card: the screenshots below are the
+   substance, and boxing the title made them compete. */
 .casestudy__hero {
-  background-color: var(--container-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg, 1rem);
-  box-shadow: var(--card-shadow);
-  padding: 2rem;
   display: grid;
-  gap: 1rem;
+  gap: 1.15rem;
   justify-items: start;
+  padding-bottom: 2.25rem;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .casestudy__badge {
@@ -52,34 +51,43 @@
 }
 
 .casestudy__title {
-  font-size: var(--h1-font-size);
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   color: var(--title-color);
   margin: 0;
 }
 
+/* Reads as a lead paragraph, so it is set a step above body copy and kept
+   to a comfortable measure even though the column is wider. */
 .casestudy__summary {
+  font-size: 1.05rem;
   color: var(--text-color);
-  line-height: 1.7;
+  line-height: 1.75;
+  max-width: 58ch;
   margin: 0;
 }
 
-/* Role / year / stack. Wraps to one fact per row on narrow screens. */
+/* Role / year / stack, as a spec strip. Wraps to one fact per row on narrow
+   screens. */
 .casestudy__facts {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem 2.5rem;
-  margin: 0;
+  gap: 1rem 2.5rem;
+  margin: 0.25rem 0 0;
   width: 100%;
-  border-top: 1px solid var(--border-color);
-  padding-top: 1rem;
+  padding: 1rem 1.25rem;
+  background-color: var(--soft-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
 }
 
 .casestudy__fact-label {
-  font-size: var(--smaller-font-size);
+  font-size: var(--tiny-font-size);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-color-light, var(--text-color));
-  margin-bottom: 0.25rem;
+  letter-spacing: 0.08em;
+  color: var(--text-color);
+  margin-bottom: 0.3rem;
 }
 
 .casestudy__fact-value {
@@ -113,34 +121,64 @@
 
 .casestudy__gallery {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.5rem;
 }
 
+/* Screenshot and caption share one frame, so a caption is unmistakably about
+   the image above it rather than floating between two of them. Wide shots
+   take the full column; tall phone screenshots sit two to a row. */
 .casestudy__figure {
+  grid-column: 1 / -1;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--container-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
 }
 
-.casestudy__caption {
-  font-size: var(--small-font-size);
-  color: var(--text-color);
-  line-height: 1.6;
-  margin-top: 0.75rem;
-  /* Narrower than the screenshot above it: a caption running the full width
-     of a 780px image is uncomfortable to read. */
-  max-width: 62ch;
+.casestudy__figure--portrait {
+  grid-column: span 1;
 }
 
 .casestudy__img {
   width: 100%;
   height: auto;
-  border-radius: 1rem;
-  border: 1px solid var(--border-color);
-  background: hsl(0, 0%, 96%);
   display: block;
+  /* Fills the frame while a screenshot loads, instead of flashing the page
+     background through a full-width gap. */
+  background-color: var(--soft-surface);
 }
 
-[data-theme='dark'] .casestudy__img {
-  background: hsl(220, 12%, 14%);
+.casestudy__caption {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.9rem;
+  align-items: start;
+  /* Pushed to the bottom of the frame so captions of different lengths still
+     line up when two portrait figures sit side by side. */
+  margin-top: auto;
+  padding: 1rem 1.25rem 1.15rem;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--soft-surface);
+}
+
+.casestudy__caption-index {
+  font-size: var(--tiny-font-size);
+  font-weight: var(--font-semi-bold);
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: var(--title-color);
+  /* Optically aligned with the first line of the caption, not its box. */
+  padding-top: 0.2rem;
+}
+
+.casestudy__caption-text {
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+  line-height: 1.65;
 }
 
 .casestudy__prevnext {
@@ -179,13 +217,29 @@
   font-size: var(--small-font-size);
 }
 
+/* One column: a portrait screenshot at half of a phone's width is unreadable,
+   and at full width it is the right size again. */
+@media screen and (max-width: 640px) {
+  .casestudy__gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .casestudy__caption {
+    padding: 0.9rem 1rem 1rem;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .casestudy {
     padding-top: 5.5rem;
   }
 
+  .casestudy__container {
+    gap: 2rem;
+  }
+
   .casestudy__hero {
-    padding: 1.5rem;
+    padding-bottom: 1.75rem;
   }
 
   .casestudy__prevnext {
