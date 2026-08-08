@@ -6,8 +6,29 @@ import { createRequire } from 'node:module'
 // and prod can never drift apart.
 const require = createRequire(import.meta.url)
 const { buildSystemPrompt, buildChatHistory } = require('./api/systemPrompt.js')
-const { validateBody } = require('./api/guard.js')
+const { validateBody, isAllowedOrigin, isRateLimited } = require('./api/guard.js')
 const { validateContactBody, sendContactEmail } = require('./api/contactService.js')
+
+// Reject a request the same way the production handlers do. Dev used to skip
+// the origin check and the rate limiter entirely, which is precisely the drift
+// api/guard.js was extracted to prevent: a limit that is never exercised
+// locally is a limit nobody notices is broken.
+async function rejectRequest(req, res, limitOptions) {
+  if (!isAllowedOrigin(req)) {
+    res.statusCode = 403
+    res.setHeader('Content-Type', 'application/json')
+    res.end(JSON.stringify({ error: 'Forbidden' }))
+    return true
+  }
+  if (await isRateLimited(req, limitOptions)) {
+    res.statusCode = 429
+    res.setHeader('Retry-After', String(Math.ceil((limitOptions?.windowMs ?? 60000) / 1000)))
+    res.setHeader('Content-Type', 'application/json')
+    res.end(JSON.stringify({ error: 'Too many requests. Please slow down.' }))
+    return true
+  }
+  return false
+}
 
 function devApi(env) {
   const apiKey = env.GEMINI_API_KEY
@@ -24,6 +45,7 @@ function devApi(env) {
         req.on('data', (d) => (body += d))
         req.on('end', async () => {
           try {
+            if (await rejectRequest(req, res)) return
             if (!apiKey) {
               res.statusCode = 500
               res.setHeader('Content-Type', 'application/json')
@@ -53,11 +75,16 @@ function devApi(env) {
             res.write('data: [DONE]\n\n')
             res.end()
           } catch (err) {
+            // Log locally, but answer with the same opaque message production
+            // sends — a dev-only error shape hides response-handling bugs in
+            // the client until they reach the deployed site.
+            console.error('[dev /api/chat]', err.message)
             if (!res.headersSent) {
               res.statusCode = 500
               res.setHeader('Content-Type', 'application/json')
-              res.end(JSON.stringify({ error: err.message }))
+              res.end(JSON.stringify({ error: 'Failed to get a response' }))
             } else {
+              res.write(`data: ${JSON.stringify({ error: 'Stream interrupted' })}\n\n`)
               res.end()
             }
           }
@@ -72,17 +99,31 @@ function devApi(env) {
         let body = ''
         req.on('data', (chunk) => (body += chunk))
         req.on('end', async () => {
-          res.setHeader('Content-Type', 'application/json')
           try {
+            // Same limits as api/contact.js.
+            if (
+              await rejectRequest(req, res, {
+                prefix: 'portfolio_contact',
+                limit: 5,
+                windowMs: 10 * 60 * 1000,
+              })
+            ) {
+              return
+            }
+            res.setHeader('Content-Type', 'application/json')
             const parsed = validateContactBody(JSON.parse(body))
-            if (parsed.spam) return res.end(JSON.stringify({ ok: true }))
+            if (parsed.spam) {
+              console.warn('Contact submission rejected as spam')
+              return res.end(JSON.stringify({ ok: true }))
+            }
             if (parsed.error) {
               res.statusCode = parsed.status
               return res.end(JSON.stringify({ error: parsed.error }))
             }
             await sendContactEmail(parsed.fields, env)
             return res.end(JSON.stringify({ ok: true }))
-          } catch {
+          } catch (err) {
+            console.error('[dev /api/contact]', err.message)
             res.statusCode = 500
             return res.end(JSON.stringify({ error: 'Unable to send message' }))
           }

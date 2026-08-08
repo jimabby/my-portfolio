@@ -48,6 +48,10 @@ const BlogSEO = ({ title, description, ogImage, slug }) => {
 
       {/* Open Graph — LinkedIn, Facebook */}
       <meta property="og:type"        content="article" />
+      <meta property="article:author" content={AUTHOR} />
+      {datePublished && (
+        <meta property="article:published_time" content={`${datePublished}T00:00:00Z`} />
+      )}
       <meta property="og:url"         content={url} />
       <meta property="og:title"       content={title} />
       <meta property="og:description" content={description} />

@@ -6,7 +6,7 @@
 // ./posts/*. They are registered with the language context by the blog chunk
 // (see ./posts/register.js) so they load only when someone opens the blog,
 // instead of riding along in the entry bundle for every visitor.
-import { projectSummaries } from './projects';
+import { projectSummaries } from './projects.mjs';
 
 const en = {
   nav: {
@@ -45,6 +45,9 @@ const en = {
     sayHello: 'Say Hello',
     downloadCV: 'Download CV',
     scrollDown: 'Scroll Down',
+    currently: 'Currently',
+    currentlyAt: 'at',
+    currentlySince: 'since {year}',
     profileAlt: 'Jim Kong profile photo',
   },
   about: {
@@ -123,6 +126,8 @@ const en = {
       awsCcp: 'AWS Certified Cloud Practitioner',
       ibmData: 'IBM Data Analyst Professional Certificate',
       awsMl: 'AWS Certified Machine Learning Engineer - Associate',
+      salesforceAi: 'Salesforce Certified AI Associate',
+      powerBi: 'Microsoft Certified: Power BI Data Analyst Associate',
       oci: 'Oracle Cloud Infrastructure 2025 Certified Foundations Associate',
     },
     exp: {
@@ -197,6 +202,8 @@ const en = {
     about: 'About',
     portfolio: 'Portfolio',
     testimonials: 'Testimonials',
+    blog: 'Blog',
+    rss: 'RSS feed',
     rights: 'All rights reserved.',
     socialAria: 'Jim Kong on {platform}',
   },
@@ -263,6 +270,9 @@ const en = {
     subtitle: 'My latest posts',
     searchPlaceholder: 'Search articles...',
     searchAria: 'Search articles',
+    tagFilterAria: 'Filter articles by tag',
+    filterByTag: 'Filter by {tag}',
+    clearTags: 'Clear tags',
     readArticle: 'Read article',
     noResults: 'No articles found.',
     backToBlog: '<- Back to Blog',
@@ -321,6 +331,9 @@ const zhHans = {
     sayHello: '打个招呼',
     downloadCV: '下载简历',
     scrollDown: '向下滚动',
+    currently: '目前',
+    currentlyAt: '任职于',
+    currentlySince: '自 {year} 年起',
     profileAlt: 'Jim Kong 个人照片',
   },
   about: {
@@ -399,6 +412,8 @@ const zhHans = {
       awsCcp: 'AWS 认证云从业者',
       ibmData: 'IBM 数据分析师专业证书',
       awsMl: 'AWS 认证机器学习工程师 - 助理级',
+      salesforceAi: 'Salesforce 认证 AI 助理级',
+      powerBi: 'Microsoft 认证：Power BI 数据分析师助理级',
       oci: 'Oracle Cloud Infrastructure 2025 认证基础助理',
     },
     exp: {
@@ -473,6 +488,8 @@ const zhHans = {
     about: '关于',
     portfolio: '作品',
     testimonials: '客户评价',
+    blog: '博客',
+    rss: 'RSS 订阅',
     rights: '版权所有。',
     socialAria: 'Jim Kong 的 {platform}',
   },
@@ -538,6 +555,9 @@ const zhHans = {
     subtitle: '我的最新文章',
     searchPlaceholder: '搜索文章…',
     searchAria: '搜索文章',
+    tagFilterAria: '按标签筛选文章',
+    filterByTag: '按 {tag} 筛选',
+    clearTags: '清除标签',
     readArticle: '阅读文章',
     noResults: '未找到文章。',
     backToBlog: '<- 返回博客',
@@ -595,6 +615,9 @@ const zhHant = {
     sayHello: '打聲招呼',
     downloadCV: '下載履歷',
     scrollDown: '向下捲動',
+    currently: '目前',
+    currentlyAt: '任職於',
+    currentlySince: '自 {year} 年起',
     profileAlt: 'Jim Kong 個人照片',
   },
   about: {
@@ -673,6 +696,8 @@ const zhHant = {
       awsCcp: 'AWS 認證雲端從業者',
       ibmData: 'IBM 資料分析師專業證書',
       awsMl: 'AWS 認證機器學習工程師 - 助理級',
+      salesforceAi: 'Salesforce 認證 AI 助理級',
+      powerBi: 'Microsoft 認證：Power BI 資料分析師助理級',
       oci: 'Oracle Cloud Infrastructure 2025 認證基礎助理',
     },
     exp: {
@@ -747,6 +772,8 @@ const zhHant = {
     about: '關於',
     portfolio: '作品',
     testimonials: '客戶評價',
+    blog: '部落格',
+    rss: 'RSS 訂閱',
     rights: '版權所有。',
     socialAria: 'Jim Kong 的 {platform}',
   },
@@ -812,6 +839,9 @@ const zhHant = {
     subtitle: '我的最新文章',
     searchPlaceholder: '搜尋文章…',
     searchAria: '搜尋文章',
+    tagFilterAria: '依標籤篩選文章',
+    filterByTag: '依 {tag} 篩選',
+    clearTags: '清除標籤',
     readArticle: '閱讀文章',
     noResults: '找不到文章。',
     backToBlog: '<- 返回網誌',
@@ -869,6 +899,9 @@ const ja = {
     sayHello: 'ご挨拶',
     downloadCV: '履歴書をダウンロード',
     scrollDown: 'スクロール',
+    currently: '現在',
+    currentlyAt: '—',
+    currentlySince: '{year}年から',
     profileAlt: 'Jim Kong のプロフィール写真',
   },
   about: {
@@ -947,6 +980,8 @@ const ja = {
       awsCcp: 'AWS 認定クラウドプラクティショナー',
       ibmData: 'IBM データアナリスト プロフェッショナル認定',
       awsMl: 'AWS 認定機械学習エンジニア - アソシエイト',
+      salesforceAi: 'Salesforce 認定 AI アソシエイト',
+      powerBi: 'Microsoft 認定：Power BI データアナリスト アソシエイト',
       oci: 'Oracle Cloud Infrastructure 2025 認定ファンデーションズ アソシエイト',
     },
     exp: {
@@ -1021,6 +1056,8 @@ const ja = {
     about: '紹介',
     portfolio: '作品',
     testimonials: '推薦の声',
+    blog: 'ブログ',
+    rss: 'RSS フィード',
     rights: '無断複写・転載を禁じます。',
     socialAria: '{platform} の Jim Kong',
   },
@@ -1087,6 +1124,9 @@ const ja = {
     subtitle: '最新の記事',
     searchPlaceholder: '記事を検索…',
     searchAria: '記事を検索',
+    tagFilterAria: 'タグで記事を絞り込む',
+    filterByTag: '{tag} で絞り込む',
+    clearTags: 'タグをクリア',
     readArticle: '記事を読む',
     noResults: '記事が見つかりません。',
     backToBlog: '<- ブログに戻る',

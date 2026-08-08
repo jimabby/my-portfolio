@@ -297,7 +297,11 @@ const Works = () => {
                     onClick={() => setGalleryState((prev) => ({ ...prev, index: idx }))}
                     aria-label={`View image ${idx + 1}`}
                   >
-                    <Img src={img} alt="" />
+                    {/* The strip is 80px wide (portfolio.css). Without an
+                        explicit `sizes` the default of 100vw makes the browser
+                        pick the largest candidate — the full-size original —
+                        once per thumbnail. */}
+                    <Img src={img} alt="" sizes="80px" loading="lazy" decoding="async" />
                   </button>
                 ))}
               </div>

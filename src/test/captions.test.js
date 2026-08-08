@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { projectCaptions } from '../i18n/captions';
+import { projectCaptions } from '../i18n/captions/index.mjs';
 import { projectsData } from '../components/portfolio/Data';
 
 // Captions are matched to screenshots by array position, and they load from a

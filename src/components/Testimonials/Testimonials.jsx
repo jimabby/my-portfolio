@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
+import { Helmet } from 'react-helmet-async';
 import "./testimonials.css"
 import Data from './Data';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -33,12 +34,42 @@ const TestimonialCard = ({ image, title, description }) => {
   );
 };
 
+const SITE_URL = 'https://jimkong-portfolio.vercel.app';
+
 const Testimonials = () => {
   const { t } = useLanguage();
   const swiperRef = useRef(null);
 
+  // Five named recommendations sat on the page as plain text, so nothing but a
+  // human reader could tell they were endorsements of a specific person.
+  //
+  // Reviews only — deliberately no aggregateRating. These are written
+  // recommendations, not scored ones; attaching a star rating would mean
+  // inventing a number nobody gave.
+  const structuredData = useMemo(
+    () => ({
+      '@context': 'https://schema.org',
+      '@graph': Data.map((entry) => ({
+        '@type': 'Review',
+        author: { '@type': 'Person', name: entry.title },
+        reviewBody: entry.description,
+        itemReviewed: {
+          '@type': 'Person',
+          name: 'Jim Kong',
+          jobTitle: 'Full Stack Developer',
+          url: `${SITE_URL}/`,
+        },
+      })),
+    }),
+    []
+  );
+
   return (
     <section className='testimonial container section' id="testimonial">
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+      </Helmet>
+
       <h2 className='section__title'>{t('testimonials.title')}</h2>
       <span className='section__subtitle'>{t('testimonials.subtitle')}</span>
 

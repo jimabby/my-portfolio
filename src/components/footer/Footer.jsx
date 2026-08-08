@@ -19,6 +19,15 @@ const Footer = () => {
           <li>
             <LocaleLink to="/#testimonial" className='footer__link'>{t('footer.testimonials')}</LocaleLink>
           </li>
+          <li>
+            <LocaleLink to="/blog" className='footer__link'>{t('footer.blog')}</LocaleLink>
+          </li>
+          <li>
+            {/* The feed is generated at build time and declared in <head>, but
+                nothing in the UI pointed at it. Not a LocaleLink: rss.xml is a
+                single static file, not a localised route. */}
+            <a href='/rss.xml' className='footer__link'>{t('footer.rss')}</a>
+          </li>
         </ul>
 
         <div className='footer__social'>

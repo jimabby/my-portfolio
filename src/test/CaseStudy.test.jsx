@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import CaseStudy from '../components/portfolio/CaseStudy.jsx';
 import { LanguageProvider } from '../i18n/LanguageContext.jsx';
-import { projectCaptions } from '../i18n/captions';
+import { projectCaptions } from '../i18n/captions/index.mjs';
 
 const renderCaseStudy = (slug) =>
   render(

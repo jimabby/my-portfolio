@@ -7,6 +7,16 @@
 export const SITE_URL = 'https://jimkong-portfolio.vercel.app';
 export const AUTHOR = 'Jim Kong';
 
+// `lastmod` for routes that have no publication date of their own — the home
+// page, the blog index, and every case study.
+//
+// Deliberately a hand-edited constant rather than `new Date()`. Stamping today
+// onto every URL made all 112 of them claim to have changed on every deploy,
+// including deploys that touched nothing but a stylesheet, which is exactly the
+// signal that teaches a crawler to stop trusting lastmod. Bump this when the
+// site's content actually changes.
+export const CONTENT_UPDATED = '2026-08-08';
+
 // English is the default and takes the bare path; the rest are prefixed.
 // Mirrors src/i18n/routes.js.
 export const LOCALE_PREFIXES = {
@@ -65,19 +75,21 @@ const CONTENT_ROUTES = [
     title: 'Jim Kong | Portfolio',
     description:
       'Jim Kong is a Sydney-based full stack developer building web apps, AI tools, WordPress sites, and data-driven software.',
-    image: '/og/hermes.webp',
+    image: '/og/site.webp',
     type: 'website',
     priority: '1.0',
     changefreq: 'monthly',
+    updated: CONTENT_UPDATED,
   },
   {
     path: '/blog',
     title: 'Jim Kong | Blog',
     description: 'Articles about software projects, AI, photography, and travel by Jim Kong.',
-    image: '/og/hermes.webp',
+    image: '/og/site.webp',
     type: 'website',
     priority: '0.8',
     changefreq: 'monthly',
+    updated: CONTENT_UPDATED,
   },
   ...BLOG_POSTS.map((post) => ({
     ...post,
@@ -87,24 +99,47 @@ const CONTENT_ROUTES = [
   })),
 ];
 
+// Maps the identifiers Data.jsx imports its screenshots under onto repo-root
+// relative asset paths, so `image: HermesImg` can be resolved back to a real
+// file on disk by the Open Graph generator.
+export function parseAssetImports(source) {
+  const imports = {};
+  for (const [, identifier, specifier] of source.matchAll(
+    /^import\s+(\w+)\s+from\s+["']([^"']+)["'];?$/gm
+  )) {
+    // Specifiers are written relative to src/components/portfolio/.
+    imports[identifier] = specifier.replace(/^\.\.\/\.\.\//, 'src/');
+  }
+  return imports;
+}
+
 // Data.jsx imports .webp assets, so it cannot simply be imported here. Read
 // each project as the block of text from its title up to the next entry's
 // `id:`, so an optional field is always attributed to the project it actually
 // belongs to rather than to whichever one happened to come first.
 export function parseProjects(source) {
+  const imports = parseAssetImports(source);
   const entries = source.matchAll(
-    /id: (\d+),[\s\S]*?title: '([^']+)',\s*slug: '([^']+)',([\s\S]*?)(?=\n\s*id: \d|\n\]|$)/g
+    /id: (\d+),([\s\S]*?)title: '([^']+)',\s*slug: '([^']+)',([\s\S]*?)(?=\n\s*id: \d|\n\]|$)/g
   );
 
-  return [...entries].map(([, id, title, slug, body]) => ({
+  return [...entries].map(([, id, head, title, slug, body]) => ({
     id: Number(id),
     title,
     slug,
     summary: body.match(/summary: '([^']*)'/)?.[1],
     // A project written up on the blog has no case study page of its own.
     article: body.match(/article: '([^']*)'/)?.[1],
+    category: body.match(/category: '([^']*)'/)?.[1],
+    // The card screenshot, as a path the build can read. Used to compose this
+    // project's Open Graph card.
+    image: imports[`${head}${body}`.match(/\bimage:\s*(\w+)/)?.[1]],
   }));
 }
+
+// Where a project's generated Open Graph card lives. One function so the route
+// table and the generator can never disagree about the filename.
+export const ogImageForSlug = (slug) => `/og/work/${slug}.webp`;
 
 // Project case studies. Slugs are read from the app's own project data so a new
 // project appears in the sitemap without anyone remembering to add it here.
@@ -114,17 +149,24 @@ export function parseProjects(source) {
 export function caseStudyRoutesFrom(source) {
   return parseProjects(source)
     .filter((project) => !project.article)
-    .map(({ id, title, slug, summary }) => ({
+    .map(({ id, title, slug, summary, image, category }) => ({
       path: `/work/${slug}`,
       title: `${title} | ${AUTHOR}`,
       description: summary || `${title} — a project by ${AUTHOR}.`,
-      image: '/og/hermes.webp',
+      // Its own card, not the site default. Every case study previewing as the
+      // same Hermes screenshot made 22 different links look like one page.
+      image: ogImageForSlug(slug),
       type: 'article',
       priority: '0.6',
       changefreq: 'yearly',
+      updated: CONTENT_UPDATED,
       // Lets the HTML generator pull this project's translated summary and
       // its per-image captions out of the app's own dictionaries.
       project: { id, title },
+      // Source screenshot and label the Open Graph card is composed from.
+      // Build-time only — never referenced by the app.
+      source: image,
+      category,
     }));
 }
 

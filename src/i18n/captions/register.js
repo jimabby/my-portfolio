@@ -5,7 +5,7 @@
 // for 80-odd screenshots has no business loading for someone who only reads
 // the home page.
 import { registerDictionary } from '../LanguageContext';
-import { projectCaptions } from './index';
+import { projectCaptions } from './index.mjs';
 
 registerDictionary({
   en: { captions: projectCaptions.en },

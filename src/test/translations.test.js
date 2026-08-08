@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { translations } from '../i18n/translations.js';
 import { projectsData } from '../components/portfolio/Data.jsx';
-import { projectSummaries } from '../i18n/projects.js';
+import { projectSummaries } from '../i18n/projects.mjs';
 
 // Collect every leaf key path. Arrays are treated as leaves so per-language
 // list length differences don't register as missing keys.

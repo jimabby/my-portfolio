@@ -9,19 +9,31 @@ import LocaleLink from "../../i18n/LocaleLink";
 
 const SECTIONS = ['home', 'about', 'skills', 'services', 'portfolio', 'testimonial', 'contact'];
 
-// An explicit choice always wins; otherwise follow the OS setting so a visitor
-// browsing in dark mode isn't hit with a white page. Kept in sync with the
-// inline bootstrap script in index.html, which applies the same rule before
-// first paint to avoid a flash of the wrong theme.
-const getStoredTheme = () => {
+const THEME_STORAGE_KEY = 'theme';
+
+// Browser-chrome colour per theme. Mirrors --body-color in index.css and the
+// inline bootstrap script in index.html, which paints both the attribute and
+// this meta tag before first paint to avoid a flash of the wrong theme.
+const THEME_COLOR = { light: '#f7f7f7', dark: '#101318' };
+
+// Only a deliberate toggle is ever stored. Returns null when the visitor has
+// never chosen, which is what keeps the OS setting authoritative.
+const readStoredTheme = () => {
   try {
-    const stored = localStorage.getItem('theme');
+    const stored = localStorage.getItem(THEME_STORAGE_KEY);
     if (stored === 'light' || stored === 'dark') return stored;
   } catch {
     // Ignore storage errors in restricted contexts.
   }
-  return window.matchMedia?.('(prefers-color-scheme: dark)')?.matches ? 'dark' : 'light';
+  return null;
 };
+
+const systemTheme = () =>
+  window.matchMedia?.('(prefers-color-scheme: dark)')?.matches ? 'dark' : 'light';
+
+// An explicit choice always wins; otherwise follow the OS setting so a visitor
+// browsing in dark mode isn't hit with a white page.
+const getInitialTheme = () => readStoredTheme() ?? systemTheme();
 
 const Header = () => {
   const location = useLocation();
@@ -86,19 +98,41 @@ const Header = () => {
   const currentActiveNav = path.startsWith('/blog') ? 'blog' : activeNav;
 
   // Dark mode
-  const [theme, setTheme] = useState(getStoredTheme);
+  const [theme, setTheme] = useState(getInitialTheme);
 
+  // Apply only — never persist here. Writing on mount would turn the OS-derived
+  // default into a stored choice on the very first page view, permanently
+  // detaching the site from the system setting.
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    try {
-      localStorage.setItem('theme', theme);
-    } catch {
-      // Ignore storage errors in restricted contexts.
-    }
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', THEME_COLOR[theme]);
   }, [theme]);
 
+  // Follow the OS while the visitor has made no explicit choice, so switching
+  // the system theme in another window is reflected here without a reload.
+  useEffect(() => {
+    const query = window.matchMedia?.('(prefers-color-scheme: dark)');
+    if (!query?.addEventListener) return;
+    const onChange = (event) => {
+      if (readStoredTheme()) return;
+      setTheme(event.matches ? 'dark' : 'light');
+    };
+    query.addEventListener('change', onChange);
+    return () => query.removeEventListener('change', onChange);
+  }, []);
+
   const toggleTheme = () => {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+    setTheme((prev) => {
+      const next = prev === 'light' ? 'dark' : 'light';
+      try {
+        localStorage.setItem(THEME_STORAGE_KEY, next);
+      } catch {
+        // Ignore storage errors in restricted contexts.
+      }
+      return next;
+    });
   };
 
   const handleNavClick = (hash) => {

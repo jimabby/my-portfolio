@@ -14,6 +14,7 @@ import { dirname, join } from 'node:path';
 import {
   AUTHOR,
   BLOG_POSTS,
+  CONTENT_UPDATED,
   LOCALES,
   NOINDEX_ROUTES,
   SITE_URL,
@@ -22,8 +23,8 @@ import {
 } from './site-routes.mjs';
 // Both are plain string dictionaries with no asset imports, so the build can
 // read them directly rather than parsing them the way Data.jsx has to be.
-import { projectSummaries } from '../src/i18n/projects.js';
-import { projectCaptions } from '../src/i18n/captions/index.js';
+import { projectSummaries } from '../src/i18n/projects.mjs';
+import { projectCaptions } from '../src/i18n/captions/index.mjs';
 
 const DIST_DIR = join(process.cwd(), 'dist');
 
@@ -95,6 +96,20 @@ const replaceMeta = (html, route, lang) => {
         `<link rel="alternate" hreflang="x-default" href="${SITE_URL}${localizedPath('en', route.path)}" />`,
       ].join('\n    ')}`;
 
+  // Publication metadata for anything that is an article — both blog posts and
+  // case studies. Without it a link preview gives no sense of how old the piece
+  // is, and a two-year-old post reads as current.
+  const articleDate = route.published ?? route.updated;
+  const articleMeta =
+    route.type === 'article'
+      ? `\n    ${[
+          `<meta property="article:author" content="${escapeAttribute(AUTHOR)}" />`,
+          ...(articleDate
+            ? [`<meta property="article:published_time" content="${articleDate}T00:00:00Z" />`]
+            : []),
+        ].join('\n    ')}`
+      : '';
+
   const ogLocales = `\n    ${[
     `<meta property="og:locale" content="${OG_LOCALE[lang]}" />`,
     ...LOCALES.filter((code) => code !== lang).map(
@@ -115,7 +130,7 @@ const replaceMeta = (html, route, lang) => {
     )
     .replace(
       /<meta[^>]+property="og:type"[^>]*>/,
-      `<meta property="og:type" content="${route.type}" />`
+      `<meta property="og:type" content="${route.type}" />${articleMeta}`
     )
     .replace(
       /<meta[^>]+property="og:url"[^>]*>/,
@@ -131,7 +146,9 @@ const replaceMeta = (html, route, lang) => {
     )
     .replace(
       /<meta[^>]+property="og:image"[^>]*>/,
-      `<meta property="og:image" content="${image}" />`
+      `<meta property="og:image" content="${image}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />`
     )
     .replace(
       /<meta[^>]+name="twitter:title"[^>]*>/,
@@ -184,8 +201,6 @@ const writeRoute = async (baseHtml, route, lang) => {
 };
 
 const buildSitemap = (routes) => {
-  const today = new Date().toISOString().slice(0, 10);
-
   const entries = routes.flatMap((route) =>
     LOCALES.map((lang) => {
       const loc = `${SITE_URL}${localizedPath(lang, route.path)}`;
@@ -202,7 +217,7 @@ const buildSitemap = (routes) => {
       return `  <url>
     <loc>${escapeXml(loc)}</loc>
 ${alternates}
-    <lastmod>${route.published ?? today}</lastmod>
+    <lastmod>${route.published ?? route.updated ?? CONTENT_UPDATED}</lastmod>
     <changefreq>${route.changefreq}</changefreq>
     <priority>${route.priority}</priority>
   </url>`;

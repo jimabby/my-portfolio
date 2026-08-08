@@ -47,6 +47,10 @@ const CaseStudy = () => {
         title={`${project.title} | Jim Kong`}
         description={summary}
         path={`/work/${project.slug}`}
+        type="article"
+        // This project's own Open Graph card, composed at build time by
+        // scripts/generate-og-images.mjs.
+        image={`/og/work/${project.slug}.webp`}
       />
       <Header />
 

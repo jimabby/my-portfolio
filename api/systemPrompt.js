@@ -24,6 +24,8 @@ Backend: Python (Advanced), Java (Advanced), PHP (Intermediate), Node.js (Advanc
 - AWS Certified Cloud Practitioner (2023)
 - IBM Data Analyst Professional Certificate (2024)
 - AWS Certified Machine Learning Engineer - Associate (2024)
+- Salesforce Certified AI Associate (2024)
+- Microsoft Certified: Power BI Data Analyst Associate (2024)
 - Oracle Cloud Infrastructure 2025 Certified Foundations Associate (2025)
 
 ## Work Experience

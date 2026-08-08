@@ -1,5 +1,6 @@
 import React from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
+import Currently from './Currently'
 import resumeUrl from '../../assets/Software Developer - Jim.pdf'
 
 const Data = () => {
@@ -64,6 +65,9 @@ const Data = () => {
       <p className='home__description'>
         {t('home.description')}
       </p>
+
+      <Currently />
+
       <div className='home__cta'>
         <a href='#contact' className='button button--flex'>
           {t('home.sayHello')}
@@ -85,7 +89,9 @@ const Data = () => {
                     ></path>
           </svg>
         </a>
-        <a href={resumeUrl} download className='button button--ghost button--flex'>
+        {/* Named explicitly: the asset ships under a content-hashed filename,
+            so a bare `download` saves it as "Software Developer - Jim-Ck7DZzjw.pdf". */}
+        <a href={resumeUrl} download='Jim-Kong-Resume.pdf' className='button button--ghost button--flex'>
           {t('home.downloadCV')}
           <i className='uil uil-import button__icon-inline'></i>
         </a>

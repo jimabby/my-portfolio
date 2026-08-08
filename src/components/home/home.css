@@ -65,7 +65,70 @@
 
 .home__description {
   max-width: 440px;
-  margin-bottom: var(--mb-2-5);
+  margin-bottom: var(--mb-1-5);
+}
+
+/* "Currently": the roles still running, surfaced in the hero because the full
+   timeline sits several sections further down the page. */
+.home__currently {
+  max-width: 440px;
+  margin-bottom: var(--mb-2);
+}
+
+.home__currently-label {
+  display: block;
+  font-size: var(--smaller-font-size);
+  font-weight: var(--font-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--title-color);
+  opacity: 0.65;
+  margin-bottom: 0.5rem;
+}
+
+.home__currently-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.home__currently-item {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+}
+
+/* Steady, not blinking: a pulsing dot next to two permanent facts is noise,
+   and it re-triggers for anyone who has asked for reduced motion. */
+.home__currently-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.home__currently-role {
+  font-weight: var(--font-medium);
+  color: var(--title-color);
+}
+
+.home__currently-at {
+  opacity: 0.7;
+}
+
+.home__currently-company {
+  font-weight: var(--font-medium);
+  color: var(--title-color);
+}
+
+.home__currently-since {
+  font-size: var(--smaller-font-size);
+  opacity: 0.6;
 }
 
 /* A real <img>, not a CSS background: as the largest element on first paint it
@@ -147,7 +210,11 @@
 
   .home__description {
     max-width: initial;
-    margin-bottom: var(--mb-2-5);
+    margin-bottom: var(--mb-1-5);
+  }
+
+  .home__currently {
+    max-width: initial;
   }
 
   .home__img {

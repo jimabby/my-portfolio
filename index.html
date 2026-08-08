@@ -3,8 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#101318" media="(prefers-color-scheme: dark)" />
+    <!-- Single tag, kept in step with the in-app toggle by the bootstrap script
+         below and by Header.jsx. Media-scoped tags would track the OS only, so
+         toggling to dark on a light-mode system left the browser chrome light. -->
+    <meta name="theme-color" content="#f7f7f7" />
     <meta
       name="description"
       content="Jim Kong is a Sydney-based full stack developer building web apps, AI tools, WordPress sites, and data-driven software."
@@ -36,8 +38,6 @@
       content="Portfolio, projects, blog, and contact details for Jim Kong, a full stack developer in Sydney."
     />
     <meta name="twitter:image" content="https://jimkong-portfolio.vercel.app/og/hermes.webp" />
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
     <title>Jim Kong | Portfolio</title>
     <script type="application/ld+json">
       {
@@ -61,7 +61,7 @@
   </head>
   <body>
     <script>
-      (function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)}catch(e){}})();
+      (function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#101318':'#f7f7f7')}catch(e){}})();
     </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>

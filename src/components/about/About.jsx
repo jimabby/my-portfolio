@@ -21,7 +21,7 @@ const About = () => {
           <p className='about__description'>
             {t('about.description')}
           </p>
-          <a download="" href={CV} className='button button--flex'>{t('about.downloadResume')}
+          <a download='Jim-Kong-Resume.pdf' href={CV} className='button button--flex'>{t('about.downloadResume')}
             <svg
                 className="button__icon"
                 xmlns="http://www.w3.org/2000/svg"

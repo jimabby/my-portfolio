@@ -43,10 +43,16 @@ describe('localized routing', () => {
     expect(await screen.findByRole('link', { name: new RegExp(homeLabel) })).toBeInTheDocument();
   });
 
+  // The blog is linked from both the header nav and the footer, and every one
+  // of those links has to carry the prefix — a single unprefixed link drops the
+  // visitor back into English mid-session.
   it('keeps the language when following a link from a translated page', async () => {
     renderAt('/ja');
-    const blogLink = await screen.findByRole('link', { name: /ブログ|Blog/ });
-    expect(blogLink).toHaveAttribute('href', '/ja/blog');
+    const blogLinks = await screen.findAllByRole('link', { name: /ブログ|Blog/ });
+    expect(blogLinks.length).toBeGreaterThan(1);
+    for (const link of blogLinks) {
+      expect(link).toHaveAttribute('href', '/ja/blog');
+    }
   });
 
   it('renders a case study for a real project slug', async () => {

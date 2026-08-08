@@ -59,15 +59,43 @@ describe('project data parsed for the sitemap', () => {
   const source = readFileSync('src/components/portfolio/Data.jsx', 'utf8');
 
   it('reads back exactly what the app renders', () => {
-    expect(parseProjects(source)).toEqual(
+    // `image` is asserted separately below; it holds a build-time file path
+    // rather than the resolved URL the app imports.
+    expect(
+      parseProjects(source).map((project) => ({
+        id: project.id,
+        title: project.title,
+        slug: project.slug,
+        summary: project.summary,
+        article: project.article,
+        category: project.category,
+      }))
+    ).toEqual(
       projectsData.map((project) => ({
         id: project.id,
         title: project.title,
         slug: project.slug,
         summary: project.summary,
         article: project.article,
+        category: project.category,
       }))
     );
+  });
+
+  // The Open Graph generator composes each card from the screenshot resolved
+  // here. Reading the wrong identifier would put another project's artwork on
+  // the card without anything failing.
+  it('resolves each project screenshot to the file the app imports', () => {
+    const parsed = parseProjects(source);
+    expect(parsed.every((project) => project.image)).toBe(true);
+
+    const filename = (path) => path.split('/').pop();
+    for (const project of parsed) {
+      const app = projectsData.find((p) => p.id === project.id);
+      expect(filename(project.image), `${project.slug} resolved the wrong screenshot`).toBe(
+        filename(app.image)
+      );
+    }
   });
 
   // The generated HTML looks the project up by id to write its translated

@@ -12,11 +12,21 @@ import Img from '../image/Img';
 import LocaleLink from "../../i18n/LocaleLink";
 
 const categories = ['All', ...Array.from(new Set(posts.map(p => p.category)))];
+const allTags = Array.from(new Set(posts.flatMap(p => p.tags))).sort();
 
 const Blog = () => {
   const { t } = useLanguage();
   const [activeCategory, setActiveCategory] = useState('All');
+  const [activeTags, setActiveTags] = useState([]);
   const [query, setQuery] = useState('');
+
+  // Tags narrow the list cumulatively: picking "AI" and "Automation" shows only
+  // posts carrying both, which is what makes stacking them useful rather than
+  // just a second way to widen the results.
+  const toggleTag = (tag) =>
+    setActiveTags(current =>
+      current.includes(tag) ? current.filter(t => t !== tag) : [...current, tag]
+    );
 
   const catLabel = useCallback(
     (cat) => t(`blog.categories.${cat}`, cat),
@@ -32,13 +42,14 @@ const Blog = () => {
     return posts.filter(p => {
       const matchCat = activeCategory === 'All' || p.category === activeCategory;
       if (!matchCat) return false;
+      if (!activeTags.every(tag => p.tags.includes(tag))) return false;
       if (words.length === 0) return true;
       const title = t(`posts.${p.key}.title`, p.title);
       const excerpt = t(`posts.${p.key}.excerpt`, p.excerpt);
       const haystack = `${p.title} ${p.excerpt} ${title} ${excerpt} ${p.category} ${catLabel(p.category)} ${p.tags.join(' ')}`.toLowerCase();
       return words.every(word => haystack.includes(word));
     });
-  }, [activeCategory, catLabel, query, t]);
+  }, [activeCategory, activeTags, catLabel, query, t]);
 
   return (
     <>
@@ -75,6 +86,31 @@ const Blog = () => {
           ))}
         </div>
 
+        {/* Tag filter. Separate from categories on purpose: a category is the
+            kind of post, a tag is what it is about, and they compose. */}
+        <div className="blog__tag-filters" role="group" aria-label={t('blog.tagFilterAria')}>
+          {allTags.map(tag => (
+            <button
+              type="button"
+              key={tag}
+              className={`blog__tag blog__tag--button${activeTags.includes(tag) ? ' blog__tag--active' : ''}`}
+              onClick={() => toggleTag(tag)}
+              aria-pressed={activeTags.includes(tag)}
+            >
+              {tag}
+            </button>
+          ))}
+          {activeTags.length > 0 && (
+            <button
+              type="button"
+              className="blog__tag-clear"
+              onClick={() => setActiveTags([])}
+            >
+              {t('blog.clearTags')}
+            </button>
+          )}
+        </div>
+
         <div className="blog__list-container container">
           {filtered.length === 0 && (
             <p className="blog__no-results">{t('blog.noResults')}</p>
@@ -101,7 +137,16 @@ const Blog = () => {
               <div className="blog__card-footer">
                 <div className="blog__card-tags">
                   {post.tags.map(tag => (
-                    <span key={tag} className="blog__tag">{tag}</span>
+                    <button
+                      type="button"
+                      key={tag}
+                      className={`blog__tag blog__tag--button${activeTags.includes(tag) ? ' blog__tag--active' : ''}`}
+                      onClick={() => toggleTag(tag)}
+                      aria-pressed={activeTags.includes(tag)}
+                      aria-label={t('blog.filterByTag').replace('{tag}', tag)}
+                    >
+                      {tag}
+                    </button>
                   ))}
                 </div>
                 <LocaleLink to={`/blog/${post.slug}`} className="blog__card-link">
