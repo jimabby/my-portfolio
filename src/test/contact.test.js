@@ -25,7 +25,21 @@ describe('contact request validation', () => {
   it('silently identifies honeypot and instant submissions as spam', () => {
     expect(validateContactBody({ ...validBody(), company: 'Bot Ltd' }).spam).toBe(true);
     expect(validateContactBody({ ...validBody(), elapsedMs: 0 }).spam).toBe(true);
-    expect(validateContactBody({ ...validBody(), elapsedMs: undefined }).spam).toBe(true);
+    expect(validateContactBody({ ...validBody(), elapsedMs: 200 }).spam).toBe(true);
+  });
+
+  // A spam verdict answers 200 and drops the message, so a false positive is
+  // silent on both ends. Autofill plus an immediate send cleared 2000 ms only
+  // sometimes, which meant a real enquiry occasionally vanished.
+  it('accepts a fast but human fill', () => {
+    expect(validateContactBody({ ...validBody(), elapsedMs: 900 }).ok).toBe(true);
+    expect(validateContactBody({ ...validBody(), elapsedMs: 1500 }).ok).toBe(true);
+  });
+
+  // An older cached client that predates the timing field is a visitor, not a
+  // bot; the honeypot and the rate limiter still cover it.
+  it('accepts a submission with no timing field at all', () => {
+    expect(validateContactBody({ ...validBody(), elapsedMs: undefined }).ok).toBe(true);
   });
 
   // Regression: the check used to compare the visitor's wall clock against the

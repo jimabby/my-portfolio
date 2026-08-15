@@ -13,14 +13,15 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import {
   AUTHOR,
-  BLOG_POSTS,
-  CONTENT_UPDATED,
   LOCALES,
   NOINDEX_ROUTES,
   SITE_URL,
   allRoutes,
   localizedPath,
 } from './site-routes.mjs';
+// Shared with the Vite dev middleware so /rss.xml and /sitemap.xml are not
+// dead links in the environment they get clicked in.
+import { buildFeed, buildSitemap } from './feeds.mjs';
 // Both are plain string dictionaries with no asset imports, so the build can
 // read them directly rather than parsing them the way Data.jsx has to be.
 import { projectSummaries } from '../src/i18n/projects.mjs';
@@ -37,14 +38,6 @@ const escapeAttribute = (value) =>
     .replaceAll('"', '&quot;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;');
-
-const escapeXml = (value) =>
-  String(value)
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&apos;');
 
 const escapeText = (value) =>
   String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
@@ -198,69 +191,6 @@ const writeRoute = async (baseHtml, route, lang) => {
     writeFile(cleanUrlOutput, html, 'utf8'),
     writeFile(trailingSlashOutput, html, 'utf8'),
   ]);
-};
-
-const buildSitemap = (routes) => {
-  const entries = routes.flatMap((route) =>
-    LOCALES.map((lang) => {
-      const loc = `${SITE_URL}${localizedPath(lang, route.path)}`;
-      // Each URL declares every translation of itself, which is what tells
-      // Google the four versions are one page rather than duplicates.
-      const alternates = [
-        ...LOCALES.map(
-          (code) =>
-            `    <xhtml:link rel="alternate" hreflang="${HREFLANG[code]}" href="${SITE_URL}${localizedPath(code, route.path)}" />`
-        ),
-        `    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${localizedPath('en', route.path)}" />`,
-      ].join('\n');
-
-      return `  <url>
-    <loc>${escapeXml(loc)}</loc>
-${alternates}
-    <lastmod>${route.published ?? route.updated ?? CONTENT_UPDATED}</lastmod>
-    <changefreq>${route.changefreq}</changefreq>
-    <priority>${route.priority}</priority>
-  </url>`;
-    })
-  );
-
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${entries.join('\n')}
-</urlset>
-`;
-};
-
-const buildFeed = () => {
-  const items = BLOG_POSTS.map((post) => {
-    const url = `${SITE_URL}${post.path}`;
-    return `    <item>
-      <title>${escapeXml(post.title)}</title>
-      <link>${escapeXml(url)}</link>
-      <guid isPermaLink="true">${escapeXml(url)}</guid>
-      <description>${escapeXml(post.description)}</description>
-      <pubDate>${new Date(`${post.published}T00:00:00Z`).toUTCString()}</pubDate>
-    </item>`;
-  });
-
-  const latest = BLOG_POSTS.reduce(
-    (newest, post) => (post.published > newest ? post.published : newest),
-    BLOG_POSTS[0].published
-  );
-
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>${escapeXml(`${AUTHOR} | Blog`)}</title>
-    <link>${SITE_URL}/blog</link>
-    <description>Articles about software projects, AI, photography, and travel by ${escapeXml(AUTHOR)}.</description>
-    <language>en</language>
-    <lastBuildDate>${new Date(`${latest}T00:00:00Z`).toUTCString()}</lastBuildDate>
-    <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />
-${items.join('\n')}
-  </channel>
-</rss>
-`;
 };
 
 const baseHtml = await readFile(join(DIST_DIR, 'index.html'), 'utf8');

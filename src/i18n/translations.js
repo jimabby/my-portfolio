@@ -43,6 +43,7 @@ const en = {
     description:
       "I am a Full Stack developer based in Sydney, and I'm very passionate and dedicated to my work.",
     sayHello: 'Say Hello',
+    viewResume: 'Resume',
     downloadCV: 'Download CV',
     scrollDown: 'Scroll Down',
     currently: 'Currently',
@@ -55,6 +56,7 @@ const en = {
     subtitle: 'My introduction',
     description:
       'Full Stack developer, I create web pages with UI/UX user interface. I have years of experience and many clients are satisfied with the projects carried out.',
+    viewResume: 'View Resume',
     downloadResume: 'Download Resume',
     experience: 'Experience',
     experienceValue: '5+ years Working',
@@ -150,6 +152,9 @@ const en = {
     moreDetails: 'More details',
     openGallery: 'Open {title} gallery',
     closeGallery: 'Close gallery',
+    galleryLabel: '{title} gallery',
+    galleryImageAlt: '{title} screenshot {n} of {total}',
+    viewImage: 'View image {n}',
     prevImage: 'Previous image',
     nextImage: 'Next image',
     filters: {
@@ -170,6 +175,7 @@ const en = {
     title: 'What They Say',
     subtitle: 'Colleagues & Leaders',
     readMore: 'Read more',
+    photoAlt: 'Photo of {name}',
     showLess: 'Show less',
     prev: 'Previous testimonial',
     next: 'Next testimonial',
@@ -201,6 +207,8 @@ const en = {
   footer: {
     about: 'About',
     portfolio: 'Portfolio',
+    work: 'Work',
+    resume: 'Resume',
     testimonials: 'Testimonials',
     blog: 'Blog',
     rss: 'RSS feed',
@@ -212,6 +220,12 @@ const en = {
     text: "The page you're looking for doesn't exist or has been moved.",
     back: 'Back to Home',
   },
+  error: {
+    title: 'Something went wrong',
+    text: 'The page hit an unexpected error. Reloading usually fixes it.',
+    reload: 'Reload page',
+    home: 'Go home',
+  },
   seo: {
     homeTitle: 'Jim Kong | Full Stack Developer',
     homeDesc:
@@ -219,6 +233,29 @@ const en = {
     blogTitle: 'Blog | Jim Kong',
     blogDesc: 'Writeups on AI projects, web development, and photography by Jim Kong.',
     notFoundTitle: 'Page not found | Jim Kong',
+    workTitle: 'Work | Jim Kong',
+    workDesc:
+      'Every project Jim Kong has shipped, from AI products and mobile apps to client websites — each with its own case study.',
+    resumeTitle: 'Resume | Jim Kong',
+    resumeDesc:
+      'The full resume of Jim Kong, a Sydney-based full stack developer: experience, skills, education, and certifications, with a PDF download.',
+  },
+  work: {
+    title: 'Work',
+    subtitle: 'Every project, in one place',
+    intro:
+      '{count} projects, from AI products and mobile apps to client websites. Each one has its own case study with screenshots and the thinking behind it.',
+    showing: 'Showing {shown} of {total}',
+  },
+  resume: {
+    eyebrow: 'Resume',
+    summary:
+      'Full stack developer in Sydney with 5+ years building web applications, AI tools, and data-driven software — from React front ends to Python and Node.js services.',
+    download: 'Download PDF',
+    viewWork: 'See the work',
+    certifications: 'Certifications',
+    footnote: 'Looking for something specific?',
+    getInTouch: 'Get in touch.',
   },
   casestudy: {
     backToWork: '← Back to work',
@@ -251,6 +288,10 @@ const en = {
     send: 'Send',
     stop: 'Stop generating',
     thinking: 'Assistant is replying...',
+    feedbackPrompt: 'Was this helpful?',
+    feedbackUp: 'Yes, this was helpful',
+    feedbackDown: 'No, this was not helpful',
+    feedbackThanks: 'Thanks for the feedback.',
     fallback: "I couldn't find a response. Please try again.",
     errorGeneric: "Sorry, I couldn't get a response. Please try again.",
     errorConfig:
@@ -274,6 +315,8 @@ const en = {
     filterByTag: 'Filter by {tag}',
     clearTags: 'Clear tags',
     readArticle: 'Read article',
+    resultCount: 'Showing {shown} of {total} articles',
+    clearAll: 'Clear filters',
     noResults: 'No articles found.',
     backToBlog: '<- Back to Blog',
     inThisArticle: 'In this article',
@@ -329,6 +372,7 @@ const zhHans = {
     description:
       '我是一名常驻悉尼的全栈开发工程师，对工作充满热情，全力以赴。',
     sayHello: '打个招呼',
+    viewResume: '简历',
     downloadCV: '下载简历',
     scrollDown: '向下滚动',
     currently: '目前',
@@ -341,6 +385,7 @@ const zhHans = {
     subtitle: '自我介绍',
     description:
       '作为一名全栈开发工程师，我负责设计兼具 UI/UX 体验的网页。我拥有多年经验，众多客户对我交付的项目都非常满意。',
+    viewResume: '查看简历',
     downloadResume: '下载简历',
     experience: '经验',
     experienceValue: '5 年以上工作经验',
@@ -436,6 +481,9 @@ const zhHans = {
     moreDetails: '了解更多',
     openGallery: '打开 {title} 图集',
     closeGallery: '关闭图集',
+    galleryLabel: '{title} 图集',
+    galleryImageAlt: '{title} 截图 第 {n} 张，共 {total} 张',
+    viewImage: '查看第 {n} 张',
     prevImage: '上一张',
     nextImage: '下一张',
     filters: {
@@ -456,6 +504,7 @@ const zhHans = {
     title: '客户评价',
     subtitle: '同事与主管',
     readMore: '展开阅读',
+    photoAlt: '{name} 的照片',
     showLess: '收起',
     prev: '上一条评价',
     next: '下一条评价',
@@ -487,6 +536,8 @@ const zhHans = {
   footer: {
     about: '关于',
     portfolio: '作品',
+    work: '项目',
+    resume: '简历',
     testimonials: '客户评价',
     blog: '博客',
     rss: 'RSS 订阅',
@@ -498,6 +549,12 @@ const zhHans = {
     text: '您访问的页面不存在或已被移动。',
     back: '返回首页',
   },
+  error: {
+    title: '出了点问题',
+    text: '页面遇到意外错误，重新加载通常可以解决。',
+    reload: '重新加载',
+    home: '返回首页',
+  },
   seo: {
     homeTitle: 'Jim Kong | 全栈开发者',
     homeDesc:
@@ -505,6 +562,28 @@ const zhHans = {
     blogTitle: '博客 | Jim Kong',
     blogDesc: 'Jim Kong 关于 AI 项目、Web 开发与摄影的文章。',
     notFoundTitle: '页面未找到 | Jim Kong',
+    workTitle: '作品 | Jim Kong',
+    workDesc: 'Jim Kong 完成的每一个项目：AI 产品、移动应用与客户网站，每个都有独立的项目详情页。',
+    resumeTitle: '简历 | Jim Kong',
+    resumeDesc:
+      '悉尼全栈开发者 Jim Kong 的完整简历：工作经历、技能、学历与认证，并提供 PDF 下载。',
+  },
+  work: {
+    title: '作品',
+    subtitle: '所有项目，一览无余',
+    intro:
+      '共 {count} 个项目，涵盖 AI 产品、移动应用与客户网站。每个项目都有独立的详情页，包含截图与设计思路。',
+    showing: '显示 {shown} / {total}',
+  },
+  resume: {
+    eyebrow: '简历',
+    summary:
+      '悉尼全栈开发者，5 年以上经验，构建 Web 应用、AI 工具与数据驱动的软件 —— 从 React 前端到 Python 与 Node.js 服务。',
+    download: '下载 PDF',
+    viewWork: '查看作品',
+    certifications: '专业认证',
+    footnote: '在找特定的内容？',
+    getInTouch: '联系我。',
   },
   casestudy: {
     backToWork: '← 返回作品',
@@ -536,6 +615,10 @@ const zhHans = {
     send: '发送',
     stop: '停止生成',
     thinking: '助手正在回复…',
+    feedbackPrompt: '这个回答有帮助吗？',
+    feedbackUp: '有帮助',
+    feedbackDown: '没有帮助',
+    feedbackThanks: '感谢你的反馈。',
     fallback: '没有找到回复，请重试。',
     errorGeneric: '抱歉，我没能获取回复，请重试。',
     errorConfig:
@@ -559,6 +642,8 @@ const zhHans = {
     filterByTag: '按 {tag} 筛选',
     clearTags: '清除标签',
     readArticle: '阅读文章',
+    resultCount: '显示 {shown} / {total} 篇文章',
+    clearAll: '清除筛选',
     noResults: '未找到文章。',
     backToBlog: '<- 返回博客',
     inThisArticle: '本文目录',
@@ -613,6 +698,7 @@ const zhHant = {
     description:
       '我是一名常駐雪梨的全端開發工程師，對工作充滿熱情，全力以赴。',
     sayHello: '打聲招呼',
+    viewResume: '履歷',
     downloadCV: '下載履歷',
     scrollDown: '向下捲動',
     currently: '目前',
@@ -625,6 +711,7 @@ const zhHant = {
     subtitle: '自我介紹',
     description:
       '身為全端開發工程師，我負責設計兼具 UI/UX 體驗的網頁。我擁有多年經驗，眾多客戶對我交付的專案都非常滿意。',
+    viewResume: '檢視履歷',
     downloadResume: '下載履歷',
     experience: '經驗',
     experienceValue: '5 年以上工作經驗',
@@ -720,6 +807,9 @@ const zhHant = {
     moreDetails: '了解更多',
     openGallery: '開啟 {title} 圖庫',
     closeGallery: '關閉圖庫',
+    galleryLabel: '{title} 圖庫',
+    galleryImageAlt: '{title} 截圖 第 {n} 張，共 {total} 張',
+    viewImage: '檢視第 {n} 張',
     prevImage: '上一張',
     nextImage: '下一張',
     filters: {
@@ -740,6 +830,7 @@ const zhHant = {
     title: '客戶評價',
     subtitle: '同事與主管',
     readMore: '展開閱讀',
+    photoAlt: '{name} 的照片',
     showLess: '收合',
     prev: '上一則評價',
     next: '下一則評價',
@@ -771,6 +862,8 @@ const zhHant = {
   footer: {
     about: '關於',
     portfolio: '作品',
+    work: '專案',
+    resume: '履歷',
     testimonials: '客戶評價',
     blog: '部落格',
     rss: 'RSS 訂閱',
@@ -782,6 +875,12 @@ const zhHant = {
     text: '您要找的頁面不存在或已被移動。',
     back: '返回首頁',
   },
+  error: {
+    title: '發生了一些問題',
+    text: '頁面遇到未預期的錯誤，重新載入通常可以解決。',
+    reload: '重新載入',
+    home: '返回首頁',
+  },
   seo: {
     homeTitle: 'Jim Kong | 全端開發者',
     homeDesc:
@@ -789,6 +888,28 @@ const zhHant = {
     blogTitle: '網誌 | Jim Kong',
     blogDesc: 'Jim Kong 關於 AI 專案、Web 開發與攝影的文章。',
     notFoundTitle: '找不到頁面 | Jim Kong',
+    workTitle: '作品 | Jim Kong',
+    workDesc: 'Jim Kong 完成的每一個專案：AI 產品、行動應用與客戶網站，每個都有獨立的專案詳情頁。',
+    resumeTitle: '履歷 | Jim Kong',
+    resumeDesc:
+      '雪梨全端開發者 Jim Kong 的完整履歷：工作經歷、技能、學歷與認證，並提供 PDF 下載。',
+  },
+  work: {
+    title: '作品',
+    subtitle: '所有專案，一覽無遺',
+    intro:
+      '共 {count} 個專案，涵蓋 AI 產品、行動應用與客戶網站。每個專案都有獨立的詳情頁，包含截圖與設計思路。',
+    showing: '顯示 {shown} / {total}',
+  },
+  resume: {
+    eyebrow: '履歷',
+    summary:
+      '雪梨全端開發者，5 年以上經驗，打造 Web 應用、AI 工具與資料驅動的軟體 —— 從 React 前端到 Python 與 Node.js 服務。',
+    download: '下載 PDF',
+    viewWork: '檢視作品',
+    certifications: '專業認證',
+    footnote: '在找特定的內容？',
+    getInTouch: '與我聯絡。',
   },
   casestudy: {
     backToWork: '← 返回作品',
@@ -820,6 +941,10 @@ const zhHant = {
     send: '傳送',
     stop: '停止生成',
     thinking: '助理正在回覆…',
+    feedbackPrompt: '這個回覆有幫助嗎？',
+    feedbackUp: '有幫助',
+    feedbackDown: '沒有幫助',
+    feedbackThanks: '感謝你的回饋。',
     fallback: '找不到回覆，請重試。',
     errorGeneric: '抱歉，我沒能取得回覆，請重試。',
     errorConfig:
@@ -843,6 +968,8 @@ const zhHant = {
     filterByTag: '依 {tag} 篩選',
     clearTags: '清除標籤',
     readArticle: '閱讀文章',
+    resultCount: '顯示 {shown} / {total} 篇文章',
+    clearAll: '清除篩選',
     noResults: '找不到文章。',
     backToBlog: '<- 返回網誌',
     inThisArticle: '本文目錄',
@@ -897,6 +1024,7 @@ const ja = {
     description:
       'シドニーを拠点とするフルスタック開発者です。仕事に情熱を持ち、全力で取り組んでいます。',
     sayHello: 'ご挨拶',
+    viewResume: '履歴書',
     downloadCV: '履歴書をダウンロード',
     scrollDown: 'スクロール',
     currently: '現在',
@@ -909,6 +1037,7 @@ const ja = {
     subtitle: '自己紹介',
     description:
       'フルスタック開発者として、UI/UX を備えた Web ページを制作しています。長年の経験があり、多くのクライアントに成果物をご満足いただいています。',
+    viewResume: '履歴書を見る',
     downloadResume: '履歴書をダウンロード',
     experience: '経験',
     experienceValue: '5 年以上の実務経験',
@@ -1004,6 +1133,9 @@ const ja = {
     moreDetails: '詳細を見る',
     openGallery: '{title} のギャラリーを開く',
     closeGallery: 'ギャラリーを閉じる',
+    galleryLabel: '{title} のギャラリー',
+    galleryImageAlt: '{title} のスクリーンショット {total} 枚中 {n} 枚目',
+    viewImage: '{n} 枚目を表示',
     prevImage: '前の画像',
     nextImage: '次の画像',
     filters: {
@@ -1024,6 +1156,7 @@ const ja = {
     title: '推薦の声',
     subtitle: '同僚とリーダー',
     readMore: '続きを読む',
+    photoAlt: '{name} の写真',
     showLess: '閉じる',
     prev: '前の推薦',
     next: '次の推薦',
@@ -1055,6 +1188,8 @@ const ja = {
   footer: {
     about: '紹介',
     portfolio: '作品',
+    work: 'プロジェクト',
+    resume: '履歴書',
     testimonials: '推薦の声',
     blog: 'ブログ',
     rss: 'RSS フィード',
@@ -1066,6 +1201,12 @@ const ja = {
     text: 'お探しのページは存在しないか、移動された可能性があります。',
     back: 'ホームに戻る',
   },
+  error: {
+    title: '問題が発生しました',
+    text: 'ページで予期しないエラーが発生しました。再読み込みで解決することがほとんどです。',
+    reload: '再読み込み',
+    home: 'ホームへ',
+  },
   seo: {
     homeTitle: 'Jim Kong | フルスタック開発者',
     homeDesc:
@@ -1073,6 +1214,29 @@ const ja = {
     blogTitle: 'ブログ | Jim Kong',
     blogDesc: 'Jim Kong による AI プロジェクト、Web 開発、写真に関する記事。',
     notFoundTitle: 'ページが見つかりません | Jim Kong',
+    workTitle: '作品 | Jim Kong',
+    workDesc:
+      'Jim Kong が手がけたすべてのプロジェクト。AI プロダクト、モバイルアプリ、クライアントのウェブサイトまで、それぞれにケーススタディがあります。',
+    resumeTitle: '履歴書 | Jim Kong',
+    resumeDesc:
+      'シドニー在住のフルスタック開発者 Jim Kong の完全な履歴書。職歴、スキル、学歴、認定資格を掲載し、PDF もダウンロードできます。',
+  },
+  work: {
+    title: '作品',
+    subtitle: 'すべてのプロジェクトを一覧で',
+    intro:
+      '{count} 件のプロジェクト。AI プロダクト、モバイルアプリ、クライアントのウェブサイトまで、それぞれにスクリーンショットと制作意図をまとめたケーススタディがあります。',
+    showing: '{total} 件中 {shown} 件を表示',
+  },
+  resume: {
+    eyebrow: '履歴書',
+    summary:
+      'シドニー在住のフルスタック開発者。5 年以上にわたり、React のフロントエンドから Python・Node.js のサービスまで、Web アプリケーション、AI ツール、データ駆動型ソフトウェアを開発しています。',
+    download: 'PDF をダウンロード',
+    viewWork: '作品を見る',
+    certifications: '認定資格',
+    footnote: 'お探しのものが見つかりませんか？',
+    getInTouch: 'お問い合わせください。',
   },
   casestudy: {
     backToWork: '← 作品一覧に戻る',
@@ -1105,6 +1269,10 @@ const ja = {
     send: '送信',
     stop: '生成を停止',
     thinking: 'アシスタントが回答中…',
+    feedbackPrompt: 'この回答は役に立ちましたか？',
+    feedbackUp: '役に立った',
+    feedbackDown: '役に立たなかった',
+    feedbackThanks: 'フィードバックありがとうございます。',
     fallback: '回答が見つかりませんでした。もう一度お試しください。',
     errorGeneric: '申し訳ありません、回答を取得できませんでした。もう一度お試しください。',
     errorConfig:
@@ -1128,6 +1296,8 @@ const ja = {
     filterByTag: '{tag} で絞り込む',
     clearTags: 'タグをクリア',
     readArticle: '記事を読む',
+    resultCount: '{total} 件中 {shown} 件の記事を表示',
+    clearAll: '絞り込みを解除',
     noResults: '記事が見つかりません。',
     backToBlog: '<- ブログに戻る',
     inThisArticle: '目次',

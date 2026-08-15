@@ -1,0 +1,245 @@
+/* The resume page. Reads as a document rather than as a landing page: one
+   column, generous leading, section rules instead of cards.
+
+   The print rules at the bottom are the point of having an HTML resume at
+   all — the page a recruiter opens is the page that comes out of the printer,
+   without the site chrome around it. */
+
+.resume {
+  padding-top: 7rem;
+}
+
+.resume__container {
+  max-width: 780px;
+}
+
+.resume__header {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 2.5rem;
+}
+
+.resume__eyebrow {
+  font-size: var(--smaller-font-size);
+  font-weight: var(--font-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.resume__name {
+  font-size: clamp(2rem, 6vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--title-color);
+  margin: 0 0 0.35rem;
+}
+
+.resume__role {
+  font-size: var(--h3-font-size);
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.resume__summary {
+  font-size: var(--normal-font-size);
+  line-height: 1.75;
+  color: var(--text-color);
+  margin-bottom: 1.25rem;
+}
+
+.resume__contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.75rem;
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+}
+
+.resume__contact a {
+  color: var(--title-color);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.resume__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.resume__section {
+  margin-bottom: 2.5rem;
+}
+
+.resume__section-title {
+  font-size: var(--smaller-font-size);
+  font-weight: var(--font-semi-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-color);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 1.25rem;
+}
+
+.resume__timeline,
+.resume__certs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1.15rem;
+}
+
+.resume__entry-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.resume__entry-title {
+  font-size: var(--normal-font-size);
+  font-weight: var(--font-semi-bold);
+  color: var(--title-color);
+  margin: 0;
+}
+
+.resume__entry-period {
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.resume__entry-org {
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+  margin: 0.15rem 0 0;
+}
+
+.resume__skills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 2.5rem;
+}
+
+.resume__skill-title {
+  font-size: var(--normal-font-size);
+  color: var(--title-color);
+  margin: 0 0 0.65rem;
+}
+
+.resume__skill-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.resume__skill {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: var(--small-font-size);
+}
+
+.resume__skill-name {
+  color: var(--title-color);
+}
+
+.resume__skill-level {
+  color: var(--text-color);
+}
+
+.resume__cert {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
+}
+
+.resume__cert-name {
+  font-size: var(--small-font-size);
+  color: var(--title-color);
+}
+
+.resume__cert-meta {
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+  white-space: nowrap;
+}
+
+.resume__footnote {
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.resume__footnote a {
+  color: var(--title-color);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+@media screen and (max-width: 576px) {
+  .resume__skills {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Printing is the whole reason this page exists in HTML. Drop the site
+   chrome, force the light palette (dark mode would otherwise flood the page
+   with ink), and keep sections from splitting across a page break. */
+@media print {
+  .header,
+  .footer,
+  .scrollup,
+  .assistant__fab,
+  .assistant__panel,
+  .resume__actions {
+    display: none !important;
+  }
+
+  .resume {
+    padding-top: 0;
+  }
+
+  .resume__container {
+    max-width: none;
+    padding: 0;
+  }
+
+  :root,
+  [data-theme='dark'] {
+    --title-color: #000;
+    --text-color: #333;
+    --body-color: #fff;
+    --container-color: #fff;
+    --border-color: #bbb;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .resume__section,
+  .resume__entry,
+  .resume__cert {
+    break-inside: avoid;
+  }
+
+  .resume__contact a,
+  .resume__footnote a {
+    text-decoration: none;
+  }
+}

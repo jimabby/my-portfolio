@@ -1,18 +1,10 @@
 import React from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { backendSkills } from '../qualification/resumeData'
 
-const groups = [
-  [
-    { name: 'Python', level: 'advanced' },
-    { name: 'Java', level: 'advanced' },
-    { name: 'PHP', level: 'intermediate' },
-  ],
-  [
-    { name: 'Node.JS', level: 'advanced' },
-    { name: 'MySQL', level: 'advanced' },
-    { name: 'Flutter', level: 'basic' },
-  ],
-]
+// Two columns, split down the middle of the same list the resume page prints.
+const half = Math.ceil(backendSkills.length / 2)
+const groups = [backendSkills.slice(0, half), backendSkills.slice(half)]
 
 const Backend = () => {
   const { t } = useLanguage()

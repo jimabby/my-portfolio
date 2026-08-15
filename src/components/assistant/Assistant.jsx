@@ -32,6 +32,10 @@ export default function Assistant() {
   const [input, setInput] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
   const [streamText, setStreamText] = useState('');
+  // Message index -> 'up' | 'down'. Deliberately not persisted: the vote is
+  // already recorded server-side, and restoring it across reloads would only
+  // invite a second one.
+  const [feedback, setFeedback] = useState({});
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const panelRef = useRef(null);
@@ -238,6 +242,27 @@ export default function Assistant() {
     setMessages([]);
     setStreamText('');
     setInput('');
+    setFeedback({});
+  }
+
+  // What visitors ask is the useful signal — a thumbs-down on a question the
+  // site should already answer is a gap in the pages, not just a bad reply.
+  // Fire-and-forget: a vote that fails to record must not surface as an error
+  // on top of whatever the assistant just got wrong.
+  function sendFeedback(index, verdict) {
+    if (feedback[index]) return;
+    setFeedback((prev) => ({ ...prev, [index]: verdict }));
+
+    const answer = messages[index]?.content ?? '';
+    // The turn immediately before the reply is the question it answered.
+    const question = messages[index - 1]?.role === 'user' ? messages[index - 1].content : '';
+    if (!question) return;
+
+    fetch('/api/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ verdict, question, answer, lang }),
+    }).catch(() => {});
   }
 
   const allMessages = isStreaming
@@ -314,6 +339,40 @@ export default function Assistant() {
                   <div className="assistant__message-body">
                     {renderMarkdown(msg.content, handleInternalLink)}
                     {msg.streaming && <span className="assistant__cursor" />}
+                    {/* Only on finished, model-authored replies: rating a
+                        locally generated error notice would record a verdict
+                        on something the model never said. */}
+                    {!msg.streaming && !msg.localOnly && messages[i - 1]?.role === 'user' && (
+                      <div className="assistant__feedback">
+                        {feedback[i] ? (
+                          <span className="assistant__feedback-thanks">
+                            {t('assistant.feedbackThanks')}
+                          </span>
+                        ) : (
+                          <>
+                            <span className="assistant__feedback-label">
+                              {t('assistant.feedbackPrompt')}
+                            </span>
+                            <button
+                              type="button"
+                              className="assistant__feedback-btn"
+                              onClick={() => sendFeedback(i, 'up')}
+                              aria-label={t('assistant.feedbackUp')}
+                            >
+                              <i className="uil uil-thumbs-up"></i>
+                            </button>
+                            <button
+                              type="button"
+                              className="assistant__feedback-btn"
+                              onClick={() => sendFeedback(i, 'down')}
+                              aria-label={t('assistant.feedbackDown')}
+                            >
+                              <i className="uil uil-thumbs-down"></i>
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <p className="assistant__message-text">{msg.content}</p>

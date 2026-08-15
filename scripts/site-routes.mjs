@@ -15,7 +15,7 @@ export const AUTHOR = 'Jim Kong';
 // including deploys that touched nothing but a stylesheet, which is exactly the
 // signal that teaches a crawler to stop trusting lastmod. Bump this when the
 // site's content actually changes.
-export const CONTENT_UPDATED = '2026-08-08';
+export const CONTENT_UPDATED = '2026-08-16';
 
 // English is the default and takes the bare path; the rest are prefixed.
 // Mirrors src/i18n/routes.js.
@@ -91,6 +91,28 @@ const CONTENT_ROUTES = [
     changefreq: 'monthly',
     updated: CONTENT_UPDATED,
   },
+  {
+    path: '/work',
+    title: 'Work | Jim Kong',
+    description:
+      'Every project Jim Kong has shipped, from AI products and mobile apps to client websites — each with its own case study.',
+    image: '/og/site.webp',
+    type: 'website',
+    priority: '0.9',
+    changefreq: 'monthly',
+    updated: CONTENT_UPDATED,
+  },
+  {
+    path: '/resume',
+    title: 'Resume | Jim Kong',
+    description:
+      'The full resume of Jim Kong, a Sydney-based full stack developer: experience, skills, education, and certifications, with a PDF download.',
+    image: '/og/site.webp',
+    type: 'website',
+    priority: '0.9',
+    changefreq: 'monthly',
+    updated: CONTENT_UPDATED,
+  },
   ...BLOG_POSTS.map((post) => ({
     ...post,
     type: 'article',
@@ -131,6 +153,8 @@ export function parseProjects(source) {
     // A project written up on the blog has no case study page of its own.
     article: body.match(/article: '([^']*)'/)?.[1],
     category: body.match(/category: '([^']*)'/)?.[1],
+    // The live site or repo. Written with either quote style in Data.jsx.
+    link: body.match(/link:\s*['"]([^'"]*)['"]/)?.[1],
     // The card screenshot, as a path the build can read. Used to compose this
     // project's Open Graph card.
     image: imports[`${head}${body}`.match(/\bimage:\s*(\w+)/)?.[1]],
@@ -188,7 +212,9 @@ export const NOINDEX_ROUTES = [
     path: '/404',
     title: 'Page Not Found | Jim Kong',
     description: 'The requested page could not be found.',
-    image: '/og/hermes.webp',
+    // The site card, not a project screenshot: a shared dead link previewing
+    // as the Hermes email client suggested the link went somewhere real.
+    image: '/og/site.webp',
     type: 'website',
     noindex: true,
   },

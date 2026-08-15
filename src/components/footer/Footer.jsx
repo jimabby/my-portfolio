@@ -14,7 +14,10 @@ const Footer = () => {
             <LocaleLink to="/#about" className='footer__link'>{t('footer.about')}</LocaleLink>
           </li>
           <li>
-            <LocaleLink to="/#portfolio" className='footer__link'>{t('footer.portfolio')}</LocaleLink>
+            <LocaleLink to="/work" className='footer__link'>{t('footer.work')}</LocaleLink>
+          </li>
+          <li>
+            <LocaleLink to="/resume" className='footer__link'>{t('footer.resume')}</LocaleLink>
           </li>
           <li>
             <LocaleLink to="/#testimonial" className='footer__link'>{t('footer.testimonials')}</LocaleLink>

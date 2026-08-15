@@ -236,7 +236,12 @@ const Works = () => {
       )}
 
       {galleryState.isOpen && (
-        <div className="work__modal" role="dialog" aria-modal="true" aria-label={`${galleryState.title} gallery`}>
+        <div
+          className="work__modal"
+          role="dialog"
+          aria-modal="true"
+          aria-label={t('portfolio.galleryLabel').replace('{title}', galleryState.title)}
+        >
           <div className="work__modal-backdrop" onClick={closeGallery} />
           <div className="work__modal-content" ref={modalContentRef}>
             <button ref={closeButtonRef} type="button" className="work__modal-close" onClick={closeGallery} aria-label={t('portfolio.closeGallery')}>
@@ -272,7 +277,10 @@ const Works = () => {
               >
                 <Img
                   src={galleryImages[galleryState.index]}
-                  alt={`${galleryState.title} screenshot ${galleryState.index + 1}`}
+                  alt={t('portfolio.galleryImageAlt')
+                    .replace('{title}', galleryState.title)
+                    .replace('{n}', galleryState.index + 1)
+                    .replace('{total}', galleryImages.length)}
                   className="work__modal-img"
                  sizes="(max-width: 992px) 92vw, 860px"/>
                 {galleryImages.length > 1 && (
@@ -295,7 +303,7 @@ const Works = () => {
                     key={`${galleryState.title}-${idx}`}
                     className={`work__modal-thumb${idx === galleryState.index ? ' is-active' : ''}`}
                     onClick={() => setGalleryState((prev) => ({ ...prev, index: idx }))}
-                    aria-label={`View image ${idx + 1}`}
+                    aria-label={t('portfolio.viewImage').replace('{n}', idx + 1)}
                   >
                     {/* The strip is 80px wide (portfolio.css). Without an
                         explicit `sizes` the default of 100vw makes the browser

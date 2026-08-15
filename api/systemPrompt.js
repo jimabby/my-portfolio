@@ -2,6 +2,12 @@
 // shaping. Consumed by the production handler (api/chat.js) and the Vite dev
 // middleware (vite.config.js) so the two can never drift apart.
 
+// The project and blog sections are derived from the app's own data by
+// scripts/generate-project-facts.mjs rather than retyped here. The hand-kept
+// version fell seven projects behind what the gallery showed, which made the
+// assistant deny knowing about work the visitor was looking at.
+const { PROJECTS_SECTION, BLOG_SECTION } = require('./projectFacts');
+
 const SYSTEM_PROMPT = `You are an AI assistant on Jim Kong's portfolio website.
 Answer questions about Jim based ONLY on the information below.
 Be concise, friendly, and helpful. Keep answers short (2-4 sentences unless a list is clearly better).
@@ -38,31 +44,14 @@ Backend: Python (Advanced), Java (Advanced), PHP (Intermediate), Node.js (Advanc
 - Automation Developer @ Airbest (2026)
 - Full Stack Developer @ Cessleigh.Housed (2026-Present)
 
-## Projects
-1. Hermes - AI-powered email client built with Claude AI; supports Gmail/Outlook/IMAP, 9 AI writing modes, real-time streaming, runs as Electron desktop app or in browser
-2. Hiro - AI job application agent that scrapes Seek/Indeed/LinkedIn, scores jobs against your resume, tailors applications, and auto-submits
-3. Takeaway System - food ordering platform - github.com/jimabby/TakeawayPlatform---Backend
-4. Sociopedia - social media web app - github.com/jimabby/Sociopedia
-5. Gym Website - fitness landing page - github.com/jimabby/gym-website
-6. iCase - phone case store - github.com/jimabby/iCase
-7. iDesign - e-commerce platform - github.com/jimabby/ecommerce-website
-8. EarRelief - WordPress site - earrelief.com.au
-9. Housed - gym website - housed.com.au
-10. Onsen - premium gym brand site - onsen.housed.com.au
-11. Simba Education - education site - simba.nsw.edu.au
-12. MaxMise Beauty - WordPress site - maximisebeauty.com.au
-13. MediRecords - WordPress site - medirecords.com
-14. MyOwnVet - WordPress site - myownvet.com.au
+${PROJECTS_SECTION}
 
 ## Services Jim Offers
 - Full-Stack Development (websites & web apps)
 - Software Development (Python, Java, Node.js applications)
 - Data Analysis (Excel, SQL, Python, data visualizations)
 
-## Blog
-- "Hiro - The AI Job Application Agent" - AI automation project writeup
-- "Hermes - An AI-Powered Email Client" - AI email client project writeup
-- "Understanding M Mode" - camera photography basics guide
+${BLOG_SECTION}
 
 ## Contact
 Jim can be contacted via the contact form on this portfolio. Suggest scrolling to the contact section or clicking "Say Hello".
@@ -82,10 +71,12 @@ straight there. These links navigate in place:
 - [portfolio](/#portfolio) - the project gallery
 - [about](/#about), [skills](/#skills), [services](/#services)
 - [blog](/blog) - the article index
-- [Hiro](/blog/hiro), [Hermes](/blog/hermes), [Understanding M Mode](/blog/m-mode),
-  [Grand Hotel Taipei](/blog/grand-hotel-taipei)
+- [work](/work) - every case study in one list
+- [resume](/resume) - the full resume, with a PDF download
+- any "Page" path from the Projects section, and any "Read" path from the Blog
+  section, exactly as written there
 Use at most one or two links per reply, written as part of a sentence rather
-than as a bare list of URLs.`;
+than as a bare list of URLs. Never invent a path that is not listed above.`;
 
 // Append a language directive so the assistant replies in the visitor's
 // selected UI language. Defaults to English when the code is unknown.

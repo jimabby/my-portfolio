@@ -1,6 +1,42 @@
 import React, { useState } from 'react'
 import "./qualification.css"
 import { useLanguage } from '../../i18n/LanguageContext'
+import { certifications, education, experience, formatPeriod } from './resumeData'
+
+// The timeline alternates sides: even-indexed entries sit left of the spine,
+// odd-indexed ones right. This used to be eight hand-written copies of the
+// same markup per tab, which is how the resume page and this section would
+// have drifted the moment either was edited. Both read resumeData.js now.
+const TimelineEntry = ({ title, subtitle, period, side }) => (
+  <div className='qualification__data'>
+    {side === 'right' && <div></div>}
+
+    {side === 'left' && (
+      <div>
+        <h3 className='qualification__title'>{title}</h3>
+        <span className='qualification__subtitle'>{subtitle}</span>
+        <div className='qualification__calendar'>
+          <i className='uil uil-calendar-alt'></i> {period}
+        </div>
+      </div>
+    )}
+
+    <div>
+      <span className='qualification__rounder'></span>
+      <span className='qualification__line'></span>
+    </div>
+
+    {side === 'right' && (
+      <div>
+        <h3 className='qualification__title'>{title}</h3>
+        <span className='qualification__subtitle'>{subtitle}</span>
+        <div className='qualification__calendar'>
+          <i className='uil uil-calendar-alt'></i> {period}
+        </div>
+      </div>
+    )}
+  </div>
+);
 
 const Qualification = () => {
   const { t } = useLanguage()
@@ -9,6 +45,30 @@ const Qualification = () => {
   const toggleTab = (index) => {
     setToggleState(index);
   }
+
+  // Degrees first, then certifications — the order the section has always
+  // shown them in.
+  const educationEntries = [
+    ...education.map((entry) => ({
+      key: `edu-${entry.titleKey}`,
+      title: t(`qualification.edu.${entry.titleKey}`),
+      subtitle: `${entry.institution} - Institute`,
+      period: entry.period,
+    })),
+    ...certifications.map((entry) => ({
+      key: `cert-${entry.titleKey}`,
+      title: t(`qualification.edu.${entry.titleKey}`),
+      subtitle: entry.issuer,
+      period: entry.period,
+    })),
+  ];
+
+  const experienceEntries = experience.map((entry) => ({
+    key: `exp-${entry.titleKey}`,
+    title: t(`qualification.exp.${entry.titleKey}`),
+    subtitle: entry.company,
+    period: formatPeriod(entry.start, entry.end, t('qualification.present')),
+  }));
 
   return (
     <section className='qualification section' id='qualification'>
@@ -32,281 +92,18 @@ const Qualification = () => {
         <div className='qualification__sections'>
           {/**Education */}
           <div className={toggleState === 1 ? "qualification__content qualification__content-active" : "qualification__content"}>
-            <div className='qualification__data'>
-              <div>
-                <h3 className='qualification__title'>
-                  {t('qualification.edu.bsMath')}
-                </h3>
-                <span className='qualification__subtitle'>Michigan State University - Institute</span>
-                <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2014 - 2018
-                </div>
-              </div>
-
-              <div>
-                <span className='qualification__rounder'></span>
-                <span className='qualification__line'></span>
-              </div>
-            </div>
-
-            <div className='qualification__data'>
-              <div></div>
-              <div>
-                <span className='qualification__rounder'></span>
-                <span className='qualification__line'></span>
-              </div>
-              <div>
-                <h3 className='qualification__title'>
-                  {t('qualification.edu.masterIT')}
-                </h3>
-                <span className='qualification__subtitle'>University of Queensland - Institute</span>
-                <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2019 - 2022
-                </div>
-              </div>
-            </div>  
-
-            <div className='qualification__data'>
-              <div>
-                <h3 className='qualification__title'>
-                  {t('qualification.edu.awsCcp')}
-                </h3>
-                <span className='qualification__subtitle'>Amazon Web Service</span>
-                <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2023
-                </div>
-              </div>
-
-              <div>
-                <span className='qualification__rounder'></span>
-                <span className='qualification__line'></span>
-              </div>
-            </div>
-
-            <div className='qualification__data'>
-              <div></div>
-              <div>
-                <span className='qualification__rounder'></span>
-                <span className='qualification__line'></span>
-              </div>
-              <div>
-                <h3 className='qualification__title'>
-                  {t('qualification.edu.ibmData')}
-                </h3>
-                <span className='qualification__subtitle'>IBM</span>
-                <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2024
-                </div>
-              </div>
-            </div>  
-
-            <div className='qualification__data'>
-              <div>
-                <h3 className='qualification__title'>
-                  {t('qualification.edu.awsMl')}
-                </h3>
-                <span className='qualification__subtitle'>Amazon Web Service</span>
-                <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2024
-                </div>
-              </div>
-
-              <div>
-                <span className='qualification__rounder'></span>
-                <span className='qualification__line'></span>
-              </div>
-            </div>
-
-            <div className='qualification__data'>
-              <div></div>
-              <div>
-                <span className='qualification__rounder'></span>
-                <span className='qualification__line'></span>
-              </div>
-              <div>
-                <h3 className='qualification__title'>
-                  {t('qualification.edu.salesforceAi')}
-                </h3>
-                <span className='qualification__subtitle'>Salesforce</span>
-                <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2024
-                </div>
-              </div>
-            </div>
-
-            <div className='qualification__data'>
-              <div>
-                <h3 className='qualification__title'>
-                  {t('qualification.edu.powerBi')}
-                </h3>
-                <span className='qualification__subtitle'>Microsoft</span>
-                <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2024
-                </div>
-              </div>
-
-              <div>
-                <span className='qualification__rounder'></span>
-                <span className='qualification__line'></span>
-              </div>
-            </div>
-
-            <div className='qualification__data'>
-              <div></div>
-              <div>
-                <span className='qualification__rounder'></span>
-                <span className='qualification__line'></span>
-              </div>
-              <div>
-                <h3 className='qualification__title'>
-                  {t('qualification.edu.oci')}
-                </h3>
-                <span className='qualification__subtitle'>Oracle</span>
-                <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2025
-                </div>
-              </div>
-            </div>  
-
+            {educationEntries.map((entry, i) => (
+              <TimelineEntry key={entry.key} {...entry} side={i % 2 === 0 ? 'left' : 'right'} />
+            ))}
           </div>
 
           {/**Experience */}
           <div className={toggleState === 2 ? "qualification__content qualification__content-active" : "qualification__content"}>
-            <div className='qualification__data'>
-              <div>
-                <h3 className='qualification__title'>
-                  {t('qualification.exp.moview')}
-                </h3>
-                <span className='qualification__subtitle'>Moview</span>
-                <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2021 - 2022
-                </div>
-              </div>
-
-              <div>
-                <span className='qualification__rounder'></span>
-                <span className='qualification__line'></span>
-              </div>
-            </div>
-
-            <div className='qualification__data'>
-              <div></div>
-              <div>
-                <span className='qualification__rounder'></span>
-                <span className='qualification__line'></span>
-              </div>
-              <div>
-                <h3 className='qualification__title'>
-                  {t('qualification.exp.takeaway')}
-                </h3>
-                <span className='qualification__subtitle'>Takeaway Platform</span>
-                <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2022 - 2023
-                </div>
-              </div>
-            </div>  
-
-            <div className='qualification__data'>
-              <div>
-                <h3 className='qualification__title'>
-                  {t('qualification.exp.upward')}
-                </h3>
-                <span className='qualification__subtitle'>Upward Consulting</span>
-                <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2023 - 2024
-                </div>
-              </div>
-              <div>
-                <span className='qualification__rounder'></span>
-                <span className='qualification__line'></span>
-              </div>
-            </div> 
-
-            <div className='qualification__data'>
-              <div></div>
-              <div>
-                <span className='qualification__rounder'></span>
-                <span className='qualification__line'></span>
-              </div>
-              <div>
-                <h3 className='qualification__title'>
-                  {t('qualification.exp.braiv')}
-                </h3>
-                <span className='qualification__subtitle'>Braiv</span>
-                <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2024 - 2025
-                </div>
-              </div>
-            </div>  
-
-            <div className='qualification__data'>
-              <div>
-                <h3 className='qualification__title'>
-                  {t('qualification.exp.veprm')}
-                </h3>
-                <span className='qualification__subtitle'>VEPRM</span>
-                <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2025 - 2026
-                </div>
-              </div>
-              <div>
-                <span className='qualification__rounder'></span>
-                <span className='qualification__line'></span>
-              </div>
-            </div>
-
-            <div className='qualification__data'>
-              <div></div>
-              <div>
-                <span className='qualification__rounder'></span>
-                <span className='qualification__line'></span>
-              </div>
-              <div>
-                <h3 className='qualification__title'>
-                  {t('qualification.exp.obk')}
-                </h3>
-                <span className='qualification__subtitle'>Our Big Kitchen</span>
-                <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2025 - {t('qualification.present')}
-                </div>
-              </div>
-            </div>
-
-            <div className='qualification__data'>
-              <div>
-                <h3 className='qualification__title'>
-                  {t('qualification.exp.airbest')}
-                </h3>
-                <span className='qualification__subtitle'>Airbest</span>
-                <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2026
-                </div>
-              </div>
-              <div>
-                <span className='qualification__rounder'></span>
-                <span className='qualification__line'></span>
-              </div>
-            </div>
-
-            <div className='qualification__data'>
-              <div></div>
-              <div>
-                <span className='qualification__rounder'></span>
-                <span className='qualification__line'></span>
-              </div>
-              <div>
-                <h3 className='qualification__title'>
-                  {t('qualification.exp.housed')}
-                </h3>
-                <span className='qualification__subtitle'>Cessleigh.Housed</span>
-                <div className='qualification__calendar'>
-                  <i className='uil uil-calendar-alt'></i> 2026 - {t('qualification.present')}
-                </div>
-              </div>
-            </div>
-
+            {experienceEntries.map((entry, i) => (
+              <TimelineEntry key={entry.key} {...entry} side={i % 2 === 0 ? 'left' : 'right'} />
+            ))}
           </div>
-          
+
         </div>
       </div>
     </section>

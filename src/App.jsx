@@ -30,6 +30,8 @@ const GrandHotelTaipei = lazy(() => import('./components/blog/GrandHotelTaipei')
 const Assistant = lazy(() => import('./components/assistant/Assistant'));
 const Testimonials = lazy(() => import('./components/Testimonials/Testimonials'));
 const CaseStudy = lazy(() => import('./components/portfolio/CaseStudy'));
+const WorkIndex = lazy(() => import('./components/portfolio/WorkIndex'));
+const Resume = lazy(() => import('./components/resume/Resume'));
 
 function useSectionReveal() {
   useEffect(() => {
@@ -169,6 +171,10 @@ const localePages = () => (
     <Route path="blog/hermes" element={<Hermes />} />
     <Route path="blog/hiro" element={<Hiro />} />
     <Route path="blog/grand-hotel-taipei" element={<GrandHotelTaipei />} />
+    <Route path="resume" element={<Resume />} />
+    {/* The index has to be declared before the :slug route so "/work" is not
+        read as a case study whose slug is empty. */}
+    <Route path="work" element={<WorkIndex />} />
     <Route path="work/:slug" element={<CaseStudy />} />
     <Route path="*" element={<NotFound />} />
   </Route>

@@ -6,13 +6,22 @@ const MAX_MESSAGE_LENGTH = 2000;
 // send. Measured on the client with a monotonic clock and sent as a duration —
 // never as an absolute timestamp, because comparing a visitor's wall clock
 // against the server's would silently reject anyone whose clock runs fast.
-const MIN_FILL_MS = 2000;
+//
+// Deliberately low. A spam verdict is answered with 200 so bots learn nothing,
+// which means a false positive shows the visitor "message sent" and drops the
+// mail on the floor — the worst failure this form has. At 2000 ms a real
+// person using password-manager autofill tripped it. Bots that submit
+// instantly still do not clear 800 ms, and the honeypot catches the rest.
+const MIN_FILL_MS = 800;
 
 function validateContactBody(body) {
   const { name, email, message, company = '', elapsedMs } = body || {};
 
   if (company) return { spam: true };
-  if (typeof elapsedMs !== 'number' || !Number.isFinite(elapsedMs) || elapsedMs < MIN_FILL_MS) {
+  // A missing duration means an older cached client, not a bot — the honeypot
+  // and the rate limiter still apply. Only a present, implausibly short one is
+  // treated as a signal.
+  if (typeof elapsedMs === 'number' && Number.isFinite(elapsedMs) && elapsedMs < MIN_FILL_MS) {
     return { spam: true };
   }
   if (!name || typeof name !== 'string' || !name.trim() || name.length > MAX_NAME_LENGTH) {

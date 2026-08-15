@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'react-router';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import ScrollUp from '../scrollup/ScrollUp';
@@ -16,22 +17,54 @@ const allTags = Array.from(new Set(posts.flatMap(p => p.tags))).sort();
 
 const Blog = () => {
   const { t } = useLanguage();
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [activeTags, setActiveTags] = useState([]);
-  const [query, setQuery] = useState('');
+
+  // Filter state lives in the URL, not in component state. A filtered view is
+  // something people share and come back to ("the AI posts"), and the back
+  // button should undo a filter rather than leave the page — neither of which
+  // works when the only record of the choice is a useState.
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const activeCategory = searchParams.get('category') || 'All';
+  const query = searchParams.get('q') || '';
+  const activeTags = useMemo(() => {
+    const raw = searchParams.get('tags');
+    // Only tags that still exist: a stale link must not filter everything away.
+    return raw ? raw.split(',').filter((tag) => allTags.includes(tag)) : [];
+  }, [searchParams]);
+
+  // Defaults are omitted from the URL, so an unfiltered /blog stays clean and
+  // is never a second URL for the same content.
+  const updateParams = useCallback(
+    (changes) => {
+      const next = new URLSearchParams(searchParams);
+      for (const [key, value] of Object.entries(changes)) {
+        if (!value || value === 'All') next.delete(key);
+        else next.set(key, value);
+      }
+      // Typing in the search box must not push a history entry per keystroke.
+      setSearchParams(next, { replace: true });
+    },
+    [searchParams, setSearchParams]
+  );
 
   // Tags narrow the list cumulatively: picking "AI" and "Automation" shows only
   // posts carrying both, which is what makes stacking them useful rather than
   // just a second way to widen the results.
-  const toggleTag = (tag) =>
-    setActiveTags(current =>
-      current.includes(tag) ? current.filter(t => t !== tag) : [...current, tag]
-    );
+  const toggleTag = (tag) => {
+    const next = activeTags.includes(tag)
+      ? activeTags.filter((t) => t !== tag)
+      : [...activeTags, tag];
+    updateParams({ tags: next.join(',') });
+  };
 
   const catLabel = useCallback(
     (cat) => t(`blog.categories.${cat}`, cat),
     [t]
   );
+
+  const isFiltered = activeCategory !== 'All' || activeTags.length > 0 || query !== '';
+
+  const clearFilters = () => setSearchParams(new URLSearchParams(), { replace: true });
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
@@ -67,7 +100,7 @@ const Blog = () => {
             className="blog__search"
             placeholder={t('blog.searchPlaceholder')}
             value={query}
-            onChange={e => setQuery(e.target.value)}
+            onChange={e => updateParams({ q: e.target.value })}
           />
         </div>
 
@@ -78,7 +111,7 @@ const Blog = () => {
               type="button"
               key={cat}
               className={`blog__filter-btn${activeCategory === cat ? ' blog__filter-btn--active' : ''}`}
-              onClick={() => setActiveCategory(cat)}
+              onClick={() => updateParams({ category: cat })}
               aria-pressed={activeCategory === cat}
             >
               {catLabel(cat)}
@@ -104,12 +137,29 @@ const Blog = () => {
             <button
               type="button"
               className="blog__tag-clear"
-              onClick={() => setActiveTags([])}
+              onClick={() => updateParams({ tags: '' })}
             >
               {t('blog.clearTags')}
             </button>
           )}
         </div>
+
+        {/* Filtering rewrites the list below with no other signal that
+            anything happened, which for a screen reader is silence. Announced
+            politely so it lands after the keystroke rather than over it. */}
+        <p className="blog__result-count" role="status" aria-live="polite">
+          {t('blog.resultCount')
+            .replace('{shown}', filtered.length)
+            .replace('{total}', posts.length)}
+          {isFiltered && (
+            <>
+              {' '}
+              <button type="button" className="blog__clear-all" onClick={clearFilters}>
+                {t('blog.clearAll')}
+              </button>
+            </>
+          )}
+        </p>
 
         <div className="blog__list-container container">
           {filtered.length === 0 && (

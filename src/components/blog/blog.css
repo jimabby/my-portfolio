@@ -1267,3 +1267,24 @@
   border-color: hsl(220, 8%, 28%);
   box-shadow: inset 0 -1px 0 hsl(220, 8%, 28%);
 }
+
+/* Result count. Sits between the filters and the list so the announcement and
+   the change it describes are adjacent in the reading order. */
+.blog__result-count {
+  text-align: center;
+  font-size: var(--smaller-font-size);
+  color: var(--text-color);
+  margin-bottom: var(--mb-1-5);
+}
+
+.blog__clear-all {
+  font-size: inherit;
+  font-weight: var(--font-medium);
+  color: var(--title-color);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}

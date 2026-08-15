@@ -1,0 +1,163 @@
+/* The case study index. Shares the design vocabulary of casestudy.css — same
+   pill badges, same border colour, same rounded outlines — so moving from this
+   list into a project does not feel like changing sites. */
+
+.workindex {
+  padding-top: 7rem;
+}
+
+.workindex__container {
+  max-width: 900px;
+}
+
+.workindex__title {
+  margin-bottom: 0.25rem;
+}
+
+.workindex__intro {
+  max-width: 46rem;
+  margin: 0 auto 2rem;
+  text-align: center;
+  color: var(--text-color);
+  font-size: var(--normal-font-size);
+  line-height: 1.7;
+}
+
+.workindex__filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.workindex__filter {
+  font-size: var(--small-font-size);
+  font-weight: var(--font-medium);
+  color: var(--title-color);
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.workindex__filter:hover {
+  background-color: var(--container-color);
+}
+
+.workindex__filter.is-active {
+  background-color: var(--title-color);
+  color: var(--container-color);
+  border-color: var(--title-color);
+}
+
+.workindex__count {
+  text-align: center;
+  font-size: var(--smaller-font-size);
+  color: var(--text-color);
+  margin-bottom: 2rem;
+}
+
+.workindex__list {
+  display: grid;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.workindex__link {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.workindex__link:hover {
+  background-color: var(--container-color);
+  transform: translateY(-2px);
+}
+
+.workindex__thumb {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 0.75rem;
+  display: block;
+}
+
+.workindex__body {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: start;
+}
+
+.workindex__badge {
+  font-size: var(--smaller-font-size);
+  font-weight: var(--font-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+}
+
+.workindex__item-title {
+  font-size: var(--h3-font-size);
+  color: var(--title-color);
+  margin: 0;
+}
+
+.workindex__summary {
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.workindex__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: var(--small-font-size);
+  font-weight: var(--font-medium);
+  color: var(--title-color);
+}
+
+.workindex__link:hover .workindex__cta i {
+  transform: translateX(0.25rem);
+}
+
+.workindex__cta i {
+  transition: transform 0.3s;
+}
+
+@media screen and (max-width: 768px) {
+  .workindex__link {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .workindex__thumb {
+    height: 190px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workindex__link,
+  .workindex__cta i {
+    transition: none;
+  }
+
+  .workindex__link:hover {
+    transform: none;
+  }
+}

@@ -17,8 +17,9 @@ Runs `npm run images` first.
 
 ### `npm run build`
 
-Builds the app for production to the `dist` folder. Runs `npm run images` first,
-then generates per-route HTML, `sitemap.xml`, and `rss.xml`.
+Builds the app for production to the `dist` folder. Runs `npm run images`,
+`npm run facts` and `npm run csp` first, then generates per-route HTML,
+`sitemap.xml`, `rss.xml`, and the service worker.
 
 ### `npm run images`
 
@@ -26,6 +27,25 @@ Regenerates the responsive image variants in `public/responsive/` and the
 sizing metadata in `src/assets/image-manifest.json`. Idempotent — reruns skip
 anything already generated. `dev` and `build` both invoke it, so it is rarely
 needed on its own.
+
+### `npm run facts`
+
+Regenerates `api/projectFacts.js` — the project and blog list the AI assistant
+answers from — out of `Data.jsx` and `site-routes.mjs`. `dev` and `build` both
+invoke it, and a test fails if the committed file falls behind.
+
+### `npm run csp`
+
+Recomputes the `Content-Security-Policy` in `vercel.json` from the inline
+scripts in `index.html`. Needed because Vercel reads headers from the committed
+`vercel.json`, not from build output; a test fails if the two drift.
+
+### `npm run icons` / `npm run fonts`
+
+Refetch the self-hosted icon set (`src/assets/icons.css`) and typeface
+(`src/assets/fonts.css` + `src/assets/fonts/`). Both need the network and both
+commit their output, so ordinary builds and fresh clones never do. Run `icons`
+after using a new `bx-*`/`uil-*` class in a component.
 
 ### `npm run preview`
 
@@ -76,6 +96,11 @@ Adding or changing a blog post or a project means touching:
   the sitemap, and the RSS feed. Project case studies are read straight out of
   `Data.jsx`, so only blog posts need adding here by hand.
 
+The `/work` index and the AI assistant's project list are both derived from
+`Data.jsx` and need no separate edit. Résumé content (roles, education,
+certifications, skills) lives in `src/components/qualification/resumeData.js`
+and is shared by the home-page timeline, the skills section, and `/resume`.
+
 ## Deployment
 
 Deployed on **Vercel**. Every push to `master` triggers an automatic redeploy.
@@ -95,4 +120,6 @@ same values in Vercel:
 - `EMAILJS_PRIVATE_KEY` is optional when EmailJS private-key authentication is
   enabled.
 - The Upstash variables are strongly recommended in production so assistant
-  and contact rate limits are shared across serverless instances.
+  and contact rate limits are shared across serverless instances. They also
+  back `/api/feedback`, which records whether an assistant reply was useful —
+  without them the vote is accepted and dropped rather than stored.

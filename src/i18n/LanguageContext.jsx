@@ -1,5 +1,6 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { translations } from './translations';
+import { LanguageContext } from './context';
 import { DEFAULT_LANG, splitLocalePath } from './routes';
 
 export const LANGUAGES = [
@@ -77,11 +78,7 @@ const lookup = (lang, path) => {
   return undefined;
 };
 
-const LanguageContext = createContext({
-  lang: DEFAULT_LANG,
-  setLang: () => {},
-  t: (path) => path,
-});
+// Defined in ./context.js — see the note there on why it is not created here.
 
 export const LanguageProvider = ({ children }) => {
   const [lang, setLangState] = useState(initialLang);

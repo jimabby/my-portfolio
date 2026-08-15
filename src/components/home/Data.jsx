@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
 import Currently from './Currently'
-import resumeUrl from '../../assets/Software Developer - Jim.pdf'
+import LocaleLink from '../../i18n/LocaleLink'
 
 const Data = () => {
   const { t } = useLanguage()
@@ -89,12 +89,15 @@ const Data = () => {
                     ></path>
           </svg>
         </a>
-        {/* Named explicitly: the asset ships under a content-hashed filename,
-            so a bare `download` saves it as "Software Developer - Jim-Ck7DZzjw.pdf". */}
-        <a href={resumeUrl} download='Jim-Kong-Resume.pdf' className='button button--ghost button--flex'>
-          {t('home.downloadCV')}
-          <i className='uil uil-import button__icon-inline'></i>
-        </a>
+        {/* Goes to the resume page rather than straight to the PDF. A blind
+            download is the wrong default: it is unreadable on a phone without
+            a viewer, invisible to search, and gives nothing to anyone who just
+            wanted to skim. /resume is the readable version and offers the same
+            PDF as its own button. */}
+        <LocaleLink to='/resume' className='button button--ghost button--flex'>
+          {t('home.viewResume')}
+          <i className='uil uil-file button__icon-inline'></i>
+        </LocaleLink>
       </div>
     </div>
   )

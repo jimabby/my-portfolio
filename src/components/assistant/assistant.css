@@ -460,3 +460,51 @@
 [data-theme='dark'] .assistant__cursor {
   background: hsl(220, 10%, 72%);
 }
+
+/* Reply rating. Quiet by default — it sits under every answer, so anything
+   with weight would compete with the answer itself. */
+.assistant__feedback {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+  font-size: var(--tiny-font-size);
+  color: var(--text-color);
+}
+
+.assistant__feedback-label,
+.assistant__feedback-thanks {
+  opacity: 0.75;
+}
+
+.assistant__feedback-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0;
+  font-size: 0.95rem;
+  color: var(--text-color);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.assistant__feedback-btn:hover {
+  color: var(--title-color);
+  background-color: var(--soft-surface);
+}
+
+.assistant__feedback-btn:focus-visible {
+  outline: 2px solid var(--title-color);
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .assistant__feedback-btn {
+    transition: none;
+  }
+}

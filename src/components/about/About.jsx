@@ -1,9 +1,9 @@
 import React from 'react';
 import "./about.css";
 import AboutImg from "../../assets/profile.webp";
-import CV from "../../assets/Software Developer - Jim.pdf";
 import Info from './Info';
 import { useLanguage } from '../../i18n/LanguageContext';
+import LocaleLink from '../../i18n/LocaleLink';
 import Img from '../image/Img';
 
 const About = () => {
@@ -21,7 +21,9 @@ const About = () => {
           <p className='about__description'>
             {t('about.description')}
           </p>
-          <a download='Jim-Kong-Resume.pdf' href={CV} className='button button--flex'>{t('about.downloadResume')}
+          {/* The readable resume, not the raw PDF — see the note in home/Data.jsx.
+              /resume carries the PDF download as its own button. */}
+          <LocaleLink to='/resume' className='button button--flex'>{t('about.viewResume')}
             <svg
                 className="button__icon"
                 xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +49,7 @@ const About = () => {
                   fill="var(--container-color)"
                 ></path>
             </svg>
-          </a>
+          </LocaleLink>
         </div>
       </div>
     </section>

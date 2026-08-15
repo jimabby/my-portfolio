@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Offline | Jim Kong</title>
+    <!-- Replaced at build time with this build's hashed stylesheet, so the
+         offline page uses the same palette and type as the rest of the site
+         rather than looking like a browser error. -->
+    <link rel="stylesheet" href="__ENTRY_CSS__" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t !== 'light' && t !== 'dark')
+            t =
+              window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light';
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+      })();
+    </script>
+    <style>
+      .offline {
+        min-height: 100vh;
+        display: grid;
+        place-content: center;
+        justify-items: center;
+        gap: 0.75rem;
+        text-align: center;
+        padding: 2rem;
+      }
+      .offline__code {
+        font-size: 3rem;
+        line-height: 1;
+      }
+      .offline__title {
+        font-size: 1.5rem;
+        color: var(--title-color);
+        margin: 0;
+      }
+      .offline__text {
+        color: var(--text-color);
+        max-width: 32rem;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="offline">
+      <span class="offline__code" aria-hidden="true">&#9729;</span>
+      <h1 class="offline__title">You're offline</h1>
+      <p class="offline__text">
+        This page hasn't been visited before, so there's no saved copy to show. Pages you have
+        already opened will still work.
+      </p>
+      <button type="button" class="button" onclick="window.location.reload()">Try again</button>
+    </main>
+  </body>
+</html>

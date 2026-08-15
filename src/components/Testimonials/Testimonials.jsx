@@ -20,7 +20,7 @@ const TestimonialCard = ({ image, title, description }) => {
   return (
     <>
       {image
-        ? <Img src={image} alt={`${title}'s photo`} className='testimonial__img'  sizes="60px"/>
+        ? <Img src={image} alt={t('testimonials.photoAlt').replace('{name}', title)} className='testimonial__img'  sizes="60px"/>
         : <div className='testimonial__img testimonial__img-placeholder'><i className='uil uil-user'></i></div>
       }
       <h3 className='testimonial__name'>{title}</h3>

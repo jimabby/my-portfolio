@@ -9,6 +9,17 @@
 
 export const UPDATES = [
   {
+    id: '2026-08-16-resume-and-work',
+    date: '2026-08-16',
+    tag: 'feature',
+    title: {
+      en: 'A full resume page, a single index of every project, and shareable blog filters.',
+      'zh-Hans': '新增完整的简历页面、汇总所有项目的索引页，以及可分享的博客筛选链接。',
+      'zh-Hant': '新增完整的履歷頁面、彙整所有專案的索引頁，以及可分享的網誌篩選連結。',
+      ja: '完全な履歴書ページ、全プロジェクトの一覧ページ、共有できるブログの絞り込みを追加しました。',
+    },
+  },
+  {
     id: '2026-07-30-case-study-notes',
     date: '2026-07-30',
     tag: 'feature',
