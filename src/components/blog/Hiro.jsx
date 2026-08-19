@@ -1,7 +1,7 @@
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import BlogProgressBar from "./BlogProgressBar";
-import BlogShareButtons from "./BlogShareButtons";
+import ShareButtons from "../share/ShareButtons";
 import BlogPrevNext from "./BlogPrevNext";
 import BlogSEO from "./BlogSEO";
 import ScrollUp from "../scrollup/ScrollUp";
@@ -373,7 +373,7 @@ const Hiro = () => {
           </div>
 
           {/* SHARE */}
-          <BlogShareButtons title="Hiro - The AI Job Application Agent" />
+          <ShareButtons title="Hiro - The AI Job Application Agent" />
 
           {/* PREV / NEXT */}
           <BlogPrevNext currentSlug="hiro" />

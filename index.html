@@ -12,6 +12,9 @@
       content="Jim Kong is a Sydney-based full stack developer building web apps, AI tools, WordPress sites, and data-driven software."
     />
     <meta name="author" content="Jim Kong" />
+    <!-- The one robots tag on any page. scripts/generate-route-html.mjs
+         rewrites it per route (404 gets "noindex, follow"), and nothing emits
+         a second one at runtime — see the note in src/components/seo/Seo.jsx. -->
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://jimkong-portfolio.vercel.app/" />
     <link

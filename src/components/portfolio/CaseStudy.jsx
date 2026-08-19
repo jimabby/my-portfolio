@@ -5,6 +5,8 @@ import ScrollUp from '../scrollup/ScrollUp';
 import Img from '../image/Img';
 import { manifestKeyFor, metadataFor } from '../image/srcset';
 import Seo from '../seo/Seo';
+import ShareButtons from '../share/ShareButtons';
+import CaseStudySchema from './CaseStudySchema';
 import LocaleLink from '../../i18n/LocaleLink';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { useLocalePath } from '../../i18n/useLocalePath';
@@ -52,6 +54,7 @@ const CaseStudy = () => {
         // scripts/generate-og-images.mjs.
         image={`/og/work/${project.slug}.webp`}
       />
+      <CaseStudySchema project={project} summary={summary} />
       <Header />
 
       <main className="casestudy section" id="main-content">
@@ -162,6 +165,8 @@ const CaseStudy = () => {
               );
             })}
           </section>
+
+          <ShareButtons title={project.title} heading={t('casestudy.shareProject')} />
 
           {(previous || next) && (
             <nav className="casestudy__prevnext" aria-label={t('casestudy.moreWork')}>

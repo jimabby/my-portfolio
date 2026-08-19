@@ -79,7 +79,7 @@ describe('the resume page', () => {
 describe('blog filters in the URL', () => {
   it('applies a category from the query string on first render', async () => {
     renderAt('/blog?category=Project');
-    expect(await screen.findByRole('heading', { level: 2 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { level: 1 })).toBeInTheDocument();
 
     const projectPosts = posts.filter((post) => post.category === 'Project');
     expect(
@@ -89,7 +89,7 @@ describe('blog filters in the URL', () => {
 
   it('applies stacked tags from the query string', async () => {
     renderAt('/blog?tags=AI,Automation');
-    await screen.findByRole('heading', { level: 2 });
+    await screen.findByRole('heading', { level: 1 });
 
     const matching = posts.filter(
       (post) => post.tags.includes('AI') && post.tags.includes('Automation')
@@ -103,7 +103,7 @@ describe('blog filters in the URL', () => {
   // the whole list away.
   it('ignores a tag that no longer exists', async () => {
     renderAt('/blog?tags=NoSuchTag');
-    await screen.findByRole('heading', { level: 2 });
+    await screen.findByRole('heading', { level: 1 });
     expect(
       screen.getByText(`Showing ${posts.length} of ${posts.length} articles`)
     ).toBeInTheDocument();

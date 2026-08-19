@@ -2,10 +2,10 @@ import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import { createRequire } from 'node:module'
 
-// Reuse the same prompt + history shaping the production handler uses, so dev
-// and prod can never drift apart.
+// Reuse the very same model call the production handler makes, so dev and
+// prod can never drift apart.
 const require = createRequire(import.meta.url)
-const { buildSystemPrompt, buildChatHistory } = require('./api/systemPrompt.js')
+const { streamChatText } = require('./api/chatService.js')
 const { validateBody, isAllowedOrigin, isRateLimited } = require('./api/guard.js')
 const { validateContactBody, sendContactEmail } = require('./api/contactService.js')
 const { validateFeedbackBody, recordFeedback } = require('./api/feedbackService.js')
@@ -52,7 +52,6 @@ function devApi(env) {
               res.setHeader('Content-Type', 'application/json')
               return res.end(JSON.stringify({ error: 'API key not configured' }))
             }
-            const { GoogleGenerativeAI } = await import('@google/generative-ai')
             const parsed = validateBody(JSON.parse(body))
             if (parsed.error) {
               res.statusCode = parsed.status
@@ -60,18 +59,10 @@ function devApi(env) {
               return res.end(JSON.stringify({ error: parsed.error }))
             }
             const { message, history, lang } = parsed
-            const genAI = new GoogleGenerativeAI(apiKey)
-            const model = genAI.getGenerativeModel({
-              model: 'gemini-2.5-flash',
-              systemInstruction: buildSystemPrompt(lang),
-            })
-            const chat = model.startChat({ history: buildChatHistory(history) })
             res.setHeader('Content-Type', 'text/event-stream')
             res.setHeader('Cache-Control', 'no-cache')
-            const result = await chat.sendMessageStream(message)
-            for await (const chunk of result.stream) {
-              const text = chunk.text()
-              if (text) res.write(`data: ${JSON.stringify({ text })}\n\n`)
+            for await (const text of streamChatText({ apiKey, message, history, lang })) {
+              res.write(`data: ${JSON.stringify({ text })}\n\n`)
             }
             res.write('data: [DONE]\n\n')
             res.end()
@@ -200,11 +191,41 @@ function devFeeds() {
   }
 }
 
+// The web app manifests are written into dist/ at build time — including the
+// English one, which is generated rather than kept in public/ so the four can
+// never drift. In dev that leaves every <link rel="manifest"> pointing at a
+// 404, which is exactly the kind of thing nobody notices until an install
+// prompt fails in production. Serve them from the same builder the build uses.
+function devManifests() {
+  return {
+    name: 'dev-manifests',
+    apply: 'serve',
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        const path = (req.url || '').split('?')[0]
+        if (!path.startsWith('/manifest') || !path.endsWith('.json')) return next()
+
+        const { allManifests } = await import('./scripts/manifests.mjs')
+        const match = allManifests().find((entry) => entry.path === path)
+        if (!match) return next()
+
+        res.setHeader('Content-Type', 'application/manifest+json; charset=utf-8')
+        res.setHeader('Cache-Control', 'no-store')
+        res.end(JSON.stringify(match.manifest, null, 2))
+      })
+    },
+  }
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return {
-    plugins: [react(), devApi(env), devFeeds()],
+    plugins: [react(), devApi(env), devFeeds(), devManifests()],
     test: {
+      // Unit tests only. The Playwright specs under e2e/ also end in .spec.js
+      // and would be collected by the default glob, where they fail on import
+      // because they need the Playwright runner rather than vitest.
+      include: ['src/**/*.test.{js,jsx}'],
       environment: 'jsdom',
       globals: true,
       setupFiles: './src/test/setup.js',

@@ -1,7 +1,7 @@
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import BlogProgressBar from "./BlogProgressBar";
-import BlogShareButtons from "./BlogShareButtons";
+import ShareButtons from "../share/ShareButtons";
 import BlogPrevNext from "./BlogPrevNext";
 import BlogSEO from "./BlogSEO";
 import ScrollUp from "../scrollup/ScrollUp";
@@ -325,7 +325,7 @@ const GrandHotelTaipei = () => {
             </div>
           </div>
 
-          <BlogShareButtons title="Staying at the Grand Hotel Taipei" />
+          <ShareButtons title="Staying at the Grand Hotel Taipei" />
 
           <BlogPrevNext currentSlug="grand-hotel-taipei" />
 

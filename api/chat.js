@@ -1,5 +1,4 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-const { buildSystemPrompt, buildChatHistory } = require('./systemPrompt');
+const { streamChatText } = require('./chatService');
 const { validateBody, isAllowedOrigin, isRateLimited } = require('./guard');
 
 module.exports = async function handler(req, res) {
@@ -26,25 +25,18 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: 'API key not configured' });
   }
 
-  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  const model = genAI.getGenerativeModel({
-    model: 'gemini-2.5-flash',
-    systemInstruction: buildSystemPrompt(lang),
-  });
-
-  const chat = model.startChat({ history: buildChatHistory(history) });
-
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
 
   try {
-    const result = await chat.sendMessageStream(message);
-    for await (const chunk of result.stream) {
-      const text = chunk.text();
-      if (text) {
-        res.write(`data: ${JSON.stringify({ text })}\n\n`);
-      }
+    for await (const text of streamChatText({
+      apiKey: process.env.GEMINI_API_KEY,
+      message,
+      history,
+      lang,
+    })) {
+      res.write(`data: ${JSON.stringify({ text })}\n\n`);
     }
     res.write('data: [DONE]\n\n');
     res.end();

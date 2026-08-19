@@ -1,0 +1,88 @@
+/* Shared by blog articles and case studies. The rules are the ones that lived
+   in blog.css under .blog__share; they moved here unchanged (bar the class
+   prefix) when case studies gained the same block, so the two cannot drift
+   into looking like different sites. */
+
+.share {
+  margin: 2rem 0;
+  padding: 1.75rem 2rem;
+  background: #f8fafc;
+  border: 1px solid #e8edf2;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.share__divider {
+  margin-bottom: 1.25rem;
+}
+
+.share__heading {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+}
+
+.share__buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.875rem;
+  flex-wrap: wrap;
+}
+
+.share__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.share__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.share__btn--linkedin {
+  background: #0a66c2;
+  color: #fff;
+}
+
+.share__btn--twitter {
+  background: #1d9bf0;
+  color: #fff;
+}
+
+.share__btn--reddit {
+  background: #ff4500;
+  color: #fff;
+}
+
+.share__btn i {
+  font-size: 1.2rem;
+}
+
+[data-theme='dark'] .share {
+  background: hsl(220, 10%, 14%);
+  border-color: hsl(220, 8%, 22%);
+}
+
+[data-theme='dark'] .share__heading {
+  color: hsl(220, 8%, 48%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .share__btn {
+    transition: none;
+  }
+
+  .share__btn:hover {
+    transform: none;
+  }
+}

@@ -39,6 +39,7 @@ export default [
           'registerDictionary',
           'detectBrowserLang',
           'readStoredLang',
+          'resolveInitialLang',
         ],
       }],
     },

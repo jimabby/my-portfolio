@@ -37,7 +37,17 @@ const Seo = ({
       <title>{title}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={url} />
-      {noindex && <meta name="robots" content="noindex, follow" />}
+      {/* No robots tag here, deliberately.
+          Under React 19, Helmet hands <meta> to React's own head hoisting,
+          which appends rather than replacing — so a tag emitted here landed
+          NEXT TO the static one in index.html, leaving a 404 page declaring
+          both "index, follow" and "noindex, follow" at once.
+          The static tag is already correct on every route without help:
+          scripts/generate-route-html.mjs writes "noindex, follow" into
+          dist/404.html, which is what Vercel serves for an unmatched path.
+          `noindex` is still honoured below, where it suppresses the hreflang
+          alternates that would otherwise advertise a page we do not want
+          indexed. */}
 
       {/* Alternates are pointless on a page we are asking not to be indexed. */}
       {!noindex &&

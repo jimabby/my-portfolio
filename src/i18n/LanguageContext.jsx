@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { translations } from './translations';
+import { dictionaryFor, isLoaded, loadLocaleWithFallback } from './locales';
 import { LanguageContext } from './context';
 import { DEFAULT_LANG, splitLocalePath } from './routes';
 
@@ -40,7 +40,11 @@ export const readStoredLang = () => {
 
 // The language the URL asks for, resolved before React mounts so the very first
 // render is already correct and no text flips after hydration.
-const initialLang = () => {
+//
+// Exported because main.jsx has to know it before it renders anything: the
+// dictionaries are separate chunks now, and the active one must be in hand or
+// the first paint is a page of raw key paths.
+export const resolveInitialLang = () => {
   const fromUrl =
     typeof window !== 'undefined' ? splitLocalePath(window.location.pathname).lang : DEFAULT_LANG;
   if (fromUrl !== DEFAULT_LANG) return fromUrl;
@@ -69,7 +73,7 @@ export const registerDictionary = (dictionary) => {
 };
 
 const lookup = (lang, path) => {
-  const fromBase = resolve(translations[lang], path);
+  const fromBase = resolve(dictionaryFor(lang), path);
   if (fromBase !== undefined && fromBase !== null) return fromBase;
   for (const dictionary of lazyDictionaries) {
     const value = resolve(dictionary[lang], path);
@@ -81,7 +85,7 @@ const lookup = (lang, path) => {
 // Defined in ./context.js — see the note there on why it is not created here.
 
 export const LanguageProvider = ({ children }) => {
-  const [lang, setLangState] = useState(initialLang);
+  const [lang, setLangState] = useState(resolveInitialLang);
   const [hasStoredPreference, setHasStoredPreference] = useState(() => readStoredLang() !== null);
 
   useEffect(() => {
@@ -91,9 +95,18 @@ export const LanguageProvider = ({ children }) => {
   // `persist: false` is how the router syncs state to the URL without turning a
   // shared link into a stored preference — only the language switcher records
   // an actual choice.
+  // Switching language is async now that a dictionary is a separate chunk:
+  // the strings have to be in hand before the state flips, or the whole page
+  // flashes English on its way to the language that was asked for. The common
+  // paths — first render, and switching back to something already visited —
+  // are already loaded and commit synchronously.
   const setLang = useCallback((next, { persist = true } = {}) => {
     if (!SUPPORTED.includes(next)) return;
-    setLangState(next);
+    if (isLoaded(next)) {
+      setLangState(next);
+    } else {
+      loadLocaleWithFallback(next).then(() => setLangState(next));
+    }
     if (!persist) return;
     setHasStoredPreference(true);
     try {
@@ -103,6 +116,8 @@ export const LanguageProvider = ({ children }) => {
     }
   }, []);
 
+  // Keyed on `lang` alone: a dictionary never changes once loaded, and
+  // setLangState only runs after its strings are in the map.
   const t = useMemo(() => {
     return (path, fallback) => {
       const value = lookup(lang, path);

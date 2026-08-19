@@ -23,7 +23,10 @@ const safeHref = (href) => {
   return null;
 };
 
-const renderInline = (text, keyPrefix, onNavigate) => {
+// `localize` maps a canonical site path onto the visitor's language, so the
+// rendered href is the one they should actually land on — middle-click and
+// "open in new tab" bypass onNavigate entirely and use the attribute as-is.
+const renderInline = (text, keyPrefix, onNavigate, localize) => {
   const parts = text.split(INLINE_PATTERN).filter((part) => part !== '' && part !== undefined);
 
   return parts.map((part, i) => {
@@ -36,10 +39,12 @@ const renderInline = (text, keyPrefix, onNavigate) => {
       if (!href) return <span key={key}>{label}</span>;
 
       const isInternal = href.startsWith('/') || href.startsWith('#');
+      const resolved =
+        isInternal && localize ? localize(href.startsWith('#') ? `/${href}` : href) : href;
       return (
         <a
           key={key}
-          href={href}
+          href={resolved}
           className="assistant__link"
           {...(isInternal
             ? { onClick: (e) => onNavigate?.(e, href) }
@@ -73,7 +78,7 @@ const renderInline = (text, keyPrefix, onNavigate) => {
 // Group the reply into paragraphs and lists, then render each line's inline
 // spans. Blocks are emitted in source order so a partially streamed reply is
 // always renderable.
-export const renderMarkdown = (text, onNavigate) => {
+export const renderMarkdown = (text, onNavigate, localize) => {
   const lines = String(text ?? '').split('\n');
   const blocks = [];
   let paragraph = [];
@@ -126,7 +131,7 @@ export const renderMarkdown = (text, onNavigate) => {
           {block.lines.map((line, j) => (
             <span key={`l${j}`}>
               {j > 0 && <br />}
-              {renderInline(line, `b${i}-l${j}`, onNavigate)}
+              {renderInline(line, `b${i}-l${j}`, onNavigate, localize)}
             </span>
           ))}
         </p>
@@ -137,7 +142,7 @@ export const renderMarkdown = (text, onNavigate) => {
     return (
       <List key={`b${i}`} className="assistant__message-list">
         {block.items.map((item, j) => (
-          <li key={`i${j}`}>{renderInline(item, `b${i}-i${j}`, onNavigate)}</li>
+          <li key={`i${j}`}>{renderInline(item, `b${i}-i${j}`, onNavigate, localize)}</li>
         ))}
       </List>
     );

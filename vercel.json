@@ -1,6 +1,17 @@
 {
   "outputDirectory": "dist",
   "cleanUrls": true,
+  "functions": {
+    "api/chat.js": {
+      "maxDuration": 60
+    },
+    "api/contact.js": {
+      "maxDuration": 15
+    },
+    "api/feedback.js": {
+      "maxDuration": 10
+    }
+  },
   "redirects": [
     {
       "source": "/work/hermes-ai-email-client",

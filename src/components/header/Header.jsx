@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import "./header.css"
 import { useLocation } from 'react-router';
 import { splitLocalePath } from '../../i18n/routes';
@@ -63,6 +63,22 @@ const Header = () => {
   //Toggle Menu
   const [Toggle, showMenu] = useState(false);
   const [activeNav, setActiveNav] = useState("#home");
+
+  // Escape closes the mobile menu, matching the gallery modal and the updates
+  // panel. Focus goes back to the toggle that opened it, so a keyboard user is
+  // not dropped at the top of the document.
+  const toggleButtonRef = useRef(null);
+
+  useEffect(() => {
+    if (!Toggle) return;
+    const onKeyDown = (event) => {
+      if (event.key !== 'Escape') return;
+      showMenu(false);
+      toggleButtonRef.current?.focus();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [Toggle]);
 
   // Compare against the language-independent path: the portfolio page lives at
   // "/" in English but at "/ja", "/zh-Hans" and "/zh-Hant" in the others.
@@ -233,6 +249,7 @@ const Header = () => {
           </button>
           <button
             type="button"
+            ref={toggleButtonRef}
             className='nav__toggle'
             onClick={() => showMenu(!Toggle)}
             aria-label={Toggle ? t('nav.menuClose') : t('nav.menuOpen')}

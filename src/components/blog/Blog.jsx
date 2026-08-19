@@ -89,7 +89,7 @@ const Blog = () => {
       <Seo title={t('seo.blogTitle')} description={t('seo.blogDesc')} path="/blog" />
       <Header />
       <main className="blog section" id="main-content">
-        <h2 className="section__title">{t('blog.title')}</h2>
+        <h1 className="section__title">{t('blog.title')}</h1>
         <span className="section__subtitle">{t('blog.subtitle')}</span>
 
         {/* Search */}

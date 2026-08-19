@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import './assistant.css';
 import { useLanguage } from '../../i18n/LanguageContext';
+import { useLocalePath } from '../../i18n/useLocalePath';
 import { renderMarkdown } from './markdown';
 
 const STORAGE_KEY = 'assistant_messages_v1';
@@ -26,6 +27,10 @@ const loadStoredMessages = () => {
 export default function Assistant() {
   const { lang, t } = useLanguage();
   const navigate = useNavigate();
+  // The model is prompted to write canonical, language-independent paths
+  // ("/blog", "/#contact"). Without this, a visitor reading /ja who follows one
+  // lands on the English page, because the URL is what selects the language.
+  const withLocale = useLocalePath();
   const starterPrompts = t('assistant.starters');
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState(loadStoredMessages);
@@ -229,12 +234,7 @@ export default function Assistant() {
   function handleInternalLink(e, href) {
     e.preventDefault();
     setIsOpen(false);
-    if (href.startsWith('#')) {
-      navigate({ pathname: '/', hash: href });
-    } else {
-      const [pathname, hash] = href.split('#');
-      navigate({ pathname: pathname || '/', hash: hash ? `#${hash}` : '' });
-    }
+    navigate(withLocale(href.startsWith('#') ? `/${href}` : href));
   }
 
   function clearMessages() {
@@ -337,7 +337,7 @@ export default function Assistant() {
               <div key={i} className={`assistant__message assistant__message--${msg.role}`}>
                 {msg.role === 'assistant' ? (
                   <div className="assistant__message-body">
-                    {renderMarkdown(msg.content, handleInternalLink)}
+                    {renderMarkdown(msg.content, handleInternalLink, withLocale)}
                     {msg.streaming && <span className="assistant__cursor" />}
                     {/* Only on finished, model-authored replies: rating a
                         locally generated error notice would record a verdict

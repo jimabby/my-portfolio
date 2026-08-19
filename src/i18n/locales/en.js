@@ -1,0 +1,348 @@
+// UI strings for en.
+//
+// One module per language, loaded on demand by ./index.js. All four used to
+// sit in src/i18n/translations.js and ride along in the entry bundle, so every
+// visitor downloaded roughly 14 kB gzipped of languages they were not reading.
+//
+// Proper nouns (people, companies, schools, product/brand names, tech names)
+// are intentionally left untranslated.
+//
+// Long-form blog article bodies deliberately live outside this file, in
+// ../posts/*. They are registered with the language context by the blog chunk
+// (see ../posts/register.js) so they load only when someone opens the blog.
+import projects from '../projects/en.mjs';
+
+const dictionary = {
+  nav: {
+    home: 'Home',
+    about: 'About',
+    skills: 'Skills',
+    services: 'Services',
+    portfolio: 'Portfolio',
+    blog: 'Blog',
+    contact: 'Contact',
+    menuOpen: 'Open menu',
+    menuClose: 'Close menu',
+    skipToContent: 'Skip to main content',
+    language: 'Language',
+  },
+  theme: {
+    toLight: 'Switch to light mode',
+    toDark: 'Switch to dark mode',
+  },
+  updates: {
+    label: 'Site updates',
+    labelNew: 'Site updates, new items available',
+    title: "What's new",
+    badge: 'New',
+    empty: 'No updates yet.',
+    tags: {
+      project: 'Project',
+      blog: 'Blog',
+      feature: 'Feature',
+    },
+  },
+  home: {
+    subtitle: 'Web / Software Developer',
+    description:
+      "I am a Full Stack developer based in Sydney, and I'm very passionate and dedicated to my work.",
+    sayHello: 'Say Hello',
+    viewResume: 'Resume',
+    downloadCV: 'Download CV',
+    scrollDown: 'Scroll Down',
+    currently: 'Currently',
+    currentlyAt: 'at',
+    currentlySince: 'since {year}',
+    profileAlt: 'Jim Kong profile photo',
+  },
+  about: {
+    title: 'About me',
+    subtitle: 'My introduction',
+    description:
+      'Full Stack developer, I create web pages with UI/UX user interface. I have years of experience and many clients are satisfied with the projects carried out.',
+    viewResume: 'View Resume',
+    downloadResume: 'Download Resume',
+    experience: 'Experience',
+    experienceValue: '5+ years Working',
+    completed: 'Completed',
+    completedValue: '20 + Projects',
+    support: 'Support',
+    supportValue: 'Online 24/7',
+  },
+  skills: {
+    title: 'Skills',
+    subtitle: 'My Technical Level',
+    frontend: 'Frontend developer',
+    backend: 'Backend developer',
+    advanced: 'Advanced',
+    intermediate: 'Intermediate',
+    basic: 'Basic',
+  },
+  services: {
+    title: 'Services',
+    subtitle: 'What I can offer',
+    viewMore: 'View More',
+    closeModal: 'Close modal',
+    fullstack: {
+      title: 'Full-Stack Developer',
+      description:
+        'I build complete web applications end to end — responsive React frontends, robust APIs, and databases — and take them from idea to production deployment.',
+      items: [
+        'I design and build functional, user-friendly websites.',
+        'I work with HTML, CSS, JavaScript and database for development.',
+        'I ensure seamless integration between user interfaces and server logic.',
+        'I optimize applications for performance, scalability, and security.',
+        'I stay updated with the latest development tools and frameworks.',
+      ],
+    },
+    software: {
+      title: 'Software Developer',
+      description:
+        'I design and ship reliable software — from desktop tools to AI automation agents — with a focus on clean architecture and maintainable code.',
+      items: [
+        'I design and build software applications to solve complex problems.',
+        'I use programming languages like Python, Java, and C++.',
+        'I focus on creating efficient, scalable, and reliable solutions.',
+        'I test and debug code to ensure software quality.',
+        'I continuously learn new technologies to improve my development skills.',
+      ],
+    },
+    data: {
+      title: 'Data Analyst',
+      description:
+        'I turn raw data into clear insights with SQL, Python, and visualization tools, helping teams make confident, data-driven decisions.',
+      items: [
+        'I analyze data to uncover trends and insights.',
+        'I use tools like Excel, SQL, and Python for data analysis.',
+        'I create visualizations to make data easier to understand.',
+        'I help businesses make informed decisions based on data.',
+        'I continuously learn new techniques to enhance my analysis skills.',
+      ],
+    },
+  },
+  qualification: {
+    title: 'Qualification',
+    subtitle: 'My personal journey',
+    education: 'Education',
+    experience: 'Experience',
+    present: 'Present',
+    edu: {
+      bsMath: 'Bachelor of Science in Mathematics',
+      masterIT: 'Master of Information and Technology',
+      awsCcp: 'AWS Certified Cloud Practitioner',
+      ibmData: 'IBM Data Analyst Professional Certificate',
+      awsMl: 'AWS Certified Machine Learning Engineer - Associate',
+      salesforceAi: 'Salesforce Certified AI Associate',
+      powerBi: 'Microsoft Certified: Power BI Data Analyst Associate',
+      oci: 'Oracle Cloud Infrastructure 2025 Certified Foundations Associate',
+    },
+    exp: {
+      moview: 'Full Stack Developer',
+      takeaway: 'Full Stack Developer',
+      upward: 'Web Developer',
+      braiv: 'Software Developer / Test Engineer',
+      veprm: 'Software Developer',
+      obk: 'Full Stack Developer',
+      airbest: 'Automation Developer',
+      housed: 'Full Stack Developer',
+    },
+  },
+  portfolio: {
+    title: 'Portfolio',
+    subtitle: 'Most recent works',
+    viewGallery: 'View gallery',
+    caseStudy: 'Case study',
+    readArticle: 'Read the story',
+    moreDetails: 'More details',
+    openGallery: 'Open {title} gallery',
+    closeGallery: 'Close gallery',
+    galleryLabel: '{title} gallery',
+    galleryImageAlt: '{title} screenshot {n} of {total}',
+    viewImage: 'View image {n}',
+    prevImage: 'Previous image',
+    nextImage: 'Next image',
+    filters: {
+      all: 'All',
+      website: 'Website',
+      wordpress: 'Wordpress',
+      app: 'App',
+    },
+    pagination: {
+      label: 'Portfolio pages',
+      prev: 'Previous page',
+      next: 'Next page',
+      page: 'Page {n}',
+      status: 'Page {current} of {total}',
+    },
+  },
+  testimonials: {
+    title: 'What They Say',
+    subtitle: 'Colleagues & Leaders',
+    readMore: 'Read more',
+    photoAlt: 'Photo of {name}',
+    showLess: 'Show less',
+    prev: 'Previous testimonial',
+    next: 'Next testimonial',
+  },
+  contact: {
+    title: 'Get in Touch',
+    subtitle: 'Contact me',
+    talkToMe: 'Talk to me',
+    writeProject: 'Write me your project',
+    email: 'Email',
+    whatsapp: 'Whatsapp',
+    messenger: 'Messenger',
+    writeMe: 'Write me',
+    nameLabel: 'Name:',
+    emailLabel: 'Email:',
+    messageLabel: 'Message:',
+    namePlaceholder: 'Please enter your name',
+    emailPlaceholder: 'Please enter your email',
+    messagePlaceholder: 'Please enter your message.',
+    send: 'Send Message',
+    sending: 'Sending...',
+    sent: 'Message sent successfully!',
+    error: 'Failed to send. Please try again.',
+    errName: 'Name is required.',
+    errEmailReq: 'Email is required.',
+    errEmailValid: 'Please enter a valid email.',
+    errMessage: 'Message is required.',
+  },
+  footer: {
+    about: 'About',
+    portfolio: 'Portfolio',
+    work: 'Work',
+    resume: 'Resume',
+    testimonials: 'Testimonials',
+    blog: 'Blog',
+    rss: 'RSS feed',
+    rights: 'All rights reserved.',
+    socialAria: 'Jim Kong on {platform}',
+  },
+  notfound: {
+    title: 'Page not found',
+    text: "The page you're looking for doesn't exist or has been moved.",
+    back: 'Back to Home',
+  },
+  error: {
+    title: 'Something went wrong',
+    text: 'The page hit an unexpected error. Reloading usually fixes it.',
+    reload: 'Reload page',
+    home: 'Go home',
+  },
+  seo: {
+    homeTitle: 'Jim Kong | Full Stack Developer',
+    homeDesc:
+      'Sydney-based full stack developer building web apps, AI tools, and data-driven software. Explore projects, skills, and contact details.',
+    blogTitle: 'Blog | Jim Kong',
+    blogDesc: 'Writeups on AI projects, web development, and photography by Jim Kong.',
+    notFoundTitle: 'Page not found | Jim Kong',
+    workTitle: 'Work | Jim Kong',
+    workDesc:
+      'Every project Jim Kong has shipped, from AI products and mobile apps to client websites — each with its own case study.',
+    resumeTitle: 'Resume | Jim Kong',
+    resumeDesc:
+      'The full resume of Jim Kong, a Sydney-based full stack developer: experience, skills, education, and certifications, with a PDF download.',
+  },
+  work: {
+    title: 'Work',
+    subtitle: 'Every project, in one place',
+    intro:
+      '{count} projects, from AI products and mobile apps to client websites. Each one has its own case study with screenshots and the thinking behind it.',
+    showing: 'Showing {shown} of {total}',
+  },
+  resume: {
+    eyebrow: 'Resume',
+    summary:
+      'Full stack developer in Sydney with 5+ years building web applications, AI tools, and data-driven software — from React front ends to Python and Node.js services.',
+    download: 'Download PDF',
+    viewWork: 'See the work',
+    certifications: 'Certifications',
+    footnote: 'Looking for something specific?',
+    getInTouch: 'Get in touch.',
+  },
+  casestudy: {
+    backToWork: '← Back to work',
+    visit: 'Visit the site',
+    galleryLabel: 'Project screenshots',
+    imageAlt: '{title} screenshot {n} of {total}',
+    roleLabel: 'Role',
+    yearLabel: 'Year',
+    stackLabel: 'Built with',
+    roles: {
+      'design-build': 'Design and build',
+      frontend: 'Front-end development',
+      fullstack: 'Full-stack development',
+      wordpress: 'WordPress development',
+    },
+    moreWork: 'More work',
+    shareProject: 'Share this project',
+    previous: 'Previous',
+    next: 'Next',
+  },
+  assistant: {
+    toggle: 'Toggle AI assistant',
+    name: 'Ask about Jim',
+    status: 'AI assistant powered by Gemini',
+    welcome:
+      'Ask about projects, skills, and experience. Answers are based on portfolio content.',
+    clear: 'Clear',
+    clearAria: 'Clear chat',
+    close: 'Close',
+    placeholder: 'Ask something...',
+    send: 'Send',
+    stop: 'Stop generating',
+    thinking: 'Assistant is replying...',
+    feedbackPrompt: 'Was this helpful?',
+    feedbackUp: 'Yes, this was helpful',
+    feedbackDown: 'No, this was not helpful',
+    feedbackThanks: 'Thanks for the feedback.',
+    fallback: "I couldn't find a response. Please try again.",
+    errorGeneric: "Sorry, I couldn't get a response. Please try again.",
+    errorConfig:
+      'The assistant is not configured in this environment. Add GEMINI_API_KEY to a .env file and restart the dev server.',
+    errorUnavailable: 'The assistant API is not available in this environment.',
+    starters: [
+      'What projects has Jim built?',
+      "Summarize Jim's experience",
+      "What are Jim's main skills?",
+      'Tell me about Hermes',
+      'What certifications does Jim have?',
+      'How can I contact Jim?',
+    ],
+  },
+  blog: {
+    title: 'Blog',
+    subtitle: 'My latest posts',
+    searchPlaceholder: 'Search articles...',
+    searchAria: 'Search articles',
+    tagFilterAria: 'Filter articles by tag',
+    filterByTag: 'Filter by {tag}',
+    clearTags: 'Clear tags',
+    readArticle: 'Read article',
+    resultCount: 'Showing {shown} of {total} articles',
+    clearAll: 'Clear filters',
+    noResults: 'No articles found.',
+    backToBlog: '<- Back to Blog',
+    inThisArticle: 'In this article',
+    writtenBy: 'Written by',
+    authorName: 'Jim',
+    authorBio:
+      'Developer passionate about building tools that make everyday tasks faster and less frustrating.',
+    shareArticle: 'Share this article',
+    shareOn: 'Share on {platform}',
+    previous: 'Previous',
+    next: 'Next',
+    categories: {
+      All: 'All',
+      Travel: 'Travel',
+      Project: 'Project',
+      'Camera Basics': 'Camera Basics',
+    },
+  },
+};
+
+// Portfolio project summaries, keyed by project id.
+dictionary.projects = projects;
+
+export default dictionary;

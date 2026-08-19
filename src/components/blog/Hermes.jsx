@@ -1,7 +1,7 @@
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import BlogProgressBar from "./BlogProgressBar";
-import BlogShareButtons from "./BlogShareButtons";
+import ShareButtons from "../share/ShareButtons";
 import BlogPrevNext from "./BlogPrevNext";
 import BlogSEO from "./BlogSEO";
 import ScrollUp from "../scrollup/ScrollUp";
@@ -320,7 +320,7 @@ const Hermes = () => {
           </div>
 
           {/* SHARE */}
-          <BlogShareButtons title="Hermes - An AI-Powered Email Client" />
+          <ShareButtons title="Hermes - An AI-Powered Email Client" />
 
           {/* PREV / NEXT */}
           <BlogPrevNext currentSlug="hermes" />

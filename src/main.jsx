@@ -6,17 +6,33 @@ import { HelmetProvider } from 'react-helmet-async'
 import './assets/icons.css'
 import './index.css'
 import App from './App.jsx'
-import { LanguageProvider } from './i18n/LanguageContext.jsx'
+import { LanguageProvider, resolveInitialLang } from './i18n/LanguageContext.jsx'
+import { loadLocaleWithFallback } from './i18n/locales'
 import { registerServiceWorker } from './registerServiceWorker.js'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <HelmetProvider>
-      <LanguageProvider>
-        <App />
-      </LanguageProvider>
-    </HelmetProvider>
-  </React.StrictMode>
-)
+const mount = () =>
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+      <HelmetProvider>
+        <LanguageProvider>
+          <App />
+        </LanguageProvider>
+      </HelmetProvider>
+    </React.StrictMode>
+  )
+
+// Each language is its own chunk, so the active one has to be in hand before
+// the first render — otherwise the page paints raw key paths ("nav.home") and
+// flips to real text a moment later. Which language the URL decides, exactly
+// as it does everywhere else on the site.
+//
+// A `.then` rather than a top-level await deliberately: TLA would push the
+// build target past what browserslist targets here, and buys nothing since
+// nothing below this line depends on the result.
+//
+// If the dictionary fails to load, mount anyway. `t` falls back to the key
+// path, which is a poor page — but a blank one is worse, and the rest of the
+// site still works.
+loadLocaleWithFallback(resolveInitialLang()).then(mount, mount)
 
 registerServiceWorker()

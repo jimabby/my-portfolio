@@ -22,6 +22,9 @@ import {
 // Shared with the Vite dev middleware so /rss.xml and /sitemap.xml are not
 // dead links in the environment they get clicked in.
 import { buildFeed, buildSitemap } from './feeds.mjs';
+// One web app manifest per language, so installing from /ja gives an app that
+// opens in Japanese rather than at the English home page.
+import { allManifests, manifestPath } from './manifests.mjs';
 // Both are plain string dictionaries with no asset imports, so the build can
 // read them directly rather than parsing them the way Data.jsx has to be.
 import { projectSummaries } from '../src/i18n/projects.mjs';
@@ -156,6 +159,12 @@ const replaceMeta = (html, route, lang) => {
       `<meta name="twitter:image" content="${image}" />`
     );
 
+  // Point the page at its own language's manifest.
+  result = result.replace(
+    /<link[^>]+rel="manifest"[^>]*>/,
+    `<link rel="manifest" href="${manifestPath(lang)}" />`
+  );
+
   if (route.noindex) {
     result = result.replace(
       /<meta[^>]+name="robots"[^>]*>/,
@@ -208,9 +217,15 @@ for (const route of NOINDEX_ROUTES) {
   await writeRoute(baseHtml, route, 'en');
 }
 
+for (const { path, manifest } of allManifests()) {
+  await writeFile(join(DIST_DIR, path.slice(1)), `${JSON.stringify(manifest, null, 2)}
+`, 'utf8');
+}
+
 await writeFile(join(DIST_DIR, 'sitemap.xml'), buildSitemap(routes), 'utf8');
 await writeFile(join(DIST_DIR, 'rss.xml'), buildFeed(), 'utf8');
 
 console.log(
-  `Generated ${routes.length} routes x ${LOCALES.length} languages, plus sitemap.xml and rss.xml.`
+  `Generated ${routes.length} routes x ${LOCALES.length} languages, ` +
+    `plus ${LOCALES.length} manifests, sitemap.xml and rss.xml.`
 );
