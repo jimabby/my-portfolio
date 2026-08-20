@@ -5,8 +5,9 @@ import hermes from './hermes';
 import hiro from './hiro';
 import mMode from './mMode';
 import grandHotelTaipei from './grandHotelTaipei';
+import housedRedesign from './housedRedesign';
 
-const sources = { hermes, hiro, mMode, grandHotelTaipei };
+const sources = { hermes, hiro, mMode, grandHotelTaipei, housedRedesign };
 
 const LANGS = ['en', 'zh-Hans', 'zh-Hant', 'ja'];
 

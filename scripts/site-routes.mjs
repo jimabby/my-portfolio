@@ -36,6 +36,14 @@ export const localizedPath = (lang, path = '/') => {
 
 export const BLOG_POSTS = [
   {
+    path: '/blog/housed-redesign',
+    title: 'Rebuilding Housed - From Brochure Site to Booking Platform',
+    description:
+      'How the Housed website moved from a nine-page brochure to a club-by-club platform: auditing the old site, rebuilding the information architecture, and cutting over without losing the URLs.',
+    image: '/og/housed-redesign.webp',
+    published: '2026-08-20',
+  },
+  {
     path: '/blog/grand-hotel-taipei',
     title: 'Staying at the Grand Hotel Taipei',
     description:

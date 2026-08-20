@@ -28,4 +28,5 @@ export default {
   20: 'Licensed HVAC contractor site covering services, equipment range, and completed project work.',
   21: 'React Native finance tracker with receipt scanning, cashback optimisation, and an AI coach.',
   22: 'Cancer companion app for tracking symptoms, treatment cycles, and reports to share with a care team.',
+  23: 'Editorial rebuild of the Housed site, with club pages, memberships, live timetables, and a member portal.',
 };

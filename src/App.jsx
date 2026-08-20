@@ -27,6 +27,7 @@ const MMode = lazy(() => import('./components/blog/MMode'));
 const Hermes = lazy(() => import('./components/blog/Hermes'));
 const Hiro = lazy(() => import('./components/blog/Hiro'));
 const GrandHotelTaipei = lazy(() => import('./components/blog/GrandHotelTaipei'));
+const HousedRedesign = lazy(() => import('./components/blog/HousedRedesign'));
 const Assistant = lazy(() => import('./components/assistant/Assistant'));
 const Testimonials = lazy(() => import('./components/Testimonials/Testimonials'));
 const CaseStudy = lazy(() => import('./components/portfolio/CaseStudy'));
@@ -171,6 +172,7 @@ const localePages = () => (
     <Route path="blog/hermes" element={<Hermes />} />
     <Route path="blog/hiro" element={<Hiro />} />
     <Route path="blog/grand-hotel-taipei" element={<GrandHotelTaipei />} />
+    <Route path="blog/housed-redesign" element={<HousedRedesign />} />
     <Route path="resume" element={<Resume />} />
     {/* The index has to be declared before the :slug route so "/work" is not
         read as a case study whose slug is empty. */}

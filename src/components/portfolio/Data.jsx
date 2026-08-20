@@ -22,6 +22,20 @@ import HousedAbout from "../../assets/housed/housed-about.webp";
 import HousedBlog from "../../assets/housed/housed-blog.webp";
 import HousedPartnerships from "../../assets/housed/housed-partnerships.webp";
 import HousedAmbassadors from "../../assets/housed/housed-ambassadors.webp";
+import HousedRedesignHome from "../../assets/housed-redesign/housed-redesign-home.webp";
+import HousedRedesignSpaces from "../../assets/housed-redesign/housed-redesign-spaces.webp";
+import HousedRedesignStudio from "../../assets/housed-redesign/housed-redesign-studio.webp";
+import HousedRedesignGoals from "../../assets/housed-redesign/housed-redesign-goals.webp";
+import HousedRedesignPersonalTraining from "../../assets/housed-redesign/housed-redesign-personal-training.webp";
+import HousedRedesignWellness from "../../assets/housed-redesign/housed-redesign-wellness.webp";
+import HousedRedesignApp from "../../assets/housed-redesign/housed-redesign-app.webp";
+import HousedRedesignMemberships from "../../assets/housed-redesign/housed-redesign-memberships.webp";
+import HousedRedesignGetStarted from "../../assets/housed-redesign/housed-redesign-get-started.webp";
+import HousedRedesignTimetable from "../../assets/housed-redesign/housed-redesign-timetable.webp";
+import HousedRedesignJournal from "../../assets/housed-redesign/housed-redesign-journal.webp";
+import HousedRedesignArticle from "../../assets/housed-redesign/housed-redesign-article.webp";
+import HousedRedesignFreePass from "../../assets/housed-redesign/housed-redesign-free-pass.webp";
+import HousedRedesignMemberPortal from "../../assets/housed-redesign/housed-redesign-member-portal.webp";
 import OnsenImg from "../../assets/onsen/onsen.webp";
 import OnsenImg1 from "../../assets/onsen/onsen1.webp";
 import SimbaImg from "../../assets/simba-education/simbaeducation.webp";
@@ -194,6 +208,33 @@ export const projectsData = [
       HousedBlog,
       HousedPartnerships,
       HousedAmbassadors,
+    ],
+  },
+  {
+    id: 23,
+    image: HousedRedesignHome,
+    title: 'Housed - Redesign',
+    slug: 'housed-redesign',
+    category: 'Website',
+    link: 'https://housed.com.au/',
+    article: '/blog/housed-redesign',
+    summary: 'Editorial rebuild of the Housed site, with club pages, memberships, live timetables, and a member portal.',
+    tags: ['Website', 'Fitness', 'Redesign'],
+    gallery: [
+      HousedRedesignHome,
+      HousedRedesignSpaces,
+      HousedRedesignStudio,
+      HousedRedesignGoals,
+      HousedRedesignPersonalTraining,
+      HousedRedesignWellness,
+      HousedRedesignApp,
+      HousedRedesignMemberships,
+      HousedRedesignGetStarted,
+      HousedRedesignTimetable,
+      HousedRedesignJournal,
+      HousedRedesignArticle,
+      HousedRedesignFreePass,
+      HousedRedesignMemberPortal,
     ],
   },
   {
