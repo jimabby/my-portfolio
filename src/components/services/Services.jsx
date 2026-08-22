@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import "./services.css"
 import { useLanguage } from '../../i18n/LanguageContext'
 
@@ -85,6 +86,12 @@ const Services = () => {
                 <i className="uil uil-arrow-right services__button-icon"></i>
               </button>
 
+              {/* Portalled to <body>. The card above it is a pane of frosted
+                  glass, and an element with a backdrop-filter becomes the
+                  containing block for its fixed-position descendants — left
+                  inside the card, this full-screen overlay would be laid out
+                  against the card instead of the viewport. */}
+              {createPortal(
               <div
                 className={toggleState === index ? "services__model active-model" : "services__model"}
                 aria-hidden={toggleState !== index}
@@ -121,7 +128,9 @@ const Services = () => {
                     ))}
                   </ul>
                 </div>
-              </div>
+              </div>,
+              document.body
+              )}
             </div>
           )
         })}

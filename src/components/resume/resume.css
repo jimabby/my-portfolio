@@ -15,7 +15,7 @@
 
 .resume__header {
   padding-bottom: 2rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--glass-border);
   margin-bottom: 2.5rem;
 }
 
@@ -23,15 +23,15 @@
   font-size: var(--smaller-font-size);
   font-weight: var(--font-medium);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: var(--tracking-eyebrow);
   color: var(--text-color);
   margin-bottom: 0.5rem;
 }
 
 .resume__name {
-  font-size: clamp(2rem, 6vw, 2.75rem);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-size: clamp(2rem, 6vw, 2.9rem);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-display);
   color: var(--title-color);
   margin: 0 0 0.35rem;
 }
@@ -61,7 +61,7 @@
 }
 
 .resume__contact a {
-  color: var(--title-color);
+  color: var(--accent-color);
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
@@ -80,10 +80,10 @@
   font-size: var(--smaller-font-size);
   font-weight: var(--font-semi-bold);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--tracking-eyebrow);
   color: var(--text-color);
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--glass-border);
   margin-bottom: 1.25rem;
 }
 
@@ -182,11 +182,11 @@
   font-size: var(--small-font-size);
   color: var(--text-color);
   padding-top: 1.5rem;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--glass-border);
 }
 
 .resume__footnote a {
-  color: var(--title-color);
+  color: var(--accent-color);
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
@@ -226,10 +226,29 @@
     --body-color: #fff;
     --container-color: #fff;
     --border-color: #bbb;
+    --accent-color: #000;
+    --soft-surface: #fff;
+    --glass-bg: #fff;
+    --glass-bg-strong: #fff;
+    --glass-bg-soft: #fff;
+    --glass-border: #bbb;
+    --glass-blur: none;
+    --glass-blur-strong: none;
+    /* Not `none`: these are composed into multi-value box-shadows, and a
+       `none` term would make the whole declaration invalid rather than
+       shadowless. */
+    --glass-inner: 0 0 0 0 transparent;
+    --glass-shadow: 0 0 0 0 transparent;
+    --glass-shadow-lg: 0 0 0 0 transparent;
   }
 
   body {
     background: #fff;
+  }
+
+  /* The ambient gradient is a full-bleed colour wash — never on paper. */
+  body::before {
+    display: none !important;
   }
 
   .resume__section,

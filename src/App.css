@@ -4,25 +4,78 @@
    site silently fell back to the generic sans-serif. */
 @import url('./assets/fonts.css');
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   Design system
+
+   Two ideas, applied everywhere:
+
+   1. Apple-minimal — an almost-achromatic cool grey palette, one blue accent
+      used sparingly, hairline rules instead of heavy borders, large continuous
+      corner radii, and generous vertical rhythm. Weight comes from spacing,
+      not from decoration.
+
+   2. Glass — every raised surface (header, cards, sheets, modals, popovers) is
+      a translucent pane over a soft ambient gradient: a blurred, saturated
+      backdrop, a hairline edge, and a single specular highlight along the top.
+      The gradient behind the page (body::before) is what the panes refract;
+      without it glass has nothing to be glass over.
+
+   Surfaces are built from the --glass-* tokens below. A pane is always the
+   same five declarations:
+
+     background: var(--glass-bg);
+     backdrop-filter: var(--glass-blur);
+     -webkit-backdrop-filter: var(--glass-blur);
+     border: 1px solid var(--glass-border);
+     box-shadow: var(--glass-inner), var(--glass-shadow);
+
+   Browsers without backdrop-filter, and readers who have asked for reduced
+   transparency, get the opaque fallback at the bottom of this file.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 :root {
   --header-height: 3.5rem;
 
-  --hue: 0;
-  --sat: 0%;
-  --title-color: hsl(var(--hue), var(--sat), 20%);
-  --title-color-dark: hsl(var(--hue), var(--sat), 8%);
-  --text-color: hsl(var(--hue), var(--sat), 38%);
-  --body-color: hsl(var(--hue), var(--sat), 97%);
+  /* Cool near-grey. The hue/sat pair is consumed by component stylesheets that
+     mix their own shades, so tinting the whole site is a two-value change. */
+  --hue: 220;
+  --sat: 14%;
+
+  --title-color: hsl(var(--hue), 16%, 14%);
+  --title-color-dark: hsl(var(--hue), 18%, 8%);
+  --text-color: hsl(var(--hue), 9%, 42%);
+  --body-color: hsl(var(--hue), 24%, 97%);
   --container-color: #ffffff;
-  --border-color: hsl(var(--hue), var(--sat), 86%);
-  --primary-color: hsl(var(--hue), var(--sat), 16%);
-  --primary-color-dark: hsl(var(--hue), var(--sat), 8%);
-  --soft-surface: hsl(var(--hue), var(--sat), 94%);
+  --border-color: hsl(var(--hue), 16%, 88%);
+  --primary-color: hsl(var(--hue), 16%, 12%);
+  --primary-color-dark: hsl(var(--hue), 20%, 6%);
+  --soft-surface: hsla(var(--hue), 20%, 50%, 0.08);
+
+  /* The one chromatic colour on the site: links, focus, active states, the
+     reading-progress bar. Everything else stays grey. */
+  --accent-color: hsl(211, 100%, 43%);
+  --accent-color-strong: hsl(211, 100%, 36%);
+  --accent-soft: hsla(211, 100%, 45%, 0.12);
+
+  /* ─── Glass ─── */
+  --glass-blur: saturate(180%) blur(20px);
+  --glass-blur-strong: saturate(200%) blur(32px);
+  --glass-bg: hsla(0, 0%, 100%, 0.62);
+  --glass-bg-strong: hsla(0, 0%, 100%, 0.82);
+  --glass-bg-soft: hsla(0, 0%, 100%, 0.42);
+  --glass-border: hsla(var(--hue), 20%, 40%, 0.16);
+  --glass-border-strong: hsla(var(--hue), 20%, 40%, 0.26);
+  --glass-inner: inset 0 1px 0 hsla(0, 0%, 100%, 0.72);
+  --glass-shadow: 0 1px 2px hsla(var(--hue), 30%, 20%, 0.05),
+    0 16px 40px -16px hsla(var(--hue), 30%, 20%, 0.18);
+  --glass-shadow-lg: 0 2px 6px hsla(var(--hue), 30%, 20%, 0.06),
+    0 36px 72px -28px hsla(var(--hue), 30%, 20%, 0.3);
+  --glass-scrim: hsla(var(--hue), 24%, 12%, 0.42);
 
   --body-font: 'Poppins', sans-serif;
 
-  --big-font-size: 3.35rem;
-  --h1-font-size: 2.2rem;
+  --big-font-size: 3.5rem;
+  --h1-font-size: 2.25rem;
   --h2-font-size: 1.4rem;
   --h3-font-size: 1.15rem;
   --normal-font-size: 1rem;
@@ -34,6 +87,12 @@
   --font-medium: 500;
   --font-semi-bold: 600;
 
+  /* Large type is set tight and small type slightly open — the same optical
+     correction Apple's own type ramp makes. */
+  --tracking-display: -0.028em;
+  --tracking-title: -0.018em;
+  --tracking-eyebrow: 0.1em;
+
   --mb-0-25: 0.25rem;
   --mb-0-5: 0.5rem;
   --mb-0-75: 0.75rem;
@@ -43,10 +102,19 @@
   --mb-2-5: 2.5rem;
   --mb-3: 3rem;
 
-  --radius-sm: 0.6rem;
-  --radius-md: 1rem;
-  --radius-lg: 1.35rem;
-  --card-shadow: 0 10px 24px rgba(13, 39, 80, 0.08);
+  --radius-sm: 0.75rem;
+  --radius-md: 1.125rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+  --radius-pill: 999px;
+
+  --card-shadow: var(--glass-shadow);
+
+  /* One easing curve for the whole site, so nothing moves in a different
+     accent from anything else. */
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
   --z-tooltip: 10;
   --z-fixed: 100;
   --z-modal: 1000;
@@ -54,165 +122,31 @@
 
 /* ─── Dark theme ─── */
 [data-theme='dark'] {
-  --title-color: hsl(220, 10%, 90%);
-  --title-color-dark: hsl(220, 10%, 96%);
+  --title-color: hsl(220, 14%, 92%);
+  --title-color-dark: hsl(220, 14%, 98%);
   --text-color: hsl(220, 8%, 62%);
-  --body-color: hsl(220, 12%, 8%);
-  --container-color: hsl(220, 10%, 12%);
-  --border-color: hsl(220, 8%, 20%);
-  --primary-color: hsl(220, 10%, 78%);
-  --primary-color-dark: hsl(220, 10%, 88%);
-  --soft-surface: hsl(220, 10%, 16%);
-  --card-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
-}
+  --body-color: hsl(220, 16%, 7%);
+  --container-color: hsl(220, 14%, 11%);
+  --border-color: hsl(220, 10%, 20%);
+  --primary-color: hsl(220, 12%, 80%);
+  --primary-color-dark: hsl(220, 12%, 90%);
+  --soft-surface: hsla(220, 20%, 80%, 0.08);
 
-[data-theme='dark'] body {
-  background:
-    radial-gradient(circle at 10% 0%, hsl(220, 14%, 12%), transparent 34%),
-    radial-gradient(circle at 90% 8%, hsl(220, 14%, 6%), transparent 30%),
-    var(--body-color);
-}
+  --accent-color: hsl(211, 100%, 62%);
+  --accent-color-strong: hsl(211, 100%, 72%);
+  --accent-soft: hsla(211, 100%, 62%, 0.16);
 
-/* Header */
-[data-theme='dark'] .header {
-  background: hsla(220, 12%, 10%, 0.88);
-  backdrop-filter: blur(12px);
-}
-
-[data-theme='dark'] .scroll-header {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-}
-
-/* Buttons */
-[data-theme='dark'] .button {
-  background: linear-gradient(135deg, hsl(220, 8%, 88%), hsl(220, 8%, 72%));
-  color: hsl(220, 12%, 8%);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
-[data-theme='dark'] .button:hover {
-  background: linear-gradient(135deg, hsl(220, 8%, 96%), hsl(220, 8%, 80%));
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-}
-
-/* Section subtitle */
-[data-theme='dark'] .section__subtitle {
-  color: hsl(220, 8%, 50%);
-}
-
-/* Home */
-[data-theme='dark'] .home__img {
-  border-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-}
-
-[data-theme='dark'] .home__subtitle::before {
-  background-color: hsl(220, 8%, 40%);
-}
-
-/* About */
-[data-theme='dark'] .about__img {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-}
-
-/* Skills */
-[data-theme='dark'] .skills .bx-badge-check {
-  color: hsl(220, 10%, 70%);
-}
-
-/* Qualification */
-[data-theme='dark'] .qualification__line {
-  background-color: hsl(220, 8%, 28%);
-}
-
-/* Services modal */
-[data-theme='dark'] .services__model {
-  background-color: rgba(0, 0, 0, 0.72);
-}
-
-/* Portfolio modal */
-[data-theme='dark'] .work__modal-backdrop {
-  background: rgba(0, 0, 0, 0.82);
-}
-
-[data-theme='dark'] .work__modal-content {
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
-}
-
-[data-theme='dark'] .work__modal-tag {
-  background: hsl(220, 8%, 20%);
-}
-
-[data-theme='dark'] .work__modal-nav {
-  background: hsl(220, 8%, 20%);
-}
-
-[data-theme='dark'] .work__modal-nav:hover {
-  background: hsl(220, 8%, 28%);
-}
-
-[data-theme='dark'] .work__modal-img {
-  background: hsl(220, 10%, 14%);
-}
-
-[data-theme='dark'] .work__modal-close {
-  background: rgba(255, 255, 255, 0.08);
-  color: hsl(220, 10%, 80%);
-}
-
-/* Contact */
-[data-theme='dark'] .contact__form-input {
-  background: hsl(220, 10%, 14%);
-  border-color: hsl(220, 8%, 24%);
-  color: hsl(220, 10%, 88%);
-}
-
-[data-theme='dark'] .contact__form-input:focus {
-  border-color: hsl(220, 10%, 50%);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
-}
-
-[data-theme='dark'] .contact__form-tag {
-  background-color: var(--container-color);
-  color: var(--text-color);
-}
-
-/* Testimonials */
-[data-theme='dark'] .swiper-pagination-bullet {
-  background-color: hsl(220, 8%, 36%) !important;
-}
-
-/* Scrollup */
-[data-theme='dark'] .scrollup {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-}
-
-/* Footer */
-[data-theme='dark'] .footer__social-link:hover {
-  background-color: hsl(220, 8%, 22%);
-}
-
-@media screen and (max-width: 768px) {
-  [data-theme='dark'] .header {
-    background: hsla(220, 12%, 10%, 0.96);
-  }
-
-  [data-theme='dark'] .nav__menu {
-    background-color: hsl(220, 10%, 13%);
-    box-shadow: 0 -10px 24px rgba(0, 0, 0, 0.4);
-  }
-}
-
-@media screen and (max-width: 992px) {
-  :root {
-    --big-font-size: 2.75rem;
-    --h1-font-size: 1.7rem;
-    --h2-font-size: 1.2rem;
-    --h3-font-size: 1rem;
-    --normal-font-size: 0.95rem;
-    --small-font-size: 0.84rem;
-    --smaller-font-size: 0.76rem;
-  }
+  --glass-bg: hsla(220, 16%, 14%, 0.58);
+  --glass-bg-strong: hsla(220, 16%, 12%, 0.8);
+  --glass-bg-soft: hsla(220, 16%, 16%, 0.38);
+  --glass-border: hsla(0, 0%, 100%, 0.1);
+  --glass-border-strong: hsla(0, 0%, 100%, 0.18);
+  --glass-inner: inset 0 1px 0 hsla(0, 0%, 100%, 0.07);
+  --glass-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.4),
+    0 16px 40px -16px hsla(0, 0%, 0%, 0.6);
+  --glass-shadow-lg: 0 2px 6px hsla(0, 0%, 0%, 0.45),
+    0 36px 72px -28px hsla(0, 0%, 0%, 0.7);
+  --glass-scrim: hsla(220, 24%, 4%, 0.6);
 }
 
 * {
@@ -234,12 +168,36 @@ textarea {
 }
 
 body {
-  background:
-    radial-gradient(circle at 10% 0%, hsl(0, 0%, 100%), transparent 34%),
-    radial-gradient(circle at 90% 8%, hsl(0, 0%, 95%), transparent 30%),
-    var(--body-color);
+  background-color: var(--body-color);
   color: var(--text-color);
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* The ambient field the glass refracts. A fixed layer rather than a body
+   background so it stays put while the page scrolls (background-attachment:
+   fixed repaints the whole gradient every frame on mobile Safari), and so the
+   blobs cannot add to the scroll height. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(46vmax 38vmax at 12% -4%, hsla(211, 100%, 60%, 0.17), transparent 64%),
+    radial-gradient(42vmax 34vmax at 92% 4%, hsla(268, 88%, 64%, 0.13), transparent 62%),
+    radial-gradient(50vmax 40vmax at 78% 96%, hsla(190, 95%, 54%, 0.12), transparent 64%),
+    radial-gradient(38vmax 32vmax at 2% 78%, hsla(340, 92%, 66%, 0.09), transparent 62%);
+}
+
+[data-theme='dark'] body::before {
+  background:
+    radial-gradient(46vmax 38vmax at 12% -4%, hsla(211, 100%, 50%, 0.2), transparent 64%),
+    radial-gradient(42vmax 34vmax at 92% 4%, hsla(268, 88%, 54%, 0.16), transparent 62%),
+    radial-gradient(50vmax 40vmax at 78% 96%, hsla(190, 95%, 44%, 0.14), transparent 64%),
+    radial-gradient(38vmax 32vmax at 2% 78%, hsla(340, 92%, 54%, 0.1), transparent 62%);
 }
 
 h1,
@@ -247,7 +205,8 @@ h2,
 h3 {
   color: var(--title-color);
   font-weight: var(--font-semi-bold);
-  line-height: 1.25;
+  line-height: 1.2;
+  letter-spacing: var(--tracking-title);
 }
 
 ul {
@@ -266,8 +225,8 @@ button {
 
 /* Keyboard-only focus ring (visible on Tab, hidden on click) */
 :focus-visible {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
 }
 
 /* Skip link — visible only when focused via keyboard */
@@ -276,13 +235,13 @@ button {
   top: -100px;
   left: 1rem;
   z-index: 9999;
-  padding: 0.6rem 1rem;
+  padding: 0.6rem 1.1rem;
   background: var(--primary-color);
   color: var(--container-color);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-pill);
   font-weight: var(--font-medium);
   text-decoration: none;
-  transition: top 0.2s ease;
+  transition: top 0.2s var(--ease);
 }
 
 .skip-link:focus {
@@ -299,21 +258,28 @@ main {
 }
 
 .section {
-  padding: 6rem 0 2.5rem;
+  padding: 7rem 0 3rem;
   scroll-margin-top: calc(var(--header-height) + 2rem);
 }
 
 .section__title {
   font-size: var(--h1-font-size);
   color: var(--title-color);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-display);
+  font-weight: var(--font-semi-bold);
 }
 
+/* Set as an eyebrow above the title's optical weight rather than as a second
+   line of prose under it — the label, not a sentence. */
 .section__subtitle {
   display: block;
-  font-size: var(--small-font-size);
-  margin-bottom: 3.25rem;
-  color: hsl(var(--hue), 20%, 45%);
+  font-size: var(--smaller-font-size);
+  margin-bottom: 3.5rem;
+  color: var(--text-color);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow);
+  font-weight: var(--font-medium);
+  opacity: 0.75;
 }
 
 .section__title,
@@ -334,23 +300,35 @@ main {
   gap: 1.5rem;
 }
 
+/* ─── Buttons ─── */
+/* Solid ink pill for the primary action, glass pill for the secondary one.
+   Both keep the whole colour change in the background layer, so the label
+   never shifts weight on hover. */
 .button {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, var(--primary-color), hsl(0, 0%, 26%));
+  background: var(--primary-color);
   color: var(--container-color);
-  padding: 0.95rem 1.5rem;
-  border-radius: var(--radius-md);
+  padding: 0.9rem 1.6rem;
+  border-radius: var(--radius-pill);
   font-weight: var(--font-medium);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  letter-spacing: -0.01em;
+  box-shadow: 0 1px 2px hsla(var(--hue), 30%, 20%, 0.16),
+    0 10px 24px -12px hsla(var(--hue), 30%, 20%, 0.5);
+  transition: transform 0.28s var(--ease-out), box-shadow 0.28s var(--ease-out),
+    background-color 0.28s var(--ease-out);
 }
 
 .button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.28);
-  background: linear-gradient(135deg, var(--primary-color-dark), hsl(0, 0%, 16%));
+  background: var(--primary-color-dark);
+  box-shadow: 0 2px 4px hsla(var(--hue), 30%, 20%, 0.18),
+    0 16px 32px -14px hsla(var(--hue), 30%, 20%, 0.6);
+}
+
+.button:active {
+  transform: translateY(0) scale(0.985);
 }
 
 .button__icon {
@@ -363,20 +341,35 @@ main {
 }
 
 .button--ghost {
-  background: transparent;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   color: var(--title-color);
-  border: 1px solid var(--border-color);
-  box-shadow: none;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-inner), var(--glass-shadow);
 }
 
 .button--ghost:hover {
-  background: var(--container-color);
-  border-color: var(--primary-color);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  background: var(--glass-bg-strong);
+  border-color: var(--glass-border-strong);
+  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
 }
 
 .button__icon-inline {
   font-size: 1.25rem;
+}
+
+[data-theme='dark'] .button {
+  color: hsl(220, 16%, 8%);
+  box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.5), 0 10px 24px -12px hsla(0, 0%, 0%, 0.7);
+}
+
+[data-theme='dark'] .button:hover {
+  box-shadow: 0 2px 4px hsla(0, 0%, 0%, 0.55), 0 16px 32px -14px hsla(0, 0%, 0%, 0.8);
+}
+
+[data-theme='dark'] .button--ghost {
+  color: var(--title-color);
 }
 
 .error-boundary {
@@ -419,13 +412,23 @@ main {
 }
 
 @media screen and (max-width: 992px) {
+  :root {
+    --big-font-size: 2.75rem;
+    --h1-font-size: 1.8rem;
+    --h2-font-size: 1.2rem;
+    --h3-font-size: 1rem;
+    --normal-font-size: 0.95rem;
+    --small-font-size: 0.84rem;
+    --smaller-font-size: 0.76rem;
+  }
+
   .container {
     margin-left: var(--mb-1-5);
     margin-right: var(--mb-1-5);
   }
 
   .button {
-    padding: 0.85rem 1.35rem;
+    padding: 0.85rem 1.4rem;
   }
 
   .button__icon {
@@ -435,16 +438,23 @@ main {
 }
 
 @media screen and (max-width: 768px) {
+  /* Blur is per-pixel work, and a phone painting a dozen frosted panes over a
+     gradient drops frames while scrolling. Keep the panes, halve the radius. */
+  :root {
+    --glass-blur: saturate(180%) blur(14px);
+    --glass-blur-strong: saturate(200%) blur(20px);
+  }
+
   body {
     margin: 0 0 var(--header-height) 0;
   }
 
   .section {
-    padding: 3.5rem 0 3rem;
+    padding: 4rem 0 3rem;
   }
 
   .section__subtitle {
-    margin-bottom: 2.4rem;
+    margin-bottom: 2.5rem;
   }
 }
 
@@ -454,11 +464,76 @@ main {
    (transform creates a containing block that traps fixed children). */
 .main .section {
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.7s var(--ease-out);
 }
 
 .main .section.section--visible {
   opacity: 1;
+}
+
+/* ─── Transparency, contrast and motion fallbacks ─── */
+/* Everything below swaps the glass tokens for opaque ones. Because every pane
+   on the site is built from those tokens, that is the whole fallback: no
+   component needs a second set of rules. */
+
+/* No backdrop-filter (older Firefox, Chromium with the flag off). Without this
+   the low-alpha panes would leave text sitting on the raw gradient. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root {
+    --glass-bg: hsl(var(--hue), 30%, 99%);
+    --glass-bg-strong: #ffffff;
+    --glass-bg-soft: hsl(var(--hue), 30%, 99%);
+  }
+
+  [data-theme='dark'] {
+    --glass-bg: hsl(220, 14%, 12%);
+    --glass-bg-strong: hsl(220, 14%, 14%);
+    --glass-bg-soft: hsl(220, 14%, 11%);
+  }
+}
+
+/* Reduce Transparency is switched on (macOS, iOS, Windows): same layout,
+   opaque panes, no blur, and the ambient gradient dimmed. */
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --glass-blur: none;
+    --glass-blur-strong: none;
+    --glass-bg: hsl(var(--hue), 30%, 99%);
+    --glass-bg-strong: #ffffff;
+    --glass-bg-soft: hsl(var(--hue), 30%, 99%);
+    --glass-border: hsl(var(--hue), 16%, 88%);
+  }
+
+  [data-theme='dark'] {
+    --glass-bg: hsl(220, 14%, 12%);
+    --glass-bg-strong: hsl(220, 14%, 14%);
+    --glass-bg-soft: hsl(220, 14%, 11%);
+    --glass-border: hsl(220, 10%, 22%);
+  }
+
+  body::before {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --glass-bg: #ffffff;
+    --glass-bg-strong: #ffffff;
+    --glass-bg-soft: #ffffff;
+    --glass-border: hsl(var(--hue), 16%, 60%);
+  }
+
+  [data-theme='dark'] {
+    --glass-bg: hsl(220, 16%, 10%);
+    --glass-bg-strong: hsl(220, 16%, 12%);
+    --glass-bg-soft: hsl(220, 16%, 10%);
+    --glass-border: hsl(220, 12%, 46%);
+  }
+
+  body::before {
+    opacity: 0.25;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

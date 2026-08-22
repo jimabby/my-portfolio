@@ -1,24 +1,31 @@
+/* A glass chip rather than a solid block: it sits over the page content, so
+   letting that content show through keeps it from reading as a hole. */
 .scrollup {
   position: fixed;
   right: calc(2rem + 8px); /* offset so center aligns with AI FAB (58px wide) */
   bottom: -20%;
-  background-color: var(--primary-color);
-  opacity: 0.6;
-  padding: 0.4rem 0.55rem;
-  border-radius: 0.55rem;
+  display: flex;
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur-strong);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  border: 1px solid var(--glass-border);
+  opacity: 0.85;
+  padding: 0.45rem 0.6rem;
+  border-radius: var(--radius-pill);
   z-index: var(--z-tooltip);
-  box-shadow: 0 8px 16px rgba(11, 84, 137, 0.26);
-  transition: bottom 0.35s, opacity 0.2s;
+  box-shadow: var(--glass-inner), var(--glass-shadow);
+  transition: bottom 0.45s var(--ease), opacity 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
 }
 
 .scrollup__icon {
   font-size: 1.5rem;
-  color: var(--container-color);
+  color: var(--title-color);
 }
 
 .scrollup:hover {
-  background-color: var(--primary-color-dark);
   opacity: 1;
+  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
 }
 
 .show-scroll {
@@ -28,7 +35,7 @@
 @media screen and (max-width: 992px) {
   .scrollup {
     right: calc(2rem + 13px); /* smaller icon, recalculate center offset */
-    padding: 0.25rem 0.4rem;
+    padding: 0.35rem 0.5rem;
   }
 
   .scrollup__icon {

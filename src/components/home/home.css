@@ -15,21 +15,38 @@
   row-gap: 1rem;
 }
 
+/* Each icon gets its own small glass chip, so the column reads as a control
+   rather than as three loose glyphs floating on the gradient. */
 .home__social-icon {
-  font-size: 1.3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: 1.2rem;
   color: var(--title-color);
-  transition: color 0.2s ease, transform 0.2s ease;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--glass-inner), var(--glass-shadow);
+  transition: color 0.25s var(--ease), transform 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out), background-color 0.25s var(--ease);
 }
 
 .home__social-icon:hover {
-  color: var(--primary-color-dark);
-  transform: translateY(-2px);
+  color: var(--accent-color);
+  background: var(--glass-bg-strong);
+  transform: translateY(-3px);
+  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
 }
 
 .home__title {
   font-size: var(--big-font-size);
   margin-bottom: var(--mb-0-25);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-display);
+  line-height: 1.08;
 }
 
 .home__hand {
@@ -50,8 +67,8 @@
   content: '';
   position: absolute;
   width: 68px;
-  height: 2px;
-  background-color: hsl(var(--hue), 18%, 56%);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--hue), 12%, 60%));
   left: 0;
   top: 0.95rem;
 }
@@ -107,7 +124,8 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--primary-color);
+  background: var(--accent-color);
+  box-shadow: 0 0 0 3px var(--accent-soft);
   flex-shrink: 0;
   align-self: center;
 }
@@ -135,10 +153,13 @@
    is the LCP, and only a genuine element is visible to the browser's preload
    scanner. A background-image can't be found until the stylesheet has been
    downloaded and parsed, which delayed it by a whole round trip. */
+/* The white ring is a glass bezel: a translucent edge with the specular
+   highlight the rest of the panes carry, so the portrait belongs to the same
+   material as everything around it. */
 .home__img {
   object-fit: cover;
-  border: 6px solid rgba(255, 255, 255, 0.7);
-  box-shadow: var(--card-shadow);
+  border: 6px solid var(--glass-bg-strong);
+  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
   order: 1;
   justify-self: center;
   width: 300px;
@@ -184,7 +205,7 @@
 
 .home__scroll-arrow {
   font-size: 1.25rem;
-  color: var(--primary-color-dark);
+  color: var(--title-color-dark);
 }
 
 @media screen and (max-width: 992px) {
@@ -262,4 +283,12 @@
     width: 22px;
     height: 22px;
   }
+}
+
+[data-theme='dark'] .home__img {
+  border-color: hsla(0, 0%, 100%, 0.08);
+}
+
+[data-theme='dark'] .home__subtitle::before {
+  background: linear-gradient(90deg, transparent, hsl(220, 8%, 42%));
 }

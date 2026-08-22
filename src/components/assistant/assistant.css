@@ -5,25 +5,31 @@
   width: 58px;
   height: 58px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary-color), hsl(0, 0%, 25%));
-  color: #fff;
+  background: var(--primary-color);
+  color: var(--container-color);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: none;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid hsla(0, 0%, 100%, 0.14);
+  box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, 0.18),
+    0 12px 28px -10px hsla(var(--hue), 30%, 10%, 0.55);
   z-index: 999;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
 }
 
 .assistant__fab:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.38);
+  transform: translateY(-3px);
+  box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, 0.22),
+    0 18px 36px -12px hsla(var(--hue), 30%, 10%, 0.65);
+}
+
+.assistant__fab:active {
+  transform: translateY(0) scale(0.96);
 }
 
 .assistant__fab--open {
-  background: linear-gradient(135deg, hsl(0, 0%, 12%), hsl(0, 0%, 6%));
+  background: var(--primary-color-dark);
 }
 
 /* Keep the FAB out of the way while the mobile nav sheet is open. */
@@ -42,6 +48,9 @@
   line-height: 1;
 }
 
+/* The panel is the site's largest pane of glass: strong blur so the page
+   scrolling behind it stays a suggestion rather than a distraction, and a
+   generous radius so the corners read as thick material. */
 .assistant__panel {
   position: fixed;
   bottom: 9.6rem;
@@ -49,10 +58,12 @@
   width: 420px;
   height: 600px;
   max-height: calc(100vh - 11rem);
-  background: var(--container-color);
-  border-radius: 18px;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 20px 40px rgba(10, 33, 61, 0.2);
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur-strong);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -61,13 +72,14 @@
 }
 
 .assistant__header {
-  background: linear-gradient(135deg, hsl(0, 0%, 18%), hsl(0, 0%, 10%));
-  color: #fff;
-  padding: 0.9rem 1rem;
+  background: var(--primary-color);
+  color: var(--container-color);
+  padding: 0.9rem 1.1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
+  box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, 0.12);
 }
 
 .assistant__header-info {
@@ -80,7 +92,8 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  background: hsla(0, 0%, 100%, 0.18);
+  border: 1px solid hsla(0, 0%, 100%, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,21 +104,22 @@
 
 .assistant__name {
   font-size: var(--small-font-size);
-  font-weight: 600;
-  color: #fff;
+  font-weight: var(--font-semi-bold);
+  color: inherit;
   margin: 0;
 }
 
 .assistant__status {
   font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.78);
+  color: inherit;
+  opacity: 0.75;
   margin: 0;
 }
 
 .assistant__close {
   background: none;
   border: none;
-  color: rgba(255, 255, 255, 0.88);
+  color: inherit;
   font-size: 0.95rem;
   cursor: pointer;
   padding: 0.25rem;
@@ -119,12 +133,12 @@
 }
 
 .assistant__clear {
-  background: rgba(255, 255, 255, 0.16);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  color: #fff;
+  background: hsla(0, 0%, 100%, 0.16);
+  border: 1px solid hsla(0, 0%, 100%, 0.3);
+  color: inherit;
   font-size: 0.7rem;
-  padding: 0.28rem 0.6rem;
-  border-radius: 999px;
+  padding: 0.28rem 0.7rem;
+  border-radius: var(--radius-pill);
   cursor: pointer;
 }
 
@@ -133,6 +147,8 @@
   cursor: not-allowed;
 }
 
+/* Transparent, not a second surface: the transcript is the inside of the pane,
+   so the blur behind the whole panel is what shows through it. */
 .assistant__messages {
   flex: 1;
   overflow-y: auto;
@@ -140,7 +156,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  background: var(--body-color);
+  background: transparent;
 }
 
 .assistant__messages::-webkit-scrollbar {
@@ -148,7 +164,7 @@
 }
 
 .assistant__messages::-webkit-scrollbar-thumb {
-  background: hsl(0, 0%, 76%);
+  background: var(--glass-border-strong);
   border-radius: 2px;
 }
 
@@ -160,21 +176,23 @@
 }
 
 .assistant__chip {
-  background: var(--soft-surface);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 0.38rem 0.75rem;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  padding: 0.4rem 0.85rem;
   font-size: 0.75rem;
   color: var(--title-color);
   cursor: pointer;
   font-family: var(--body-font);
-  transition: background-color 0.15s, border-color 0.15s;
+  transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease);
   text-align: left;
 }
 
 .assistant__chip:hover {
-  background-color: var(--border-color);
-  border-color: var(--text-color);
+  background: var(--glass-bg-strong);
+  border-color: var(--glass-border-strong);
 }
 
 .assistant__message {
@@ -192,8 +210,8 @@
 
 .assistant__message-text {
   margin: 0;
-  padding: 0.625rem 0.875rem;
-  border-radius: 12px;
+  padding: 0.65rem 0.95rem;
+  border-radius: var(--radius-md);
   font-size: var(--small-font-size);
   line-height: 1.55;
   white-space: pre-wrap;
@@ -201,20 +219,24 @@
 }
 
 .assistant__message--user .assistant__message-text {
-  background: linear-gradient(135deg, var(--primary-color), hsl(0, 0%, 24%));
+  background: var(--accent-color);
   color: #fff;
-  border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 6px;
+  box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, 0.2);
 }
 
 /* Assistant replies are Markdown, so the bubble moves out to the wrapper and
    the blocks inside it lay out as ordinary prose. */
 .assistant__message-body {
-  padding: 0.625rem 0.875rem;
-  border-radius: 12px;
-  border-bottom-left-radius: 4px;
-  background-color: var(--container-color);
+  padding: 0.65rem 0.95rem;
+  border-radius: var(--radius-md);
+  border-bottom-left-radius: 6px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   color: var(--title-color);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-inner);
   font-size: var(--small-font-size);
   line-height: 1.55;
   word-break: break-word;
@@ -240,22 +262,22 @@
 }
 
 .assistant__message-body code {
-  background-color: var(--body-color);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  padding: 0.05rem 0.3rem;
+  background: var(--soft-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: 6px;
+  padding: 0.05rem 0.35rem;
   font-size: 0.9em;
 }
 
 .assistant__link {
-  color: var(--title-color);
+  color: var(--accent-color);
   text-decoration: underline;
   text-underline-offset: 2px;
   font-weight: var(--font-medium);
 }
 
 .assistant__link:hover {
-  color: var(--primary-color);
+  color: var(--accent-color-strong);
 }
 
 /* Announced by assistive tech, never shown. */
@@ -292,11 +314,13 @@
 }
 
 .assistant__typing {
-  padding: 0.625rem 0.875rem;
-  background-color: var(--container-color);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  border-bottom-left-radius: 4px;
+  padding: 0.65rem 0.95rem;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  border-bottom-left-radius: 6px;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -305,7 +329,7 @@
 .assistant__typing span {
   width: 7px;
   height: 7px;
-  background: hsl(0, 0%, 58%);
+  background: var(--text-color);
   border-radius: 50%;
   animation: typing-bounce 1.2s ease-in-out infinite;
 }
@@ -335,33 +359,35 @@
   padding: 0.6rem 0.75rem;
   flex-wrap: wrap;
   flex-shrink: 0;
-  border-top: 1px solid var(--border-color);
-  background: var(--container-color);
+  border-top: 1px solid var(--glass-border);
+  background: var(--glass-bg-soft);
 }
 
 .assistant__input-area {
   padding: 0.75rem;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--glass-border);
   display: flex;
   gap: 0.5rem;
   flex-shrink: 0;
-  background: var(--container-color);
+  background: var(--glass-bg-soft);
 }
 
 .assistant__input {
   flex: 1;
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 0.5rem 0.875rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  padding: 0.55rem 1rem;
   font-size: var(--small-font-size);
   font-family: var(--body-font);
-  background: var(--body-color);
+  background: var(--glass-bg);
   color: var(--title-color);
   outline: none;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 
 .assistant__input:focus {
-  border-color: var(--primary-color);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 .assistant__input:disabled {
@@ -372,7 +398,7 @@
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background-color: var(--primary-color);
+  background: var(--accent-color);
   color: #fff;
   border: none;
   cursor: pointer;
@@ -380,11 +406,14 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background-color 0.2s, opacity 0.2s;
+  box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, 0.22);
+  transition: background-color 0.2s var(--ease), opacity 0.2s var(--ease),
+    transform 0.2s var(--ease-out);
 }
 
 .assistant__send:hover:not(:disabled) {
-  background-color: var(--primary-color-dark);
+  background: var(--accent-color-strong);
+  transform: scale(1.05);
 }
 
 .assistant__send:disabled {
@@ -416,49 +445,38 @@
 }
 
 /* ─── Dark mode ─── */
+/* Almost everything here now comes from the glass and palette tokens. What is
+   left is the two places the panel paints its own ink: the FAB and the header
+   strip, which invert with --primary-color and so need their light-on-dark
+   text put back. */
+[data-theme='dark'] .assistant__fab,
+[data-theme='dark'] .assistant__header {
+  color: hsl(220, 16%, 8%);
+}
+
 [data-theme='dark'] .assistant__fab {
-  background: linear-gradient(135deg, hsl(220, 10%, 80%), hsl(220, 8%, 50%));
-  color: hsl(220, 12%, 8%);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  border-color: hsla(0, 0%, 0%, 0.2);
+  box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, 0.3),
+    0 12px 28px -10px hsla(0, 0%, 0%, 0.8);
 }
 
-[data-theme='dark'] .assistant__fab--open {
-  background: linear-gradient(135deg, hsl(220, 10%, 26%), hsl(220, 10%, 14%));
-  color: #fff;
-}
-
-[data-theme='dark'] .assistant__panel {
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+[data-theme='dark'] .assistant__fab:hover {
+  box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, 0.35),
+    0 18px 36px -12px hsla(0, 0%, 0%, 0.9);
 }
 
 [data-theme='dark'] .assistant__header {
-  background: linear-gradient(135deg, hsl(220, 14%, 14%), hsl(220, 14%, 8%));
+  box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, 0.25);
 }
 
-[data-theme='dark'] .assistant__messages::-webkit-scrollbar-thumb {
-  background: hsl(220, 8%, 28%);
-}
-
-[data-theme='dark'] .assistant__message--user .assistant__message-text {
-  background: linear-gradient(135deg, hsl(220, 10%, 76%), hsl(220, 8%, 50%));
-  color: hsl(220, 12%, 8%);
-}
-
-[data-theme='dark'] .assistant__typing span {
-  background: hsl(220, 8%, 40%);
-}
-
-[data-theme='dark'] .assistant__send {
-  background-color: hsl(220, 10%, 76%);
-  color: hsl(220, 12%, 8%);
-}
-
-[data-theme='dark'] .assistant__send:hover:not(:disabled) {
-  background-color: hsl(220, 10%, 88%);
+[data-theme='dark'] .assistant__avatar,
+[data-theme='dark'] .assistant__clear {
+  background: hsla(0, 0%, 0%, 0.12);
+  border-color: hsla(0, 0%, 0%, 0.2);
 }
 
 [data-theme='dark'] .assistant__cursor {
-  background: hsl(220, 10%, 72%);
+  background: var(--title-color);
 }
 
 /* Reply rating. Quiet by default — it sits under every answer, so anything
@@ -506,5 +524,11 @@
 @media (prefers-reduced-motion: reduce) {
   .assistant__feedback-btn {
     transition: none;
+  }
+
+  .assistant__fab:hover,
+  .assistant__fab:active,
+  .assistant__send:hover:not(:disabled) {
+    transform: none;
   }
 }

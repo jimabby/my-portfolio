@@ -10,31 +10,37 @@
 
 .testimonial__nav {
   flex-shrink: 0;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: none;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 50%;
-  background-color: var(--container-color);
-  border: 1px solid var(--border-color);
-  color: var(--primary-color);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-inner), var(--glass-shadow);
+  color: var(--title-color);
   font-size: 1.5rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s var(--ease), color 0.3s var(--ease),
+    transform 0.3s var(--ease-out);
 }
 
 .testimonial__nav:hover {
-  background-color: var(--primary-color);
-  color: #fff;
+  background: var(--primary-color);
+  color: var(--container-color);
+  transform: scale(1.06);
 }
 
 .testimonial__card {
-  background-color: var(--container-color);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--card-shadow);
-  padding: 1.5rem 2rem;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-inner), var(--glass-shadow);
+  padding: 1.75rem 2rem;
   border-radius: var(--radius-lg);
   margin-bottom: var(--mb-3);
 }
@@ -59,7 +65,7 @@
 
 .testimonial__img-placeholder {
   height: 60px;
-  background-color: var(--border-color);
+  background-color: var(--soft-surface);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,7 +87,7 @@
 .testimonial__toggle {
   background: none;
   border: none;
-  color: var(--primary-color);
+  color: var(--accent-color);
   font-size: var(--smaller-font-size);
   font-weight: var(--font-medium);
   cursor: pointer;
@@ -99,11 +105,11 @@
 
 
 .swiper-pagination-bullet {
-  background-color: hsl(var(--hue), 22%, 65%) !important;
+  background-color: hsl(var(--hue), 12%, 62%) !important;
 }
 
 .swiper-pagination-bullet-active {
-  background-color: var(--primary-color) !important;
+  background-color: var(--accent-color) !important;
 }
 
 @media screen and (max-width: 992px) {
@@ -113,5 +119,11 @@
 
   .testimonial__card {
     padding: 1.25rem 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonial__nav:hover {
+    transform: none;
   }
 }

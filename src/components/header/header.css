@@ -4,10 +4,12 @@
   top: 0;
   left: 0;
   z-index: var(--z-fixed);
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(10px);
+  background: var(--glass-bg-soft);
+  backdrop-filter: var(--glass-blur-strong);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: background-color 0.3s var(--ease), border-color 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
 }
 
 .nav {
@@ -59,7 +61,7 @@
 
 .active-link,
 .nav__link:hover {
-  color: var(--primary-color-dark);
+  color: var(--title-color-dark);
 }
 
 .nav__buttons {
@@ -77,17 +79,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s ease, transform 0.2s ease;
+  padding: 0.35rem;
+  border-radius: var(--radius-pill);
+  transition: color 0.25s var(--ease), background-color 0.25s var(--ease),
+    transform 0.4s var(--ease-out);
 }
 
 .nav__theme-toggle:hover {
-  color: var(--primary-color-dark);
+  color: var(--title-color-dark);
+  background: var(--soft-surface);
   transform: rotate(15deg);
 }
 
+/* Off the top of the page the bar has content sliding under it, so the pane
+   goes opaque enough to keep the nav legible against whatever passes below. */
 .scroll-header {
-  border-color: var(--border-color);
-  box-shadow: 0 8px 20px rgba(21, 47, 88, 0.08);
+  background: var(--glass-bg-strong);
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-inner), 0 10px 30px -18px hsla(var(--hue), 30%, 20%, 0.45);
+}
+
+[data-theme='dark'] .scroll-header {
+  box-shadow: 0 10px 30px -18px hsla(0, 0%, 0%, 0.9);
 }
 
 /* ─── Language switcher ─── */
@@ -112,7 +125,7 @@
 }
 
 .lang-switcher__toggle:hover {
-  color: var(--primary-color-dark);
+  color: var(--title-color-dark);
   background: var(--soft-surface);
 }
 
@@ -129,10 +142,12 @@
   top: calc(100% + 0.5rem);
   right: 0;
   min-width: 9rem;
-  background: var(--container-color);
-  border: 1px solid var(--border-color);
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur-strong);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
-  box-shadow: var(--card-shadow);
+  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
   padding: 0.4rem;
   z-index: var(--z-fixed);
   display: grid;
@@ -159,8 +174,8 @@
 }
 
 .lang-switcher__option.is-active {
-  background: var(--primary-color);
-  color: var(--container-color);
+  background: var(--accent-color);
+  color: #fff;
 }
 
 /* ─── Update dot ─── */
@@ -236,11 +251,13 @@
   max-height: min(24rem, 60vh);
   overflow-y: auto;
   overscroll-behavior: contain;
-  background: var(--container-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  box-shadow: var(--card-shadow);
-  padding: 1rem;
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur-strong);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
+  padding: 1.15rem;
   z-index: var(--z-fixed);
 }
 
@@ -265,7 +282,7 @@
   display: grid;
   gap: 0.2rem;
   padding-left: 0.75rem;
-  border-left: 2px solid var(--border-color);
+  border-left: 2px solid var(--glass-border-strong);
 }
 
 .updates__meta {
@@ -280,8 +297,8 @@
   font-weight: var(--font-medium);
   color: var(--title-color);
   background: var(--soft-surface);
-  border-radius: var(--radius-sm);
-  padding: 0.1rem 0.4rem;
+  border-radius: var(--radius-pill);
+  padding: 0.1rem 0.5rem;
 }
 
 .updates__date {
@@ -294,8 +311,8 @@
   font-weight: var(--font-semi-bold);
   color: #fff;
   background: hsl(0, 78%, 52%);
-  border-radius: var(--radius-sm);
-  padding: 0.1rem 0.4rem;
+  border-radius: var(--radius-pill);
+  padding: 0.1rem 0.5rem;
   line-height: 1.4;
 }
 
@@ -322,10 +339,22 @@
 }
 
 @media screen and (max-width: 768px) {
+  /* The bar moves to the bottom of the viewport, where it reads as a tab bar:
+     opaque enough to sit over scrolling content, hairline along its top. */
   .header {
     top: initial;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.96);
+    background: var(--glass-bg-strong);
+    border-bottom: none;
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .scroll-header {
+    box-shadow: 0 -10px 30px -18px hsla(var(--hue), 30%, 20%, 0.45);
+  }
+
+  [data-theme='dark'] .scroll-header {
+    box-shadow: 0 -10px 30px -18px hsla(0, 0%, 0%, 0.9);
   }
 
   .nav {
@@ -340,19 +369,22 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: var(--container-color);
+    background: var(--glass-bg-strong);
+    backdrop-filter: var(--glass-blur-strong);
+    -webkit-backdrop-filter: var(--glass-blur-strong);
+    border-top: 1px solid var(--glass-border);
     padding: 2rem 1.5rem 4rem;
-    box-shadow: 0 -10px 24px rgba(17, 39, 68, 0.2);
-    border-radius: 1.5rem 1.5rem 0 0;
+    box-shadow: var(--glass-inner), 0 -24px 60px -20px hsla(var(--hue), 30%, 20%, 0.35);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
     transform: translateY(110%);
     visibility: hidden;
-    transition: transform 0.3s ease, visibility 0s linear 0.3s;
+    transition: transform 0.4s var(--ease), visibility 0s linear 0.4s;
   }
 
   .show-menu {
     transform: translateY(0);
     visibility: visible;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s var(--ease);
   }
 
   .nav__list {
@@ -375,7 +407,7 @@
   }
 
   .nav__close:hover {
-    color: var(--primary-color-dark);
+    color: var(--title-color-dark);
   }
 
   .nav__toggle {

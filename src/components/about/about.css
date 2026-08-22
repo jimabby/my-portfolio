@@ -6,9 +6,9 @@
 
 .about__img {
   width: 350px;
-  border-radius: 1.5rem;
+  border-radius: var(--radius-xl);
   justify-self: center;
-  box-shadow: var(--card-shadow);
+  box-shadow: var(--glass-shadow-lg);
 }
 
 .about__info {
@@ -18,17 +18,25 @@
 }
 
 .about__box {
-  background-color: var(--container-color);
-  border: 1px solid var(--border-color);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   text-align: center;
-  padding: 1rem 1.25rem;
-  box-shadow: 0 8px 18px rgba(13, 40, 80, 0.06);
+  padding: 1.15rem 1.25rem;
+  box-shadow: var(--glass-inner), var(--glass-shadow);
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+}
+
+.about__box:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
 }
 
 .about__icon {
   font-size: 1.4rem;
-  color: var(--primary-color-dark);
+  color: var(--title-color-dark);
   margin-bottom: var(--mb-0-5);
 }
 
@@ -87,5 +95,11 @@
 @media screen and (max-width: 350px) {
   .about__info {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about__box:hover {
+    transform: none;
   }
 }

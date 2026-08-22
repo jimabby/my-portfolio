@@ -27,20 +27,28 @@
 }
 
 .contact__card {
-  background-color: var(--container-color);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--card-shadow);
-  padding: 1rem;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-inner), var(--glass-shadow);
+  padding: 1.15rem;
   border-radius: var(--radius-md);
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
+.contact__card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
+}
+
 .contact__card-icon {
   font-size: 1.9rem;
-  color: var(--primary-color-dark);
+  color: var(--title-color-dark);
   margin-bottom: var(--mb-0-25);
 }
 
@@ -72,17 +80,23 @@
   transition: 0.3s;
 }
 
+.contact__button:hover {
+  color: var(--accent-color);
+}
+
 .contact__button:hover .contact__button-icon {
   transform: translateX(0.25rem);
 }
 
 .contact__form {
   width: 100%;
-  background: var(--container-color);
-  border: 1px solid var(--border-color);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   padding: 2.5rem 2rem;
-  box-shadow: var(--card-shadow);
+  box-shadow: var(--glass-inner), var(--glass-shadow);
 }
 
 .contact__form-div {
@@ -97,27 +111,45 @@
   left: 0;
   width: 100%;
   height: 100%;
-  border: 1px solid hsl(var(--hue), 24%, 74%);
-  background: hsl(210, 38%, 98%);
-  color: var(--text-color);
+  border: 1px solid var(--glass-border-strong);
+  background: var(--glass-bg-soft);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  color: var(--title-color);
   outline: none;
-  border-radius: 0.85rem;
+  border-radius: var(--radius-md);
   padding: 1.5rem;
   z-index: 1;
+  transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease),
+    background-color 0.25s var(--ease);
 }
 
+.contact__form-input::placeholder {
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+/* The focus ring is the accent at low alpha rather than a heavier border, so
+   the field grows a halo instead of thickening. */
 .contact__form-input:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+  border-color: var(--accent-color);
+  background: var(--glass-bg);
+  box-shadow: 0 0 0 4px var(--accent-soft);
 }
 
+/* Straddles the field's top edge, so it carries its own frosted chip to cut
+   the border cleanly instead of letting the line run through the label. */
 .contact__form-tag {
   position: absolute;
   top: -0.75rem;
   left: 1.25rem;
   font-size: var(--smaller-font-size);
-  padding: 0.25rem;
-  background-color: var(--container-color);
+  padding: 0.25rem 0.45rem;
+  color: var(--text-color);
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur-strong);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  border-radius: var(--radius-sm);
   z-index: 10;
 }
 
@@ -136,11 +168,20 @@
 }
 
 .contact__status--success {
-  color: #2e7d32;
+  color: hsl(142, 62%, 30%);
 }
 
 .contact__status--error {
-  color: #c62828;
+  color: hsl(0, 65%, 45%);
+}
+
+[data-theme='dark'] .contact__status--success {
+  color: hsl(142, 62%, 62%);
+}
+
+[data-theme='dark'] .contact__status--error,
+[data-theme='dark'] .contact__form-error {
+  color: hsl(0, 80%, 70%);
 }
 
 .contact__form-error {
@@ -148,7 +189,7 @@
   margin-top: -1.25rem;
   margin-bottom: 0.5rem;
   font-size: var(--smaller-font-size);
-  color: #c62828;
+  color: hsl(0, 65%, 45%);
 }
 
 @media screen and (max-width: 992px) {
@@ -189,4 +230,10 @@
   width: 1px;
   height: 1px;
   overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact__card:hover {
+    transform: none;
+  }
 }

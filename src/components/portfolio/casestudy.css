@@ -19,14 +19,19 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.5rem 0.9rem;
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
-  transition: background-color 0.3s;
+  padding: 0.5rem 1rem;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--glass-inner);
+  transition: background-color 0.3s var(--ease), transform 0.3s var(--ease-out);
 }
 
 .casestudy__back:hover {
-  background-color: var(--container-color);
+  background: var(--glass-bg-strong);
+  transform: translateX(-2px);
 }
 
 /* An open page header rather than a card: the screenshots below are the
@@ -36,24 +41,25 @@
   gap: 1.15rem;
   justify-items: start;
   padding-bottom: 2.25rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .casestudy__badge {
   font-size: var(--smaller-font-size);
   font-weight: var(--font-medium);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-eyebrow);
   color: var(--text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
-  padding: 0.2rem 0.7rem;
+  background: var(--soft-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  padding: 0.2rem 0.75rem;
 }
 
 .casestudy__title {
-  font-size: clamp(1.9rem, 5vw, 2.6rem);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.9rem, 5vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-display);
   color: var(--title-color);
   margin: 0;
 }
@@ -76,16 +82,19 @@
   gap: 1rem 2.5rem;
   margin: 0.25rem 0 0;
   width: 100%;
-  padding: 1rem 1.25rem;
-  background-color: var(--soft-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
+  padding: 1.15rem 1.35rem;
+  background: var(--glass-bg-soft);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--glass-inner);
 }
 
 .casestudy__fact-label {
   font-size: var(--tiny-font-size);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-eyebrow);
   color: var(--text-color);
   margin-bottom: 0.3rem;
 }
@@ -109,10 +118,10 @@
 .casestudy__tag {
   font-size: var(--smaller-font-size);
   color: var(--text-color);
-  background-color: var(--body-color);
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
-  padding: 0.2rem 0.7rem;
+  background: var(--soft-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  padding: 0.2rem 0.75rem;
 }
 
 .casestudy__visit {
@@ -134,9 +143,12 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background-color: var(--container-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-inner), var(--glass-shadow);
 }
 
 .casestudy__figure--portrait {
@@ -160,15 +172,15 @@
   /* Pushed to the bottom of the frame so captions of different lengths still
      line up when two portrait figures sit side by side. */
   margin-top: auto;
-  padding: 1rem 1.25rem 1.15rem;
-  border-top: 1px solid var(--border-color);
-  background-color: var(--soft-surface);
+  padding: 1rem 1.35rem 1.15rem;
+  border-top: 1px solid var(--glass-border);
+  background: var(--glass-bg-soft);
 }
 
 .casestudy__caption-index {
   font-size: var(--tiny-font-size);
   font-weight: var(--font-semi-bold);
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-eyebrow);
   font-variant-numeric: tabular-nums;
   color: var(--title-color);
   /* Optically aligned with the first line of the caption, not its box. */
@@ -190,16 +202,21 @@
 .casestudy__prevnext-link {
   display: grid;
   gap: 0.35rem;
-  padding: 1rem 1.25rem;
-  border: 1px solid var(--border-color);
-  border-radius: 1rem;
-  background-color: var(--container-color);
-  transition: transform 0.3s, box-shadow 0.3s;
+  padding: 1.15rem 1.35rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-inner);
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out),
+    border-color 0.35s var(--ease);
 }
 
 .casestudy__prevnext-link:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--card-shadow);
+  transform: translateY(-3px);
+  border-color: var(--glass-border-strong);
+  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
 }
 
 .casestudy__prevnext-link--next {
@@ -248,5 +265,12 @@
 
   .casestudy__prevnext-link--next {
     text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .casestudy__back:hover,
+  .casestudy__prevnext-link:hover {
+    transform: none;
   }
 }
