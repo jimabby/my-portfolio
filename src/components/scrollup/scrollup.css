@@ -12,10 +12,17 @@
   opacity: 0.85;
   padding: 0.45rem 0.6rem;
   border-radius: var(--radius-pill);
-  z-index: var(--z-tooltip);
+  /* Sits in the same corner stack as the assistant: below its panel (998) and
+     its FAB (999), but above the header. --z-tooltip (10) put it *under* the
+     header, which is only harmless while the header is at the top of the page
+     — below 768px it becomes a bottom tab bar and swallowed this button whole. */
+  z-index: 997;
   box-shadow: var(--glass-inner), var(--glass-shadow);
+  /* Parked off-screen it must not take keyboard focus, so it is hidden rather
+     than merely moved; visibility flips only once the slide-out has finished. */
+  visibility: hidden;
   transition: bottom 0.45s var(--ease), opacity 0.25s var(--ease),
-    box-shadow 0.25s var(--ease);
+    box-shadow 0.25s var(--ease), visibility 0s linear 0.45s;
 }
 
 .scrollup__icon {
@@ -30,6 +37,9 @@
 
 .show-scroll {
   bottom: 1rem;
+  visibility: visible;
+  transition: bottom 0.45s var(--ease), opacity 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
 }
 
 @media screen and (max-width: 992px) {
@@ -43,8 +53,28 @@
   }
 }
 
+/* Below this width the header is a bottom tab bar, so the corner stacks upward:
+   tab bar, then the assistant FAB, then this chip above it. The offsets track
+   the FAB's own `bottom` in assistant.css plus its 58px height and a gap. */
+@media screen and (max-width: 768px) {
+  .scrollup.show-scroll {
+    bottom: calc(6rem + 58px + 0.6rem);
+  }
+
+  /* The nav sheet slides up over this corner, and the chip now outranks the
+     header it lives above. Same treatment the FAB already gets. */
+  body:has(.nav__menu.show-menu) .scrollup {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
 @media screen and (max-width: 480px) {
   .scrollup {
     right: calc(1.2rem + 13px);
+  }
+
+  .scrollup.show-scroll {
+    bottom: calc(5.4rem + 58px + 0.6rem);
   }
 }

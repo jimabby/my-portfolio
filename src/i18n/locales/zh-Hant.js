@@ -25,6 +25,7 @@ const dictionary = {
     menuClose: '關閉選單',
     skipToContent: '跳至主要內容',
     language: '語言',
+    backToTop: '回到頂部',
   },
   theme: {
     toLight: '切換至淺色模式',

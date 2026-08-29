@@ -25,6 +25,7 @@ const dictionary = {
     menuClose: 'メニューを閉じる',
     skipToContent: 'メインコンテンツへ移動',
     language: '言語',
+    backToTop: 'ページ先頭へ戻る',
   },
   theme: {
     toLight: 'ライトモードに切り替え',

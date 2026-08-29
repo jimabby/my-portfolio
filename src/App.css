@@ -470,6 +470,19 @@ main {
     margin: 0 0 var(--header-height) 0;
   }
 
+  /* iOS Safari zooms the whole page when a field it is focusing measures under
+     16px, and every field here inherits something smaller from the type scale
+     — the contact form at 15.2px, the /work search at 15px, the assistant at
+     13.44px. One floor for all of them beats three component-level overrides.
+     The attribute selectors outrank the component classes, so order is not
+     load-bearing. */
+  input[type='text'],
+  input[type='email'],
+  input[type='search'],
+  textarea {
+    font-size: 16px;
+  }
+
   .section {
     padding: 4rem 0 3rem;
   }

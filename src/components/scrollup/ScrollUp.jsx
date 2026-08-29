@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import "./scrollup.css";
+import { useLanguage } from "../../i18n/LanguageContext";
 
 const ScrollUp = () => {
+  const { t } = useLanguage();
+
   useEffect(() => {
     let ticking = false;
     const update = () => {
@@ -24,9 +27,11 @@ const ScrollUp = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // The icon is the whole of the link's content, so without a label this is the
+  // one icon control on the site a screen reader announces as just "link".
   return (
-    <a href="#top" className="scrollup">
-      <i className="uil uil-arrow-up scrollup__icon"></i>
+    <a href="#top" className="scrollup" aria-label={t('nav.backToTop')}>
+      <i className="uil uil-arrow-up scrollup__icon" aria-hidden="true"></i>
     </a>
   );
 };

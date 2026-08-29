@@ -25,6 +25,7 @@ const dictionary = {
     menuClose: 'Close menu',
     skipToContent: 'Skip to main content',
     language: 'Language',
+    backToTop: 'Back to top',
   },
   theme: {
     toLight: 'Switch to light mode',

@@ -28,10 +28,16 @@
   color: var(--accent-color);
 }
 
+/* Wraps deliberately: six links plus their gaps need ~459px, and the container
+   is 342px on a 390px phone. Without this the row overflowed the viewport on
+   every page — "About" clipped to "out", "RSS feed" cut mid-word — and took the
+   whole document into a horizontal scroll with it. */
 .footer__list {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   column-gap: 1.5rem;
+  row-gap: 0.75rem;
   margin-bottom: var(--mb-2);
 }
 

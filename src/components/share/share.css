@@ -52,18 +52,22 @@
   box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.45);
 }
 
+/* Brand colours, darkened just enough to carry white label text at 4.5:1.
+   The published swatches (#1d9bf0, #ff4500) manage only 3.00:1 and 3.44:1
+   against white, which fails at this 0.9375rem size. LinkedIn's #0a66c2
+   already clears it at 5.69:1 and is untouched. */
 .share__btn--linkedin {
-  background: #0a66c2;
+  background: #0a66c2; /* 5.69:1 */
   color: #fff;
 }
 
 .share__btn--twitter {
-  background: #1d9bf0;
+  background: #1a75b8; /* 4.91:1 */
   color: #fff;
 }
 
 .share__btn--reddit {
-  background: #ff4500;
+  background: #d63a00; /* 4.70:1 */
   color: #fff;
 }
 

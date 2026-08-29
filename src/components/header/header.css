@@ -184,6 +184,9 @@
   display: flex;
 }
 
+/* The dot itself is 0.6rem, which left the button a 21px target — under the
+   24px floor in WCAG 2.2 SC 2.5.8. The padding stays; the minimum does the
+   work, so the dot's visual size is unchanged. */
 .updates__toggle {
   display: flex;
   align-items: center;
@@ -192,6 +195,8 @@
   border: none;
   cursor: pointer;
   padding: 0.35rem;
+  min-width: 24px;
+  min-height: 24px;
   border-radius: 50%;
   transition: background-color 0.2s ease;
 }
@@ -364,14 +369,20 @@
   /* The header's backdrop-filter makes it the containing block for this
      fixed menu, so bottom: -100% resolves against the header height and
      leaves the menu visible. Hide it with transform + visibility instead. */
+  /* Opaque, not glass. This sheet is a child of .header, and .header has its
+     own backdrop-filter — which makes it a backdrop root, so a nested
+     backdrop-filter here has nothing left to sample and is silently a no-op.
+     (Verified: screenshots with the declaration and with it forced to `none`
+     are byte-identical.) The result was an 82%-opaque sheet with no blur, and
+     the hero copy read straight through it into the nav labels. Every other
+     pane on the site is glass because blur actually reaches it; this one
+     cannot have it, so it gets the solid surface instead of faking it. */
   .nav__menu {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: var(--glass-bg-strong);
-    backdrop-filter: var(--glass-blur-strong);
-    -webkit-backdrop-filter: var(--glass-blur-strong);
+    background: var(--container-color);
     border-top: 1px solid var(--glass-border);
     padding: 2rem 1.5rem 4rem;
     box-shadow: var(--glass-inner), 0 -24px 60px -20px hsla(var(--hue), 30%, 20%, 0.35);
@@ -413,6 +424,20 @@
   .nav__toggle {
     font-size: 1.2rem;
     cursor: pointer;
+  }
+
+  /* These four are the whole of the mobile tab bar, and the two icon-only ones
+     were 19x31 and 21x21. Give the row a single comfortable touch size rather
+     than leaving each to whatever its glyph happens to measure. */
+  .nav__toggle,
+  .updates__toggle,
+  .nav__theme-toggle,
+  .lang-switcher__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
   }
 
   .nav__icon,
