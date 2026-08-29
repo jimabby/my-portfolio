@@ -47,6 +47,6 @@ const svg = `
 </svg>`;
 
 const buf = Buffer.from(svg);
-await sharp(buf).webp({ quality: 88 }).toFile('public/og/hiro.webp');
+await sharp(buf).webp({ quality: 88 }).toFile('scripts/og-art/hiro.webp');
 await sharp(buf).resize(900, 473).webp({ quality: 82 }).toFile('src/assets/hiro.webp');
-console.log('Generated public/og/hiro.webp and src/assets/hiro.webp');
+console.log('Generated scripts/og-art/hiro.webp and src/assets/hiro.webp');

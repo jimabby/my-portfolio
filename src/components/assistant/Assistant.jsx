@@ -8,6 +8,15 @@ import { renderMarkdown } from './markdown';
 const STORAGE_KEY = 'assistant_messages_v1';
 const MAX_STORED_MESSAGES = 20;
 
+// Longer than the chat function's own budget (vercel.json sets maxDuration to
+// 60s for api/chat.js). At 30s this fired first and cut off long replies at
+// half the time the server was allowed to spend on them — and because it
+// aborts through the same controller as the stop button, the visitor saw a
+// reply that simply stopped, with nothing to say why. The server's limit
+// should be what ends a slow request; this is only a backstop for a
+// connection that has genuinely gone away.
+const REQUEST_TIMEOUT_MS = 65000;
+
 const loadStoredMessages = () => {
   try {
     const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
@@ -46,6 +55,9 @@ export default function Assistant() {
   const panelRef = useRef(null);
   const fabRef = useRef(null);
   const abortRef = useRef(null);
+  // Set when the backstop above fires, so the abort handler can tell a timeout
+  // apart from the visitor pressing stop. Same AbortError either way.
+  const timedOutRef = useRef(false);
 
   // Abort any in-flight request if the component unmounts mid-stream.
   useEffect(() => () => abortRef.current?.abort(), []);
@@ -116,8 +128,12 @@ export default function Assistant() {
 
     const controller = new AbortController();
     abortRef.current = controller;
+    timedOutRef.current = false;
     // Don't let a hung request leave the user stuck forever.
-    const timeoutId = setTimeout(() => controller.abort(), 30000);
+    const timeoutId = setTimeout(() => {
+      timedOutRef.current = true;
+      controller.abort();
+    }, REQUEST_TIMEOUT_MS);
 
     let reader;
     let fullText = '';
@@ -183,13 +199,22 @@ export default function Assistant() {
         },
       ]);
     } catch (err) {
-      // User pressed stop (or the request timed out): keep whatever streamed
-      // so far rather than replacing it with an error.
+      // User pressed stop: keep whatever streamed so far rather than replacing
+      // it with an error — they asked for it to end, and the partial answer is
+      // still the answer. A timeout is different: nobody chose it, so it gets
+      // said out loud, appended to whatever did arrive.
       if (err.name === 'AbortError') {
+        const timedOut = timedOutRef.current;
         if (fullText) {
           setMessages((prev) => [
             ...prev,
             { role: 'assistant', content: fullText },
+          ]);
+        }
+        if (timedOut) {
+          setMessages((prev) => [
+            ...prev,
+            { role: 'assistant', content: t('assistant.errorTimeout'), localOnly: true },
           ]);
         }
       } else {
@@ -212,6 +237,7 @@ export default function Assistant() {
       clearTimeout(timeoutId);
       reader?.cancel().catch(() => {});
       abortRef.current = null;
+      timedOutRef.current = false;
       setIsStreaming(false);
       setStreamText('');
     }

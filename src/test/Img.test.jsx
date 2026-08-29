@@ -48,9 +48,45 @@ describe('buildSrcSet', () => {
     expect(manifest[SMALL].v).toHaveLength(0);
     expect(buildSrcSet(`/assets/${SMALL}`, SMALL)).toBeUndefined();
   });
+
+  // The original asset is a .webp file. Appending it to the AVIF candidate
+  // list would advertise those bytes as AVIF inside a `type="image/avif"`
+  // <source>, and a browser that took that candidate would be handed a WebP
+  // it was told to decode as something else.
+  it('offers the same widths in AVIF, without the WebP original', () => {
+    const src = '/assets/Hermes_overview-D8pF-c2I.webp';
+    const avif = buildSrcSet(src, WIDE, 'avif');
+
+    expect(avif).toMatch(/\/responsive\/Hermes_overview-480-[A-Za-z0-9_-]{8}\.avif 480w/);
+    expect(avif).not.toContain('.webp');
+    expect(avif.split(', ')).toHaveLength(manifest[WIDE].v.length);
+  });
 });
 
 describe('<Img>', () => {
+  // AVIF is offered, never required: a browser that cannot decode it skips the
+  // <source> and takes the <img>'s own WebP srcset. If the AVIF ever replaced
+  // the srcset rather than preceding it, those browsers would get no image.
+  it('offers AVIF ahead of the WebP the <img> still carries', () => {
+    const { container } = render(<Img src={`/src/assets/hermes/${WIDE}`} alt="Overview" />);
+    const source = container.querySelector('picture > source');
+    const img = container.querySelector('picture > img');
+
+    expect(source.getAttribute('type')).toBe('image/avif');
+    expect(source.getAttribute('srcset')).toContain('.avif');
+    expect(img.getAttribute('srcset')).toContain('.webp');
+    expect(source.compareDocumentPosition(img)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+  });
+
+  // A <picture> around a lone <img> is a DOM node and a layout box for
+  // nothing, and every rule styling these images assumes the <img> is where it
+  // has always been.
+  it('does not wrap an image that has no variants to offer', () => {
+    const { container } = render(<Img src={`/src/assets/${SMALL}`} alt="" />);
+    expect(container.querySelector('picture')).toBeNull();
+    expect(container.querySelector('img')).not.toBeNull();
+  });
+
   it('always carries intrinsic width and height so layout cannot shift', () => {
     const { container } = render(<Img src={`/src/assets/hermes/${WIDE}`} alt="Overview" />);
     const img = container.querySelector('img');

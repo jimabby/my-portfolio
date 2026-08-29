@@ -28,7 +28,7 @@ const MMode = () => {
       <BlogSEO
         title="Understanding M Mode"
         description="Learn how shutter speed, aperture, and ISO work together to give you full creative control over your camera - with practical examples you can try right away."
-        ogImage="m-mode.webp"
+        ogImage="m-mode.jpg"
         slug="m-mode"
       />
       <Header />

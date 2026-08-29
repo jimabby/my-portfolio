@@ -18,7 +18,7 @@ const Hiro = () => {
       <BlogSEO
         title="Hiro - The AI Job Application Agent"
         description="Hiro scrapes Seek, Indeed, and LinkedIn on a schedule, scores every job against your resume, tailors your application, and submits - all while you sleep."
-        ogImage="hiro.webp"
+        ogImage="hiro.jpg"
         slug="hiro"
       />
       <Header />

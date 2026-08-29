@@ -26,7 +26,7 @@ const Hermes = () => {
       <BlogSEO
         title="Hermes - An AI-Powered Email Client"
         description="A full-featured email client with Claude AI built in. Connect Gmail, Outlook, or any IMAP account and use 9 AI writing modes to compose better emails."
-        ogImage="hermes.webp"
+        ogImage="hermes.jpg"
         slug="hermes"
       />
       <Header />

@@ -46,7 +46,7 @@ const GrandHotelTaipei = () => {
       <BlogSEO
         title="Staying at the Grand Hotel Taipei"
         description="A personal April stay at the Grand Hotel Taipei, from the red-pillared entrance and grand lobby to quiet corridors, city views, and slow moments around the grounds."
-        ogImage="grand-hotel-taipei.webp"
+        ogImage="grand-hotel-taipei.jpg"
         slug="grand-hotel-taipei"
       />
       <Header />

@@ -11,7 +11,7 @@ import sharp from 'sharp';
 const WIDTH = 1200;
 const HEIGHT = 630;
 const SCREENSHOT = 'src/assets/housed-redesign/housed-redesign-home.webp';
-const OUTPUT = 'public/og/housed-redesign.webp';
+const OUTPUT = 'scripts/og-art/housed-redesign.webp';
 
 const svg = `
 <svg width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}" xmlns="http://www.w3.org/2000/svg">

@@ -48,7 +48,6 @@ const dictionary = {
       '我是一名常駐雪梨的全端開發工程師，對工作充滿熱情，全力以赴。',
     sayHello: '打聲招呼',
     viewResume: '履歷',
-    downloadCV: '下載履歷',
     scrollDown: '向下捲動',
     currently: '目前',
     currentlyAt: '任職於',
@@ -61,7 +60,6 @@ const dictionary = {
     description:
       '身為全端開發工程師，我負責設計兼具 UI/UX 體驗的網頁。我擁有多年經驗，眾多客戶對我交付的專案都非常滿意。',
     viewResume: '檢視履歷',
-    downloadResume: '下載履歷',
     experience: '經驗',
     experienceValue: '5 年以上工作經驗',
     completed: '已完成',
@@ -153,7 +151,6 @@ const dictionary = {
     viewGallery: '檢視圖庫',
     caseStudy: '專案詳情',
     readArticle: '閱讀文章',
-    moreDetails: '了解更多',
     openGallery: '開啟 {title} 圖庫',
     closeGallery: '關閉圖庫',
     galleryLabel: '{title} 圖庫',
@@ -249,6 +246,14 @@ const dictionary = {
     intro:
       '共 {count} 個專案，涵蓋 AI 產品、行動應用與客戶網站。每個專案都有獨立的詳情頁，包含截圖與設計思路。',
     showing: '顯示 {shown} / {total}',
+    searchPlaceholder: '搜尋專案...',
+    searchAria: '搜尋專案',
+    tagFilterAria: '依標籤篩選專案',
+    tagsToggle: '依標籤篩選',
+    filterByTag: '依 {tag} 篩選',
+    clearTags: '清除標籤',
+    clearAll: '清除篩選',
+    noResults: '沒有符合條件的專案。',
   },
   resume: {
     eyebrow: '履歷',
@@ -300,6 +305,7 @@ const dictionary = {
     errorConfig:
       '目前環境未設定助理。請在 .env 檔案中加入 GEMINI_API_KEY 並重新啟動開發伺服器。',
     errorUnavailable: '目前環境無法使用助理 API。',
+    errorTimeout: '等待時間過長，已停止接收回覆。請再試一次。',
     starters: [
       'Jim 做過哪些專案？',
       '總結一下 Jim 的經驗',

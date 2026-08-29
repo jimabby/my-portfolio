@@ -48,7 +48,6 @@ const dictionary = {
       'シドニーを拠点とするフルスタック開発者です。仕事に情熱を持ち、全力で取り組んでいます。',
     sayHello: 'ご挨拶',
     viewResume: '履歴書',
-    downloadCV: '履歴書をダウンロード',
     scrollDown: 'スクロール',
     currently: '現在',
     currentlyAt: '—',
@@ -61,7 +60,6 @@ const dictionary = {
     description:
       'フルスタック開発者として、UI/UX を備えた Web ページを制作しています。長年の経験があり、多くのクライアントに成果物をご満足いただいています。',
     viewResume: '履歴書を見る',
-    downloadResume: '履歴書をダウンロード',
     experience: '経験',
     experienceValue: '5 年以上の実務経験',
     completed: '完了',
@@ -153,7 +151,6 @@ const dictionary = {
     viewGallery: 'ギャラリーを見る',
     caseStudy: 'ケーススタディ',
     readArticle: '記事を読む',
-    moreDetails: '詳細を見る',
     openGallery: '{title} のギャラリーを開く',
     closeGallery: 'ギャラリーを閉じる',
     galleryLabel: '{title} のギャラリー',
@@ -250,6 +247,14 @@ const dictionary = {
     intro:
       '{count} 件のプロジェクト。AI プロダクト、モバイルアプリ、クライアントのウェブサイトまで、それぞれにスクリーンショットと制作意図をまとめたケーススタディがあります。',
     showing: '{total} 件中 {shown} 件を表示',
+    searchPlaceholder: 'プロジェクトを検索...',
+    searchAria: 'プロジェクトを検索',
+    tagFilterAria: 'タグでプロジェクトを絞り込む',
+    tagsToggle: 'タグで絞り込む',
+    filterByTag: '{tag} で絞り込む',
+    clearTags: 'タグをクリア',
+    clearAll: 'フィルターをクリア',
+    noResults: '条件に一致するプロジェクトはありません。',
   },
   resume: {
     eyebrow: '履歴書',
@@ -302,6 +307,7 @@ const dictionary = {
     errorConfig:
       'この環境ではアシスタントが設定されていません。.env ファイルに GEMINI_API_KEY を追加し、開発サーバーを再起動してください。',
     errorUnavailable: 'この環境ではアシスタント API を利用できません。',
+    errorTimeout: '時間がかかりすぎたため、応答の待機を中止しました。もう一度お試しください。',
     starters: [
       'Jim はどんなプロジェクトを作りましたか？',
       'Jim の経験をまとめて',

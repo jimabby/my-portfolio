@@ -24,6 +24,168 @@
   line-height: 1.7;
 }
 
+/* Search, category and tag controls. Deliberately the same shapes the blog
+   index uses — same pill, same active treatment — because they are the same
+   controls doing the same job on the other half of the site. */
+.workindex__search-wrapper {
+  max-width: 30rem;
+  margin: 0 auto 1rem;
+}
+
+.workindex__search {
+  width: 100%;
+  padding: 0.7rem 1.2rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  font-size: 0.9375rem;
+  font-family: inherit;
+  color: var(--title-color);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-inner);
+  outline: none;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.workindex__search::placeholder {
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+.workindex__search:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.workindex__tags-toggle-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.workindex__tags-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: var(--small-font-size);
+  font-weight: var(--font-medium);
+  font-family: inherit;
+  color: var(--text-color);
+  background: none;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  transition: color 0.2s var(--ease);
+}
+
+.workindex__tags-toggle:hover {
+  color: var(--title-color);
+}
+
+.workindex__tags-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.35rem;
+  border-radius: var(--radius-pill);
+  background: var(--primary-color);
+  color: var(--container-color);
+  font-size: 0.6875rem;
+  font-weight: var(--font-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+.workindex__tags-chevron {
+  font-size: 1.1rem;
+  line-height: 1;
+  transition: transform 0.2s var(--ease);
+}
+
+.workindex__tags-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+/* The `hidden` attribute only sets `display: none` from the UA stylesheet, so
+   the `display: flex` below outranks it and the collapsed panel stayed on
+   screen. Restated at author level so the attribute actually hides it. */
+.workindex__tags[hidden] {
+  display: none;
+}
+
+.workindex__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.workindex__tag {
+  font-size: 0.8125rem;
+  font-weight: var(--font-medium);
+  font-family: inherit;
+  color: var(--text-color);
+  background: var(--soft-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  padding: 0.25rem 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+
+.workindex__tag:hover {
+  border-color: var(--glass-border-strong);
+  color: var(--title-color);
+}
+
+.workindex__tag.is-active,
+.workindex__tag.is-active:hover {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--container-color);
+}
+
+.workindex__tag-clear {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--text-color);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0.25rem 0.5rem;
+}
+
+.workindex__tag-clear:hover {
+  color: var(--primary-color);
+}
+
+.workindex__clear-all {
+  font-size: inherit;
+  font-weight: var(--font-medium);
+  font-family: inherit;
+  color: var(--title-color);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.workindex__no-results {
+  text-align: center;
+  color: var(--text-color);
+  font-size: 1rem;
+  padding: 2rem 0 3rem;
+}
+
 .workindex__filters {
   display: flex;
   flex-wrap: wrap;

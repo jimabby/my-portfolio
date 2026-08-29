@@ -27,12 +27,20 @@ export const manifestKeyFor = (src) => {
 
 export const metadataFor = (key) => (key ? (manifest[key] ?? null) : null);
 
-export const buildSrcSet = (src, key) => {
+// The variants exist in both formats at every width, written by the same loop
+// from the same hash — so one manifest entry describes both and the AVIF set
+// costs nothing extra to ship to the client.
+export const buildSrcSet = (src, key, ext = 'webp') => {
   const entry = metadataFor(key);
   if (!entry || entry.v.length === 0) return undefined;
   const stem = key.replace(/\.[A-Za-z0-9]+$/, '');
-  const candidates = entry.v.map(([w, hash]) => `/responsive/${stem}-${w}-${hash}.webp ${w}w`);
+  const candidates = entry.v.map(([w, hash]) => `/responsive/${stem}-${w}-${hash}.${ext} ${w}w`);
+
   // The original is the largest candidate, so it wins whenever the layout is
-  // wide enough to need it.
-  return [...candidates, `${src} ${entry.w}w`].join(', ');
+  // wide enough to need it. It is only appended to the WebP set: the original
+  // is a .webp file, and listing it in the AVIF <source> would advertise it as
+  // an AVIF and hand a browser the wrong bytes for the type it was promised.
+  return ext === 'webp'
+    ? [...candidates, `${src} ${entry.w}w`].join(', ')
+    : candidates.join(', ');
 };

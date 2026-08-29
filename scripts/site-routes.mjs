@@ -34,46 +34,61 @@ export const localizedPath = (lang, path = '/') => {
   return `${prefix}${clean}` || '/';
 };
 
+// Blog posts. `art` and `source` are build-time only, read by
+// generate-og-images.mjs and never referenced by the app:
+//   art     a finished 1.91:1 card drawn by hand, normalised to 1200x630
+//   source  a screenshot, composed into the same card layout the case studies
+//           use - title, category, framed artwork
+// Exactly one of the two per post. Before this existed the blog cards were
+// hand-placed files nobody resized: one was the 8256x5504 camera original at
+// 4.4 MB, under a <head> that declared it 1200x630.
 export const BLOG_POSTS = [
   {
     path: '/blog/housed-redesign',
     title: 'Rebuilding Housed - From Brochure Site to Booking Platform',
     description:
       'How the Housed website moved from a nine-page brochure to a club-by-club platform: auditing the old site, rebuilding the information architecture, and cutting over without losing the URLs.',
-    image: '/og/housed-redesign.webp',
+    image: '/og/housed-redesign.jpg',
     published: '2026-08-20',
+    art: 'scripts/og-art/housed-redesign.webp',
   },
   {
     path: '/blog/grand-hotel-taipei',
     title: 'Staying at the Grand Hotel Taipei',
     description:
       'A personal April stay at the Grand Hotel Taipei, from the red-pillared entrance and grand lobby to quiet corridors, city views, and slow moments around the grounds.',
-    image: '/og/grand-hotel-taipei.webp',
+    image: '/og/grand-hotel-taipei.jpg',
     published: '2026-04-15',
+    source: 'src/assets/taipei-taoyuan/taipei-taoyuan-9.webp',
+    category: 'Travel',
   },
   {
     path: '/blog/hiro',
     title: 'Hiro - The AI Job Application Agent',
     description:
       'Hiro scrapes Seek, Indeed, and LinkedIn on a schedule, scores every job against your resume, tailors your application, and submits - all while you sleep.',
-    image: '/og/hiro.webp',
+    image: '/og/hiro.jpg',
     published: '2026-03-20',
+    art: 'scripts/og-art/hiro.webp',
   },
   {
     path: '/blog/hermes',
     title: 'Hermes - An AI-Powered Email Client',
     description:
       'A full-featured email client with Claude AI built in. Connect Gmail, Outlook, or any IMAP account and use 9 AI writing modes to compose better emails.',
-    image: '/og/hermes.webp',
+    image: '/og/hermes.jpg',
     published: '2026-03-05',
+    source: 'src/assets/hermes/Hermes_overview.webp',
+    category: 'Project',
   },
   {
     path: '/blog/m-mode',
     title: 'Understanding M Mode',
     description:
       'Learn how shutter speed, aperture, and ISO work together to give you full creative control over your camera - with practical examples you can try right away.',
-    image: '/og/m-mode.webp',
+    image: '/og/m-mode.jpg',
     published: '2025-02-10',
+    art: 'scripts/og-art/m-mode.webp',
   },
 ];
 
@@ -83,7 +98,7 @@ const CONTENT_ROUTES = [
     title: 'Jim Kong | Portfolio',
     description:
       'Jim Kong is a Sydney-based full stack developer building web apps, AI tools, WordPress sites, and data-driven software.',
-    image: '/og/site.webp',
+    image: '/og/site.jpg',
     type: 'website',
     priority: '1.0',
     changefreq: 'monthly',
@@ -93,7 +108,7 @@ const CONTENT_ROUTES = [
     path: '/blog',
     title: 'Jim Kong | Blog',
     description: 'Articles about software projects, AI, photography, and travel by Jim Kong.',
-    image: '/og/site.webp',
+    image: '/og/site.jpg',
     type: 'website',
     priority: '0.8',
     changefreq: 'monthly',
@@ -104,7 +119,7 @@ const CONTENT_ROUTES = [
     title: 'Work | Jim Kong',
     description:
       'Every project Jim Kong has shipped, from AI products and mobile apps to client websites — each with its own case study.',
-    image: '/og/site.webp',
+    image: '/og/site.jpg',
     type: 'website',
     priority: '0.9',
     changefreq: 'monthly',
@@ -115,7 +130,7 @@ const CONTENT_ROUTES = [
     title: 'Resume | Jim Kong',
     description:
       'The full resume of Jim Kong, a Sydney-based full stack developer: experience, skills, education, and certifications, with a PDF download.',
-    image: '/og/site.webp',
+    image: '/og/site.jpg',
     type: 'website',
     priority: '0.9',
     changefreq: 'monthly',
@@ -171,7 +186,7 @@ export function parseProjects(source) {
 
 // Where a project's generated Open Graph card lives. One function so the route
 // table and the generator can never disagree about the filename.
-export const ogImageForSlug = (slug) => `/og/work/${slug}.webp`;
+export const ogImageForSlug = (slug) => `/og/work/${slug}.jpg`;
 
 // Project case studies. Slugs are read from the app's own project data so a new
 // project appears in the sitemap without anyone remembering to add it here.
@@ -222,7 +237,7 @@ export const NOINDEX_ROUTES = [
     description: 'The requested page could not be found.',
     // The site card, not a project screenshot: a shared dead link previewing
     // as the Hermes email client suggested the link went somewhere real.
-    image: '/og/site.webp',
+    image: '/og/site.jpg',
     type: 'website',
     noindex: true,
   },

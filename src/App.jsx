@@ -57,6 +57,11 @@ function useSectionReveal() {
     // Lazy-loaded sections (e.g. Testimonials) mount after this effect runs, so
     // their <section> isn't caught by the initial query. Watch for sections
     // added later and observe them too, otherwise they stay at opacity: 0.
+    //
+    // Scoped to <main>, not document.body. Every section lives inside main,
+    // while the assistant panel is a sibling of it — and watching the whole
+    // body meant each token the assistant streamed fired this callback to walk
+    // the new nodes looking for sections that were never going to be there.
     const mutationObserver = new MutationObserver((mutations) => {
       mutations.forEach((m) => {
         m.addedNodes.forEach((node) => {
@@ -66,7 +71,8 @@ function useSectionReveal() {
         });
       });
     });
-    mutationObserver.observe(document.body, { childList: true, subtree: true });
+    const main = document.getElementById('main-content');
+    if (main) mutationObserver.observe(main, { childList: true, subtree: true });
 
     return () => {
       observer.disconnect();

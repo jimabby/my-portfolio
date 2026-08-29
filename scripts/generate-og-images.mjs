@@ -1,4 +1,5 @@
-// Composes one Open Graph card per case study, plus the site-wide default.
+// Composes one Open Graph card per case study and per blog post, plus the
+// site-wide default.
 //
 // Every case study used to share /og/hermes.webp, so 22 different links all
 // previewed as the same Hermes screenshot — indistinguishable in a LinkedIn
@@ -17,10 +18,18 @@ import { createHash } from 'node:crypto';
 import { mkdir, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises';
 import { basename, join } from 'node:path';
 import sharp from 'sharp';
-import { AUTHOR, SITE_URL, caseStudyRoutes } from './site-routes.mjs';
+import { AUTHOR, BLOG_POSTS, SITE_URL, caseStudyRoutes } from './site-routes.mjs';
 
-const OUTPUT_DIR = join(process.cwd(), 'public', 'og', 'work');
-const SITE_CARD = join(process.cwd(), 'public', 'og', 'site.webp');
+const OG_DIR = join(process.cwd(), 'public', 'og');
+const OUTPUT_DIR = join(OG_DIR, 'work');
+const SITE_CARD = join(OG_DIR, 'site.jpg');
+
+// JPEG, not WebP. These URLs are fetched once by a crawler, so the format buys
+// nothing on the wire — and LinkedIn, which is the highest-intent place a
+// portfolio link gets shared, still will not render a WebP og:image at all.
+// Every card previewed as a bare title-and-link there.
+const CARD_FORMAT = { ext: 'jpg', mime: 'image/jpeg' };
+const encodeCard = (pipeline) => pipeline.jpeg({ quality: 88, mozjpeg: true });
 // Deliberately outside public/: everything under that directory is copied
 // verbatim into dist and served, and a build cache is not something visitors
 // should be able to fetch.
@@ -186,6 +195,40 @@ async function framedScreenshot(sourcePath) {
   };
 }
 
+// A blog post's card comes from one of two places, and both end up at exactly
+// 1200x630 so the dimensions the <head> declares are true.
+//
+// `art` is finished artwork drawn for that post — the decorative Hiro and
+// Housed cards, hand-composed by the one-off scripts alongside this one. It is
+// only normalised: fitted to the frame, never redrawn, because redrawing it
+// would throw the artwork away.
+//
+// `source` is an ordinary screenshot, composed into the same card layout the
+// case studies use. That is what a post without bespoke art gets, and it is
+// why adding a post no longer means remembering to make an image by hand.
+async function blogCard(post) {
+  if (post.art) {
+    const bytes = await readFile(join(process.cwd(), post.art));
+    return sharp(bytes).resize(WIDTH, HEIGHT, { fit: 'cover', position: 'attention' });
+  }
+
+  const svg = cardSvg({
+    title: post.title,
+    category: post.category || 'Article',
+  });
+  const screenshot = await framedScreenshot(join(process.cwd(), post.source));
+  return sharp(Buffer.from(svg)).composite([screenshot]);
+}
+
+// The bytes a blog card is built from, for the rebuild fingerprint.
+async function blogCardInputs(post) {
+  if (post.art) return [await readFile(join(process.cwd(), post.art))];
+  return [
+    cardSvg({ title: post.title, category: post.category || 'Article' }),
+    await readFile(join(process.cwd(), post.source)),
+  ];
+}
+
 // A card is rebuilt only when its inputs change, so repeat builds are cheap and
 // the committed output stays byte-stable in git.
 //
@@ -215,7 +258,7 @@ async function run() {
 
   for (const route of routes) {
     const slug = route.path.replace('/work/', '');
-    const name = `${slug}.webp`;
+    const name = `${slug}.${CARD_FORMAT.ext}`;
     expected.add(name);
 
     if (!route.source) {
@@ -244,10 +287,9 @@ async function run() {
     }
 
     const screenshot = await framedScreenshot(sourcePath);
-    await sharp(Buffer.from(svg))
-      .composite([screenshot])
-      .webp({ quality: 86 })
-      .toFile(join(OUTPUT_DIR, name));
+    await encodeCard(sharp(Buffer.from(svg)).composite([screenshot])).toFile(
+      join(OUTPUT_DIR, name)
+    );
     generated += 1;
   }
 
@@ -260,14 +302,57 @@ async function run() {
     }
   }
 
+  // Blog cards. Same cache, same output directory as the site card — one
+  // level up from the case studies, because that is where the route table has
+  // always pointed and changing it would break every shared link.
+  const blogExpected = new Set([basename(SITE_CARD)]);
+
+  for (const post of BLOG_POSTS) {
+    const slug = post.path.replace('/blog/', '');
+    const name = `${slug}.${CARD_FORMAT.ext}`;
+    blogExpected.add(name);
+
+    const declared = post.art || post.source;
+    if (!declared) {
+      console.warn(`No art or source declared for ${post.path} — skipping its card.`);
+      skipped += 1;
+      continue;
+    }
+    if (!(await exists(join(process.cwd(), declared)))) {
+      console.warn(`Missing ${declared} for ${post.path} — skipping its card.`);
+      skipped += 1;
+      continue;
+    }
+
+    const stamp = fingerprint(await blogCardInputs(post));
+    nextStamps[name] = stamp;
+
+    if (stamps[name] === stamp && (await exists(join(OG_DIR, name)))) {
+      reused += 1;
+      continue;
+    }
+
+    await encodeCard(await blogCard(post)).toFile(join(OG_DIR, name));
+    generated += 1;
+  }
+
   const siteSvg = siteCardSvg();
   const siteStamp = fingerprint([siteSvg]);
   nextStamps[basename(SITE_CARD)] = siteStamp;
   if (stamps[basename(SITE_CARD)] !== siteStamp || !(await exists(SITE_CARD))) {
-    await sharp(Buffer.from(siteSvg)).webp({ quality: 88 }).toFile(SITE_CARD);
+    await encodeCard(sharp(Buffer.from(siteSvg))).toFile(SITE_CARD);
     generated += 1;
   } else {
     reused += 1;
+  }
+
+  // Blog cards left behind by a renamed post or a format change. Scoped to
+  // files: `work/` is a directory in here and is cleaned by its own pass above.
+  for (const entry of await readdir(OG_DIR, { withFileTypes: true })) {
+    if (entry.isFile() && !blogExpected.has(entry.name)) {
+      await rm(join(OG_DIR, entry.name));
+      removed += 1;
+    }
   }
 
   await writeFile(STAMP_PATH, `${JSON.stringify(nextStamps, null, 2)}\n`, 'utf8');

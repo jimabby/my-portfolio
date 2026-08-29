@@ -22,6 +22,7 @@ import {
 // Shared with the Vite dev middleware so /rss.xml and /sitemap.xml are not
 // dead links in the environment they get clicked in.
 import { buildFeed, buildSitemap } from './feeds.mjs';
+import { buildLlmsTxt } from './llms.mjs';
 // One web app manifest per language, so installing from /ja gives an app that
 // opens in Japanese rather than at the English home page.
 import { allManifests, manifestPath } from './manifests.mjs';
@@ -31,6 +32,10 @@ import { projectSummaries } from '../src/i18n/projects.mjs';
 import { projectCaptions } from '../src/i18n/captions/index.mjs';
 
 const DIST_DIR = join(process.cwd(), 'dist');
+// llms.txt lists every project, and the project list only exists inside
+// Data.jsx — which imports .webp assets, so it is parsed as text here exactly
+// as site-routes.mjs and the Open Graph generator parse it.
+const PROJECT_DATA = join(process.cwd(), 'src', 'components', 'portfolio', 'Data.jsx');
 
 const HREFLANG = { en: 'en', 'zh-Hans': 'zh-Hans', 'zh-Hant': 'zh-Hant', ja: 'ja' };
 const OG_LOCALE = { en: 'en_US', 'zh-Hans': 'zh_CN', 'zh-Hant': 'zh_TW', ja: 'ja_JP' };
@@ -143,6 +148,7 @@ const replaceMeta = (html, route, lang) => {
     .replace(
       /<meta[^>]+property="og:image"[^>]*>/,
       `<meta property="og:image" content="${image}" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />`
     )
@@ -224,8 +230,13 @@ for (const { path, manifest } of allManifests()) {
 
 await writeFile(join(DIST_DIR, 'sitemap.xml'), buildSitemap(routes), 'utf8');
 await writeFile(join(DIST_DIR, 'rss.xml'), buildFeed(), 'utf8');
+await writeFile(
+  join(DIST_DIR, 'llms.txt'),
+  buildLlmsTxt(await readFile(PROJECT_DATA, 'utf8')),
+  'utf8'
+);
 
 console.log(
   `Generated ${routes.length} routes x ${LOCALES.length} languages, ` +
-    `plus ${LOCALES.length} manifests, sitemap.xml and rss.xml.`
+    `plus ${LOCALES.length} manifests, sitemap.xml, rss.xml and llms.txt.`
 );

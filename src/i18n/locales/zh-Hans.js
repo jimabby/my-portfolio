@@ -48,7 +48,6 @@ const dictionary = {
       '我是一名常驻悉尼的全栈开发工程师，对工作充满热情，全力以赴。',
     sayHello: '打个招呼',
     viewResume: '简历',
-    downloadCV: '下载简历',
     scrollDown: '向下滚动',
     currently: '目前',
     currentlyAt: '任职于',
@@ -61,7 +60,6 @@ const dictionary = {
     description:
       '作为一名全栈开发工程师，我负责设计兼具 UI/UX 体验的网页。我拥有多年经验，众多客户对我交付的项目都非常满意。',
     viewResume: '查看简历',
-    downloadResume: '下载简历',
     experience: '经验',
     experienceValue: '5 年以上工作经验',
     completed: '已完成',
@@ -153,7 +151,6 @@ const dictionary = {
     viewGallery: '查看图集',
     caseStudy: '项目详情',
     readArticle: '阅读文章',
-    moreDetails: '了解更多',
     openGallery: '打开 {title} 图集',
     closeGallery: '关闭图集',
     galleryLabel: '{title} 图集',
@@ -249,6 +246,14 @@ const dictionary = {
     intro:
       '共 {count} 个项目，涵盖 AI 产品、移动应用与客户网站。每个项目都有独立的详情页，包含截图与设计思路。',
     showing: '显示 {shown} / {total}',
+    searchPlaceholder: '搜索项目...',
+    searchAria: '搜索项目',
+    tagFilterAria: '按标签筛选项目',
+    tagsToggle: '按标签筛选',
+    filterByTag: '按 {tag} 筛选',
+    clearTags: '清除标签',
+    clearAll: '清除筛选',
+    noResults: '没有符合条件的项目。',
   },
   resume: {
     eyebrow: '简历',
@@ -300,6 +305,7 @@ const dictionary = {
     errorConfig:
       '当前环境未配置助手。请在 .env 文件中添加 GEMINI_API_KEY 并重启开发服务器。',
     errorUnavailable: '当前环境无法使用助手 API。',
+    errorTimeout: '等待时间过长，已停止接收回复。请再试一次。',
     starters: [
       'Jim 做过哪些项目？',
       '总结一下 Jim 的经验',

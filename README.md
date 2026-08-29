@@ -19,15 +19,16 @@ Runs `npm run images` first.
 
 Builds the app for production to the `dist` folder. Runs `npm run images`,
 `npm run facts` and `npm run csp` first, then generates per-route HTML, one
-web app manifest per language, `sitemap.xml`, `rss.xml`, and the service
-worker.
+web app manifest per language, `sitemap.xml`, `rss.xml`, `llms.txt`, and the
+service worker.
 
 ### `npm run images`
 
-Regenerates the responsive image variants in `public/responsive/` and the
-sizing metadata in `src/assets/image-manifest.json`. Idempotent — reruns skip
-anything already generated. `dev` and `build` both invoke it, so it is rarely
-needed on its own.
+Regenerates the responsive image variants in `public/responsive/` (AVIF and
+WebP at every width), the sizing metadata in `src/assets/image-manifest.json`,
+and the Open Graph cards in `public/og/`. Idempotent — reruns skip anything
+already generated. `dev` and `build` both invoke it, so it is rarely needed on
+its own.
 
 ### `npm run facts`
 
@@ -47,6 +48,14 @@ Refetch the self-hosted icon set (`src/assets/icons.css`) and typeface
 (`src/assets/fonts.css` + `src/assets/fonts/`). Both need the network and both
 commit their output, so ordinary builds and fresh clones never do. Run `icons`
 after using a new `bx-*`/`uil-*` class in a component.
+
+### `npm run icons:app`
+
+Re-encodes the PWA icons in `public/icons/`. They ship as design-tool exports
+at roughly four times the bytes they need, and two of them are in the service
+worker's precache list — so this is 736 kB off a first visit. Run it after
+replacing any icon artwork and commit the result. Not part of `build`: it
+rewrites committed files, which a build should never do.
 
 ### `npm run screenshots`
 
@@ -120,8 +129,15 @@ rather than as duplicates.
 Use `<Img>` from `src/components/image/Img.jsx` instead of a bare `<img>`. It
 reads `src/assets/image-manifest.json` to attach intrinsic `width`/`height`
 (preventing layout shift) and a `srcset` of down-scaled variants (so phones do
-not download full-resolution originals). Adding a new asset needs no extra
-wiring — run `npm run images` and it is picked up.
+not download full-resolution originals), and wraps the `<img>` in a `<picture>`
+that offers AVIF ahead of the WebP. Adding a new asset needs no extra wiring —
+run `npm run images` and it is picked up.
+
+The AVIF set is an offer, never a substitution: a browser that cannot decode it
+skips the `<source>` and takes the `<img>`'s own WebP `srcset`. `App.css` gives
+`picture` `display: contents` and its `source` `display: none`, so the `<img>`
+goes on participating in its parent's layout exactly as it did before the
+wrapper existed.
 
 `public/responsive/` is generated and gitignored; `image-manifest.json` is
 committed so a fresh clone renders sensible markup before the variants exist.
@@ -133,8 +149,10 @@ Adding or changing a blog post or a project means touching:
 - `src/components/blog/postsData.js` or `src/components/portfolio/Data.jsx`
   (the app's own data, including the `slug` and a post's `isoDate`)
 - `scripts/site-routes.mjs` — the route table behind the prerendered `<head>`,
-  the sitemap, and the RSS feed. Project case studies are read straight out of
-  `Data.jsx`, so only blog posts need adding here by hand.
+  the sitemap, the RSS feed, and `llms.txt`. Project case studies are read
+  straight out of `Data.jsx`, so only blog posts need adding here by hand. A
+  new post also declares where its Open Graph card comes from: `art` for
+  finished 1.91:1 artwork, or `source` for a screenshot to compose one from.
 
 The `/work` index and the AI assistant's project list are both derived from
 `Data.jsx` and need no separate edit. Résumé content (roles, education,

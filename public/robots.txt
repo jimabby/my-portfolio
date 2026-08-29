@@ -3,4 +3,9 @@ User-agent: *
 Disallow:
 Sitemap: https://jimkong-portfolio.vercel.app/sitemap.xml
 
-# sitemap.xml and rss.xml are generated at build time from scripts/site-routes.mjs
+# sitemap.xml, rss.xml and llms.txt are generated at build time from
+# scripts/site-routes.mjs
+
+# A plain-text index of this site for language models, generated from the
+# same route table as the sitemap. See https://llmstxt.org/
+LLM-Content: https://jimkong-portfolio.vercel.app/llms.txt

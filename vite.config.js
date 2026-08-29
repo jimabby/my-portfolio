@@ -187,6 +187,16 @@ function devFeeds() {
         const { allRoutes } = await import('./scripts/site-routes.mjs')
         send(res, buildSitemap(await allRoutes()))
       })
+
+      server.middlewares.use('/llms.txt', async (_req, res) => {
+        const { buildLlmsTxt } = await import('./scripts/llms.mjs')
+        const { readFile } = await import('node:fs/promises')
+        const source = await readFile('src/components/portfolio/Data.jsx', 'utf8')
+        // Plain text, not XML like the two above it.
+        res.setHeader('Content-Type', 'text/plain; charset=utf-8')
+        res.setHeader('Cache-Control', 'no-store')
+        res.end(buildLlmsTxt(source))
+      })
     },
   }
 }

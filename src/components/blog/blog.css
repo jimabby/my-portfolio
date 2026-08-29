@@ -202,8 +202,17 @@
 /* Layout & wrapper */
 /* =============== */
 
+/* Sized backwards from the text measure, not picked for the viewport.
+   This was 780px, and because every section card adds 3rem of padding on each
+   side, the actual column of text and images came out at 636px — narrower
+   than the case-study images (820px) and the /work list (900px) on the same
+   site, so a post read as a thin ribbon on a desktop screen.
+   900px matches /work and leaves 756px inside the card, which is a shade
+   under 80 characters at the body size: about as wide as running text can go
+   before the eye starts losing its place on the return sweep. Everything in
+   the card shares that one width, so every left and right edge lines up. */
 .blog__container {
-  max-width: 780px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 3rem 1.5rem 6rem;
 }

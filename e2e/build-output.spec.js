@@ -35,7 +35,7 @@ test.describe('prerendered head', () => {
     const html = await (await request.get('/blog/hermes')).text();
     expect(html).toContain('<meta property="og:type" content="article" />');
     expect(html).toContain('article:published_time');
-    expect(html).toContain('/og/hermes.webp');
+    expect(html).toContain('/og/hermes.jpg');
   });
 
   test('an indexable page says so exactly once', async ({ request }) => {
@@ -120,8 +120,72 @@ test.describe('generated files', () => {
     expect(new Date(expires).getTime()).toBeGreaterThan(Date.now());
   });
 
-  test('robots.txt points at the sitemap', async ({ request }) => {
+  test('robots.txt points at the sitemap and at llms.txt', async ({ request }) => {
     const text = await (await request.get('/robots.txt')).text();
     expect(text).toContain('Sitemap: https://jimkong-portfolio.vercel.app/sitemap.xml');
+    expect(text).toContain('LLM-Content: https://jimkong-portfolio.vercel.app/llms.txt');
+  });
+
+  // Generated from the same route table as the sitemap, so the failure this
+  // guards against is the one the sitemap already had: a URL listed for a page
+  // that is not there.
+  test('llms.txt lists only pages the site actually serves', async ({ request }) => {
+    const response = await request.get('/llms.txt');
+    expect(response.ok()).toBe(true);
+    expect(response.headers()['content-type']).toContain('text/plain');
+
+    const text = await response.text();
+    expect(text).toContain('# Jim Kong');
+    expect(text).toContain('## Projects');
+    expect(text).toContain('## Writing');
+
+    const paths = [...text.matchAll(/\]\(https:\/\/[^/]+(\/[^)]*)\)/g)].map((m) => m[1]);
+    expect(paths.length).toBeGreaterThan(20);
+
+    for (const path of paths) {
+      expect((await request.get(path)).ok(), `llms.txt links to ${path}`).toBe(true);
+    }
+  });
+
+  // WebP cards previewed as a bare title-and-link on LinkedIn, and three of the
+  // five blog cards were never resized at all — one was the 8256x5504 camera
+  // original, under a <head> that declared it 1200x630.
+  test('every Open Graph card is a real 1200x630 JPEG', async ({ request }) => {
+    const pages = ['/', '/blog/grand-hotel-taipei', '/blog/hermes', '/work/pockyt'];
+
+    for (const page of pages) {
+      const html = await (await request.get(page)).text();
+      const image = html.match(/<meta property="og:image" content="([^"]+)"/)?.[1];
+      expect(image, `${page} declares an og:image`).toBeTruthy();
+      expect(image, `${page} card is a JPEG`).toMatch(/\.jpg$/);
+      expect(html).toContain('<meta property="og:image:type" content="image/jpeg" />');
+
+      const card = await request.get(new URL(image).pathname);
+      expect(card.ok(), `${page} -> ${image}`).toBe(true);
+      expect(card.headers()['content-type']).toContain('image/jpeg');
+
+      // JFIF/EXIF headers vary, so the dimensions are read off the SOF marker
+      // rather than trusting a fixed offset.
+      const bytes = Buffer.from(await card.body());
+      let i = 2;
+      let size = null;
+      while (i < bytes.length - 9) {
+        if (bytes[i] !== 0xff) break;
+        const marker = bytes[i + 1];
+        const length = bytes.readUInt16BE(i + 2);
+        // SOF0/1/2, excluding the DHT/DAC/DRI markers in the same range.
+        if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
+          size = { h: bytes.readUInt16BE(i + 5), w: bytes.readUInt16BE(i + 7) };
+          break;
+        }
+        i += 2 + length;
+      }
+
+      expect(size, `${image} is decodable JPEG`).not.toBeNull();
+      expect(size, `${image} matches the dimensions the head declares`).toEqual({
+        w: 1200,
+        h: 630,
+      });
+    }
   });
 });

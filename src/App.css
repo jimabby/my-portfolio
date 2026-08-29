@@ -253,6 +253,27 @@ img {
   height: auto;
 }
 
+/* <Img> wraps its <img> in a <picture> to offer AVIF ahead of WebP. That
+   wrapper must not become the flex or grid item its <img> used to be, or
+   every gallery, card and thumbnail laid out around the image changes shape.
+   `display: contents` removes the picture's own box and lets the <img> go on
+   participating in the parent's layout exactly as before.
+
+   Safe here because no rule in this codebase selects an image by its position
+   in the tree — there is not one `> img` selector — so nothing is relying on
+   the <img> being a direct child of what now contains the <picture>. */
+picture {
+  display: contents;
+}
+
+/* And the <source> inside it must not be one either. It computes to
+   `display: block`, not `none` — so once the <picture> stopped generating a
+   box, the <source> became the FIRST grid item of every card, taking the
+   column the thumbnail belonged in and pushing the text to a row of its own. */
+picture > source {
+  display: none;
+}
+
 main {
   overflow: hidden;
 }

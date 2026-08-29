@@ -52,7 +52,7 @@ const CaseStudy = () => {
         type="article"
         // This project's own Open Graph card, composed at build time by
         // scripts/generate-og-images.mjs.
-        image={`/og/work/${project.slug}.webp`}
+        image={`/og/work/${project.slug}.jpg`}
       />
       <CaseStudySchema project={project} summary={summary} />
       <Header />

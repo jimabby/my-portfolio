@@ -48,7 +48,6 @@ const dictionary = {
       "I am a Full Stack developer based in Sydney, and I'm very passionate and dedicated to my work.",
     sayHello: 'Say Hello',
     viewResume: 'Resume',
-    downloadCV: 'Download CV',
     scrollDown: 'Scroll Down',
     currently: 'Currently',
     currentlyAt: 'at',
@@ -61,7 +60,6 @@ const dictionary = {
     description:
       'Full Stack developer, I create web pages with UI/UX user interface. I have years of experience and many clients are satisfied with the projects carried out.',
     viewResume: 'View Resume',
-    downloadResume: 'Download Resume',
     experience: 'Experience',
     experienceValue: '5+ years Working',
     completed: 'Completed',
@@ -153,7 +151,6 @@ const dictionary = {
     viewGallery: 'View gallery',
     caseStudy: 'Case study',
     readArticle: 'Read the story',
-    moreDetails: 'More details',
     openGallery: 'Open {title} gallery',
     closeGallery: 'Close gallery',
     galleryLabel: '{title} gallery',
@@ -250,6 +247,14 @@ const dictionary = {
     intro:
       '{count} projects, from AI products and mobile apps to client websites. Each one has its own case study with screenshots and the thinking behind it.',
     showing: 'Showing {shown} of {total}',
+    searchPlaceholder: 'Search projects...',
+    searchAria: 'Search projects',
+    tagFilterAria: 'Filter projects by tag',
+    tagsToggle: 'Filter by tag',
+    filterByTag: 'Filter by {tag}',
+    clearTags: 'Clear tags',
+    clearAll: 'Clear filters',
+    noResults: 'No projects match those filters.',
   },
   resume: {
     eyebrow: 'Resume',
@@ -302,6 +307,7 @@ const dictionary = {
     errorConfig:
       'The assistant is not configured in this environment. Add GEMINI_API_KEY to a .env file and restart the dev server.',
     errorUnavailable: 'The assistant API is not available in this environment.',
+    errorTimeout: 'That took too long, so I stopped waiting. Please try again.',
     starters: [
       'What projects has Jim built?',
       "Summarize Jim's experience",

@@ -33,6 +33,20 @@ const MANIFEST_PATH = join(SOURCE_DIR, 'image-manifest.json');
 const WIDTHS = [480, 960, 1440];
 const SOURCE_EXTENSIONS = new Set(['.webp', '.jpg', '.jpeg', '.png']);
 
+// Both formats at every width. AVIF lands roughly a third smaller than WebP at
+// matched quality and is supported by every browser this site targets, but it
+// is offered rather than substituted: <Img> emits it as a <source> ahead of
+// the WebP, so anything that cannot decode it silently takes the WebP instead
+// and nobody gets a broken image.
+//
+// Quality is per-format on purpose. AVIF at the same number looks better and
+// weighs more than WebP does, so matching the numbers would hand back the
+// saving that is the whole reason for encoding it.
+const FORMATS = [
+  { ext: 'webp', encode: (pipeline) => pipeline.webp({ quality: 78 }) },
+  { ext: 'avif', encode: (pipeline) => pipeline.avif({ quality: 55, effort: 4 }) },
+];
+
 async function collectImages(dir) {
   const found = [];
   for (const entry of await readdir(dir, { withFileTypes: true })) {
@@ -92,16 +106,18 @@ async function run() {
         .digest('base64url')
         .slice(0, 8);
 
-      const variantName = `${stem}-${targetWidth}-${hash}.webp`;
-      expected.add(variantName);
+      for (const { ext, encode } of FORMATS) {
+        const variantName = `${stem}-${targetWidth}-${hash}.${ext}`;
+        expected.add(variantName);
 
-      if (await exists(join(OUTPUT_DIR, variantName))) {
-        reused += 1;
-      } else {
-        await sharp(bytes)
-          .resize({ width: targetWidth, withoutEnlargement: true })
-          .webp({ quality: 78 })
-          .toFile(join(OUTPUT_DIR, variantName));
+        if (await exists(join(OUTPUT_DIR, variantName))) {
+          reused += 1;
+          continue;
+        }
+
+        await encode(
+          sharp(bytes).resize({ width: targetWidth, withoutEnlargement: true })
+        ).toFile(join(OUTPUT_DIR, variantName));
         generated += 1;
       }
 

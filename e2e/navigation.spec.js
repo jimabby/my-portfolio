@@ -112,3 +112,64 @@ test('only the active language’s dictionary is fetched', async ({ page }) => {
   // other two are what splitting the dictionary was for.
   expect(localeChunks.sort()).toEqual(['en', 'ja']);
 });
+
+// The point of putting the filters in the URL is that the URL alone
+// reproduces the view — so this reloads into one rather than clicking to it.
+test('a filtered /work URL opens already filtered, and can be shared', async ({ page }) => {
+  await page.goto('/work?category=wordpress');
+
+  // The list is client-rendered, so wait for it rather than counting an empty
+  // container that React has not reached yet.
+  await expect(page.locator('.workindex__item').first()).toBeVisible();
+  const filtered = await page.locator('.workindex__item').count();
+  expect(filtered).toBeGreaterThan(0);
+  await expect(page.getByRole('button', { name: 'Wordpress', exact: true })).toHaveAttribute(
+    'aria-pressed',
+    'true'
+  );
+
+  // Clearing returns to the bare URL, so an unfiltered /work is never a second
+  // URL for the same page.
+  await page.getByRole('button', { name: 'Clear filters' }).click();
+  await expect(page).toHaveURL(/\/work$/);
+  // Polled, not counted once: the URL settles a render before the list does.
+  await expect
+    .poll(() => page.locator('.workindex__item').count())
+    .toBeGreaterThan(filtered);
+});
+
+test('searching /work narrows the list and survives a reload', async ({ page }) => {
+  await page.goto('/work');
+  await expect(page.locator('.workindex__item').first()).toBeVisible();
+  await page.getByRole('textbox', { name: 'Search projects' }).fill('hvac');
+
+  await expect(page).toHaveURL(/q=hvac/);
+  const narrowed = await page.locator('.workindex__item').count();
+  expect(narrowed).toBeGreaterThan(0);
+
+  await page.reload();
+  await expect(page.locator('.workindex__item')).toHaveCount(narrowed);
+});
+
+// The AVIF set is an offer, not a substitution: Chromium takes it, and a
+// browser that cannot decode it must still find a WebP srcset on the <img>.
+test('images offer AVIF ahead of the WebP fallback', async ({ page }) => {
+  const served = [];
+  page.on('response', (response) => {
+    if (/\/responsive\/.+\.(avif|webp)$/.test(response.url())) served.push(response.url());
+  });
+
+  await page.goto('/work');
+  await page.locator('.workindex__item').first().scrollIntoViewIfNeeded();
+
+  const first = page.locator('picture').first();
+  await expect(first.locator('source[type="image/avif"]')).toHaveAttribute(
+    'srcset',
+    /\.avif \d+w/
+  );
+  await expect(first.locator('img')).toHaveAttribute('srcset', /\.webp \d+w/);
+
+  await expect
+    .poll(() => served.filter((url) => url.endsWith('.avif')).length)
+    .toBeGreaterThan(0);
+});

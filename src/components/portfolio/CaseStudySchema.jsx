@@ -20,7 +20,7 @@ const CaseStudySchema = ({ project, summary }) => {
   const { lang } = useLanguage();
 
   const url = `${SITE_URL}${localizedPath(lang, projectPath(project))}`;
-  const image = `${SITE_URL}/og/work/${project.slug}.webp`;
+  const image = `${SITE_URL}/og/work/${project.slug}.jpg`;
   const author = { '@type': 'Person', name: AUTHOR, url: `${SITE_URL}/` };
 
   const creativeWork = {

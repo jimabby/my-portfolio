@@ -44,7 +44,7 @@ const HousedRedesign = () => {
       <BlogSEO
         title={TITLE}
         description={DESCRIPTION}
-        ogImage="housed-redesign.webp"
+        ogImage="housed-redesign.jpg"
         slug="housed-redesign"
       />
       <Header />
