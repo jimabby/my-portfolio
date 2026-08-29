@@ -3,6 +3,10 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import Works from '../components/portfolio/Works.jsx';
 import { LanguageProvider } from '../i18n/LanguageContext.jsx';
+import { projectsData } from '../components/portfolio/Data';
+
+// Mirrors Works.jsx's PAGE_SIZE: the assertions below are about page one.
+const PAGE_SIZE = 9;
 
 // Project cards link to their case-study page, so a router is required.
 const renderWorks = () =>
@@ -36,15 +40,24 @@ describe('Works pagination', () => {
     expect(document.activeElement).toHaveClass('work__img-button');
   });
 
-  // Hermes is written up on the blog, so its card links there instead of to a
-  // near-empty case study page that would compete with the post in search.
+  // A project written up on the blog links there instead of to a near-empty
+  // case study page that would compete with the post in search. Read off the
+  // data rather than naming projects: every new write-up added one more of
+  // these links, and a hard-coded single one broke the moment there were two.
   it('sends a project with a blog article to the post', () => {
     renderWorks();
 
-    expect(screen.getByRole('link', { name: /Read the story/ })).toHaveAttribute(
-      'href',
-      '/blog/hermes'
-    );
+    const expected = projectsData
+      .slice(0, PAGE_SIZE)
+      .filter((project) => project.article)
+      .map((project) => project.article);
+
+    expect(expected.length).toBeGreaterThan(0);
+    expect(
+      screen
+        .getAllByRole('link', { name: /Read the story/ })
+        .map((link) => link.getAttribute('href'))
+    ).toEqual(expected);
     expect(screen.getAllByRole('link', { name: /Case study/ }).length).toBeGreaterThan(0);
   });
 

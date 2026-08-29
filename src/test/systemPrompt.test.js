@@ -17,10 +17,15 @@ const source = readFileSync('src/components/portfolio/Data.jsx', 'utf8');
 // portfolio" for work the visitor is looking at. That is exactly how seven
 // projects went missing before the list was generated.
 describe('assistant system prompt', () => {
+  // Line endings are normalised on both sides. The file is committed with LF
+  // and the generator writes LF, but git checks it out as CRLF on Windows
+  // (core.autocrlf), so a byte comparison failed on every Windows clone while
+  // passing in CI — a staleness check that cried wolf on one platform only.
   it('has the generated facts file committed in sync with the app data', () => {
+    const lf = (text) => text.replace(/\r\n/g, '\n');
     const committed = readFileSync('api/projectFacts.js', 'utf8');
-    expect(committed, 'api/projectFacts.js is stale — run `npm run facts`').toBe(
-      renderModule(buildFacts(source, BLOG_POSTS))
+    expect(lf(committed), 'api/projectFacts.js is stale — run `npm run facts`').toBe(
+      lf(renderModule(buildFacts(source, BLOG_POSTS)))
     );
   });
 
