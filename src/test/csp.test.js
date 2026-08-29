@@ -26,6 +26,21 @@ describe('content security policy', () => {
     }
   });
 
+  // The bootstrap snippet spans several lines, so its line endings are part
+  // of what gets hashed. git commits index.html with LF and checks it out as
+  // CRLF on Windows, and `npm run csp` runs from prebuild — so before the
+  // bodies were normalised, any Windows build rewrote vercel.json with a hash
+  // that did not match the LF file Vercel serves. That fails silently in
+  // production: the theme bootstrap is blocked and every cold load flashes
+  // the wrong theme.
+  it('hashes the same on a CRLF checkout as on an LF one', () => {
+    const lf = html.replace(/\r\n/g, '\n');
+    const crlf = lf.replace(/\n/g, '\r\n');
+
+    expect(cspFrom(crlf)).toBe(cspFrom(lf));
+    expect(csp).toBe(cspFrom(lf));
+  });
+
   it('no longer allows arbitrary inline script', () => {
     const scriptSrc = csp.split('; ').find((directive) => directive.startsWith('script-src'));
     expect(scriptSrc).not.toContain("'unsafe-inline'");

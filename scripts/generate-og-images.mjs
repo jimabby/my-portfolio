@@ -236,11 +236,19 @@ async function blogCardInputs(post) {
 // placement live in code rather than in the SVG string, so hashing only the
 // SVG left every landscape card stale after the frame moved — the cache said
 // "unchanged" about a layout that had changed.
-const LAYOUT = await readFile(new URL(import.meta.url), 'utf8');
+// Normalised to LF, like every text input below. git checks these files out
+// as CRLF on Windows and commits them as LF, so hashing the raw bytes made
+// every stamp platform-dependent: CI saw all 28 cards as stale on every
+// build and og-cache.json could never settle.
+const toLf = (text) => text.replace(/\r\n/g, '\n');
+
+const LAYOUT = toLf(await readFile(new URL(import.meta.url), 'utf8'));
 
 function fingerprint(parts) {
   const hash = createHash('sha256').update(LAYOUT);
-  for (const part of parts) hash.update(part);
+  // Strings are card SVGs, built from template literals in this file and so
+  // carrying its line endings; Buffers are image bytes and are left alone.
+  for (const part of parts) hash.update(typeof part === 'string' ? toLf(part) : part);
   return hash.digest('base64url').slice(0, 16);
 }
 

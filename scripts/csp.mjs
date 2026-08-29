@@ -19,9 +19,19 @@ import { createHash } from 'node:crypto';
 
 // Only <script> elements with no `type` and no `src` — the ones a browser
 // executes and CSP therefore governs.
+//
+// Bodies are normalised to LF before they are hashed. The snippet spans
+// several lines, so its line endings are part of what CSP hashes — and git
+// commits index.html with LF while checking it out as CRLF on Windows
+// (core.autocrlf). Hashing the working copy therefore produced a different
+// policy on Windows than in CI, and because `npm run csp` runs from prebuild,
+// any Windows build quietly rewrote vercel.json with a hash that does not
+// match the LF file Vercel actually serves. The symptom in production is not
+// an error: the theme bootstrap is silently blocked and every cold load
+// flashes the wrong theme. LF is what ships, so LF is what gets hashed.
 export function inlineScripts(html) {
   return [...html.matchAll(/<script(?![^>]*\b(?:src|type)=)[^>]*>([\s\S]*?)<\/script>/g)].map(
-    ([, body]) => body
+    ([, body]) => body.replace(/\r\n/g, '\n')
   );
 }
 
