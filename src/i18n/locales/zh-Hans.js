@@ -146,6 +146,13 @@ const dictionary = {
       housed: '全栈开发工程师',
     },
   },
+  desk: {
+    title: '精选作品',
+    subtitle: '点击任意作品查看详情',
+    openPiece: '打开 {title}',
+    close: '关闭详情',
+    viewAll: '查看全部作品',
+  },
   portfolio: {
     title: '作品',
     subtitle: '最新作品',

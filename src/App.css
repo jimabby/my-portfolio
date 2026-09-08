@@ -283,6 +283,22 @@ main {
   scroll-margin-top: calc(var(--header-height) + 2rem);
 }
 
+/* Settle onto the nearest heading when scrolling stops. `proximity`, never
+   `mandatory`: it only pulls the page onto a boundary if you already stopped
+   near one, so a section taller than the viewport can still be read at any
+   offset and the wheel is never taken away from the visitor. Desktop only —
+   on a phone every section is several screens tall and snapping fights
+   momentum scrolling — and off entirely when motion is not wanted. */
+@media screen and (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+
+  .main .section {
+    scroll-snap-align: start;
+  }
+}
+
 .section__title {
   font-size: var(--h1-font-size);
   color: var(--title-color);

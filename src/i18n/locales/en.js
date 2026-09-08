@@ -146,6 +146,13 @@ const dictionary = {
       housed: 'Full Stack Developer',
     },
   },
+  desk: {
+    title: 'Selected work',
+    subtitle: 'Click a piece to open it',
+    openPiece: 'Open {title}',
+    close: 'Close details',
+    viewAll: 'See all work',
+  },
   portfolio: {
     title: 'Portfolio',
     subtitle: 'Most recent works',

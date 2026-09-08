@@ -146,6 +146,13 @@ const dictionary = {
       housed: '全端開發工程師',
     },
   },
+  desk: {
+    title: '精選作品',
+    subtitle: '點擊任一作品查看詳情',
+    openPiece: '開啟 {title}',
+    close: '關閉詳情',
+    viewAll: '查看全部作品',
+  },
   portfolio: {
     title: '作品',
     subtitle: '最新作品',

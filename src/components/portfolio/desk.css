@@ -1,0 +1,651 @@
+/* The flat-lay, built as a lit scene rather than a layout: the stage carries a
+   perspective, the scatter is a plane inside it that leans with the pointer,
+   and every piece is an object on that plane. Position comes from custom
+   properties set inline per piece (--x, --y, --w, --rot); the mobile rules at
+   the bottom simply stop reading them and flatten the whole thing back into a
+   grid, with no JS branching on viewport width. */
+
+.desk__stage {
+  position: relative;
+  max-width: 1080px;
+  margin: 0 auto;
+  /* Tuned to the layout below: tall enough to clear the bottom row's caption
+     chips, and no taller, or the section ends in a band of dead space. */
+  aspect-ratio: 16 / 8.5;
+
+  /* The camera. A long enough lens that pieces at the edges of the table are
+     not visibly stretched, placed a little above centre so the surface recedes
+     the way a table shot from standing height does. */
+  perspective: 2000px;
+  perspective-origin: 50% 28%;
+
+  /* One light, upper left, so every shadow in the scene falls the same way.
+     Hard-coding a direction is the whole point — matched shadows are most of
+     what makes a flat-lay read as photographed rather than assembled. */
+  --desk-shadow: 0 1px 2px hsla(var(--hue), 32%, 18%, 0.18),
+    7px 11px 20px -8px hsla(var(--hue), 32%, 18%, 0.34),
+    18px 32px 56px -20px hsla(var(--hue), 32%, 18%, 0.3);
+  --desk-shadow-lift: 0 2px 3px hsla(var(--hue), 32%, 18%, 0.16),
+    16px 26px 40px -12px hsla(var(--hue), 32%, 18%, 0.36),
+    40px 68px 104px -28px hsla(var(--hue), 32%, 18%, 0.36);
+
+  /* Not a glass pane — a device bezel is an object in the scene, not a raised
+     surface, so it keeps one deliberate colour in both themes rather than
+     refracting the page behind it. */
+  --desk-bezel: hsl(var(--hue), 14%, 16%);
+  --desk-bezel-edge: hsla(0, 0%, 100%, 0.14);
+}
+
+[data-theme='dark'] .desk__stage {
+  --desk-bezel: hsl(220, 14%, 22%);
+  --desk-bezel-edge: hsla(0, 0%, 100%, 0.16);
+  --desk-shadow: 0 1px 2px hsla(220, 40%, 2%, 0.5),
+    7px 11px 20px -8px hsla(220, 40%, 2%, 0.62),
+    18px 32px 56px -20px hsla(220, 40%, 2%, 0.58);
+  --desk-shadow-lift: 0 2px 3px hsla(220, 40%, 2%, 0.5),
+    16px 26px 40px -12px hsla(220, 40%, 2%, 0.68),
+    40px 68px 104px -28px hsla(220, 40%, 2%, 0.66);
+}
+
+/* The surface the pieces are lying on: a warm key from the upper left, a broad
+   fill under the middle of the table, and a ring of falloff around the edge of
+   the pool.
+
+   Every stop reaches zero alpha before the element's own edge. The first pass
+   let the outer colour run to the corners, and once blurred that read on the
+   page as a soft grey rectangle — a smudge behind the work rather than light
+   on a surface. */
+.desk__stage::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -12% -8%;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      46% 52% at 32% 20%,
+      hsla(40, 82%, 84%, 0.62),
+      hsla(40, 82%, 84%, 0) 74%
+    ),
+    radial-gradient(
+      58% 62% at 52% 44%,
+      hsla(var(--hue), 30%, 100%, 0.72),
+      hsla(var(--hue), 30%, 100%, 0) 78%
+    ),
+    radial-gradient(
+      72% 76% at 50% 46%,
+      hsla(var(--hue), 26%, 44%, 0) 46%,
+      hsla(var(--hue), 26%, 44%, 0.24) 82%,
+      hsla(var(--hue), 26%, 44%, 0) 100%
+    );
+  filter: blur(26px);
+  /* Fades the light to nothing at the element's own edges. Tuning each
+     gradient to end inside the box is a losing game — an ellipse sized in
+     percentages of the box always gets clipped somewhere before its last
+     stop, and every clip is a visible seam. One mask ends all of them. */
+  -webkit-mask-image: radial-gradient(closest-side, #000 52%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 52%, transparent 100%);
+}
+
+[data-theme='dark'] .desk__stage::before {
+  background:
+    radial-gradient(
+      46% 52% at 32% 20%,
+      hsla(34, 62%, 60%, 0.2),
+      hsla(34, 62%, 60%, 0) 74%
+    ),
+    radial-gradient(
+      58% 62% at 52% 44%,
+      hsla(220, 16%, 44%, 0.36),
+      hsla(220, 16%, 44%, 0) 78%
+    ),
+    radial-gradient(
+      72% 76% at 50% 46%,
+      hsla(220, 30%, 3%, 0) 54%,
+      hsla(220, 30%, 3%, 0.4) 84%,
+      hsla(220, 30%, 3%, 0) 100%
+    );
+}
+
+/* Grain. The last thing that separates a render from a frame of film, kept
+   just under the threshold where anyone would name it. Sits above the scatter
+   so it falls across the pieces the way it would across a photograph, and
+   below the detail panel, which is interface and stays clean. */
+.desk__stage::after {
+  content: '';
+  position: absolute;
+  z-index: 4;
+  inset: -12% -8%;
+  pointer-events: none;
+  opacity: 0.05;
+  filter: grayscale(1);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  -webkit-mask-image: radial-gradient(closest-side, #000 58%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 58%, transparent 100%);
+}
+
+[data-theme='dark'] .desk__stage::after {
+  opacity: 0.07;
+}
+
+/* An invisible click-catcher for the empty surface around the pieces, so
+   clicking off a piece closes the panel. It sits *under* the scatter — a
+   translucent sheet over the top would read as a grey box with hard edges, and
+   would swallow the hover on the pieces it dimmed. The dimming is done by the
+   pieces themselves instead, further down. */
+.desk__scrim {
+  position: absolute;
+  inset: -1.5rem;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.desk__stage.is-open .desk__scrim {
+  pointer-events: auto;
+}
+
+/* The tabletop. It keeps the stage's perspective so a lifted piece travels in
+   real depth, but at rest its own transform is identity — and that matters
+   more than it sounds.
+
+   Any non-identity 3D transform here makes the browser rasterise the whole
+   subtree once and project the result, which resamples every screenshot on the
+   table. Measured on the Simba Health piece, a 3.5deg resting tilt took the
+   Laplacian variance of that crop from 385 to 83: about four fifths of the
+   fine detail in the work, gone, in the state every visitor sees and every
+   capture of the page records. A tilt nobody could name is not worth that.
+
+   So the plane only leans while the pointer is actually on it, when the
+   visitor is looking at the scene rather than reading the screenshots — and
+   settles back to perfectly sharp the moment they leave. No will-change
+   either: measured identical, and it would pin the soft raster permanently. */
+.desk__scatter {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--drift-x, 0deg)) rotateY(var(--drift-y, 0deg));
+  transition: transform 0.4s var(--ease-out);
+}
+
+.desk__piece {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  z-index: 1;
+  /* --rot is set inline; --r is the value actually used, so a piece can be
+     straightened when it is picked up — an inline --r could not be overridden
+     by a class. --z lifts it toward the camera, --tx/--ty tilt it toward the
+     pointer. */
+  --r: var(--rot);
+  --z: 0px;
+  transform: translateZ(var(--z)) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg))
+    rotate(var(--r));
+  transition: transform 0.4s var(--ease-out), opacity 0.35s var(--ease),
+    filter 0.35s var(--ease);
+}
+
+/* Picking a piece up: it rises toward the camera, half-straightens, and its
+   shadow lengthens to match. translateZ rather than scale, so it travels
+   through the same perspective as everything else instead of just growing. */
+.desk__piece:hover,
+.desk__piece:focus-within {
+  z-index: 2;
+  --z: 36px;
+  --r: calc(var(--rot) * 0.35);
+}
+
+.desk__stage.is-open .desk__piece.is-selected {
+  z-index: 5;
+  --z: 78px;
+  --r: 0deg;
+}
+
+/* Rack focus: everything that is not the open piece falls out of focus, which
+   is the shot the reference gets with a real lens. Hovering one pulls it back,
+   so moving from project to project stays a single click. */
+.desk__stage.is-open .desk__piece:not(.is-selected) {
+  opacity: 0.55;
+  filter: saturate(0.45) blur(2.5px);
+}
+
+.desk__stage.is-open .desk__piece:not(.is-selected):hover,
+.desk__stage.is-open .desk__piece:not(.is-selected):focus-within {
+  opacity: 1;
+  filter: none;
+}
+
+.desk__button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.desk__button:focus-visible {
+  outline: none;
+}
+
+.desk__frame {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid var(--glass-border-strong);
+  box-shadow: var(--desk-shadow);
+  transition: box-shadow 0.4s var(--ease-out), border-color 0.4s var(--ease-out);
+}
+
+.desk__piece:hover .desk__frame,
+.desk__piece:focus-within .desk__frame,
+.desk__stage.is-open .desk__piece.is-selected .desk__frame {
+  box-shadow: var(--desk-shadow-lift);
+}
+
+/* The pieces settle onto the table as the section arrives, one after another.
+   Two things this rule has to get right:
+
+   Keyed to .section--visible, which the page's IntersectionObserver adds when
+   the section scrolls into view. The desk is not lazy-loaded, so an animation
+   on the bare class would play out on page load with the section still a
+   screen below the fold and nobody watching.
+
+   And it lives on the button, not on the piece, so it never fights the piece's
+   own 3D transform for control of the same property. */
+.section--visible .desk__button {
+  animation: desk-settle 0.7s var(--ease-out) backwards;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+@keyframes desk-settle {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.desk__button:focus-visible .desk__frame {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
+}
+
+.desk__piece:hover .desk__frame,
+.desk__piece:focus-within .desk__frame {
+  border-color: var(--accent-color);
+}
+
+.desk__shot {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ─── Browser chrome ─── */
+
+.desk__chrome {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  /* A percentage here would resolve against an auto-height parent and do
+     nothing; 14px is about the right share of a ~340px-wide piece. */
+  height: 14px;
+  padding: 0 6px;
+  background: var(--glass-bg-strong);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.desk__dot {
+  flex: 0 0 auto;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--glass-border-strong);
+}
+
+.desk__bar {
+  flex: 1 1 auto;
+  height: 5px;
+  margin-left: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--glass-border);
+}
+
+/* ─── Phone bezel ─── */
+
+.desk__piece--phone .desk__frame {
+  padding: 4px;
+  border-radius: 16px;
+  border-color: var(--desk-bezel-edge);
+  background: var(--desk-bezel);
+}
+
+.desk__piece--phone .desk__shot {
+  border-radius: 12px;
+}
+
+.desk__notch {
+  position: absolute;
+  z-index: 1;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30%;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: hsla(0, 0%, 100%, 0.28);
+}
+
+/* ─── Caption chip ─── */
+
+.desk__label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(2px);
+  margin-top: 0.5rem;
+  padding: 0.2rem 0.6rem;
+  white-space: nowrap;
+  font-size: var(--smaller-font-size);
+  font-weight: var(--font-medium);
+  color: var(--title-color);
+  border-radius: var(--radius-pill);
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-inner), var(--glass-shadow);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.desk__piece:hover .desk__label,
+.desk__piece:focus-within .desk__label,
+.desk__piece.is-selected .desk__label {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ─── Detail panel ─── */
+
+.desk__panel {
+  position: absolute;
+  z-index: 6;
+  top: 50%;
+  width: min(340px, 40%);
+  padding: 1.5rem 1.4rem;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur-strong);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  border: 1px solid var(--glass-border-strong);
+  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
+  animation: desk-panel-in 0.35s var(--ease-out) both;
+  /* Keeps the sheet clear of the header on desktop and of the bottom nav bar
+     on mobile when it is scrolled into view. */
+  scroll-margin-top: calc(var(--header-height) + 1rem);
+  scroll-margin-bottom: calc(var(--header-height) + 1rem);
+}
+
+.desk__panel:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
+}
+
+.desk__panel--right {
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.desk__panel--left {
+  left: 0;
+  transform: translateY(-50%);
+}
+
+@keyframes desk-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+.desk__panel-close {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  font-size: 1.15rem;
+  color: var(--text-color);
+  cursor: pointer;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg-soft);
+  transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.desk__panel-close:hover {
+  color: var(--title-color);
+  border-color: var(--glass-border-strong);
+}
+
+.desk__panel-category {
+  display: inline-block;
+  margin-bottom: var(--mb-0-5);
+  padding: 0.15rem 0.6rem;
+  font-size: var(--smaller-font-size);
+  font-weight: var(--font-medium);
+  color: var(--accent-color);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg-soft);
+}
+
+.desk__panel-title {
+  font-size: var(--h2-font-size);
+  color: var(--title-color);
+  margin-bottom: var(--mb-0-5);
+  /* The panel is a fixed width and some titles are long ("Simba Education -
+     New Build"); without this they push the close button off the corner. */
+  padding-right: 1.5rem;
+}
+
+.desk__panel-summary {
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+  margin-bottom: var(--mb-1);
+}
+
+.desk__panel-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 var(--mb-1-5);
+  padding: 0;
+  list-style: none;
+}
+
+.desk__panel-tag {
+  padding: 0.2rem 0.6rem;
+  font-size: var(--smaller-font-size);
+  color: var(--text-color);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg-soft);
+}
+
+.desk__panel-link {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ─── Footer link to the full grid ─── */
+
+.desk__all {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: var(--mb-2-5);
+  font-size: var(--small-font-size);
+  font-weight: var(--font-medium);
+  color: var(--accent-color);
+}
+
+.desk__all:hover {
+  color: var(--accent-color-strong);
+}
+
+/* ─── Collapse to a grid on small screens ───
+   A seven-piece scatter on a 390px viewport gives ~50px targets, so below the
+   tablet breakpoint the pieces stop being positioned, the scrim goes away and
+   the panel becomes a sheet under the grid. */
+
+@media screen and (max-width: 991px) {
+  .desk__stage {
+    aspect-ratio: 16 / 9.5;
+  }
+
+  .desk__panel {
+    width: min(320px, 46%);
+    padding: 1.25rem 1.1rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  /* No camera here: there is no pointer to move it, the scene is a grid rather
+     than a table, and a perspective on a column of tall screenshots only
+     distorts them. */
+  .desk__stage {
+    aspect-ratio: auto;
+    perspective: none;
+  }
+
+  .desk__stage::before {
+    inset: -4%;
+    filter: blur(48px);
+  }
+
+  .desk__stage::after {
+    display: none;
+  }
+
+  .desk__scrim {
+    display: none;
+  }
+
+  .desk__scatter {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: end;
+    gap: 2.25rem 1.25rem;
+    transform-style: flat;
+    transform: none;
+  }
+
+  .desk__piece,
+  .desk__piece:hover,
+  .desk__piece:focus-within,
+  .desk__stage.is-open .desk__piece.is-selected {
+    position: static;
+    width: auto;
+    transform: none;
+  }
+
+  /* A blurred thumbnail is unreadable at this size, and there is no depth for
+     it to signal — the fade alone says which piece is open. */
+  .desk__stage.is-open .desk__piece:not(.is-selected) {
+    filter: saturate(0.45);
+  }
+
+  .desk__piece--phone {
+    max-width: 62%;
+    justify-self: center;
+  }
+
+  .desk__chrome {
+    height: 11px;
+  }
+
+  /* Always visible here — there is no hover on a phone — and allowed to wrap.
+     Half these titles ("Simba Education - New Build") ellipsise away to
+     nothing at this width, which is worse than a second line. */
+  .desk__label {
+    position: static;
+    transform: none;
+    display: block;
+    margin: 0.6rem auto 0;
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
+    opacity: 1;
+  }
+
+  .desk__panel,
+  .desk__panel--left,
+  .desk__panel--right {
+    position: static;
+    width: auto;
+    margin-top: var(--mb-2);
+    transform: none;
+  }
+
+  @keyframes desk-panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* The global reduced-motion block already flattens durations; what is left is
+   the movement itself. The scene keeps its light and its shadows — those are
+   static — but nothing lifts, leans, settles or racks focus. The pointer
+   listener bails out under the same query, so --drift-* is never even set. */
+@media (prefers-reduced-motion: reduce) {
+  .desk__scatter {
+    transform: none;
+  }
+
+  .desk__piece,
+  .desk__piece:hover,
+  .desk__piece:focus-within,
+  .desk__stage.is-open .desk__piece.is-selected {
+    transform: rotate(var(--rot));
+  }
+
+  .desk__stage.is-open .desk__piece:not(.is-selected) {
+    filter: saturate(0.45);
+  }
+
+  .section--visible .desk__button {
+    animation: none;
+  }
+
+  .desk__panel {
+    animation: none;
+  }
+}

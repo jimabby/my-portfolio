@@ -146,6 +146,13 @@ const dictionary = {
       housed: 'フルスタック開発者',
     },
   },
+  desk: {
+    title: '主な作品',
+    subtitle: '作品をクリックすると詳細が開きます',
+    openPiece: '{title} を開く',
+    close: '詳細を閉じる',
+    viewAll: 'すべての作品を見る',
+  },
   portfolio: {
     title: '作品',
     subtitle: '最新の作品',

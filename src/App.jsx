@@ -7,6 +7,7 @@ import Contact from './components/contact/Contact';
 import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
+import Desk from './components/portfolio/Desk';
 import Portfolio from './components/portfolio/Portfolio';
 import Qualification from './components/qualification/Qualification';
 import ScrollUp from './components/scrollup/ScrollUp';
@@ -108,6 +109,10 @@ function PortfolioPage() {
 
       <main className="main" id="main-content">
         <Home />
+        {/* The flat-lay of flagship work sits directly under the hero: it is
+            the thing you scroll into, while the full 24-project grid stays in
+            <Portfolio /> further down. */}
+        <Desk />
         <About />
         <Skills />
         <Services />
