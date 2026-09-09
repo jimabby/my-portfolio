@@ -52,7 +52,23 @@ jobs:
 
       - run: npx playwright install --with-deps chromium
 
-      # playwright.config.js builds the site and starts `vite preview` itself.
+      # public/responsive is gitignored, so without this every run re-encodes
+      # all ~610 variants from scratch — 160s of CPU, most of it AVIF, which
+      # is what pushed the build past the old webServer timeout. The generator
+      # skips any output that already exists for that exact content, so a hit
+      # turns the whole step into a no-op. restore-keys lets a near-miss
+      # (one image edited) still reuse the rest; the fresh key is saved after.
+      - uses: actions/cache@v4
+        with:
+          path: public/responsive
+          key: responsive-${{ hashFiles('src/assets/**/*.webp', 'src/assets/**/*.jpg', 'src/assets/**/*.jpeg', 'src/assets/**/*.png', 'scripts/generate-responsive-images.mjs') }}
+          restore-keys: responsive-
+
+      # Built here rather than inside playwright.config.js's webServer command
+      # so a build failure reports itself instead of becoming a mute timeout.
+      - run: npm run build
+
+      # playwright.config.js starts `vite preview` over the dist/ built above.
       - run: npm run e2e
 
       - uses: actions/upload-artifact@v4

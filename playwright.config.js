@@ -7,10 +7,13 @@ import { defineConfig, devices } from '@playwright/test';
 // the generated manifests and feeds, the service worker, and the 404 shell.
 // Those are produced by four build scripts and asserted by nothing.
 //
-// `npm run e2e` builds and previews automatically. Chromium only — these check
-// that the pipeline emitted the right bytes, not that the CSS renders the same
-// in every engine.
+// Locally `npm run e2e` builds and previews automatically. In CI the workflow
+// builds in its own step instead — see webServer below. Chromium only: these
+// check that the pipeline emitted the right bytes, not that the CSS renders
+// the same in every engine.
 const PORT = 4318;
+
+const PREVIEW = `npx vite preview --port ${PORT} --strictPort`;
 
 export default defineConfig({
   testDir: './e2e',
@@ -26,9 +29,15 @@ export default defineConfig({
   webServer: {
     // `vite preview` serves dist/ the way Vercel does for static files, which
     // is what makes the prerendered .html assertions below meaningful.
-    command: `npm run build && npx vite preview --port ${PORT} --strictPort`,
+    //
+    // The build stays out of this command in CI. Playwright swallows the
+    // server's output until the URL answers, so a cold image build that ran
+    // long used to surface only as `Timed out waiting 180000ms` with nothing
+    // to read; the workflow now builds in a step of its own, where a failure
+    // prints its own error and the cache can be restored around it.
+    command: process.env.CI ? PREVIEW : `npm run build && ${PREVIEW}`,
     url: `http://localhost:${PORT}`,
     reuseExistingServer: !process.env.CI,
-    timeout: 180_000,
+    timeout: process.env.CI ? 60_000 : 180_000,
   },
 });
