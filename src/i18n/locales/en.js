@@ -49,7 +49,6 @@ const dictionary = {
       "I am a Full Stack developer based in Sydney, and I'm very passionate and dedicated to my work.",
     sayHello: 'Say Hello',
     viewResume: 'Resume',
-    scrollDown: 'Scroll Down',
     currently: 'Currently',
     currentlyAt: 'at',
     currentlySince: 'since {year}',
@@ -57,10 +56,9 @@ const dictionary = {
   },
   about: {
     title: 'About me',
-    subtitle: 'My introduction',
     description:
       'Full Stack developer, I create web pages with UI/UX user interface. I have years of experience and many clients are satisfied with the projects carried out.',
-    viewResume: 'View Resume',
+    viewResume: 'Resume',
     experience: 'Experience',
     experienceValue: '5+ years Working',
     completed: 'Completed',
@@ -70,7 +68,6 @@ const dictionary = {
   },
   skills: {
     title: 'Skills',
-    subtitle: 'My Technical Level',
     frontend: 'Frontend developer',
     backend: 'Backend developer',
     advanced: 'Advanced',
@@ -85,7 +82,7 @@ const dictionary = {
     fullstack: {
       title: 'Full-Stack Developer',
       description:
-        'I build complete web applications end to end — responsive React frontends, robust APIs, and databases — and take them from idea to production deployment.',
+        'I build complete web applications end to end: responsive React frontends, robust APIs, and databases, taken from idea to production deployment.',
       items: [
         'I design and build functional, user-friendly websites.',
         'I work with HTML, CSS, JavaScript and database for development.',
@@ -97,7 +94,7 @@ const dictionary = {
     software: {
       title: 'Software Developer',
       description:
-        'I design and ship reliable software — from desktop tools to AI automation agents — with a focus on clean architecture and maintainable code.',
+        'I design and ship reliable software, from desktop tools to AI automation agents, with a focus on clean architecture and maintainable code.',
       items: [
         'I design and build software applications to solve complex problems.',
         'I use programming languages like Python, Java, and C++.',
@@ -121,7 +118,6 @@ const dictionary = {
   },
   qualification: {
     title: 'Qualification',
-    subtitle: 'My personal journey',
     education: 'Education',
     experience: 'Experience',
     present: 'Present',
@@ -155,7 +151,6 @@ const dictionary = {
   },
   portfolio: {
     title: 'Portfolio',
-    subtitle: 'Most recent works',
     viewGallery: 'View gallery',
     caseStudy: 'Case study',
     readArticle: 'Read the story',
@@ -191,7 +186,6 @@ const dictionary = {
   },
   contact: {
     title: 'Get in Touch',
-    subtitle: 'Contact me',
     talkToMe: 'Talk to me',
     writeProject: 'Write me your project',
     email: 'Email',
@@ -244,7 +238,7 @@ const dictionary = {
     notFoundTitle: 'Page not found | Jim Kong',
     workTitle: 'Work | Jim Kong',
     workDesc:
-      'Every project Jim Kong has shipped, from AI products and mobile apps to client websites — each with its own case study.',
+      'Every project Jim Kong has shipped, from AI products and mobile apps to client websites, each with its own case study.',
     resumeTitle: 'Resume | Jim Kong',
     resumeDesc:
       'The full resume of Jim Kong, a Sydney-based full stack developer: experience, skills, education, and certifications, with a PDF download.',
@@ -267,7 +261,7 @@ const dictionary = {
   resume: {
     eyebrow: 'Resume',
     summary:
-      'Full stack developer in Sydney with 5+ years building web applications, AI tools, and data-driven software — from React front ends to Python and Node.js services.',
+      'Full stack developer in Sydney with 5+ years building web applications, AI tools, and data-driven software, from React front ends to Python and Node.js services.',
     download: 'Download PDF',
     viewWork: 'See the work',
     certifications: 'Certifications',

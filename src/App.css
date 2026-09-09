@@ -299,15 +299,39 @@ main {
   }
 }
 
+/* Section headers are left-aligned and carry the container's own measure and
+   gutters, so a heading starts on the same vertical line as the content under
+   it. They used to be centred, which put every one of the nine sections on the
+   same axis and made the page read as one repeated template. Left-aligning
+   them leaves the open space down the right-hand side instead, where it reads
+   as deliberate rather than as a margin nobody chose. */
+.section__title,
+.section__subtitle {
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  text-align: left;
+}
+
 .section__title {
   font-size: var(--h1-font-size);
   color: var(--title-color);
   letter-spacing: var(--tracking-display);
   font-weight: var(--font-semi-bold);
+  line-height: 1.15;
+  margin-bottom: 3.5rem;
 }
 
-/* Set as an eyebrow above the title's optical weight rather than as a second
-   line of prose under it — the label, not a sentence. */
+/* Most sections no longer take a label at all: an uppercase kicker over every
+   heading is the thing that makes a page look generated. Three of the nine
+   carry one, and never two in a row. Where one is present it sits under the
+   title as a label, and the title gives up its own bottom margin to it. */
+.section__title:has(+ .section__subtitle) {
+  margin-bottom: 0;
+}
+
 .section__subtitle {
   display: block;
   font-size: var(--smaller-font-size);
@@ -317,11 +341,6 @@ main {
   letter-spacing: var(--tracking-eyebrow);
   font-weight: var(--font-medium);
   opacity: 0.75;
-}
-
-.section__title,
-.section__subtitle {
-  text-align: center;
 }
 
 .container {

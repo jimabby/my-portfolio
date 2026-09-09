@@ -87,7 +87,6 @@ const Contact = () => {
   return (
     <section className='contact section' id='contact'>
       <h2 className='section__title'>{t('contact.title')}</h2>
-      <span className='section__subtitle'>{t('contact.subtitle')}</span>
 
       <div className='contact__container container grid'>
         <div className='contact__content'>

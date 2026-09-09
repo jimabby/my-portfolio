@@ -1,7 +1,10 @@
+/* Anchored to the container's left edge, on the same axis as the section
+   heading, rather than centred between two equal margins. The two cards come
+   to 760 of the 1024, and the space they leave on the right is the point. */
 .skills__container {
   grid-template-columns: repeat(2, 360px);
   column-gap: 2.5rem;
-  justify-content: center;
+  justify-content: start;
 }
 
 .skills__content {
@@ -20,7 +23,7 @@
   text-transform: uppercase;
   letter-spacing: var(--tracking-eyebrow);
   color: var(--text-color);
-  text-align: center;
+  text-align: left;
   margin-bottom: var(--mb-1-5);
 }
 

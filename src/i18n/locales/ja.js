@@ -49,7 +49,6 @@ const dictionary = {
       'シドニーを拠点とするフルスタック開発者です。仕事に情熱を持ち、全力で取り組んでいます。',
     sayHello: 'ご挨拶',
     viewResume: '履歴書',
-    scrollDown: 'スクロール',
     currently: '現在',
     currentlyAt: '—',
     currentlySince: '{year}年から',
@@ -57,10 +56,9 @@ const dictionary = {
   },
   about: {
     title: '私について',
-    subtitle: '自己紹介',
     description:
       'フルスタック開発者として、UI/UX を備えた Web ページを制作しています。長年の経験があり、多くのクライアントに成果物をご満足いただいています。',
-    viewResume: '履歴書を見る',
+    viewResume: '履歴書',
     experience: '経験',
     experienceValue: '5 年以上の実務経験',
     completed: '完了',
@@ -70,7 +68,6 @@ const dictionary = {
   },
   skills: {
     title: 'スキル',
-    subtitle: '私の技術レベル',
     frontend: 'フロントエンド開発',
     backend: 'バックエンド開発',
     advanced: '上級',
@@ -121,7 +118,6 @@ const dictionary = {
   },
   qualification: {
     title: '資格',
-    subtitle: '私の歩み',
     education: '学歴',
     experience: '職歴',
     present: '現在',
@@ -155,7 +151,6 @@ const dictionary = {
   },
   portfolio: {
     title: '作品',
-    subtitle: '最新の作品',
     viewGallery: 'ギャラリーを見る',
     caseStudy: 'ケーススタディ',
     readArticle: '記事を読む',
@@ -191,7 +186,6 @@ const dictionary = {
   },
   contact: {
     title: 'お問い合わせ',
-    subtitle: '連絡する',
     talkToMe: 'お気軽にどうぞ',
     writeProject: 'プロジェクトについて教えてください',
     email: 'メール',

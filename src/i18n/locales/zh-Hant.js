@@ -49,7 +49,6 @@ const dictionary = {
       '我是一名常駐雪梨的全端開發工程師，對工作充滿熱情，全力以赴。',
     sayHello: '打聲招呼',
     viewResume: '履歷',
-    scrollDown: '向下捲動',
     currently: '目前',
     currentlyAt: '任職於',
     currentlySince: '自 {year} 年起',
@@ -57,10 +56,9 @@ const dictionary = {
   },
   about: {
     title: '關於我',
-    subtitle: '自我介紹',
     description:
       '身為全端開發工程師，我負責設計兼具 UI/UX 體驗的網頁。我擁有多年經驗，眾多客戶對我交付的專案都非常滿意。',
-    viewResume: '檢視履歷',
+    viewResume: '履歷',
     experience: '經驗',
     experienceValue: '5 年以上工作經驗',
     completed: '已完成',
@@ -70,7 +68,6 @@ const dictionary = {
   },
   skills: {
     title: '技能',
-    subtitle: '我的技術水平',
     frontend: '前端開發',
     backend: '後端開發',
     advanced: '熟練',
@@ -121,7 +118,6 @@ const dictionary = {
   },
   qualification: {
     title: '資歷',
-    subtitle: '我的個人歷程',
     education: '學歷',
     experience: '工作經歷',
     present: '至今',
@@ -155,7 +151,6 @@ const dictionary = {
   },
   portfolio: {
     title: '作品',
-    subtitle: '最新作品',
     viewGallery: '檢視圖庫',
     caseStudy: '專案詳情',
     readArticle: '閱讀文章',
@@ -191,7 +186,6 @@ const dictionary = {
   },
   contact: {
     title: '取得聯絡',
-    subtitle: '聯絡我',
     talkToMe: '與我交流',
     writeProject: '告訴我你的專案',
     email: '電子郵件',

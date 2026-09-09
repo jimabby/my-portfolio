@@ -49,7 +49,6 @@ const dictionary = {
       '我是一名常驻悉尼的全栈开发工程师，对工作充满热情，全力以赴。',
     sayHello: '打个招呼',
     viewResume: '简历',
-    scrollDown: '向下滚动',
     currently: '目前',
     currentlyAt: '任职于',
     currentlySince: '自 {year} 年起',
@@ -57,10 +56,9 @@ const dictionary = {
   },
   about: {
     title: '关于我',
-    subtitle: '自我介绍',
     description:
       '作为一名全栈开发工程师，我负责设计兼具 UI/UX 体验的网页。我拥有多年经验，众多客户对我交付的项目都非常满意。',
-    viewResume: '查看简历',
+    viewResume: '简历',
     experience: '经验',
     experienceValue: '5 年以上工作经验',
     completed: '已完成',
@@ -70,7 +68,6 @@ const dictionary = {
   },
   skills: {
     title: '技能',
-    subtitle: '我的技术水平',
     frontend: '前端开发',
     backend: '后端开发',
     advanced: '熟练',
@@ -121,7 +118,6 @@ const dictionary = {
   },
   qualification: {
     title: '资历',
-    subtitle: '我的个人历程',
     education: '教育',
     experience: '工作经历',
     present: '至今',
@@ -155,7 +151,6 @@ const dictionary = {
   },
   portfolio: {
     title: '作品',
-    subtitle: '最新作品',
     viewGallery: '查看图集',
     caseStudy: '项目详情',
     readArticle: '阅读文章',
@@ -191,7 +186,6 @@ const dictionary = {
   },
   contact: {
     title: '取得联系',
-    subtitle: '联系我',
     talkToMe: '与我交流',
     writeProject: '告诉我你的项目',
     email: '邮箱',
