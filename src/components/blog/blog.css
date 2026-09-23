@@ -1023,3 +1023,80 @@
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
+
+/* =============================== */
+/* VIDEO                           */
+/* =============================== */
+
+/* A poster until clicked, then the YouTube iframe in the same 16:9 box, so
+   pressing play moves nothing on the page. */
+.blog__video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #0b1020;
+}
+
+.blog__video iframe,
+.blog__video-play {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.blog__video-play {
+  display: block;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.blog__video-play picture,
+.blog__video-poster {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blog__video-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.65);
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.blog__video-play:hover .blog__video-icon,
+.blog__video-play:focus-visible .blog__video-icon {
+  background: #c4302b;
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.blog__video-play:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: -3px;
+}
+
+/* Charts ship as a light and a dark SVG; show the one matching the theme. */
+.blog__chart--dark {
+  display: none;
+}
+
+[data-theme='dark'] .blog__chart--light {
+  display: none;
+}
+
+[data-theme='dark'] .blog__chart--dark {
+  display: block;
+}

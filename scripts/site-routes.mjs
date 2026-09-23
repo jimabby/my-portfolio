@@ -44,6 +44,15 @@ export const localizedPath = (lang, path = '/') => {
 // 4.4 MB, under a <head> that declared it 1200x630.
 export const BLOG_POSTS = [
   {
+    path: '/blog/policy-time-machine',
+    title: "Policy Time Machine - Try Tomorrow's Rules on Yesterday's Decisions",
+    description:
+      'An Airflow project that replays two years of past decisions under a proposed rule, shows which sentence caused each change, and turns human rulings into a regression suite for the next proposal.',
+    image: '/og/policy-time-machine.jpg',
+    published: '2026-09-24',
+    art: 'scripts/og-art/policy-time-machine.webp',
+  },
+  {
     path: '/blog/housed-redesign',
     title: 'Rebuilding Housed - From Brochure Site to Booking Platform',
     description:

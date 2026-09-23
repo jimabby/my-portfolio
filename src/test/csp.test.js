@@ -66,6 +66,14 @@ describe('content security policy', () => {
     }
   });
 
+  // Only the blog's YouTube player may be framed, and only from the
+  // privacy-enhanced host; anything wider would let an injected iframe load
+  // arbitrary pages.
+  it('frames nothing but the privacy-enhanced YouTube player', () => {
+    const frameSrc = csp.split('; ').find((directive) => directive.startsWith('frame-src'));
+    expect(frameSrc).toBe('frame-src https://www.youtube-nocookie.com');
+  });
+
   it('allows the service worker it registers', () => {
     expect(csp).toContain("worker-src 'self'");
   });

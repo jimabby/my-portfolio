@@ -3,8 +3,23 @@ import mmodeThumb   from '../../assets/m-mode/Nikon-Z8-m-mode.webp';
 import grandHotelTaipeiThumb from '../../assets/taipei-taoyuan/taipei-taoyuan-9.webp';
 import hiroThumb from '../../assets/hiro/hiro.webp';
 import housedRedesignThumb from '../../assets/housed-redesign/housed-redesign-home.webp';
+import policyTimeMachineThumb from '../../assets/policy-time-machine/ptm-video-poster.webp';
 
 export const posts = [
+  {
+    id: 6,
+    slug: 'policy-time-machine',
+    isoDate: '2026-09-24',
+    key: 'policyTimeMachine',
+    title: 'Policy Time Machine — Try Tomorrow’s Rules on Yesterday’s Decisions',
+    category: 'Project',
+    date: 'Sep 2026',
+    readTime: '8 min read',
+    tags: ['AI', 'Airflow', 'Project'],
+    thumbnail: policyTimeMachineThumb,
+    excerpt:
+      'An Airflow project that replays two years of past decisions under a proposed rule, shows which sentence caused each change, and turns human rulings into a regression suite for the next proposal.',
+  },
   {
     id: 5,
     slug: 'housed-redesign',

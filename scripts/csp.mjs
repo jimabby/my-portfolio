@@ -52,6 +52,10 @@ export function buildCsp(hashes) {
     "font-src 'self' data:",
     "img-src 'self' data:",
     "connect-src 'self' https://va.vercel-scripts.com https://vitals.vercel-insights.com",
+    // The click-to-load player in src/components/blog/VideoEmbed.jsx, and
+    // nothing else. The privacy-enhanced host only; its poster is served from
+    // this origin, so img-src stays 'self'.
+    "frame-src https://www.youtube-nocookie.com",
     // The service worker registered by src/registerServiceWorker.js.
     "worker-src 'self'",
     "manifest-src 'self'",
