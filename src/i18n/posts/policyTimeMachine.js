@@ -20,7 +20,7 @@ const en = {
   videoTitle: 'Policy Time Machine — three-minute demo',
   videoPlay: 'Play the three-minute demo video',
   videoCaption:
-    'The three-minute demo. Every number in it comes from a synthetic fixture replayed offline, with no API key.',
+    'The three-minute demo, including the backfill running in Airflow and a reviewer’s form on a waiting task. Every number in it comes from a synthetic fixture.',
 
   // TOC
   tocProblem: 'The question nobody can answer',
@@ -164,6 +164,8 @@ const en = {
     'Once a model was writing rules, a trimmed-down eval was no longer safe enough. The evaluator now walks the parsed expression node by node and refuses anything it does not explicitly support.',
   lessonsItem4:
     'When a human review times out, Airflow falls back to its defaults, which here was the most generous outcome. A review the clock answered is now refused rather than written into the permanent record.',
+  lessonsItem5:
+    'Mapping the review over two lists at once gave Airflow a cross product: eight contested cases became 64 review tasks, most showing one case’s question over another case’s evidence, and none of the answers could be recorded. The review now maps over pairs, one task per case, and the form shows the facts as they stood on the decision date.',
   lessonsP2:
     'The project finished with more than 1,500 tests. The README charts are regenerated from the fixture on every build, so a chart cannot outlive the number it draws.',
 
@@ -193,7 +195,7 @@ const zhHans = {
     'Policy Time Machine 让这个问题有了答案。它在拟议规则下重放过去两年的决定，只使用每个决定当天已知的事实，指出每一处变化是哪一句条款造成的，并请人来裁定少数真正重要的个案。这些裁定会成为一套回归测试，之后每一次规则修改都必须通过。',
   videoTitle: 'Policy Time Machine — 三分钟演示',
   videoPlay: '播放三分钟演示视频',
-  videoCaption: '三分钟演示。其中每个数字都来自离线重放的合成数据集，无需 API 密钥。',
+  videoCaption: '三分钟演示，包括在 Airflow 中运行的 backfill，以及等待中的任务上的审核表单。其中每个数字都来自合成数据集。',
 
   tocProblem: '没人能回答的问题',
   tocReplay: '倒带与重放',
@@ -311,6 +313,8 @@ const zhHans = {
     '一旦由模型来编写规则，精简版的 eval 就不再够安全了。现在的求值器会逐个节点遍历解析后的表达式，拒绝任何未明确支持的内容。',
   lessonsItem4:
     '人工审核超时时，Airflow 会回退到默认值，而在这里默认值是最宽松的结果。现在，由时钟“回答”的审核会被拒绝，而不会写进永久记录。',
+  lessonsItem5:
+    '同时对两个列表做映射，Airflow 得到的是笛卡尔积：8 个有争议的案例变成了 64 个审核任务，大多数把一个案例的问题配上另一个案例的证据，而且没有一个答案能被记录。现在审核按成对的数据映射，每个案例一个任务，表单也显示决定当日已知的事实。',
   lessonsP2: '项目完成时有超过 1,500 个测试。README 中的图表会在每次构建时从数据集重新生成，因此图表不会比它所画的数字活得更久。',
 
   tryItHeading: '亲自试试',
@@ -336,7 +340,7 @@ const zhHant = {
     'Policy Time Machine 讓這個問題有了答案。它在擬議規則下重播過去兩年的決定，只使用每個決定當天已知的事實，指出每一處變化是哪一句條款造成的，並請人來裁定少數真正重要的個案。這些裁定會成為一套回歸測試，之後每一次規則修改都必須通過。',
   videoTitle: 'Policy Time Machine — 三分鐘示範',
   videoPlay: '播放三分鐘示範影片',
-  videoCaption: '三分鐘示範。其中每個數字都來自離線重播的合成資料集，無需 API 金鑰。',
+  videoCaption: '三分鐘示範，包括在 Airflow 中執行的 backfill，以及等待中的任務上的審核表單。其中每個數字都來自合成資料集。',
 
   tocProblem: '沒人能回答的問題',
   tocReplay: '倒帶與重播',
@@ -452,6 +456,8 @@ const zhHant = {
     '一旦由模型來撰寫規則，精簡版的 eval 就不再夠安全了。現在的求值器會逐個節點走訪解析後的運算式，拒絕任何未明確支援的內容。',
   lessonsItem4:
     '人工審核逾時時，Airflow 會回退到預設值，而在這裡預設值是最寬鬆的結果。現在，由時鐘「回答」的審核會被拒絕，而不會寫進永久紀錄。',
+  lessonsItem5:
+    '同時對兩個列表做映射，Airflow 得到的是笛卡兒積：8 個有爭議的案例變成了 64 個審核任務，大多數把一個案例的問題配上另一個案例的證據，而且沒有一個答案能被記錄。現在審核按成對的資料映射，每個案例一個任務，表單也顯示決定當日已知的事實。',
   lessonsP2: '專案完成時有超過 1,500 個測試。README 中的圖表會在每次建置時從資料集重新產生，因此圖表不會比它所畫的數字活得更久。',
 
   tryItHeading: '親自試試',
@@ -477,7 +483,7 @@ const ja = {
     'Policy Time Machine は、この問いに答えを出せるようにします。提案されたルールのもとで過去2年分の判断をリプレイし、各判断の日付時点で分かっていた事実だけを使います。そして、どの一文が各変化を生んだかを示し、本当に重要な少数のケースを人に裁定してもらいます。その裁定は、今後のすべてのルール変更が通過しなければならない回帰テストになります。',
   videoTitle: 'Policy Time Machine — 3分間のデモ',
   videoPlay: '3分間のデモ動画を再生',
-  videoCaption: '3分間のデモ。登場する数字はすべて、オフラインでリプレイした合成データセットによるもので、API キーは不要です。',
+  videoCaption: '3分間のデモ。Airflow で実行される backfill と、待機中のタスクに表示されるレビューフォームも映っています。登場する数字はすべて合成データセットによるものです。',
 
   tocProblem: '誰にも答えられない問い',
   tocReplay: '巻き戻してリプレイする',
@@ -592,6 +598,8 @@ const ja = {
     'モデルがルールを書くようになると、機能を絞った eval ではもう安全とは言えません。評価器は今では解析済みの式をノードごとにたどり、明示的にサポートしていないものはすべて拒否します。',
   lessonsItem4:
     '人のレビューがタイムアウトすると Airflow はデフォルト値に戻りますが、ここではそれが最も寛容な結果でした。時計が「答えた」レビューは、永続的な記録に書き込まれず、拒否されるようになりました。',
+  lessonsItem5:
+    '2つのリストに同時にマッピングすると、Airflow はその直積を作ります。争点のある8件が64件のレビュータスクになり、その多くはある案件の質問に別の案件の証拠を並べたもので、どの回答も記録できませんでした。現在はペア単位でマッピングして1件につき1タスクとし、フォームには判断日時点で分かっていた事実を表示しています。',
   lessonsP2: 'プロジェクトは1,500件を超えるテストで完成しました。README のグラフはビルドのたびにデータセットから再生成されるため、グラフが描いている数字より長生きすることはありません。',
 
   tryItHeading: '試してみる',

@@ -34,7 +34,7 @@ const DESCRIPTION =
 const REPO_URL = 'https://github.com/jimabby/policy-time-machine';
 // The id from the YouTube URL. Emptied, the player links to the video file in
 // the repository instead.
-const YOUTUBE_ID = '_m8U_cvHXvA';
+const YOUTUBE_ID = 's17FHWoOkDA';
 const VIDEO_FALLBACK = `${REPO_URL}/blob/main/policy_time_machine_demo.mp4`;
 
 // Both variants are in the DOM and blog.css shows the one matching the theme,
@@ -264,6 +264,7 @@ const PolicyTimeMachine = () => {
                 <li>{t('posts.policyTimeMachine.lessonsItem2')}</li>
                 <li>{t('posts.policyTimeMachine.lessonsItem3')}</li>
                 <li>{t('posts.policyTimeMachine.lessonsItem4')}</li>
+                <li>{t('posts.policyTimeMachine.lessonsItem5')}</li>
               </ul>
 
               <p>{t('posts.policyTimeMachine.lessonsP2')}</p>
