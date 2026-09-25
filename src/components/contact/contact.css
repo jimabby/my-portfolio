@@ -8,8 +8,12 @@
 
 .contact__title {
   text-align: left;
-  font-size: var(--h3-font-size);
+  font-family: var(--mono-font);
+  font-size: 0.72rem;
   font-weight: var(--font-medium);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-color);
   margin-bottom: var(--mb-1-5);
 }
 
@@ -26,83 +30,180 @@
   grid-auto-rows: 1fr;
 }
 
+/* Tickets. A stub on the left carries the icon, torn along a perforation —
+   the dashed rule, and two half-circle bites out of the edges made with a
+   mask, so the page shows through them in either grade. */
 .contact__card {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-inner), var(--glass-shadow);
-  padding: 1.15rem;
-  border-radius: var(--radius-md);
-  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  --stub: 70px;
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--stub) 1fr;
+  grid-template-rows: auto auto auto;
+  align-content: center;
+  column-gap: 1.2rem;
+  padding: 1rem 1.2rem 1rem 0;
+  text-align: left;
+  color: hsl(38, 30%, 90%);
+  background:
+    linear-gradient(90deg, hsla(0, 0%, 100%, 0.06) 0 var(--stub), transparent var(--stub)),
+    var(--film-black);
+  border-radius: var(--radius-sm);
+  -webkit-mask:
+    radial-gradient(circle 9px at var(--stub) 0, transparent 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle 9px at var(--stub) 100%, transparent 98%, #000) bottom / 100% 51% no-repeat;
+  mask:
+    radial-gradient(circle 9px at var(--stub) 0, transparent 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle 9px at var(--stub) 100%, transparent 98%, #000) bottom / 100% 51% no-repeat;
+  filter: drop-shadow(4px 8px 10px hsla(28, 40%, 10%, 0.25));
+  transition: transform 0.45s var(--ease-out);
+}
+
+.contact__card::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: var(--stub);
+  border-left: 1px dashed hsla(38, 30%, 90%, 0.35);
+}
+
+.contact__card:nth-child(2) {
+  background:
+    linear-gradient(90deg, hsla(0, 0%, 100%, 0.06) 0 var(--stub), transparent var(--stub)),
+    radial-gradient(80% 120% at 100% 0, hsla(9, 70%, 45%, 0.35), transparent 70%),
+    var(--film-black);
+}
+
+.contact__card:nth-child(3) {
+  background:
+    linear-gradient(90deg, hsla(0, 0%, 100%, 0.06) 0 var(--stub), transparent var(--stub)),
+    radial-gradient(80% 120% at 100% 0, hsla(186, 60%, 38%, 0.35), transparent 70%),
+    var(--film-black);
+}
+
+.contact__card:first-child {
+  background:
+    linear-gradient(90deg, hsla(0, 0%, 100%, 0.06) 0 var(--stub), transparent var(--stub)),
+    radial-gradient(80% 120% at 100% 0, hsla(38, 70%, 50%, 0.3), transparent 70%),
+    var(--film-black);
 }
 
 .contact__card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
+  transform: rotate(-1.2deg) translateX(4px);
 }
 
 .contact__card-icon {
-  font-size: 1.9rem;
-  color: var(--title-color-dark);
-  margin-bottom: var(--mb-0-25);
-}
-
-.contact__card-title,
-.contact__card-data {
-  font-size: var(--small-font-size);
+  grid-row: 1 / 4;
+  align-self: center;
+  justify-self: center;
+  font-size: 1.7rem;
+  color: hsl(38, 62%, 66%);
 }
 
 .contact__card-title {
+  font-family: var(--mono-font);
+  font-size: 0.64rem;
   font-weight: var(--font-medium);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: hsla(38, 30%, 90%, 0.55);
 }
 
 .contact__card-data {
   display: block;
-  margin-bottom: var(--mb-0-75);
+  font-family: var(--display-font);
+  font-size: 1.35rem;
+  line-height: 1.2;
+  margin-bottom: 0.3rem;
+  word-break: break-word;
+  color: hsl(38, 30%, 95%);
 }
 
 .contact__button {
-  color: var(--text-color);
-  font-size: var(--small-font-size);
+  color: hsl(38, 62%, 66%);
+  font-family: var(--mono-font);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  column-gap: 0.25rem;
+  column-gap: 0.3rem;
 }
 
 .contact__button-icon {
   font-size: 1rem;
-  transition: 0.3s;
+  transition: transform 0.3s var(--ease-out);
 }
 
 .contact__button:hover {
-  color: var(--accent-color);
+  color: hsl(38, 30%, 96%);
 }
 
 .contact__button:hover .contact__button-icon {
   transform: translateX(0.25rem);
 }
 
+/* The form is a page of screenplay: cream bond in both grades (it is a prop,
+   not a surface of the interface), Courier throughout, a scene heading at the
+   top, and fields that are ruled lines rather than boxes. */
 .contact__form {
+  --paper: hsl(42, 40%, 96%);
+  --ink: hsl(28, 20%, 12%);
+  --ink-soft: hsl(28, 10%, 42%);
+  position: relative;
   width: 100%;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  padding: 2.5rem 2rem;
-  box-shadow: var(--glass-inner), var(--glass-shadow);
+  background:
+    linear-gradient(90deg, transparent 2.6rem, hsla(9, 70%, 50%, 0.28) 2.6rem calc(2.6rem + 1px), transparent calc(2.6rem + 1px)),
+    var(--paper);
+  color: var(--ink);
+  border-radius: 1px;
+  padding: 2.4rem 2.4rem 2.2rem 4rem;
+  font-family: var(--script-font);
+  box-shadow: 0 1px 2px hsla(28, 40%, 12%, 0.12),
+    14px 28px 50px -26px hsla(28, 40%, 12%, 0.5);
+  transform: rotate(0.5deg);
+}
+
+/* Three-hole punch down the left margin. */
+.contact__form::after {
+  content: '';
+  position: absolute;
+  top: 12%;
+  bottom: 12%;
+  left: 1rem;
+  width: 12px;
+  background:
+    radial-gradient(circle 6px, var(--body-color) 96%, transparent) top / 12px 12px no-repeat,
+    radial-gradient(circle 6px, var(--body-color) 96%, transparent) center / 12px 12px no-repeat,
+    radial-gradient(circle 6px, var(--body-color) 96%, transparent) bottom / 12px 12px no-repeat;
+  box-shadow: none;
+}
+
+.contact__form::before {
+  content: 'INT. YOUR NEXT PROJECT — DAY' / '';
+  display: block;
+  margin-bottom: 2.2rem;
+  font-family: var(--script-font);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+[data-theme='dark'] .contact__form {
+  --paper: hsl(40, 26%, 86%);
+  box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.5), 14px 28px 60px -20px hsla(0, 0%, 0%, 0.9);
+}
+
+[data-theme='dark'] .contact__form::before {
+  content: 'INT. YOUR NEXT PROJECT — NIGHT' / '';
 }
 
 .contact__form-div {
   position: relative;
   margin-bottom: var(--mb-2);
-  height: 4rem;
+  height: 3.6rem;
 }
 
 .contact__form-input {
@@ -111,54 +212,83 @@
   left: 0;
   width: 100%;
   height: 100%;
-  border: 1px solid var(--glass-border-strong);
-  background: var(--glass-bg-soft);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  color: var(--title-color);
+  border: none;
+  border-bottom: 1px solid hsla(28, 20%, 12%, 0.35);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--script-font);
+  font-size: 1rem;
   outline: none;
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
+  border-radius: 0;
+  padding: 1.5rem 0 0.4rem;
   z-index: 1;
-  transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease),
-    background-color 0.25s var(--ease);
+  transition: border-color 0.25s var(--ease), background-color 0.25s var(--ease);
 }
 
 .contact__form-input::placeholder {
-  color: var(--text-color);
-  opacity: 0.6;
+  color: var(--ink-soft);
+  opacity: 0.7;
 }
 
-/* The focus ring is the accent at low alpha rather than a heavier border, so
-   the field grows a halo instead of thickening. */
 .contact__form-input:focus {
-  border-color: var(--accent-color);
-  background: var(--glass-bg);
-  box-shadow: 0 0 0 4px var(--accent-soft);
+  border-bottom-color: var(--accent-color);
+  background: hsla(44, 90%, 60%, 0.1);
 }
 
-/* Straddles the field's top edge, so it carries its own frosted chip to cut
-   the border cleanly instead of letting the line run through the label. */
+[data-theme='dark'] .contact__form-input:focus {
+  border-bottom-color: hsl(9, 72%, 42%);
+}
+
+/* The character cue: the field's name in capitals, the way a screenplay
+   names who speaks next. */
 .contact__form-tag {
   position: absolute;
-  top: -0.75rem;
-  left: 1.25rem;
-  font-size: var(--smaller-font-size);
-  padding: 0.25rem 0.45rem;
-  color: var(--text-color);
-  background: var(--glass-bg-strong);
-  backdrop-filter: var(--glass-blur-strong);
-  -webkit-backdrop-filter: var(--glass-blur-strong);
-  border-radius: var(--radius-sm);
+  top: -0.2rem;
+  left: 0;
+  font-family: var(--script-font);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
   z-index: 10;
 }
 
 .contact__form-area {
-  height: 11rem;
+  height: 10rem;
 }
 
 .contact__form-area textarea {
   resize: none;
+  padding-top: 1.7rem;
+  line-height: 1.9;
+  background-image: repeating-linear-gradient(
+    transparent 0 calc(1.9em - 1px),
+    hsla(28, 20%, 12%, 0.12) calc(1.9em - 1px) 1.9em
+  );
+  background-position: 0 1.7rem;
+  background-attachment: local;
+}
+
+/* On paper the button is always ink, whatever the grade. */
+.contact__form .button {
+  background: hsl(28, 20%, 10%);
+  border-color: hsl(28, 20%, 10%);
+  color: hsl(42, 40%, 96%);
+  font-family: var(--body-font);
+}
+
+.contact__form .button::before {
+  background: hsl(9, 72%, 42%);
+}
+
+.contact__form .button:hover {
+  border-color: hsl(9, 72%, 42%);
+  color: hsl(42, 40%, 96%);
+}
+
+.contact__form .button__icon path {
+  fill: currentColor;
 }
 
 .contact__status {
@@ -179,8 +309,7 @@
   color: hsl(142, 62%, 62%);
 }
 
-[data-theme='dark'] .contact__status--error,
-[data-theme='dark'] .contact__form-error {
+[data-theme='dark'] .contact__status--error {
   color: hsl(0, 80%, 70%);
 }
 
@@ -188,8 +317,9 @@
   display: block;
   margin-top: -1.25rem;
   margin-bottom: 0.5rem;
+  font-family: var(--script-font);
   font-size: var(--smaller-font-size);
-  color: hsl(0, 65%, 45%);
+  color: hsl(0, 70%, 38%);
 }
 
 @media screen and (max-width: 992px) {
@@ -220,6 +350,16 @@
 
   .contact__form {
     width: 100%;
+    padding: 2rem 1.4rem 1.8rem 2.8rem;
+    transform: none;
+    background:
+      linear-gradient(90deg, transparent 1.9rem, hsla(9, 70%, 50%, 0.28) 1.9rem calc(1.9rem + 1px), transparent calc(1.9rem + 1px)),
+      var(--paper);
+  }
+
+  .contact__form::after {
+    left: 0.55rem;
+    width: 10px;
   }
 }
 
@@ -236,4 +376,15 @@
   .contact__card:hover {
     transform: none;
   }
+}
+
+/* The status lines sit on the paper, so they stay ink-dark in both grades. */
+.contact__form .contact__status--success,
+[data-theme='dark'] .contact__form .contact__status--success {
+  color: hsl(142, 62%, 26%);
+}
+
+.contact__form .contact__status--error,
+[data-theme='dark'] .contact__form .contact__status--error {
+  color: hsl(0, 70%, 38%);
 }

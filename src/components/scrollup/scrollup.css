@@ -1,67 +1,125 @@
-/* A glass chip rather than a solid block: it sits over the page content, so
-   letting that content show through keeps it from reading as a hole. */
+/* Back to top, as a rewind (ScrollUp.jsx). A small reel in the same stack as
+   the assistant's: spokes cut out of the dark hub, and round the rim a ring
+   in the accent that fills as the page is read (--played, 0–360deg, set on
+   scroll). Parked off-screen until the reader is a screen or so down. */
 .scrollup {
+  --reel-size: 46px;
   position: fixed;
-  right: calc(2rem + 8px); /* offset so center aligns with AI FAB (58px wide) */
+  /* Centred on the assistant's 58px reel above it. */
+  right: calc(2rem + (58px - var(--reel-size)) / 2);
   bottom: -20%;
-  display: flex;
-  background: var(--glass-bg-strong);
-  backdrop-filter: var(--glass-blur-strong);
-  -webkit-backdrop-filter: var(--glass-blur-strong);
-  border: 1px solid var(--glass-border);
-  opacity: 0.85;
-  padding: 0.45rem 0.6rem;
-  border-radius: var(--radius-pill);
+  display: grid;
+  place-items: center;
+  width: var(--reel-size);
+  height: var(--reel-size);
+  border-radius: 50%;
+  isolation: isolate;
+  background: conic-gradient(var(--accent-color) var(--played, 0deg), hsla(38, 30%, 88%, 0.18) var(--played, 0deg));
+  box-shadow: 0 0 0 1px var(--film-black), 4px 10px 22px -8px hsla(28, 40%, 8%, 0.6);
   /* Sits in the same corner stack as the assistant: below its panel (998) and
-     its FAB (999), but above the header. --z-tooltip (10) put it *under* the
-     header, which is only harmless while the header is at the top of the page
-     — below 768px it becomes a bottom tab bar and swallowed this button whole. */
+     its FAB (999), but above the header, which below 768px becomes a bottom
+     tab bar and would otherwise swallow this button whole. */
   z-index: 997;
-  box-shadow: var(--glass-inner), var(--glass-shadow);
   /* Parked off-screen it must not take keyboard focus, so it is hidden rather
      than merely moved; visibility flips only once the slide-out has finished. */
   visibility: hidden;
-  transition: bottom 0.45s var(--ease), opacity 0.25s var(--ease),
-    box-shadow 0.25s var(--ease), visibility 0s linear 0.45s;
+  transition: bottom 0.45s var(--ease), transform 0.35s var(--ease-out),
+    visibility 0s linear 0.45s;
 }
 
-.scrollup__icon {
-  font-size: 1.5rem;
-  color: var(--title-color);
+/* The reel inside the ring: three sprocket holes round a hub, on film base. */
+.scrollup::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 3px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 20%, hsl(28, 8%, 30%) 0 4px, transparent 4.5px),
+    radial-gradient(circle at 78% 64%, hsl(28, 8%, 30%) 0 4px, transparent 4.5px),
+    radial-gradient(circle at 22% 64%, hsl(28, 8%, 30%) 0 4px, transparent 4.5px),
+    var(--film-black);
+  transition: transform 0.9s var(--ease-out);
 }
 
 .scrollup:hover {
-  opacity: 1;
-  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
+  transform: translateY(-2px);
+}
+
+.scrollup:hover::before {
+  transform: rotate(-60deg);
+}
+
+/* ◀◀ turned to point up: rewind, toward the start. */
+.scrollup__icon {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: -0.18em;
+  line-height: 1;
+  color: hsl(38, 30%, 92%);
+  transform: rotate(90deg) translateX(-0.05em);
 }
 
 .show-scroll {
   bottom: 1rem;
   visibility: visible;
-  transition: bottom 0.45s var(--ease), opacity 0.25s var(--ease),
-    box-shadow 0.25s var(--ease);
+  transition: bottom 0.45s var(--ease), transform 0.35s var(--ease-out);
 }
 
-@media screen and (max-width: 992px) {
-  .scrollup {
-    right: calc(2rem + 13px); /* smaller icon, recalculate center offset */
-    padding: 0.35rem 0.5rem;
-  }
+/* Rewinding: the spokes spin backwards and the camcorder readout blinks in
+   the top corner of the frame until the page reaches the top. */
+html[data-rewind] .scrollup::before {
+  animation: scrollup-rewind 0.45s linear infinite;
+}
 
-  .scrollup__icon {
-    font-size: 1.25rem;
+@keyframes scrollup-rewind {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.scrollup__rew {
+  position: fixed;
+  top: calc(var(--header-height) + 2.2rem);
+  left: 1.6rem;
+  z-index: 997;
+  display: none;
+  padding: 0.3rem 0.6rem;
+  font-family: var(--mono-font);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #fff;
+  background: hsla(0, 0%, 0%, 0.55);
+  text-shadow: 0 0 6px hsla(0, 0%, 100%, 0.6);
+  pointer-events: none;
+}
+
+html[data-rewind] .scrollup__rew {
+  display: block;
+  animation: scrollup-blink 0.8s steps(1, end) infinite;
+}
+
+@keyframes scrollup-blink {
+  50% {
+    opacity: 0;
   }
 }
 
 /* Below this width the header is a bottom tab bar, so the corner stacks upward:
-   tab bar, then the assistant FAB, then this chip above it. The offsets track
+   tab bar, then the assistant FAB, then this reel above it. The offsets track
    the FAB's own `bottom` in assistant.css plus its 58px height and a gap. */
 @media screen and (max-width: 768px) {
   .scrollup.show-scroll {
     bottom: calc(6rem + 58px + 0.6rem);
   }
 
-  /* The nav sheet slides up over this corner, and the chip now outranks the
+  .scrollup__rew {
+    top: calc(env(safe-area-inset-top) + 1rem);
+    left: 1rem;
+  }
+
+  /* The nav sheet slides up over this corner, and the reel outranks the
      header it lives above. Same treatment the FAB already gets. */
   body:has(.nav__menu.show-menu) .scrollup {
     opacity: 0;
@@ -71,10 +129,22 @@
 
 @media screen and (max-width: 480px) {
   .scrollup {
-    right: calc(1.2rem + 13px);
+    right: calc(1.2rem + (58px - var(--reel-size)) / 2);
   }
 
   .scrollup.show-scroll {
     bottom: calc(5.4rem + 58px + 0.6rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-rewind] .scrollup::before,
+  html[data-rewind] .scrollup__rew {
+    animation: none;
+  }
+
+  .scrollup:hover,
+  .scrollup:hover::before {
+    transform: none;
   }
 }

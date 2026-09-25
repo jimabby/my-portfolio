@@ -1,143 +1,181 @@
-/* The flat-lay, built as a lit scene rather than a layout: the stage carries a
-   perspective, the scatter is a plane inside it that leans with the pointer,
-   and every piece is an object on that plane. Position comes from custom
-   properties set inline per piece (--x, --y, --w, --rot); the mobile rules at
-   the bottom simply stop reading them and flatten the whole thing back into a
-   grid, with no JS branching on viewport width. */
+/* The selected work as a film set: a pile of cloth-bound volumes on a desk,
+   shot in both of the site's grades. Night is a walnut desk under one lamp,
+   in a dark band. Day (the light theme) is honey oak with sunlight falling
+   through venetian blinds, on the page's own paper. The rules below are
+   written for Night; the Day grade overrides them at the end of the file.
+
+   Stacking inside the stage, back to front:
+     0  set dressing (desk surface, coffee ring, pencil)
+     1  scrim (click-to-close catcher)
+     2  the books                  — a hovered book rises to 6, into the light
+     3  the lamp's falloff
+     4  air (light shaft, dust)
+     7  film grain
+     8  letterbox bars
+     9  HUD
+     10 the open spread
+
+   Position comes from custom properties set inline per book (--x, --y, --w,
+   --rot); the phone rules at the bottom stop reading them and stand the books
+   up in a two-column shelf, with no JS branching on viewport width. */
+
+/* Registered so the lamp can glide when the pointer moves, rather than jump —
+   an unregistered custom property cannot be transitioned. */
+@property --lx {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 44%;
+}
+
+@property --ly {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 42%;
+}
+
+.desk {
+  --ink: #0b0907;
+  --paper: #f3ead5;
+  --paper-shade: #e2d6ba;
+  --cream: #f1e6cf;
+  --cream-dim: hsla(40, 52%, 88%, 0.62);
+  --gold: #d6b46e;
+  --gold-deep: #8a6a2f;
+  --type: #2b2118;
+  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', 'Songti SC',
+    'Noto Serif CJK SC', 'Noto Serif JP', Georgia, serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  position: relative;
+  padding-bottom: 5rem;
+  background:
+    radial-gradient(70% 60% at 50% 40%, hsla(30, 40%, 14%, 0.55), transparent 70%),
+    var(--ink);
+  color: var(--cream);
+  overflow: hidden;
+}
+
+/* Hairlines where the set meets the page, so the band has an edge rather than
+   a smear. */
+.desk::before,
+.desk::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsla(40, 50%, 70%, 0.22), transparent);
+}
+
+.desk::before {
+  top: 0;
+}
+
+.desk::after {
+  bottom: 0;
+}
+
+.desk .section__title {
+  color: var(--cream);
+  font-style: italic;
+}
+
+.desk .section__subtitle {
+  color: var(--cream-dim);
+  opacity: 1;
+  margin-bottom: 2.5rem;
+}
+
+/* ─── The stage ─── */
 
 .desk__stage {
   position: relative;
-  max-width: 1080px;
+  width: calc(100% - 3rem);
+  max-width: 1240px;
   margin: 0 auto;
-  /* Tuned to the layout below: tall enough to clear the bottom row's caption
-     chips, and no taller, or the section ends in a band of dead space. */
-  aspect-ratio: 16 / 8.5;
-
-  /* The camera. A long enough lens that pieces at the edges of the table are
-     not visibly stretched, placed a little above centre so the surface recedes
-     the way a table shot from standing height does. */
-  perspective: 2000px;
-  perspective-origin: 50% 28%;
-
-  /* One light, upper left, so every shadow in the scene falls the same way.
-     Hard-coding a direction is the whole point — matched shadows are most of
-     what makes a flat-lay read as photographed rather than assembled. */
-  --desk-shadow: 0 1px 2px hsla(var(--hue), 32%, 18%, 0.18),
-    7px 11px 20px -8px hsla(var(--hue), 32%, 18%, 0.34),
-    18px 32px 56px -20px hsla(var(--hue), 32%, 18%, 0.3);
-  --desk-shadow-lift: 0 2px 3px hsla(var(--hue), 32%, 18%, 0.16),
-    16px 26px 40px -12px hsla(var(--hue), 32%, 18%, 0.36),
-    40px 68px 104px -28px hsla(var(--hue), 32%, 18%, 0.36);
-
-  /* Not a glass pane — a device bezel is an object in the scene, not a raised
-     surface, so it keeps one deliberate colour in both themes rather than
-     refracting the page behind it. */
-  --desk-bezel: hsl(var(--hue), 14%, 16%);
-  --desk-bezel-edge: hsla(0, 0%, 100%, 0.14);
+  aspect-ratio: 16 / 9;
+  container-type: size;
+  overflow: hidden;
+  border-radius: 6px;
+  isolation: isolate;
+  background: #120c08;
+  border: 1px solid hsla(40, 50%, 80%, 0.08);
+  box-shadow: 0 50px 120px -40px #000, 0 0 0 1px #000;
+  transition: --lx 0.9s var(--ease-out), --ly 0.9s var(--ease-out);
 }
 
-[data-theme='dark'] .desk__stage {
-  --desk-bezel: hsl(220, 14%, 22%);
-  --desk-bezel-edge: hsla(0, 0%, 100%, 0.16);
-  --desk-shadow: 0 1px 2px hsla(220, 40%, 2%, 0.5),
-    7px 11px 20px -8px hsla(220, 40%, 2%, 0.62),
-    18px 32px 56px -20px hsla(220, 40%, 2%, 0.58);
-  --desk-shadow-lift: 0 2px 3px hsla(220, 40%, 2%, 0.5),
-    16px 26px 40px -12px hsla(220, 40%, 2%, 0.68),
-    40px 68px 104px -28px hsla(220, 40%, 2%, 0.66);
-}
-
-/* The surface the pieces are lying on: a warm key from the upper left, a broad
-   fill under the middle of the table, and a ring of falloff around the edge of
-   the pool.
-
-   Every stop reaches zero alpha before the element's own edge. The first pass
-   let the outer colour run to the corners, and once blurred that read on the
-   page as a soft grey rectangle — a smudge behind the work rather than light
-   on a surface. */
-.desk__stage::before {
-  content: '';
+.desk__set,
+.desk__light,
+.desk__air,
+.desk__grain,
+.desk__bars,
+.desk__hud {
   position: absolute;
-  z-index: -1;
-  inset: -12% -8%;
+  inset: 0;
   pointer-events: none;
-  background:
-    radial-gradient(
-      46% 52% at 32% 20%,
-      hsla(40, 82%, 84%, 0.62),
-      hsla(40, 82%, 84%, 0) 74%
-    ),
-    radial-gradient(
-      58% 62% at 52% 44%,
-      hsla(var(--hue), 30%, 100%, 0.72),
-      hsla(var(--hue), 30%, 100%, 0) 78%
-    ),
-    radial-gradient(
-      72% 76% at 50% 46%,
-      hsla(var(--hue), 26%, 44%, 0) 46%,
-      hsla(var(--hue), 26%, 44%, 0.24) 82%,
-      hsla(var(--hue), 26%, 44%, 0) 100%
-    );
-  filter: blur(26px);
-  /* Fades the light to nothing at the element's own edges. Tuning each
-     gradient to end inside the box is a losing game — an ellipse sized in
-     percentages of the box always gets clipped somewhere before its last
-     stop, and every clip is a visible seam. One mask ends all of them. */
-  -webkit-mask-image: radial-gradient(closest-side, #000 52%, transparent 100%);
-  mask-image: radial-gradient(closest-side, #000 52%, transparent 100%);
 }
 
-[data-theme='dark'] .desk__stage::before {
-  background:
-    radial-gradient(
-      46% 52% at 32% 20%,
-      hsla(34, 62%, 60%, 0.2),
-      hsla(34, 62%, 60%, 0) 74%
-    ),
-    radial-gradient(
-      58% 62% at 52% 44%,
-      hsla(220, 16%, 44%, 0.36),
-      hsla(220, 16%, 44%, 0) 78%
-    ),
-    radial-gradient(
-      72% 76% at 50% 46%,
-      hsla(220, 30%, 3%, 0) 54%,
-      hsla(220, 30%, 3%, 0.4) 84%,
-      hsla(220, 30%, 3%, 0) 100%
-    );
+.desk__set {
+  z-index: 0;
 }
 
-/* Grain. The last thing that separates a render from a frame of film, kept
-   just under the threshold where anyone would name it. Sits above the scatter
-   so it falls across the pieces the way it would across a photograph, and
-   below the detail panel, which is interface and stays clean. */
-.desk__stage::after {
-  content: '';
+/* Walnut, from a single turbulence filter stretched along the grain: a very
+   low horizontal frequency against a high vertical one draws long streaks
+   rather than blotches. No image request, and it scales to any stage. */
+.desk__surface {
   position: absolute;
-  z-index: 4;
-  inset: -12% -8%;
-  pointer-events: none;
-  opacity: 0.05;
-  filter: grayscale(1);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
-  -webkit-mask-image: radial-gradient(closest-side, #000 58%, transparent 100%);
-  mask-image: radial-gradient(closest-side, #000 58%, transparent 100%);
+  inset: 0;
+  background-color: #1e1109;
+  background-image:
+    linear-gradient(180deg, hsla(25, 60%, 20%, 0.25), transparent 30%, hsla(20, 50%, 5%, 0.3)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='800' preserveAspectRatio='none'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0022 0.075' numOctaves='4' seed='11'/%3E%3CfeColorMatrix values='0.42 0 0 0 0.02 0.24 0 0 0 0.01 0.13 0 0 0 0.003 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
 }
 
-[data-theme='dark'] .desk__stage::after {
-  opacity: 0.07;
+/* Where a mug stood an hour ago. */
+.desk__ring {
+  position: absolute;
+  left: 84%;
+  top: 60%;
+  width: 11%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    transparent 80%,
+    hsla(22, 60%, 8%, 0.55) 86%,
+    hsla(22, 60%, 8%, 0.2) 92%,
+    transparent 100%
+  );
+  transform: rotate(-12deg) scaleY(0.96);
 }
 
-/* An invisible click-catcher for the empty surface around the pieces, so
-   clicking off a piece closes the panel. It sits *under* the scatter — a
-   translucent sheet over the top would read as a grey box with hard edges, and
-   would swallow the hover on the pieces it dimmed. The dimming is done by the
-   pieces themselves instead, further down. */
+/* A pencil: painted barrel, bare wood cone, graphite tip, brass ferrule. */
+.desk__pencil {
+  position: absolute;
+  left: 82%;
+  top: 30%;
+  width: 16%;
+  height: 0.9%;
+  min-height: 5px;
+  border-radius: 1px 40% 40% 1px;
+  transform: rotate(64deg);
+  background: linear-gradient(
+    90deg,
+    #b8914a 0 6%,
+    #3a2a12 6% 7%,
+    #1d3b2f 7% 82%,
+    #d9b98c 82% 95%,
+    #2a2a2a 95%
+  );
+  box-shadow: 4px 6px 6px hsla(0, 0%, 0%, 0.55),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.18), inset 0 -1px 0 hsla(0, 0%, 0%, 0.35);
+}
+
 .desk__scrim {
   position: absolute;
-  inset: -1.5rem;
-  z-index: 0;
+  inset: 0;
+  z-index: 1;
   pointer-events: none;
 }
 
@@ -145,78 +183,274 @@
   pointer-events: auto;
 }
 
-/* The tabletop. It keeps the stage's perspective so a lifted piece travels in
-   real depth, but at rest its own transform is identity — and that matters
-   more than it sounds.
+/* ─── The lamp ───
+   Most of what makes this read as filmed rather than laid out: one warm pool
+   the pointer can steer, and falloff steep enough that the books at the edge
+   of the table are genuinely in shadow. The overlay pass brightens and warms
+   whatever sits in the pool — the covers, not just the wood. */
+.desk__light {
+  z-index: 3;
+  background: radial-gradient(
+    ellipse 62% 78% at var(--lx) var(--ly),
+    transparent 0%,
+    transparent 22%,
+    hsla(24, 60%, 3%, 0.5) 56%,
+    hsla(24, 60%, 2%, 0.94) 100%
+  );
+  transition: opacity 0.6s var(--ease-out);
+}
 
-   Any non-identity 3D transform here makes the browser rasterise the whole
-   subtree once and project the result, which resamples every screenshot on the
-   table. Measured on the Simba Health piece, a 3.5deg resting tilt took the
-   Laplacian variance of that crop from 385 to 83: about four fifths of the
-   fine detail in the work, gone, in the state every visitor sees and every
-   capture of the page records. A tilt nobody could name is not worth that.
+.desk__light::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: overlay;
+  background: radial-gradient(
+    ellipse 40% 52% at var(--lx) var(--ly),
+    hsla(36, 95%, 62%, 0.7),
+    hsla(36, 95%, 62%, 0) 70%
+  );
+}
 
-   So the plane only leans while the pointer is actually on it, when the
-   visitor is looking at the scene rather than reading the screenshots — and
-   settles back to perfectly sharp the moment they leave. No will-change
-   either: measured identical, and it would pin the soft raster permanently. */
+/* The lamp being switched on, once, when the set scrolls into view: a dead
+   frame, a stutter, then light. */
+.desk__light::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #050302;
+  opacity: 0;
+}
+
+.section--visible .desk__light::after {
+  animation: desk-lamp-on 1.5s steps(1, end) 0.15s backwards;
+}
+
+@keyframes desk-lamp-on {
+  0% { opacity: 1; }
+  28% { opacity: 0.35; }
+  34% { opacity: 0.9; }
+  44% { opacity: 0.15; }
+  50% { opacity: 0.6; }
+  62% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* ─── Air: the shaft of light and the dust drifting through it ─── */
+
+.desk__air {
+  z-index: 4;
+}
+
+/* The blur is on the beam and the clip on its pseudo-element because the
+   order matters: clip-path cuts after filter, so on one element the shaft
+   keeps a ruler-straight edge however hard it is blurred. */
+.desk__beam {
+  position: absolute;
+  inset: -10% 0 0;
+  filter: blur(48px);
+  mix-blend-mode: screen;
+  animation: desk-breathe 7s ease-in-out infinite alternate;
+}
+
+.desk__beam::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    172deg,
+    hsla(40, 90%, 78%, 0.3),
+    hsla(40, 90%, 70%, 0.08) 55%,
+    transparent 80%
+  );
+  clip-path: polygon(40% 0, 54% 0, 76% 100%, 14% 100%);
+}
+
+@keyframes desk-breathe {
+  from { opacity: 0.5; }
+  to { opacity: 0.85; }
+}
+
+/* Positions come from the mote's index through sin() and cos() rather than a
+   hand-written list: a golden-angle spiral spreads fourteen of them through
+   the beam with no two in a line. */
+.desk__mote {
+  position: absolute;
+  left: calc(44% + 20% * sin(calc(var(--d) * 137.5deg)));
+  top: calc(46% + 34% * cos(calc(var(--d) * 97deg)));
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: hsla(40, 90%, 85%, 0.9);
+  box-shadow: 0 0 6px hsla(40, 90%, 70%, 0.8);
+  opacity: 0;
+  animation: desk-drift calc(9s + var(--d) * 0.8s) linear infinite;
+  animation-delay: calc(var(--d) * -1.3s);
+}
+
+.desk__mote:nth-child(3n) {
+  width: 2px;
+  height: 2px;
+  filter: blur(0.5px);
+}
+
+@keyframes desk-drift {
+  0% { opacity: 0; transform: translate(0, 0); }
+  20% { opacity: 0.8; }
+  80% { opacity: 0.5; }
+  100% { opacity: 0; transform: translate(26px, -70px); }
+}
+
+/* Grain: the last thing that separates a render from a frame of film, just
+   under the threshold where anyone would name it. */
+.desk__grain {
+  z-index: 7;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  animation: desk-grain 0.8s steps(4) infinite;
+}
+
+@keyframes desk-grain {
+  0% { background-position: 0 0; }
+  25% { background-position: -40px 60px; }
+  50% { background-position: 70px -30px; }
+  75% { background-position: -20px -80px; }
+  100% { background-position: 0 0; }
+}
+
+/* Letterbox: when a volume is open the frame crops to scope, the way a film
+   cuts from the establishing shot to the close-up. */
+.desk__bars {
+  z-index: 8;
+}
+
+.desk__bars::before,
+.desk__bars::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: #000;
+  transition: height 0.7s var(--ease-out);
+}
+
+.desk__bars::before {
+  top: 0;
+}
+
+.desk__bars::after {
+  bottom: 0;
+}
+
+.desk__stage.is-open .desk__bars::before,
+.desk__stage.is-open .desk__bars::after {
+  height: 6.5%;
+}
+
+/* ─── HUD: viewfinder corners, a slate, and the keys that work here ─── */
+
+.desk__hud {
+  z-index: 9;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+.desk__corner {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 0 solid hsla(40, 50%, 88%, 0.45);
+}
+
+.desk__corner--tl { top: 16px; left: 16px; border-top-width: 1px; border-left-width: 1px; }
+.desk__corner--tr { top: 16px; right: 16px; border-top-width: 1px; border-right-width: 1px; }
+.desk__corner--bl { bottom: 16px; left: 16px; border-bottom-width: 1px; border-left-width: 1px; }
+.desk__corner--br { bottom: 16px; right: 16px; border-bottom-width: 1px; border-right-width: 1px; }
+
+.desk__slate {
+  position: absolute;
+  top: 22px;
+  left: 48px;
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+}
+
+.desk__rec {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e0473a;
+  box-shadow: 0 0 8px #e0473a;
+  animation: desk-rec 1.6s steps(1, end) infinite;
+}
+
+@keyframes desk-rec {
+  50% { opacity: 0.15; }
+}
+
+.desk__keys {
+  position: absolute;
+  right: 48px;
+  bottom: 20px;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.desk kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.9em;
+  height: 1.9em;
+  padding: 0 0.4em;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+  border: 1px solid hsla(40, 50%, 80%, 0.35);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: hsla(30, 30%, 8%, 0.7);
+}
+
+/* ─── The books ─── */
+
 .desk__scatter {
   position: absolute;
   inset: 0;
   margin: 0;
   padding: 0;
   list-style: none;
-  transform-style: preserve-3d;
-  transform: rotateX(var(--drift-x, 0deg)) rotateY(var(--drift-y, 0deg));
-  transition: transform 0.4s var(--ease-out);
 }
 
+/* The slot holds position and casts the shadow; the button inside carries the
+   rotation. A drop-shadow on an element that is itself rotated would rotate
+   with it, and seven shadows falling seven ways is the fastest tell of a
+   composite. Here every shadow falls down and to the right, away from the
+   lamp. */
 .desk__piece {
   position: absolute;
   left: var(--x);
   top: var(--y);
   width: var(--w);
-  z-index: 1;
-  /* --rot is set inline; --r is the value actually used, so a piece can be
-     straightened when it is picked up — an inline --r could not be overridden
-     by a class. --z lifts it toward the camera, --tx/--ty tilt it toward the
-     pointer. */
-  --r: var(--rot);
-  --z: 0px;
-  transform: translateZ(var(--z)) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg))
-    rotate(var(--r));
-  transition: transform 0.4s var(--ease-out), opacity 0.35s var(--ease),
-    filter 0.35s var(--ease);
+  z-index: 2;
+  perspective: 900px;
+  filter: drop-shadow(3px 4px 2px hsla(0, 0%, 0%, 0.6))
+    drop-shadow(12px 20px 16px hsla(0, 0%, 0%, 0.5));
+  transition: filter 0.45s var(--ease-out), opacity 0.35s var(--ease);
 }
 
-/* Picking a piece up: it rises toward the camera, half-straightens, and its
-   shadow lengthens to match. translateZ rather than scale, so it travels
-   through the same perspective as everything else instead of just growing. */
 .desk__piece:hover,
 .desk__piece:focus-within {
-  z-index: 2;
-  --z: 36px;
-  --r: calc(var(--rot) * 0.35);
-}
-
-.desk__stage.is-open .desk__piece.is-selected {
-  z-index: 5;
-  --z: 78px;
-  --r: 0deg;
-}
-
-/* Rack focus: everything that is not the open piece falls out of focus, which
-   is the shot the reference gets with a real lens. Hovering one pulls it back,
-   so moving from project to project stays a single click. */
-.desk__stage.is-open .desk__piece:not(.is-selected) {
-  opacity: 0.55;
-  filter: saturate(0.45) blur(2.5px);
-}
-
-.desk__stage.is-open .desk__piece:not(.is-selected):hover,
-.desk__stage.is-open .desk__piece:not(.is-selected):focus-within {
-  opacity: 1;
-  filter: none;
+  z-index: 6;
+  filter: drop-shadow(6px 10px 6px hsla(0, 0%, 0%, 0.5))
+    drop-shadow(30px 48px 34px hsla(0, 0%, 0%, 0.55));
 }
 
 .desk__button {
@@ -228,424 +462,1108 @@
   font-family: inherit;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  --r: var(--rot);
+  --z: 0px;
+  transform: translateZ(var(--z)) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg))
+    rotate(var(--r));
+  transition: transform 0.5s var(--ease-out), filter 0.45s var(--ease);
+}
+
+/* Picking a book up: it rises toward the camera and half-straightens in the
+   hand. translateZ rather than scale, so it travels through the perspective
+   instead of just growing. */
+.desk__piece:hover .desk__button,
+.desk__piece:focus-within .desk__button {
+  --z: 46px;
+  --r: calc(var(--rot) * 0.35);
 }
 
 .desk__button:focus-visible {
   outline: none;
 }
 
-.desk__frame {
-  display: block;
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-  border: 1px solid var(--glass-border-strong);
-  box-shadow: var(--desk-shadow);
-  transition: box-shadow 0.4s var(--ease-out), border-color 0.4s var(--ease-out);
+.desk__button:focus-visible .desk__cover {
+  outline: 2px solid var(--gold);
+  outline-offset: 5px;
 }
 
-.desk__piece:hover .desk__frame,
-.desk__piece:focus-within .desk__frame,
-.desk__stage.is-open .desk__piece.is-selected .desk__frame {
-  box-shadow: var(--desk-shadow-lift);
+/* The book that was picked up has left the table; the rest fall out of focus
+   behind it, the way a long lens racks to the subject. */
+.desk__stage.is-open .desk__piece.is-selected {
+  opacity: 0;
 }
 
-/* The pieces settle onto the table as the section arrives, one after another.
-   Two things this rule has to get right:
-
-   Keyed to .section--visible, which the page's IntersectionObserver adds when
-   the section scrolls into view. The desk is not lazy-loaded, so an animation
-   on the bare class would play out on page load with the section still a
-   screen below the fold and nobody watching.
-
-   And it lives on the button, not on the piece, so it never fights the piece's
-   own 3D transform for control of the same property. */
-.section--visible .desk__button {
-  animation: desk-settle 0.7s var(--ease-out) backwards;
-  animation-delay: calc(var(--i, 0) * 70ms);
+.desk__stage.is-open .desk__piece:not(.is-selected) .desk__button {
+  filter: blur(3px) brightness(0.7);
 }
 
-@keyframes desk-settle {
+.desk__stage.is-open .desk__light {
+  opacity: 1;
+}
+
+.desk__stage.is-open .desk__light::before {
+  opacity: 0.4;
+}
+
+/* Settling onto the desk as the section arrives: dropped from a hand's height,
+   one after another. Keyed to .section--visible so it plays when someone is
+   watching, not on page load a screen below the fold; and on the cover, not
+   the button, so it never fights the button's own transform. */
+.section--visible .desk__button .desk__cover {
+  animation: desk-drop 0.8s var(--ease-out) backwards;
+  animation-delay: calc(0.9s + var(--i, 0) * 90ms);
+}
+
+@keyframes desk-drop {
   from {
     opacity: 0;
-    transform: translateY(22px);
+    transform: translate(-6px, -26px) scale(1.12);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }
 
-.desk__button:focus-visible .desk__frame {
-  outline: 2px solid var(--accent-color);
-  outline-offset: 3px;
+/* ─── The binding ───
+   Proportions per format, read by both the book on the desk and the board in
+   the spread. */
+.desk__piece--tall,
+.desk__tome--tall {
+  --cover-ratio: 2 / 3;
+  --plate-ratio: 4 / 5;
+  --plate-w: 74%;
+  --title-size: 10.5cqi;
+  --ratio: 1.3333;
 }
 
-.desk__piece:hover .desk__frame,
-.desk__piece:focus-within .desk__frame {
-  border-color: var(--accent-color);
+.desk__piece--quarto,
+.desk__tome--quarto {
+  --cover-ratio: 3 / 4;
+  --plate-ratio: 4 / 3;
+  --plate-w: 80%;
+  --title-size: 9cqi;
+  --ratio: 1.5;
 }
 
-.desk__shot {
+.desk__piece--album,
+.desk__tome--album {
+  --cover-ratio: 4 / 3;
+  --plate-ratio: 16 / 9;
+  --plate-w: 56%;
+  --title-size: 5.4cqi;
+  --ratio: 2.2;
+}
+
+/* The front board: book cloth (a fine weave over the binding colour, with a
+   sheen across it), a darker spine hinge on the left, and — as box-shadows
+   stepping down and right — the edges of the text block and the back board,
+   which is what makes it a volume rather than a card. */
+.desk__cover {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 3%;
+  aspect-ratio: var(--cover-ratio);
+  padding: 7% 7% 7% 13%;
+  overflow: hidden;
+  container-type: inline-size;
+  text-align: center;
+  border-radius: 2px 5px 5px 2px;
+  background-color: var(--cloth);
+  background-image:
+    linear-gradient(118deg, hsla(0, 0%, 100%, 0.1), transparent 38%, transparent 62%, hsla(0, 0%, 0%, 0.3)),
+    repeating-linear-gradient(0deg, hsla(0, 0%, 100%, 0.035) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, hsla(0, 0%, 0%, 0.08) 0 1px, transparent 1px 3px);
+  box-shadow:
+    inset 0 0 0 1px hsla(0, 0%, 100%, 0.05),
+    inset 0 0 18px hsla(0, 0%, 0%, 0.35),
+    1px 1px 0 #eae1c9,
+    2px 2px 0 #cdbf9f,
+    3px 3px 0 #e6dcc1,
+    4px 4px 0 #c4b793,
+    5px 5px 0 #ddd1b3,
+    6px 6px 0 color-mix(in srgb, var(--cloth) 75%, #000);
+}
+
+/* Container units are measured against the nearest *ancestor* container, so
+   the cover's own padding above is in percentages; everything inside it is in
+   cqi and scales with the book. */
+.desk__spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8.5cqi;
+  background: linear-gradient(
+    90deg,
+    hsla(0, 0%, 0%, 0.45),
+    hsla(0, 0%, 100%, 0.07) 45%,
+    hsla(0, 0%, 0%, 0.35) 85%,
+    hsla(0, 0%, 0%, 0.15)
+  );
+  box-shadow: inset -1px 0 hsla(0, 0%, 0%, 0.45), 1px 0 hsla(0, 0%, 100%, 0.06);
+}
+
+.desk__cover-no,
+.desk__cover-cat {
+  font-family: var(--serif);
+  font-size: max(6px, 4.2cqi);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: hsla(40, 55%, 72%, 0.8);
+  line-height: 1;
+}
+
+.desk__piece--album .desk__cover-no,
+.desk__piece--album .desk__cover-cat,
+.desk__tome--album .desk__cover-no,
+.desk__tome--album .desk__cover-cat {
+  font-size: max(6px, 2.8cqi);
+}
+
+/* A tipped-in plate: the screenshot mounted on card with a thin gilt rule, the
+   way colour plates were pasted into art books. */
+.desk__plate {
+  display: block;
+  width: var(--plate-w);
+  aspect-ratio: var(--plate-ratio);
+  padding: 1.6cqi;
+  background: #efe6d0;
+  border: 1px solid hsla(40, 55%, 55%, 0.7);
+  box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.5), inset 0 0 0 1px hsla(0, 0%, 100%, 0.4);
+}
+
+.desk__plate picture {
+  display: contents;
+}
+
+.desk__plate-img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
 }
 
-/* ─── Browser chrome ─── */
-
-.desk__chrome {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  /* A percentage here would resolve against an auto-height parent and do
-     nothing; 14px is about the right share of a ~340px-wide piece. */
-  height: 14px;
-  padding: 0 6px;
-  background: var(--glass-bg-strong);
-  border-bottom: 1px solid var(--glass-border);
+/* Gold foil. The gradient is wider than the text so hovering can slide the
+   highlight across it — light catching the stamping as the book tilts. */
+.desk__cover-title {
+  display: block;
+  max-width: 100%;
+  font-family: var(--serif);
+  font-size: var(--title-size);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+  color: transparent;
+  background: linear-gradient(
+    100deg,
+    #8a6a2f 0%,
+    #c9a45c 20%,
+    #f6e3a8 32%,
+    #b08a45 44%,
+    #d9bb72 60%,
+    #fff1c4 70%,
+    #9c7a38 84%
+  );
+  background-size: 260% 100%;
+  background-position: 0% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 1px 0 hsla(0, 0%, 0%, 0.55));
+  transition: background-position 1.1s var(--ease-out);
 }
 
-.desk__dot {
-  flex: 0 0 auto;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--glass-border-strong);
+.desk__piece:hover .desk__cover-title,
+.desk__piece:focus-within .desk__cover-title {
+  background-position: 100% 0;
 }
 
-.desk__bar {
-  flex: 1 1 auto;
-  height: 5px;
-  margin-left: 6px;
-  border-radius: var(--radius-pill);
-  background: var(--glass-border);
+.desk__cover-rule {
+  display: block;
+  width: 26%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 
-/* ─── Phone bezel ─── */
-
-.desk__piece--phone .desk__frame {
-  padding: 4px;
-  border-radius: 16px;
-  border-color: var(--desk-bezel-edge);
-  background: var(--desk-bezel);
-}
-
-.desk__piece--phone .desk__shot {
-  border-radius: 12px;
-}
-
-.desk__notch {
-  position: absolute;
-  z-index: 1;
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30%;
-  height: 3px;
-  border-radius: var(--radius-pill);
-  background: hsla(0, 0%, 100%, 0.28);
-}
-
-/* ─── Caption chip ─── */
-
+/* ─── Hover prompt ───
+   A game's interact prompt: the key, and what it does. Overlaps the foot of
+   the book rather than hanging below it, so the bottom row's prompts stay
+   inside the frame. */
 .desk__label {
   position: absolute;
-  top: 100%;
   left: 50%;
-  transform: translateX(-50%) translateY(2px);
-  margin-top: 0.5rem;
-  padding: 0.2rem 0.6rem;
+  top: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: -0.6rem;
+  padding: 0.3rem 0.7rem 0.3rem 0.35rem;
   white-space: nowrap;
-  font-size: var(--smaller-font-size);
-  font-weight: var(--font-medium);
-  color: var(--title-color);
-  border-radius: var(--radius-pill);
-  background: var(--glass-bg-strong);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-inner), var(--glass-shadow);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--cream);
+  background: hsla(30, 30%, 5%, 0.86);
+  border: 1px solid hsla(40, 55%, 60%, 0.45);
+  border-radius: 3px;
+  box-shadow: 0 8px 20px hsla(0, 0%, 0%, 0.5);
   opacity: 0;
+  transform: translate(-50%, 6px);
   pointer-events: none;
-  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+  transition: opacity 0.25s var(--ease), transform 0.35s var(--ease-out);
 }
 
 .desk__piece:hover .desk__label,
-.desk__piece:focus-within .desk__label,
-.desk__piece.is-selected .desk__label {
+.desk__piece:focus-within .desk__label {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  transform: translate(-50%, 0);
 }
 
-/* ─── Detail panel ─── */
+.desk__stage.is-open .desk__label {
+  display: none;
+}
+
+/* ─── The open volume ─── */
 
 .desk__panel {
   position: absolute;
-  z-index: 6;
-  top: 50%;
-  width: min(340px, 40%);
-  padding: 1.5rem 1.4rem;
-  border-radius: var(--radius-lg);
-  background: var(--glass-bg-strong);
-  backdrop-filter: var(--glass-blur-strong);
-  -webkit-backdrop-filter: var(--glass-blur-strong);
-  border: 1px solid var(--glass-border-strong);
-  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
-  animation: desk-panel-in 0.35s var(--ease-out) both;
-  /* Keeps the sheet clear of the header on desktop and of the bottom nav bar
-     on mobile when it is scrolled into view. */
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1800px;
+  pointer-events: none;
+  outline: none;
   scroll-margin-top: calc(var(--header-height) + 1rem);
   scroll-margin-bottom: calc(var(--header-height) + 1rem);
 }
 
-.desk__panel:focus-visible {
-  outline: 2px solid var(--accent-color);
-  outline-offset: 3px;
+.desk__panel[hidden] {
+  display: none;
 }
 
-.desk__panel--right {
-  right: 0;
-  transform: translateY(-50%);
+.desk__panel > * {
+  pointer-events: auto;
 }
 
-.desk__panel--left {
-  left: 0;
-  transform: translateY(-50%);
+.desk__panel:focus-visible .desk__tome {
+  outline: 1px solid hsla(40, 55%, 60%, 0.6);
+  outline-offset: 10px;
 }
 
-@keyframes desk-panel-in {
-  from {
-    opacity: 0;
-    transform: translateY(-50%) scale(0.96);
+/* Sized from the frame's height first — a spread is limited by how tall the
+   stage is, not how wide — and from its width only when a wide format would
+   run off the sides. */
+.desk__tome {
+  position: relative;
+  height: min(80cqh, calc(84cqw / var(--ratio)));
+  aspect-ratio: var(--ratio);
+  container-type: size;
+  transform-style: preserve-3d;
+  transform-origin: 75% 50%;
+  animation: desk-flight 1.35s both;
+}
+
+/* The flight: from exactly over the book on the desk (the offsets Desk.jsx
+   measures), up into the middle of the frame closed, then the whole spread
+   eases half a page right as the cover swings open, so it ends centred. The
+   fallbacks are a plain rise, for a spread with nothing measured. */
+@keyframes desk-flight {
+  0% {
+    transform: translate(var(--fx, 0px), var(--fy, 60px)) translateX(-25%)
+      rotate(var(--fr, 0deg)) scale(var(--fsx, 0.7), var(--fsy, 0.7));
+    animation-timing-function: cubic-bezier(0.22, 0.8, 0.28, 1);
   }
-  to {
-    opacity: 1;
-    transform: translateY(-50%) scale(1);
+  46% {
+    transform: translateX(-25%) translateZ(40px);
+    animation-timing-function: cubic-bezier(0.55, 0, 0.2, 1);
+  }
+  100% {
+    transform: none;
   }
 }
 
-.desk__panel-close {
+/* Back board and text block under the right-hand page. */
+.desk__tome::before {
+  content: '';
   position: absolute;
-  top: 0.7rem;
-  right: 0.7rem;
-  display: grid;
-  place-items: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  font-size: 1.15rem;
-  color: var(--text-color);
-  cursor: pointer;
-  border-radius: 50%;
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg-soft);
-  transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: 0;
+  border-radius: 0 5px 5px 0;
+  background: color-mix(in srgb, var(--cloth) 80%, #000);
+  box-shadow: 0 50px 90px -20px hsla(0, 0%, 0%, 0.8), 0 18px 30px -10px hsla(0, 0%, 0%, 0.6);
+  transform: translateZ(-1px);
 }
 
-.desk__panel-close:hover {
-  color: var(--title-color);
-  border-color: var(--glass-border-strong);
+.desk__leaf {
+  position: absolute;
+  top: 1.8cqh;
+  bottom: 1.8cqh;
+  width: calc(50% - 1.8cqh);
+  overflow: auto;
+  scrollbar-width: thin;
+}
+
+.desk__leaf--right {
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  padding: 8cqh 5.5cqw 6cqh 4.5cqw;
+  color: var(--type);
+  font-family: var(--serif);
+  background:
+    linear-gradient(90deg, hsla(30, 40%, 20%, 0.28), hsla(30, 40%, 20%, 0.06) 7%, transparent 16%),
+    radial-gradient(120% 90% at 60% 40%, var(--paper), var(--paper-shade));
+  box-shadow: 1px 1px 0 #e0d4b8, 2px 2px 0 #cbbd9b, 3px 3px 0 #ddd0b2, 4px 4px 0 #c2b48f;
 }
 
 .desk__panel-category {
-  display: inline-block;
-  margin-bottom: var(--mb-0-5);
-  padding: 0.15rem 0.6rem;
-  font-size: var(--smaller-font-size);
-  font-weight: var(--font-medium);
-  color: var(--accent-color);
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg-soft);
+  font-size: max(10px, 2.1cqh);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
 }
 
 .desk__panel-title {
-  font-size: var(--h2-font-size);
-  color: var(--title-color);
-  margin-bottom: var(--mb-0-5);
-  /* The panel is a fixed width and some titles are long ("Simba Education -
-     New Build"); without this they push the close button off the corner. */
-  padding-right: 1.5rem;
+  margin: 1.4cqh 0 0;
+  font-family: var(--serif);
+  font-size: max(20px, 6.4cqh);
+  font-weight: 600;
+  line-height: 1.05;
+  color: var(--type);
+  text-wrap: balance;
+}
+
+.desk__fleuron {
+  display: block;
+  margin: 2cqh 0;
+  font-size: max(14px, 3cqh);
+  line-height: 1;
+  color: var(--gold-deep);
 }
 
 .desk__panel-summary {
-  font-size: var(--small-font-size);
-  color: var(--text-color);
-  margin-bottom: var(--mb-1);
+  margin: 0 0 2.5cqh;
+  font-size: max(13px, 2.9cqh);
+  line-height: 1.55;
+  color: hsl(28, 22%, 22%);
 }
 
+/* The index line: set in small caps and separated with middots, the way a
+   colophon lists what a book was set in. */
 .desk__panel-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 0 0 var(--mb-1-5);
+  gap: 0.2rem 0;
+  margin: 0 0 3cqh;
   padding: 0;
   list-style: none;
 }
 
 .desk__panel-tag {
-  padding: 0.2rem 0.6rem;
-  font-size: var(--smaller-font-size);
-  color: var(--text-color);
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg-soft);
+  font-size: max(11px, 2.3cqh);
+  font-style: italic;
+  color: hsl(28, 20%, 34%);
+}
+
+.desk__panel-tag + .desk__panel-tag::before {
+  content: '·';
+  margin: 0 0.55em;
+  font-style: normal;
+  color: var(--gold-deep);
 }
 
 .desk__panel-link {
-  width: 100%;
-  justify-content: center;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding: 0.7em 1.2em;
+  font-family: var(--body-font);
+  font-size: max(11px, 2.1cqh);
+  font-weight: var(--font-semi-bold);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--type);
+  border: 1px solid var(--type);
+  border-radius: 2px;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
 }
 
-/* ─── Footer link to the full grid ─── */
+.desk__panel-link:hover,
+.desk__panel-link:focus-visible {
+  background: var(--type);
+  color: var(--paper);
+}
+
+.desk__panel-link:focus-visible {
+  outline: 2px solid var(--gold-deep);
+  outline-offset: 3px;
+}
+
+.desk__folio {
+  display: block;
+  margin-top: 2.5cqh;
+  font-size: max(10px, 1.9cqh);
+  text-align: center;
+  color: hsl(28, 16%, 48%);
+}
+
+/* The front board, hinged at the gutter. Closed it lies over the right-hand
+   page; open it has swung all the way over and its inside — the endpaper,
+   with a plate tipped in — is the left-hand page. */
+.desk__board {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 50%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transform: rotateY(-180deg);
+  animation: desk-open 1.35s both;
+}
+
+@keyframes desk-open {
+  0%,
+  42% {
+    transform: rotateY(0deg);
+    animation-timing-function: cubic-bezier(0.45, 0, 0.15, 1);
+  }
+  100% {
+    transform: rotateY(-180deg);
+  }
+}
+
+.desk__board-front,
+.desk__board-back {
+  position: absolute;
+  inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.desk__board-front .desk__cover {
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+/* The inside of the board: cloth turned over at the edges, and the endpaper
+   pasted down inside it. */
+.desk__board-back {
+  transform: rotateY(180deg);
+  padding: 1.8cqh 0 1.8cqh 1.8cqh;
+  border-radius: 5px 0 0 5px;
+  background: color-mix(in srgb, var(--cloth) 80%, #000);
+}
+
+.desk__endplate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.4cqh;
+  height: 100%;
+  margin: 0;
+  padding: 6cqh 4cqw;
+  background:
+    linear-gradient(270deg, hsla(30, 40%, 20%, 0.3), hsla(30, 40%, 20%, 0.06) 7%, transparent 16%),
+    radial-gradient(120% 90% at 40% 40%, var(--paper), var(--paper-shade));
+}
+
+.desk__endplate picture {
+  display: contents;
+}
+
+.desk__endplate-img {
+  display: block;
+  max-width: 100%;
+  max-height: 78%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  padding: 1.2cqh;
+  background: #fbf6ea;
+  border: 1px solid hsla(40, 55%, 45%, 0.55);
+  box-shadow: 0 2px 6px hsla(30, 40%, 20%, 0.3);
+}
+
+.desk__endplate figcaption {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: max(11px, 2.1cqh);
+  color: hsl(28, 16%, 40%);
+}
+
+.desk__endplate figcaption::before {
+  content: 'Plate — ';
+  font-style: normal;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.8em;
+}
+
+/* ─── Controls around the spread ─── */
+
+.desk__nav,
+.desk__panel-close {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  color: var(--cream);
+  cursor: pointer;
+  border: 1px solid hsla(40, 55%, 70%, 0.35);
+  background: hsla(30, 30%, 5%, 0.72);
+  transition: color 0.25s var(--ease), border-color 0.25s var(--ease),
+    background-color 0.25s var(--ease);
+  animation: desk-controls-in 0.5s var(--ease-out) 0.9s both;
+}
+
+.desk__nav:hover,
+.desk__panel-close:hover,
+.desk__nav:focus-visible,
+.desk__panel-close:focus-visible {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: hsla(30, 30%, 8%, 0.9);
+  outline: none;
+}
+
+.desk__nav {
+  top: 50%;
+  width: 46px;
+  height: 46px;
+  margin-top: -23px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+}
+
+.desk__nav--prev {
+  left: 2.5%;
+}
+
+.desk__nav--next {
+  right: 2.5%;
+}
+
+.desk__panel-close {
+  top: 9%;
+  right: 2.5%;
+  padding: 0.3rem 0.55rem 0.3rem 0.35rem;
+  border-radius: 4px;
+  font-size: 1.05rem;
+}
+
+.desk__panel-close kbd {
+  border: none;
+  background: none;
+  min-width: 0;
+  padding: 0;
+  color: inherit;
+}
+
+@keyframes desk-controls-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ─── Link to the full grid ─── */
 
 .desk__all {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
-  margin-top: var(--mb-2-5);
+  margin-top: 2.5rem;
   font-size: var(--small-font-size);
   font-weight: var(--font-medium);
-  color: var(--accent-color);
+  letter-spacing: 0.08em;
+  color: var(--gold);
 }
 
 .desk__all:hover {
-  color: var(--accent-color-strong);
+  color: var(--cream);
 }
 
-/* ─── Collapse to a grid on small screens ───
-   A seven-piece scatter on a 390px viewport gives ~50px targets, so below the
-   tablet breakpoint the pieces stop being positioned, the scrim goes away and
-   the panel becomes a sheet under the grid. */
+/* ─── Tablet ─── */
 
 @media screen and (max-width: 991px) {
   .desk__stage {
-    aspect-ratio: 16 / 9.5;
+    aspect-ratio: 4 / 3;
+    width: calc(100% - 2rem);
   }
 
-  .desk__panel {
-    width: min(320px, 46%);
-    padding: 1.25rem 1.1rem;
+  .desk__slate,
+  .desk__keys {
+    font-size: 10px;
+  }
+
+  .desk__nav {
+    width: 38px;
+    height: 38px;
+    margin-top: -19px;
+    font-size: 1.25rem;
+  }
+
+  .desk__nav--prev {
+    left: 1%;
+  }
+
+  .desk__nav--next {
+    right: 1%;
   }
 }
 
+/* ─── Phone: a shelf, and the volume opened beneath it ───
+   Seven books scattered across a 390px frame would be 50px targets, so the
+   books stand in a two-column grid on the same walnut, the lamp overhead, and
+   the open volume becomes a single page under the shelf: plate first, then the
+   story. */
 @media screen and (max-width: 767px) {
-  /* No camera here: there is no pointer to move it, the scene is a grid rather
-     than a table, and a perspective on a column of tall screenshots only
-     distorts them. */
+  .desk {
+    padding-bottom: 3.5rem;
+  }
+
   .desk__stage {
     aspect-ratio: auto;
+    width: 100%;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    container-type: normal;
+    padding: 2.75rem 1.25rem 2rem;
+    --lx: 50%;
+    --ly: 30%;
+  }
+
+  .desk__ring,
+  .desk__pencil,
+  .desk__beam,
+  .desk__corner,
+  .desk__keys,
+  .desk__bars {
+    display: none;
+  }
+
+  .desk__slate {
+    top: 14px;
+    left: 1.25rem;
+  }
+
+  .desk__light {
+    background: radial-gradient(
+      ellipse 90% 60% at var(--lx) var(--ly),
+      transparent 20%,
+      hsla(24, 60%, 3%, 0.5) 75%,
+      hsla(24, 60%, 2%, 0.8) 100%
+    );
+  }
+
+  .desk__scatter {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    gap: 2rem 1.5rem;
+  }
+
+  .desk__piece {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: auto;
     perspective: none;
   }
 
-  .desk__stage::before {
-    inset: -4%;
-    filter: blur(48px);
+  /* Keep a hint of the resting angle — a shelf pulled straight by a ruler
+     stops looking like anybody's desk. */
+  .desk__button,
+  .desk__piece:hover .desk__button,
+  .desk__piece:focus-within .desk__button {
+    transform: rotate(calc(var(--rot) * 0.4));
   }
 
-  .desk__stage::after {
-    display: none;
-  }
-
-  .desk__scrim {
-    display: none;
-  }
-
-  .desk__scatter {
-    position: static;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: end;
-    gap: 2.25rem 1.25rem;
-    transform-style: flat;
-    transform: none;
-  }
-
-  .desk__piece,
-  .desk__piece:hover,
-  .desk__piece:focus-within,
-  .desk__stage.is-open .desk__piece.is-selected {
-    position: static;
-    width: auto;
-    transform: none;
-  }
-
-  /* A blurred thumbnail is unreadable at this size, and there is no depth for
-     it to signal — the fade alone says which piece is open. */
-  .desk__stage.is-open .desk__piece:not(.is-selected) {
-    filter: saturate(0.45);
-  }
-
-  .desk__piece--phone {
-    max-width: 62%;
+  .desk__piece--tall {
+    width: 72%;
     justify-self: center;
   }
 
-  .desk__chrome {
-    height: 11px;
-  }
-
-  /* Always visible here — there is no hover on a phone — and allowed to wrap.
-     Half these titles ("Simba Education - New Build") ellipsise away to
-     nothing at this width, which is worse than a second line. */
   .desk__label {
-    position: static;
-    transform: none;
-    display: block;
-    margin: 0.6rem auto 0;
-    max-width: 100%;
-    white-space: normal;
-    text-align: center;
-    opacity: 1;
+    display: none;
   }
 
-  .desk__panel,
-  .desk__panel--left,
-  .desk__panel--right {
-    position: static;
-    width: auto;
-    margin-top: var(--mb-2);
-    transform: none;
-  }
-
-  @keyframes desk-panel-in {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-}
-
-/* The global reduced-motion block already flattens durations; what is left is
-   the movement itself. The scene keeps its light and its shadows — those are
-   static — but nothing lifts, leans, settles or racks focus. The pointer
-   listener bails out under the same query, so --drift-* is never even set. */
-@media (prefers-reduced-motion: reduce) {
-  .desk__scatter {
-    transform: none;
-  }
-
-  .desk__piece,
-  .desk__piece:hover,
-  .desk__piece:focus-within,
   .desk__stage.is-open .desk__piece.is-selected {
-    transform: rotate(var(--rot));
+    opacity: 0.25;
   }
 
-  .desk__stage.is-open .desk__piece:not(.is-selected) {
-    filter: saturate(0.45);
+  .desk__stage.is-open .desk__piece:not(.is-selected) .desk__button {
+    filter: brightness(0.75);
   }
 
-  .section--visible .desk__button {
-    animation: none;
+  /* On a phone the volume opens full screen, over the page, like the
+     screening room the portfolio grid opens into: a dark room, the page
+     scrolling inside it, close at the top and the way to the next volume
+     fixed at the bottom under the thumb. Desk.jsx locks the page behind it,
+     keeps focus inside it and turns a sideways swipe into prev / next.
+
+     Safe to fix-position here: below this breakpoint the stage drops its
+     size containment (container-type: normal above), which would otherwise
+     become the containing block and trap the sheet inside the desk. */
+  /* The stage's own stacking context would trap the sheet's z-index inside
+     the desk, under the header and the floating buttons. */
+  .desk__stage {
+    isolation: auto;
   }
 
   .desk__panel {
+    position: fixed;
+    inset: 0;
+    z-index: 1300;
+    display: block;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: calc(env(safe-area-inset-top) + 4.5rem) 1rem calc(env(safe-area-inset-bottom) + 6.5rem);
+    background:
+      radial-gradient(90% 50% at 50% 0%, hsla(36, 50%, 30%, 0.25), transparent 70%),
+      hsla(28, 20%, 3%, 0.97);
+    perspective: none;
+    pointer-events: auto;
+    animation: desk-sheet-in 0.45s var(--ease-out) both;
+  }
+
+  @keyframes desk-sheet-in {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .desk__tome {
+    max-width: 460px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    aspect-ratio: auto;
+    container-type: inline-size;
+    transform-style: flat;
+    transform-origin: 50% 0;
+    animation: desk-page-in 0.6s var(--ease-out) both;
+    box-shadow: 0 30px 60px -20px #000;
+  }
+
+  @keyframes desk-page-in {
+    from { opacity: 0; transform: translateY(16px) rotateX(6deg); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .desk__tome::before {
+    display: none;
+  }
+
+  .desk__board {
+    order: -1;
+    position: relative;
+    left: auto;
+    width: auto;
+    transform: none;
+    animation: none;
+    transform-style: flat;
+  }
+
+  .desk__board-front {
+    display: none;
+  }
+
+  .desk__board-back {
+    position: relative;
+    transform: none;
+    padding: 0;
+    border-radius: 3px 3px 0 0;
+  }
+
+  .desk__endplate {
+    padding: 1.5rem 1.25rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .desk__endplate-img {
+    max-height: 360px;
+    padding: 6px;
+  }
+
+  .desk__endplate figcaption {
+    font-size: 0.8rem;
+  }
+
+  .desk__leaf,
+  .desk__leaf--right {
+    position: relative;
+    left: auto;
+    width: auto;
+    overflow: visible;
+    padding: 1.5rem 1.4rem 1.25rem;
+    border-radius: 0 0 3px 3px;
+    background: radial-gradient(120% 90% at 50% 30%, var(--paper), var(--paper-shade));
+    box-shadow: none;
+  }
+
+  .desk__panel-category { font-size: 0.7rem; }
+  .desk__panel-title { margin-top: 0.4rem; font-size: 1.7rem; }
+  .desk__fleuron { margin: 0.7rem 0; font-size: 1rem; }
+  .desk__panel-summary { margin-bottom: 1rem; font-size: 0.95rem; }
+  .desk__panel-tag { font-size: 0.85rem; }
+  .desk__panel-tags { margin-bottom: 1.25rem; }
+  .desk__panel-link { font-size: 0.75rem; }
+  .desk__folio { margin-top: 1rem; font-size: 0.72rem; }
+
+  /* Close at the top right; previous and next fixed along the bottom, where
+     a thumb already is. 48px targets throughout. */
+  .desk__nav,
+  .desk__panel-close {
+    position: fixed;
+    z-index: 1;
+    margin: 0;
+    animation: none;
+    background: hsla(28, 20%, 6%, 0.9);
+  }
+
+  /* "Esc" means nothing without a keyboard. */
+  .desk__panel-close kbd {
+    display: none;
+  }
+
+  .desk__panel-close {
+    top: calc(env(safe-area-inset-top) + 1rem);
+    right: 1rem;
+    height: 48px;
+    padding: 0 1rem;
+  }
+
+  .desk__nav {
+    top: auto;
+    bottom: calc(env(safe-area-inset-bottom) + 1.25rem);
+    width: 52px;
+    height: 52px;
+    margin-top: 0;
+  }
+
+  .desk__nav--prev {
+    left: 1.25rem;
+  }
+
+  .desk__nav--next {
+    right: 1.25rem;
+  }
+
+  /* The count between them, so the bottom bar says where you are. */
+  .desk__panel::after {
+    content: attr(data-count);
+    position: fixed;
+    left: 50%;
+    bottom: calc(env(safe-area-inset-bottom) + 2.2rem);
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: hsla(38, 30%, 88%, 0.7);
+    pointer-events: none;
+  }
+}
+
+/* The global reduced-motion block already collapses durations; what is left
+   is the movement itself. The set keeps its light, shadows and grain — those
+   are the look, and they are still — but nothing drops, drifts, lifts, flies
+   or flickers, and the volume is simply open. */
+@media (prefers-reduced-motion: reduce) {
+  .desk__stage {
+    transition: none;
+  }
+
+  .desk__mote,
+  .desk__beam,
+  .desk__grain,
+  .desk__rec {
     animation: none;
   }
+
+  .desk__mote {
+    display: none;
+  }
+
+  .section--visible .desk__light::after,
+  .section--visible .desk__button .desk__cover {
+    animation: none;
+  }
+
+  .desk__button,
+  .desk__piece:hover .desk__button,
+  .desk__piece:focus-within .desk__button {
+    transform: rotate(var(--rot));
+  }
+
+  .desk__stage.is-open .desk__piece:not(.is-selected) .desk__button {
+    filter: brightness(0.7);
+  }
+
+  .desk__tome,
+  .desk__board,
+  .desk__nav,
+  .desk__panel-close {
+    animation: none;
+  }
+}
+
+/* ═══ Day grade ═══
+   The light theme shoots the same set by day. The band drops away to the
+   page's own paper, the walnut becomes honey oak, and the lamp becomes the
+   sun: a warm wash across the desk, cut into bars by the blinds. The pointer
+   still steers the light — here it slides the bars, as if the blinds swung.
+   Books, labels, letterbox and the open volume are props and interface, and
+   read the same in both grades. */
+
+[data-theme='light'] .desk {
+  --cream-dim: hsla(28, 24%, 18%, 0.62);
+  background: transparent;
+  color: var(--title-color);
+}
+
+[data-theme='light'] .desk::before,
+[data-theme='light'] .desk::after {
+  background: linear-gradient(90deg, transparent, var(--glass-border-strong), transparent);
+}
+
+[data-theme='light'] .desk .section__title {
+  color: var(--title-color);
+}
+
+[data-theme='light'] .desk .section__subtitle {
+  color: var(--text-color);
+}
+
+[data-theme='light'] .desk__stage {
+  background: #c9a57a;
+  border-color: hsla(28, 40%, 20%, 0.14);
+  box-shadow: 0 40px 90px -40px hsla(28, 50%, 20%, 0.55), 0 0 0 1px hsla(28, 40%, 20%, 0.08);
+}
+
+[data-theme='light'] .desk__surface {
+  background-color: #b58d62;
+  background-image:
+    linear-gradient(180deg, hsla(40, 80%, 90%, 0.18), transparent 40%, hsla(24, 50%, 20%, 0.16)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='800' preserveAspectRatio='none'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0022 0.075' numOctaves='4' seed='11'/%3E%3CfeColorMatrix values='0.3 0 0 0 0.6 0.24 0 0 0 0.44 0.18 0 0 0 0.28 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
+}
+
+[data-theme='light'] .desk__ring {
+  background: radial-gradient(
+    closest-side,
+    transparent 80%,
+    hsla(24, 50%, 22%, 0.35) 86%,
+    hsla(24, 50%, 22%, 0.12) 92%,
+    transparent 100%
+  );
+}
+
+/* The blinds: bars of shade laid across the desk at the sun's angle, blurred
+   because a blind is a long way from the surface it shadows, over a soft
+   falloff toward the edges of the frame. */
+[data-theme='light'] .desk__light {
+  inset: -40px;
+  background:
+    repeating-linear-gradient(
+      -28deg,
+      hsla(24, 45%, 16%, 0.2) 0 60px,
+      transparent 84px 128px,
+      hsla(24, 45%, 16%, 0.2) 152px 212px
+    ),
+    radial-gradient(
+      ellipse 70% 80% at 40% 40%,
+      transparent 30%,
+      hsla(24, 40%, 16%, 0.3) 100%
+    );
+  filter: blur(9px);
+  translate: calc((var(--lx) - 44%) * 0.35) 0;
+  transition: opacity 0.6s var(--ease-out);
+}
+
+/* And the sun itself, where it gets through: a warm overlay in the same
+   bars, offset so it lands between the shadows. */
+[data-theme='light'] .desk__light::before {
+  mix-blend-mode: soft-light;
+  background: repeating-linear-gradient(
+    -28deg,
+    transparent 0 68px,
+    hsla(40, 90%, 84%, 0.5) 84px 128px,
+    transparent 144px 212px
+  );
+}
+
+[data-theme='light'] .desk__light::after,
+[data-theme='light'] .section--visible .desk__light::after {
+  display: none;
+  animation: none;
+}
+
+[data-theme='light'] .desk__beam {
+  filter: blur(40px);
+  mix-blend-mode: soft-light;
+}
+
+[data-theme='light'] .desk__beam::before {
+  background: linear-gradient(
+    150deg,
+    hsla(45, 90%, 94%, 0.55),
+    hsla(45, 90%, 90%, 0.12) 60%,
+    transparent 85%
+  );
+  clip-path: polygon(0 0, 30% 0, 90% 100%, 40% 100%);
+}
+
+[data-theme='light'] .desk__mote {
+  background: hsla(44, 80%, 96%, 0.95);
+  box-shadow: 0 0 5px hsla(44, 90%, 80%, 0.9);
+}
+
+[data-theme='light'] .desk__corner {
+  border-color: hsla(28, 40%, 12%, 0.45);
+}
+
+[data-theme='light'] .desk__hud {
+  color: hsla(28, 30%, 12%, 0.72);
+}
+
+[data-theme='light'] .desk__stage.is-open .desk__piece:not(.is-selected) .desk__button {
+  filter: blur(3px) brightness(0.82) saturate(0.8);
+}
+
+[data-theme='light'] .desk__all {
+  color: var(--accent-color);
+}
+
+[data-theme='light'] .desk__all:hover {
+  color: var(--title-color);
+}
+
+@media screen and (max-width: 767px) {
+  [data-theme='light'] .desk__light {
+    inset: -20px;
+    translate: none;
+  }
+}
+
+/* While a volume is open full screen on a phone (Desk.jsx sets this), the
+   page's floating controls step out of the way. */
+html[data-sheet] .assistant__fab,
+html[data-sheet] .scrollup,
+html[data-sheet] .header {
+  visibility: hidden;
 }

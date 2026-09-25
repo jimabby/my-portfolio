@@ -5,76 +5,86 @@
 @import url('./assets/fonts.css');
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Design system
+   Design system — the site as a film
 
-   Two ideas, applied everywhere:
+   The page is cut like a feature: an opening title card, numbered scenes, a
+   set piece (the desk), and closing credits. Three ideas carry it everywhere:
 
-   1. Apple-minimal — an almost-achromatic cool grey palette, one blue accent
-      used sparingly, hairline rules instead of heavy borders, large continuous
-      corner radii, and generous vertical rhythm. Weight comes from spacing,
-      not from decoration.
+   1. Two grades, not two themes. Light is Day — warm paper stock, ink, one
+      vermilion accent, sun through the blinds. Dark is Night — a warm black
+      with a teal cast in the shadows and tungsten gold as the accent. Every
+      component reads the same tokens, so the whole film is regraded at once.
 
-   2. Glass — every raised surface (header, cards, sheets, modals, popovers) is
-      a translucent pane over a soft ambient gradient: a blurred, saturated
-      backdrop, a hairline edge, and a single specular highlight along the top.
-      The gradient behind the page (body::before) is what the panes refract;
-      without it glass has nothing to be glass over.
+   2. Three voices of type. Instrument Serif is the title card: headings, the
+      hero, pull quotes. Poppins is the reading text. A monospace is the
+      camera department: slates, timecodes, labels, metadata.
 
-   Surfaces are built from the --glass-* tokens below. A pane is always the
-   same five declarations:
+   3. Film stock over everything. A fixed grain layer and a few soft light
+      leaks sit over the page (body::before / body::after), so flat colour
+      reads as photographed rather than rendered. Surfaces are paper and card,
+      not glass: square-ish corners, hairline rules, shadows that fall one way.
 
-     background: var(--glass-bg);
-     backdrop-filter: var(--glass-blur);
-     -webkit-backdrop-filter: var(--glass-blur);
-     border: 1px solid var(--glass-border);
-     box-shadow: var(--glass-inner), var(--glass-shadow);
-
-   Browsers without backdrop-filter, and readers who have asked for reduced
-   transparency, get the opaque fallback at the bottom of this file.
+   The --glass-* token names are kept so every existing component keeps
+   working; they now describe paper surfaces rather than frosted panes.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 :root {
   --header-height: 3.5rem;
 
-  /* Cool near-grey. The hue/sat pair is consumed by component stylesheets that
+  /* Warm paper. The hue/sat pair is consumed by component stylesheets that
      mix their own shades, so tinting the whole site is a two-value change. */
-  --hue: 220;
-  --sat: 14%;
+  --hue: 32;
+  --sat: 22%;
 
-  --title-color: hsl(var(--hue), 16%, 14%);
-  --title-color-dark: hsl(var(--hue), 18%, 8%);
-  --text-color: hsl(var(--hue), 9%, 42%);
-  --body-color: hsl(var(--hue), 24%, 97%);
-  --container-color: #ffffff;
-  --border-color: hsl(var(--hue), 16%, 88%);
-  --primary-color: hsl(var(--hue), 16%, 12%);
-  --primary-color-dark: hsl(var(--hue), 20%, 6%);
-  --soft-surface: hsla(var(--hue), 20%, 50%, 0.08);
+  --title-color: hsl(28, 18%, 9%);
+  --title-color-dark: hsl(28, 22%, 5%);
+  --text-color: hsl(28, 10%, 34%);
+  --body-color: hsl(38, 36%, 93%);
+  --container-color: hsl(40, 45%, 97%);
+  --border-color: hsla(28, 30%, 12%, 0.14);
+  --primary-color: hsl(28, 18%, 10%);
+  --primary-color-dark: hsl(28, 22%, 4%);
+  --soft-surface: hsla(28, 30%, 30%, 0.07);
 
-  /* The one chromatic colour on the site: links, focus, active states, the
-     reading-progress bar. Everything else stays grey. */
-  --accent-color: hsl(211, 100%, 43%);
-  --accent-color-strong: hsl(211, 100%, 36%);
-  --accent-soft: hsla(211, 100%, 45%, 0.12);
+  /* The one chromatic colour: a poster vermilion by day. Links, focus, active
+     states, the slate's REC light. */
+  --accent-color: hsl(9, 72%, 42%);
+  --accent-color-strong: hsl(9, 76%, 34%);
+  --accent-soft: hsla(9, 72%, 42%, 0.12);
 
-  /* ─── Glass ─── */
-  --glass-blur: saturate(180%) blur(20px);
-  --glass-blur-strong: saturate(200%) blur(32px);
-  --glass-bg: hsla(0, 0%, 100%, 0.62);
-  --glass-bg-strong: hsla(0, 0%, 100%, 0.82);
-  --glass-bg-soft: hsla(0, 0%, 100%, 0.42);
-  --glass-border: hsla(var(--hue), 20%, 40%, 0.16);
-  --glass-border-strong: hsla(var(--hue), 20%, 40%, 0.26);
-  --glass-inner: inset 0 1px 0 hsla(0, 0%, 100%, 0.72);
-  --glass-shadow: 0 1px 2px hsla(var(--hue), 30%, 20%, 0.05),
-    0 16px 40px -16px hsla(var(--hue), 30%, 20%, 0.18);
-  --glass-shadow-lg: 0 2px 6px hsla(var(--hue), 30%, 20%, 0.06),
-    0 36px 72px -28px hsla(var(--hue), 30%, 20%, 0.3);
-  --glass-scrim: hsla(var(--hue), 24%, 12%, 0.42);
+  /* ─── Surfaces (paper, not glass) ─── */
+  --glass-blur: saturate(120%) blur(10px);
+  --glass-blur-strong: saturate(130%) blur(18px);
+  --glass-bg: hsla(40, 50%, 98%, 0.78);
+  --glass-bg-strong: hsla(40, 50%, 98%, 0.94);
+  --glass-bg-soft: hsla(40, 50%, 98%, 0.5);
+  --glass-border: hsla(28, 30%, 12%, 0.14);
+  --glass-border-strong: hsla(28, 30%, 12%, 0.3);
+  --glass-inner: inset 0 1px 0 hsla(0, 0%, 100%, 0.6);
+  --glass-shadow: 0 1px 1px hsla(28, 40%, 12%, 0.08),
+    6px 14px 30px -18px hsla(28, 40%, 12%, 0.35);
+  --glass-shadow-lg: 0 2px 4px hsla(28, 40%, 12%, 0.1),
+    14px 34px 60px -28px hsla(28, 40%, 12%, 0.45);
+  --glass-scrim: hsla(28, 30%, 6%, 0.55);
+
+  /* ─── Film ─── */
+  --display-font: 'Instrument Serif', 'Iowan Old Style', 'Palatino Linotype', Palatino,
+    'Songti SC', 'Noto Serif CJK SC', Georgia, serif;
+  --mono-font: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+  --script-font: 'Courier Prime', 'Courier New', Courier, var(--mono-font);
+  --film-black: #0b0a09;
+  --sprocket: hsl(38, 36%, 93%);
+  --grain-opacity: 0.07;
+  --leak-a: hsla(24, 95%, 60%, 0.16);
+  --leak-b: hsla(44, 95%, 66%, 0.14);
+  --leak-c: hsla(190, 60%, 50%, 0.07);
+  /* The key light that follows the visitor's pointer (useKeyLight.js). */
+  --key-light: hsla(40, 95%, 72%, 0.2);
 
   --body-font: 'Poppins', sans-serif;
 
   --big-font-size: 3.5rem;
+  --display-size: clamp(2.6rem, 4.6vw, 4.1rem);
   --h1-font-size: 2.25rem;
   --h2-font-size: 1.4rem;
   --h3-font-size: 1.15rem;
@@ -91,7 +101,7 @@
      correction Apple's own type ramp makes. */
   --tracking-display: -0.028em;
   --tracking-title: -0.018em;
-  --tracking-eyebrow: 0.1em;
+  --tracking-eyebrow: 0.22em;
 
   --mb-0-25: 0.25rem;
   --mb-0-5: 0.5rem;
@@ -102,10 +112,11 @@
   --mb-2-5: 2.5rem;
   --mb-3: 3rem;
 
-  --radius-sm: 0.75rem;
-  --radius-md: 1.125rem;
-  --radius-lg: 1.5rem;
-  --radius-xl: 2rem;
+  /* Cut, not moulded: paper and card have a corner, not a pebble's curve. */
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 6px;
   --radius-pill: 999px;
 
   --card-shadow: var(--glass-shadow);
@@ -122,31 +133,43 @@
 
 /* ─── Dark theme ─── */
 [data-theme='dark'] {
-  --title-color: hsl(220, 14%, 92%);
-  --title-color-dark: hsl(220, 14%, 98%);
-  --text-color: hsl(220, 8%, 62%);
-  --body-color: hsl(220, 16%, 7%);
-  --container-color: hsl(220, 14%, 11%);
-  --border-color: hsl(220, 10%, 20%);
-  --primary-color: hsl(220, 12%, 80%);
-  --primary-color-dark: hsl(220, 12%, 90%);
-  --soft-surface: hsla(220, 20%, 80%, 0.08);
+  --title-color: hsl(38, 38%, 90%);
+  --title-color-dark: hsl(38, 40%, 96%);
+  --text-color: hsl(34, 12%, 64%);
+  --body-color: hsl(28, 14%, 5%);
+  --container-color: hsl(28, 12%, 9%);
+  --border-color: hsla(38, 40%, 80%, 0.12);
+  --primary-color: hsl(38, 42%, 88%);
+  --primary-color-dark: hsl(38, 50%, 95%);
+  --soft-surface: hsla(38, 40%, 80%, 0.06);
 
-  --accent-color: hsl(211, 100%, 62%);
-  --accent-color-strong: hsl(211, 100%, 72%);
-  --accent-soft: hsla(211, 100%, 62%, 0.16);
+  /* Tungsten by night. */
+  --accent-color: hsl(38, 62%, 62%);
+  --accent-color-strong: hsl(38, 72%, 72%);
+  --accent-soft: hsla(38, 62%, 62%, 0.14);
 
-  --glass-bg: hsla(220, 16%, 14%, 0.58);
-  --glass-bg-strong: hsla(220, 16%, 12%, 0.8);
-  --glass-bg-soft: hsla(220, 16%, 16%, 0.38);
-  --glass-border: hsla(0, 0%, 100%, 0.1);
-  --glass-border-strong: hsla(0, 0%, 100%, 0.18);
-  --glass-inner: inset 0 1px 0 hsla(0, 0%, 100%, 0.07);
-  --glass-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.4),
-    0 16px 40px -16px hsla(0, 0%, 0%, 0.6);
-  --glass-shadow-lg: 0 2px 6px hsla(0, 0%, 0%, 0.45),
-    0 36px 72px -28px hsla(0, 0%, 0%, 0.7);
-  --glass-scrim: hsla(220, 24%, 4%, 0.6);
+  --glass-bg: hsla(28, 12%, 10%, 0.74);
+  --glass-bg-strong: hsla(28, 12%, 9%, 0.92);
+  --glass-bg-soft: hsla(28, 12%, 12%, 0.45);
+  --glass-border: hsla(38, 40%, 80%, 0.12);
+  --glass-border-strong: hsla(38, 40%, 80%, 0.24);
+  --glass-inner: inset 0 1px 0 hsla(38, 40%, 90%, 0.05);
+  --glass-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.5),
+    6px 16px 36px -16px hsla(0, 0%, 0%, 0.75);
+  --glass-shadow-lg: 0 2px 6px hsla(0, 0%, 0%, 0.5),
+    14px 38px 70px -26px hsla(0, 0%, 0%, 0.85);
+  --glass-scrim: hsla(28, 20%, 2%, 0.72);
+
+  --sprocket: hsl(28, 14%, 5%);
+  /* By night the page is already black, so the film stock is lifted a few
+     points off it — otherwise every strip, poster and ticket loses its edge. */
+  --film-black: hsl(28, 10%, 11%);
+  --grain-opacity: 0.09;
+  /* Teal in the shadows, amber in the highlights: the blockbuster grade. */
+  --leak-a: hsla(30, 90%, 50%, 0.12);
+  --leak-b: hsla(40, 90%, 55%, 0.06);
+  --leak-c: hsla(186, 70%, 38%, 0.16);
+  --key-light: hsla(34, 85%, 55%, 0.11);
 }
 
 * {
@@ -175,10 +198,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* The ambient field the glass refracts. A fixed layer rather than a body
-   background so it stays put while the page scrolls (background-attachment:
-   fixed repaints the whole gradient every frame on mobile Safari), and so the
-   blobs cannot add to the scroll height. */
+/* Light leaks: the warm bloom where light got into the camera body, and a
+   cool wash opposite it. A fixed layer rather than a body background so it
+   stays put while the page scrolls (background-attachment: fixed repaints the
+   whole gradient every frame on mobile Safari). */
 body::before {
   content: '';
   position: fixed;
@@ -186,18 +209,30 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(46vmax 38vmax at 12% -4%, hsla(211, 100%, 60%, 0.17), transparent 64%),
-    radial-gradient(42vmax 34vmax at 92% 4%, hsla(268, 88%, 64%, 0.13), transparent 62%),
-    radial-gradient(50vmax 40vmax at 78% 96%, hsla(190, 95%, 54%, 0.12), transparent 64%),
-    radial-gradient(38vmax 32vmax at 2% 78%, hsla(340, 92%, 66%, 0.09), transparent 62%);
+    radial-gradient(38vmax 30vmax at var(--mx, 30%) var(--my, 20%), var(--key-light), transparent 70%),
+    radial-gradient(52vmax 40vmax at 6% -6%, var(--leak-a), transparent 64%),
+    radial-gradient(40vmax 30vmax at 96% 8%, var(--leak-b), transparent 62%),
+    radial-gradient(56vmax 44vmax at 88% 104%, var(--leak-c), transparent 64%);
 }
 
-[data-theme='dark'] body::before {
-  background:
-    radial-gradient(46vmax 38vmax at 12% -4%, hsla(211, 100%, 50%, 0.2), transparent 64%),
-    radial-gradient(42vmax 34vmax at 92% 4%, hsla(268, 88%, 54%, 0.16), transparent 62%),
-    radial-gradient(50vmax 40vmax at 78% 96%, hsla(190, 95%, 44%, 0.14), transparent 64%),
-    radial-gradient(38vmax 32vmax at 2% 78%, hsla(340, 92%, 54%, 0.1), transparent 62%);
+/* Grain over the whole print. Static, not animated: a full-viewport layer
+   that repaints every frame costs more than it gives at this opacity. Above
+   everything, including dialogs, and inert to the pointer. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: multiply;
+}
+
+[data-theme='dark'] body::after {
+  mix-blend-mode: screen;
+  opacity: calc(var(--grain-opacity) * 0.6);
 }
 
 h1,
@@ -207,6 +242,11 @@ h3 {
   font-weight: var(--font-semi-bold);
   line-height: 1.2;
   letter-spacing: var(--tracking-title);
+}
+
+::selection {
+  background: var(--accent-color);
+  color: var(--container-color);
 }
 
 ul {
@@ -316,12 +356,54 @@ main {
 }
 
 .section__title {
-  font-size: var(--h1-font-size);
+  font-family: var(--display-font);
+  font-size: var(--display-size);
   color: var(--title-color);
-  letter-spacing: var(--tracking-display);
-  font-weight: var(--font-semi-bold);
-  line-height: 1.15;
+  letter-spacing: -0.012em;
+  font-weight: 400;
+  line-height: 0.98;
   margin-bottom: 3.5rem;
+}
+
+/* Chapter cards. Every scene on the home page is numbered by a CSS counter —
+   no markup, so adding or reordering a section renumbers the film — and
+   slated in the camera department's monospace, with a rule running out to
+   the edge of the measure. The hero is the title card, not a scene. */
+.main {
+  counter-reset: scene;
+}
+
+.main .section__title::before {
+  counter-increment: scene;
+  content: 'SC. ' counter(scene, decimal-leading-zero);
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1.1rem;
+  font-family: var(--mono-font);
+  font-size: 0.7rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  line-height: 1;
+  color: var(--accent-color);
+}
+
+.main .section__title::after {
+  content: '';
+  display: block;
+  width: 3.5rem;
+  height: 1px;
+  margin-top: 1.4rem;
+  background: var(--title-color);
+  opacity: 0.35;
+  transform-origin: left;
+  transition: transform 1.2s var(--ease-out) 0.2s;
+}
+
+/* The rule draws itself as the scene comes into view. */
+.main .section:not(.section--visible) .section__title::after {
+  transform: scaleX(0);
 }
 
 /* Most sections no longer take a label at all: an uppercase kicker over every
@@ -334,13 +416,22 @@ main {
 
 .section__subtitle {
   display: block;
-  font-size: var(--smaller-font-size);
+  font-family: var(--mono-font);
+  font-size: 0.72rem;
   margin-bottom: 3.5rem;
   color: var(--text-color);
   text-transform: uppercase;
   letter-spacing: var(--tracking-eyebrow);
   font-weight: var(--font-medium);
-  opacity: 0.75;
+}
+
+/* A title with a subtitle gives the subtitle its rule instead. */
+.main .section__title:has(+ .section__subtitle)::after {
+  display: none;
+}
+
+.section__title + .section__subtitle {
+  margin-top: 1rem;
 }
 
 .container {
@@ -357,34 +448,61 @@ main {
 }
 
 /* ─── Buttons ─── */
-/* Solid ink pill for the primary action, glass pill for the secondary one.
-   Both keep the whole colour change in the background layer, so the label
-   never shifts weight on hover. */
+/* A solid ink slab for the primary action and a hairline outline for the
+   secondary, both set in small tracked capitals like a title card's credits.
+   On hover a band of the accent wipes across behind the label — the colour
+   change lives in a background layer, so the label never shifts. */
 .button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   background: var(--primary-color);
   color: var(--container-color);
-  padding: 0.9rem 1.6rem;
-  border-radius: var(--radius-pill);
-  font-weight: var(--font-medium);
-  letter-spacing: -0.01em;
-  box-shadow: 0 1px 2px hsla(var(--hue), 30%, 20%, 0.16),
-    0 10px 24px -12px hsla(var(--hue), 30%, 20%, 0.5);
-  transition: transform 0.28s var(--ease-out), box-shadow 0.28s var(--ease-out),
-    background-color 0.28s var(--ease-out);
+  padding: 0.95rem 1.5rem;
+  border: 1px solid var(--primary-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: var(--font-semi-bold);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  box-shadow: 4px 6px 0 -1px hsla(28, 40%, 12%, 0.12);
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out),
+    color 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--accent-color);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--ease-out);
 }
 
 .button:hover {
-  transform: translateY(-2px);
-  background: var(--primary-color-dark);
-  box-shadow: 0 2px 4px hsla(var(--hue), 30%, 20%, 0.18),
-    0 16px 32px -14px hsla(var(--hue), 30%, 20%, 0.6);
+  transform: translate(-1px, -2px);
+  border-color: var(--accent-color);
+  box-shadow: 6px 9px 0 -1px hsla(28, 40%, 12%, 0.16);
+}
+
+.button:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .button:active {
-  transform: translateY(0) scale(0.985);
+  transform: translate(0, 0);
+  box-shadow: 2px 3px 0 -1px hsla(28, 40%, 12%, 0.12);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: progress;
 }
 
 .button__icon {
@@ -397,35 +515,43 @@ main {
 }
 
 .button--ghost {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  background: transparent;
   color: var(--title-color);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-inner), var(--glass-shadow);
+  border: 1px solid var(--glass-border-strong);
+  box-shadow: none;
+}
+
+.button--ghost::before {
+  background: var(--title-color);
 }
 
 .button--ghost:hover {
-  background: var(--glass-bg-strong);
-  border-color: var(--glass-border-strong);
-  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
+  color: var(--container-color);
+  border-color: var(--title-color);
+  box-shadow: 6px 9px 0 -1px hsla(28, 40%, 12%, 0.12);
 }
 
 .button__icon-inline {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
 }
 
 [data-theme='dark'] .button {
-  color: hsl(220, 16%, 8%);
-  box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.5), 0 10px 24px -12px hsla(0, 0%, 0%, 0.7);
+  color: var(--body-color);
+  box-shadow: 4px 6px 0 -1px hsla(0, 0%, 0%, 0.6);
 }
 
 [data-theme='dark'] .button:hover {
-  box-shadow: 0 2px 4px hsla(0, 0%, 0%, 0.55), 0 16px 32px -14px hsla(0, 0%, 0%, 0.8);
+  color: var(--body-color);
+  box-shadow: 6px 9px 0 -1px hsla(0, 0%, 0%, 0.7);
 }
 
 [data-theme='dark'] .button--ghost {
   color: var(--title-color);
+  box-shadow: none;
+}
+
+[data-theme='dark'] .button--ghost:hover {
+  color: var(--body-color);
 }
 
 .error-boundary {
@@ -622,6 +748,60 @@ main {
   .main .section {
     opacity: 1;
     transition: none;
+  }
+}
+
+/* ─── Touch ergonomics ───
+   On a touchscreen every link the film look set in small tracked capitals
+   still has to be a thumb's target. The type stays small — that is the look —
+   but the box around it grows to at least 44px tall (WCAG 2.5.5's
+   comfortable size, well past 2.5.8's 24px floor), and the micro-labels never
+   drop below 11px, the smallest size that stays legible on a phone. Scoped
+   under body so they outrank the component stylesheets, which load after
+   this one. */
+@media screen and (max-width: 768px) {
+  body .footer__link,
+  body .footer__title,
+  body .work__button,
+  body .contact__button,
+  body .blog__card-link,
+  body .blog__back-button,
+  body .casestudy__back,
+  body .resume__contact a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  body .desk__all {
+    min-height: 44px;
+  }
+  body .footer__list {
+    row-gap: 0;
+  }
+  body .blog__tag--button {
+    min-height: 32px;
+  }
+  body .blog__toc-list a {
+    display: inline-block;
+    padding: 0.55rem 0;
+  }
+  body .about__currently-label,
+  body .about__title,
+  body .skills__level,
+  body .qualification__calendar,
+  body .work__button,
+  body .testimonial__toggle,
+  body .contact__card-title,
+  body .contact__button,
+  body .footer__copyright,
+  body .blog__tag,
+  body .blog__card-category,
+  body .blog__card-dot,
+  body .blog__card-date,
+  body .blog__card-readtime,
+  body .casestudy__tag,
+  body .casestudy__prevnext-dir {
+    font-size: 0.72rem;
   }
 }
 

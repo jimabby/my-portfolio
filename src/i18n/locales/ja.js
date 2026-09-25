@@ -148,6 +148,9 @@ const dictionary = {
     openPiece: '{title} を開く',
     close: '詳細を閉じる',
     viewAll: 'すべての作品を見る',
+    prev: '前の巻',
+    next: '次の巻',
+    count: '全{n}巻',
   },
   portfolio: {
     title: '作品',
@@ -288,6 +291,9 @@ const dictionary = {
     next: '次へ',
   },
   assistant: {
+    cueYou: 'あなた',
+    cueAi: 'JIM の AI（ナレーション）',
+    beat: '（間）',
     toggle: 'AI アシスタントの切り替え',
     name: 'Jim について聞く',
     status: 'Gemini 搭載の AI アシスタント',

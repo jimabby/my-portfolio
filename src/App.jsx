@@ -9,6 +9,9 @@ import Header from './components/header/Header';
 import Home from './components/home/Home';
 import Desk from './components/portfolio/Desk';
 import Portfolio from './components/portfolio/Portfolio';
+import Reel from './components/reel/Reel';
+import Leader from './components/leader/Leader';
+import { useKeyLight } from './components/ambient/useKeyLight';
 import Qualification from './components/qualification/Qualification';
 import ScrollUp from './components/scrollup/ScrollUp';
 import Services from './components/services/Services';
@@ -127,6 +130,8 @@ function PortfolioPage() {
 
       <Footer />
       <ScrollUp />
+      <Reel />
+      <Leader />
     </>
   );
 }
@@ -223,6 +228,7 @@ export function AppRoutes() {
 }
 
 function App() {
+  useKeyLight();
   return (
     <ErrorBoundary>
       <BrowserRouter basename={import.meta.env.BASE_URL}>

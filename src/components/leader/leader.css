@@ -1,0 +1,223 @@
+/* The film leader. Timeline, in one place:
+
+     0.00 – 1.65s   3 · 2 · 1, each number held for one sweep of the dial
+     1.65 – 1.90s   the flash as the leader runs out and picture starts
+     1.90 – 2.35s   the leader fades; home.css opens the curtain on the hero
+
+   Everything is keyed off --beat, so the whole count can be retimed from one
+   value. Skipping replaces the timeline with a quick fade. */
+
+@property --sweep {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.leader {
+  --beat: 0.55s;
+  --ink: hsl(38, 30%, 90%);
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, hsl(30, 8%, 16%) 0%, hsl(30, 10%, 6%) 75%);
+  color: var(--ink);
+  cursor: pointer;
+  animation: leader-out 0.45s var(--ease) calc(var(--beat) * 3 + 0.25s) forwards;
+}
+
+.leader.is-skipping {
+  animation: leader-out 0.28s var(--ease) forwards;
+}
+
+@keyframes leader-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Projector flicker: the lamp's brightness stepping frame to frame. */
+.leader::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #000;
+  animation: leader-flicker 0.24s steps(1, end) infinite;
+  pointer-events: none;
+}
+
+@keyframes leader-flicker {
+  0% { opacity: 0.04; }
+  25% { opacity: 0.12; }
+  50% { opacity: 0; }
+  75% { opacity: 0.08; }
+}
+
+/* The flash as the leader runs out. */
+.leader::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: hsl(40, 60%, 96%);
+  opacity: 0;
+  pointer-events: none;
+  animation: leader-flash 0.3s ease-out calc(var(--beat) * 3) forwards;
+}
+
+@keyframes leader-flash {
+  0% { opacity: 0; }
+  30% { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+
+/* Gate weave: the whole frame drifts a pixel or two, the way film does as it
+   runs through the gate. */
+.leader__frame {
+  position: absolute;
+  inset: 0;
+  animation: leader-weave 0.36s steps(1, end) infinite;
+}
+
+@keyframes leader-weave {
+  0% { transform: translate(0, 0); }
+  33% { transform: translate(1px, -1px); }
+  66% { transform: translate(-1px, 1px); }
+}
+
+.leader__rule {
+  position: absolute;
+  background: hsla(38, 30%, 90%, 0.35);
+}
+
+.leader__rule--h {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+}
+
+.leader__rule--v {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+}
+
+/* The dial: a disc the sweep fills clockwise once per beat, two rings, and
+   the number. */
+.leader__dial {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(62vmin, 520px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: conic-gradient(
+    hsla(38, 30%, 90%, 0.16) var(--sweep),
+    hsla(38, 30%, 90%, 0.03) var(--sweep)
+  );
+  animation: leader-sweep var(--beat) linear 3;
+}
+
+@keyframes leader-sweep {
+  from { --sweep: 0deg; }
+  to { --sweep: 360deg; }
+}
+
+.leader__ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+}
+
+.leader__ring--outer {
+  inset: 0;
+}
+
+.leader__ring--inner {
+  inset: 9%;
+  border-width: 1px;
+  opacity: 0.6;
+}
+
+/* Each number is visible only while its own animation is running: the base
+   state is hidden, and no fill mode carries the visible keyframe outside the
+   beat it belongs to. */
+.leader__n {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--display-font);
+  font-size: min(44vmin, 380px);
+  line-height: 1;
+  opacity: 0;
+  animation: leader-number var(--beat) linear calc(var(--k) * var(--beat));
+}
+
+@keyframes leader-number {
+  0%,
+  100% {
+    opacity: 1;
+  }
+}
+
+.leader__label {
+  position: absolute;
+  font-family: var(--mono-font);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: hsla(38, 30%, 90%, 0.6);
+}
+
+.leader__label--tl {
+  top: 2rem;
+  left: 2rem;
+}
+
+.leader__label--tr {
+  top: 2rem;
+  right: 2rem;
+}
+
+.leader__label--b {
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Two scratches on the emulsion, jumping about as the film runs. */
+.leader__scratch {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(transparent, hsla(0, 0%, 100%, 0.5) 20%, hsla(0, 0%, 100%, 0.2) 70%, transparent);
+  animation: leader-scratch 0.5s steps(1, end) infinite;
+}
+
+.leader__scratch--a {
+  left: 23%;
+}
+
+.leader__scratch--b {
+  left: 71%;
+  animation-duration: 0.7s;
+  animation-direction: reverse;
+}
+
+@keyframes leader-scratch {
+  0% { transform: translateX(0); opacity: 0.8; }
+  25% { transform: translateX(40px); opacity: 0; }
+  50% { transform: translateX(-12px); opacity: 0.6; }
+  75% { transform: translateX(90px); opacity: 0.3; }
+}
+
+/* The floating controls belong to the picture, not the leader: they wait
+   off-screen until the countdown is over. */
+html[data-leader] .assistant__fab,
+html[data-leader] .reel {
+  visibility: hidden;
+}

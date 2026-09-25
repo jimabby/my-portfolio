@@ -304,7 +304,7 @@ export default function Assistant() {
       <button
         ref={fabRef}
         type="button"
-        className={`assistant__fab ${isOpen ? 'assistant__fab--open' : ''}`}
+        className={`assistant__fab ${isOpen ? 'assistant__fab--open' : ''}${isStreaming ? ' is-rolling' : ''}`}
         onClick={() => setIsOpen((v) => !v)}
         aria-label={t('assistant.toggle')}
         aria-expanded={isOpen}
@@ -361,6 +361,12 @@ export default function Assistant() {
             )}
             {allMessages.map((msg, i) => (
               <div key={i} className={`assistant__message assistant__message--${msg.role}`}>
+                {/* The character cue, as a screenplay names who speaks next.
+                    Real text, not decoration: it is also how a screen reader
+                    tells the two sides of the conversation apart. */}
+                <span className="assistant__cue">
+                  {t(msg.role === 'user' ? 'assistant.cueYou' : 'assistant.cueAi')}
+                </span>
                 {msg.role === 'assistant' ? (
                   <div className="assistant__message-body">
                     {renderMarkdown(msg.content, handleInternalLink, withLocale)}
@@ -407,9 +413,9 @@ export default function Assistant() {
             ))}
             {isStreaming && streamText === '' && (
               <div className="assistant__message assistant__message--assistant">
-                <div className="assistant__typing">
-                  <span /><span /><span />
-                </div>
+                <span className="assistant__cue">{t('assistant.cueAi')}</span>
+                {/* A pause, written the way a script writes one. */}
+                <p className="assistant__beat">{t('assistant.beat')}</p>
               </div>
             )}
             <div ref={messagesEndRef} />

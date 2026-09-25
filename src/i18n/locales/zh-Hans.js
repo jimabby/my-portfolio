@@ -148,6 +148,9 @@ const dictionary = {
     openPiece: '打开 {title}',
     close: '关闭详情',
     viewAll: '查看全部作品',
+    prev: '上一卷',
+    next: '下一卷',
+    count: '共 {n} 卷',
   },
   portfolio: {
     title: '作品',
@@ -287,6 +290,9 @@ const dictionary = {
     next: '下一个',
   },
   assistant: {
+    cueYou: '你',
+    cueAi: 'JIM 的 AI（画外音）',
+    beat: '（停顿）',
     toggle: '切换 AI 助手',
     name: '了解 Jim',
     status: '由 Gemini 驱动的 AI 助手',

@@ -14,7 +14,11 @@ const About = () => {
       <h2 className='section__title'>{t('about.title')}</h2>
 
       <div className='about__container container grid'>
-        <Img src={AboutImg} alt='Jim Kong' className='about__img'  sizes="(max-width: 768px) 220px, 350px"/>
+        {/* A darkroom print, taped to the page. The tape is the figure's own
+            pseudo-elements, so there is nothing extra here to hide. */}
+        <figure className='about__print'>
+          <Img src={AboutImg} alt='Jim Kong' className='about__img'  sizes="(max-width: 768px) 220px, 350px"/>
+        </figure>
 
         <div className='about__data'>
           <Currently />

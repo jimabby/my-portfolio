@@ -2,38 +2,44 @@
   max-width: 768px;
 }
 
-/* The two tabs sit in one glass segmented control, the way a picker does on
-   iOS: the track is the pane, the active tab is the raised pill inside it. */
+/* Two reels. The tabs are labels on the cans: tracked mono, the active one
+   underlined in the accent. */
 .qualification__tabs {
   display: flex;
   justify-content: center;
-  margin-bottom: var(--mb-2);
-  gap: 0.25rem;
-  padding: 0.3rem;
-  background: var(--glass-bg-soft);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-pill);
+  margin-bottom: var(--mb-3);
+  gap: 2.5rem;
   width: max-content;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: var(--glass-inner);
 }
 
 .qualification__button {
-  font-size: var(--h3-font-size);
+  position: relative;
+  font-family: var(--mono-font);
+  font-size: 0.74rem;
   font-weight: var(--font-medium);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: var(--text-color);
   margin: 0;
   cursor: pointer;
-  padding: 0.5rem 1.1rem;
-  border-radius: var(--radius-pill);
+  padding: 0.5rem 0;
   background: none;
   border: none;
-  font-family: inherit;
-  transition: color 0.25s var(--ease), background-color 0.25s var(--ease),
-    box-shadow 0.25s var(--ease);
+  transition: color 0.25s var(--ease);
+}
+
+.qualification__button::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent-color);
+  transform: scaleX(0);
+  transition: transform 0.45s var(--ease-out);
 }
 
 .qualification__button:hover {
@@ -41,15 +47,17 @@
 }
 
 .qualification__icon {
-  font-size: 1.5rem;
-  margin-right: var(--mb-0-25);
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
 }
 
 .qualification__active,
 .qualification__active:hover {
-  color: var(--title-color-dark);
-  background: var(--glass-bg-strong);
-  box-shadow: var(--glass-inner), 0 1px 3px hsla(var(--hue), 30%, 20%, 0.12);
+  color: var(--title-color);
+}
+
+.qualification__active::after {
+  transform: scaleX(1);
 }
 
 .qualification__sections {
@@ -73,44 +81,60 @@
 }
 
 .qualification__title {
-  font-size: var(--normal-font-size);
-  font-weight: var(--font-medium);
+  font-family: var(--display-font);
+  font-size: 1.45rem;
+  font-weight: 400;
+  line-height: 1.08;
+  margin-bottom: 0.3rem;
 }
 
 .qualification__subtitle {
   display: inline-block;
   font-size: var(--small-font-size);
-  margin-bottom: var(--mb-1);
+  margin-bottom: 0.7rem;
 }
 
 .qualification__calendar i {
-  margin-right: 0.2rem;
-  opacity: 0.6;
+  display: none;
 }
 
 .qualification__calendar {
-  font-size: var(--small-font-size);
+  display: block;
+  font-family: var(--mono-font);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--accent-color);
+  margin-bottom: 2.2rem;
 }
 
+/* The spine of the timeline is a strip of film: black base, sprocket holes
+   down both edges. Each entry's slice of strip carries a lit frame where the
+   old dot was, so the history reads as frames exposed one after another. */
 .qualification__rounder {
-  display: inline-block;
-  width: 11px;
-  height: 11px;
-  background-color: var(--accent-color);
-  box-shadow: 0 0 0 4px var(--accent-soft);
-  border-radius: 50%;
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 26px;
+  height: 18px;
+  margin-top: 2px;
+  background: var(--film-black);
+  border-left: 5px solid var(--film-black);
+  border-right: 5px solid var(--film-black);
+  box-shadow: inset 0 0 0 2px var(--film-black), inset 0 0 0 20px var(--accent-color);
+}
+
+.qualification__data:hover .qualification__rounder {
+  box-shadow: inset 0 0 0 2px var(--film-black), inset 0 0 0 20px hsl(40, 90%, 62%);
 }
 
 .qualification__line {
   display: block;
-  width: 1px;
-  height: 100%;
-  background: linear-gradient(
-    180deg,
-    hsla(var(--hue), 16%, 60%, 0.55),
-    hsla(var(--hue), 16%, 60%, 0.12)
-  );
-  transform: translate(5px, -6px);
+  width: 26px;
+  height: calc(100% - 20px);
+  background:
+    repeating-linear-gradient(180deg, var(--body-color) 0 4px, transparent 4px 10px) left 1px top 0 / 3px 100% no-repeat,
+    repeating-linear-gradient(180deg, var(--body-color) 0 4px, transparent 4px 10px) right 1px top 0 / 3px 100% no-repeat,
+    var(--film-black);
 }
 
 @media screen and (max-width: 992px) {
@@ -130,6 +154,23 @@
 @media screen and (max-width: 576px) {
   .qualification__sections {
     grid-template-columns: initial;
+  }
+
+  /* One-sided on a phone: the strip runs down the left and every entry
+     reads to its right, instead of alternating sides and leaving each one a
+     third of the screen. The entry's empty spacer goes, and the strip's cell
+     is moved to the front of whichever side it was on. */
+  .qualification__data {
+    grid-template-columns: max-content 1fr;
+    column-gap: 1.1rem;
+  }
+
+  .qualification__data > div:empty {
+    display: none;
+  }
+
+  .qualification__data > div:has(.qualification__rounder) {
+    order: -1;
   }
 
   .qualification__button {

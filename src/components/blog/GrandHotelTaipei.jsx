@@ -52,7 +52,7 @@ const GrandHotelTaipei = () => {
       <Header />
       <BlogProgressBar />
 
-      <main className="blog blog--single section" id="main-content">
+      <main className="blog blog--single blog--travel section" id="main-content">
         <div className="blog__container container">
 
           <div className="blog__back-wrapper">

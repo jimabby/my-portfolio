@@ -10,7 +10,16 @@ const Data = () => {
   const { t } = useLanguage()
   return (
     <div className='home__data'>
-      <h1 className='home__title'>Jim Kong</h1>
+      {/* The slate over the title card: a production number and where it
+          was shot. Coordinates rather than words, so it needs no translation;
+          decoration, so hidden from assistive tech. */}
+      <span className='home__slate' aria-hidden='true'>
+        <span className='home__rec' />
+        Nº 001 — 33°52′S 151°12′E
+      </span>
+      <h1 className='home__title'>
+        Jim <em>Kong</em>
+      </h1>
 
       <h3 className='home__subtitle'>
         {t('home.subtitle')}

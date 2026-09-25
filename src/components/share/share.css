@@ -5,13 +5,9 @@
 
 .share {
   margin: 2rem 0;
-  padding: 1.75rem 2rem;
-  background: var(--glass-bg-soft);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--glass-inner);
+  padding: 1.6rem 0;
+  border-top: 1px solid var(--glass-border-strong);
+  border-bottom: 1px solid var(--glass-border-strong);
   text-align: center;
 }
 
@@ -20,7 +16,8 @@
 }
 
 .share__heading {
-  font-size: var(--smaller-font-size);
+  font-family: var(--mono-font);
+  font-size: 0.7rem;
   font-weight: var(--font-semi-bold);
   text-transform: uppercase;
   letter-spacing: var(--tracking-eyebrow);
@@ -34,39 +31,47 @@
   flex-wrap: wrap;
 }
 
+/* Outlined in ink until pointed at, then filled with the network's own
+   colour — so the row reads as part of the page rather than three ads. */
 .share__btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.6rem 1.4rem;
-  border-radius: var(--radius-pill);
-  font-size: 0.9375rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border-strong);
+  background: transparent;
+  color: var(--title-color);
+  font-family: var(--mono-font);
+  font-size: 0.7rem;
   font-weight: var(--font-medium);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   text-decoration: none;
-  letter-spacing: -0.01em;
-  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+  transition: background-color 0.3s var(--ease), color 0.3s var(--ease),
+    border-color 0.3s var(--ease);
 }
 
 .share__btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.45);
+  color: #fff;
+  border-color: transparent;
 }
 
 /* Brand colours, darkened just enough to carry white label text at 4.5:1.
    The published swatches (#1d9bf0, #ff4500) manage only 3.00:1 and 3.44:1
    against white, which fails at this 0.9375rem size. LinkedIn's #0a66c2
    already clears it at 5.69:1 and is untouched. */
-.share__btn--linkedin {
+.share__btn--linkedin:hover {
   background: #0a66c2; /* 5.69:1 */
   color: #fff;
 }
 
-.share__btn--twitter {
+.share__btn--twitter:hover {
   background: #1a75b8; /* 4.91:1 */
   color: #fff;
 }
 
-.share__btn--reddit {
+.share__btn--reddit:hover {
   background: #d63a00; /* 4.70:1 */
   color: #fff;
 }

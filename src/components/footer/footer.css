@@ -1,85 +1,163 @@
+/* Closing credits. The footer is the last reel in both grades: black stock,
+   "Fin." as the end card, the site's own name signed under it, and the links
+   set like a credit roll in the tracked mono. */
 .footer {
-  background: var(--glass-bg-soft);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border-top: 1px solid var(--glass-border);
-  box-shadow: var(--glass-inner);
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 80% at 50% 0%, hsla(34, 60%, 40%, 0.16), transparent 70%),
+    var(--film-black);
+  color: hsl(38, 30%, 88%);
+}
+
+/* Sprocket rows along the top edge: the page ends on the film itself. */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: repeating-linear-gradient(
+    90deg,
+    hsla(38, 30%, 90%, 0.12) 0 10px,
+    transparent 10px 24px
+  );
 }
 
 .footer__container {
-  padding: 2.5rem 0 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem 0 6rem;
 }
 
-.footer__title,
-.footer__link {
-  color: var(--title-color);
+.footer__container::before {
+  content: 'Fin.' / '';
+  font-family: var(--display-font);
+  font-style: italic;
+  font-size: clamp(4rem, 10vw, 7rem);
+  line-height: 0.9;
+  color: hsl(38, 30%, 94%);
+  margin-bottom: 1.4rem;
+}
+
+/* Each language ends its films its own way: "Fin." in English, and the
+   single character that closes Chinese and Japanese cinema — 终 in
+   Simplified, 終 in Traditional and in Japanese — set upright, because an
+   italic Han character is not a thing. */
+:lang(zh-Hans) .footer__container::before {
+  content: '终' / '';
+  font-family: 'Songti SC', 'STSong', 'Noto Serif CJK SC', 'Source Han Serif SC', serif;
+  font-style: normal;
+  letter-spacing: 0;
+}
+
+:lang(zh-Hant) .footer__container::before {
+  content: '終' / '';
+  font-family: 'Songti TC', 'Noto Serif CJK TC', 'Source Han Serif TC', serif;
+  font-style: normal;
+}
+
+:lang(ja) .footer__container::before {
+  content: '終' / '';
+  font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif CJK JP', 'Source Han Serif JP', serif;
+  font-style: normal;
 }
 
 .footer__title {
   display: block;
   text-align: center;
-  margin-bottom: var(--mb-2);
-  font-size: var(--h1-font-size);
-  font-weight: var(--font-semi-bold);
-  letter-spacing: var(--tracking-display);
+  margin-bottom: 2.6rem;
+  font-family: var(--mono-font);
+  font-size: 0.72rem;
+  font-weight: var(--font-medium);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: hsla(38, 30%, 88%, 0.6);
 }
 
-.footer__link:hover {
-  color: var(--accent-color);
+.footer__title::before {
+  /* A no-break space: the title is a flex box on phones (for its tap
+     target), and a flex item's trailing plain space collapses. */
+  content: 'A film by\00a0' / '';
+  letter-spacing: 0.3em;
 }
 
-/* Wraps deliberately: six links plus their gaps need ~459px, and the container
-   is 342px on a 390px phone. Without this the row overflowed the viewport on
-   every page — "About" clipped to "out", "RSS feed" cut mid-word — and took the
-   whole document into a horizontal scroll with it. */
+.footer__link {
+  font-family: var(--mono-font);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: hsl(38, 30%, 88%);
+  transition: color 0.25s var(--ease);
+}
+
+.footer__link:hover,
+.footer__title:hover {
+  color: hsl(38, 62%, 66%);
+}
+
+/* Wraps deliberately: six links plus their gaps need more than a phone's
+   width, and without wrapping the row took the whole document into a
+   horizontal scroll with it. */
 .footer__list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  column-gap: 1.5rem;
-  row-gap: 0.75rem;
-  margin-bottom: var(--mb-2);
+  column-gap: 2.2rem;
+  row-gap: 0.9rem;
+  margin-bottom: 2.4rem;
 }
 
 .footer__social {
   display: flex;
   justify-content: center;
-  column-gap: 1.25rem;
+  column-gap: 1.1rem;
 }
 
 .footer__social-link {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  color: var(--title-color-dark);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-inner);
-  font-size: 1.125rem;
+  color: hsl(38, 30%, 90%);
+  border: 1px solid hsla(38, 30%, 90%, 0.22);
+  font-size: 1.05rem;
   padding: 0.55rem;
-  border-radius: var(--radius-pill);
+  border-radius: 50%;
   display: inline-flex;
-  transition: transform 0.3s var(--ease-out), background-color 0.25s var(--ease),
-    color 0.25s var(--ease);
+  transition: color 0.25s var(--ease), border-color 0.25s var(--ease),
+    transform 0.3s var(--ease-out);
 }
 
 .footer__social-link:hover {
-  background: var(--glass-bg-strong);
-  color: var(--accent-color);
-  transform: translateY(-2px);
+  color: hsl(38, 62%, 66%);
+  border-color: hsl(38, 62%, 66%);
+  transform: rotate(-8deg);
 }
 
 .footer__copyright {
   display: block;
-  margin-top: 4.2rem;
-  color: var(--text-color);
+  margin-top: 3.6rem;
+  font-family: var(--mono-font);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: hsla(38, 30%, 88%, 0.5);
   text-align: center;
-  font-size: var(--smaller-font-size);
 }
 
 @media screen and (max-width: 992px) {
   .footer__social-link {
     padding: 0.45rem;
     font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .footer__container {
+    padding: 4rem 0 6.5rem;
+  }
+
+  .footer__list {
+    column-gap: 1.4rem;
   }
 }
 

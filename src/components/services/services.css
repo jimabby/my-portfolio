@@ -1,60 +1,133 @@
+/* One-sheets. Each service is a film poster: black stock, the service's
+   number billed large in the display face, its title set like a feature's,
+   and a billing block — the hairline-and-small-caps band every poster has at
+   its foot — above the call to action. The numbering is a CSS counter. */
 .services__container {
-  grid-template-columns: repeat(3, 270px);
+  grid-template-columns: repeat(3, minmax(0, 290px));
   justify-content: start;
-  column-gap: 1.4rem;
+  column-gap: 1.6rem;
+  counter-reset: poster;
 }
 
 .services__content {
+  counter-increment: poster;
   position: relative;
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--glass-inner), var(--glass-shadow);
-  padding: 2.4rem 1.75rem 1.75rem;
-  transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out),
-    border-color 0.4s var(--ease-out);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 380px;
+  overflow: hidden;
+  isolation: isolate;
+  color: hsl(38, 30%, 88%);
+  background:
+    radial-gradient(120% 70% at 80% 0%, hsla(30, 90%, 55%, 0.28), transparent 60%),
+    radial-gradient(90% 60% at 0% 100%, hsla(186, 60%, 40%, 0.22), transparent 70%),
+    var(--film-black);
+  border-radius: var(--radius-sm);
+  box-shadow: 6px 12px 0 -3px hsla(28, 40%, 12%, 0.14), var(--glass-shadow);
+  padding: 1.6rem 1.5rem 1.4rem;
+  transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out);
+}
+
+.services__content:nth-child(2) {
+  background:
+    radial-gradient(120% 70% at 20% 0%, hsla(9, 80%, 50%, 0.3), transparent 60%),
+    radial-gradient(90% 60% at 100% 100%, hsla(40, 80%, 50%, 0.16), transparent 70%),
+    var(--film-black);
+}
+
+.services__content:nth-child(3) {
+  background:
+    radial-gradient(120% 70% at 50% 0%, hsla(186, 60%, 42%, 0.32), transparent 60%),
+    radial-gradient(90% 60% at 100% 100%, hsla(30, 90%, 55%, 0.18), transparent 70%),
+    var(--film-black);
+}
+
+/* The big number, bleeding off the right edge like a poster's key art. */
+.services__content::before {
+  content: counter(poster, decimal-leading-zero);
+  position: absolute;
+  z-index: -1;
+  top: -1.4rem;
+  right: -0.8rem;
+  font-family: var(--display-font);
+  font-style: italic;
+  font-size: 11rem;
+  line-height: 1;
+  color: hsla(38, 40%, 90%, 0.09);
+  transition: transform 0.9s var(--ease-out), color 0.6s var(--ease);
+}
+
+/* The billing block. */
+.services__content::after {
+  content: 'WRITTEN · DESIGNED · BUILT · SHIPPED' / '';
+  order: 2;
+  display: block;
+  margin: 1.4rem 0 1rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid hsla(38, 30%, 88%, 0.25);
+  font-family: var(--mono-font);
+  font-size: 0.56rem;
+  letter-spacing: 0.26em;
+  color: hsla(38, 30%, 88%, 0.5);
+}
+
+.services__content > div {
+  order: 1;
+}
+
+.services__button {
+  order: 3;
 }
 
 .services__content:hover {
-  transform: translateY(-4px);
-  border-color: var(--glass-border-strong);
-  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
+  transform: translateY(-6px) rotate(-0.6deg);
+  box-shadow: 10px 18px 0 -4px hsla(28, 40%, 12%, 0.16), var(--glass-shadow-lg);
+}
+
+.services__content:hover::before {
+  transform: translateX(-0.5rem) scale(1.06);
+  color: hsla(38, 60%, 70%, 0.16);
 }
 
 .services__icon {
   display: block;
-  font-size: 1.9rem;
-  color: var(--title-color-dark);
-  margin-bottom: var(--mb-1);
+  font-size: 1.6rem;
+  color: hsl(38, 62%, 66%);
+  margin-bottom: 5.5rem;
 }
 
 .services__title {
-  font-size: var(--h3-font-size);
-  margin-bottom: var(--mb-1);
-  font-weight: var(--font-medium);
+  font-family: var(--display-font);
+  font-size: 2.3rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: hsl(38, 30%, 95%);
+  margin-bottom: 0;
 }
 
 /* min-height, not padding: the unpadded box was a 20px-tall target, under the
-   24px floor in WCAG 2.2 SC 2.5.8, and growing it this way leaves the card's
-   spacing where the design put it. */
+   24px floor in WCAG 2.2 SC 2.5.8. */
 .services__button {
-  color: var(--title-color);
-  font-size: var(--small-font-size);
+  align-self: flex-start;
+  color: hsl(38, 30%, 92%);
+  font-family: var(--mono-font);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   display: inline-flex;
   align-items: center;
-  column-gap: 0.25rem;
+  column-gap: 0.35rem;
   cursor: pointer;
   background: none;
   border: none;
   padding: 0;
   min-height: 24px;
-  font-family: inherit;
 }
 
 .services__button:hover {
-  color: var(--accent-color);
+  color: hsl(38, 62%, 66%);
 }
 
 .services__button-icon {
@@ -63,7 +136,7 @@
 }
 
 .services__button:hover .services__button-icon {
-  transform: translateX(0.25rem);
+  transform: translateX(0.3rem);
 }
 
 /* The scrim is blurred as well as darkened: the sheet above it is glass, so
@@ -88,15 +161,14 @@
 }
 
 .services__model-content {
-  width: min(520px, 100%);
+  width: min(540px, 100%);
   position: relative;
-  background: var(--glass-bg-strong);
-  backdrop-filter: var(--glass-blur-strong);
-  -webkit-backdrop-filter: var(--glass-blur-strong);
+  background: var(--container-color);
   border: 1px solid var(--glass-border);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
-  padding: 3.5rem 2.2rem 2.2rem;
+  border-top: 4px solid var(--accent-color);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--glass-shadow-lg);
+  padding: 3.25rem 2.4rem 2.4rem;
   transform: scale(0.96);
   transition: transform 0.35s var(--ease-out);
 }
@@ -135,8 +207,10 @@
 }
 
 .services__model-title {
-  font-size: var(--h3-font-size);
-  font-weight: var(--font-medium);
+  font-family: var(--display-font);
+  font-size: 2.4rem;
+  font-weight: 400;
+  line-height: 1;
   margin-bottom: var(--mb-1);
 }
 
@@ -172,7 +246,7 @@
 
 @media screen and (max-width: 992px) {
   .services__container {
-    grid-template-columns: repeat(3, 220px);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -182,11 +256,16 @@
   }
 
   .services__content {
-    padding: 2rem 1rem 1.2rem;
+    min-height: 320px;
+    padding: 1.4rem 1.1rem 1.2rem;
   }
 
   .services__icon {
-    font-size: 1.5rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .services__title {
+    font-size: 1.9rem;
   }
 }
 
@@ -200,9 +279,14 @@
   }
 }
 
-@media screen and (max-width: 350px) {
+@media screen and (max-width: 520px) {
   .services__container {
     grid-template-columns: 1fr;
+    row-gap: 1.25rem;
+  }
+
+  .services__content {
+    min-height: 260px;
   }
 }
 

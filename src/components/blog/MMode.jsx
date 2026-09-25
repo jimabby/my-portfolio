@@ -34,7 +34,7 @@ const MMode = () => {
       <Header />
       <BlogProgressBar />
 
-      <main className="blog blog--single section" id="main-content">
+      <main className="blog blog--single blog--camera section" id="main-content">
         <div className="blog__container container">
 
           {/* Back button */}

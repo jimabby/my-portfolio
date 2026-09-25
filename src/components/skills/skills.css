@@ -1,42 +1,83 @@
-/* Anchored to the container's left edge, on the same axis as the section
-   heading, rather than centred between two equal margins. The two cards come
-   to 760 of the 1024, and the space they leave on the right is the point. */
+/* Call sheets. Each discipline is a typed sheet pinned to the board: a header
+   band in the mono, then the cast of technologies set like end credits —
+   the name, a dotted leader, and the billing (the level) flush right.
+
+   Anchored to the container's left edge, on the same axis as the section
+   heading, rather than centred between two equal margins. */
 .skills__container {
-  grid-template-columns: repeat(2, 360px);
+  grid-template-columns: repeat(2, minmax(0, 400px));
   column-gap: 2.5rem;
   justify-content: start;
 }
 
 .skills__content {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  position: relative;
+  background: var(--container-color);
   border: 1px solid var(--glass-border);
-  padding: 2.25rem 2.25rem;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--glass-inner), var(--glass-shadow);
+  padding: 0 2rem 2rem;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--glass-shadow);
+  transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out);
+}
+
+.skills__content:nth-child(1) {
+  transform: rotate(-0.8deg);
+}
+
+.skills__content:nth-child(2) {
+  transform: rotate(0.9deg) translateY(1.2rem);
+}
+
+.skills__content:hover {
+  transform: rotate(0deg) translateY(-4px);
+  box-shadow: var(--glass-shadow-lg);
+}
+
+/* A pin. */
+.skills__content::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, hsl(9, 80%, 66%), var(--accent-color) 60%, hsl(9, 70%, 24%));
+  box-shadow: 2px 4px 5px hsla(28, 40%, 10%, 0.4);
 }
 
 .skills__title {
-  font-size: var(--smaller-font-size);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 -2rem 1.6rem;
+  padding: 1.35rem 2rem 0.9rem;
+  border-bottom: 1px solid var(--title-color);
+  font-family: var(--mono-font);
+  font-size: 0.7rem;
   font-weight: var(--font-semi-bold);
   text-transform: uppercase;
-  letter-spacing: var(--tracking-eyebrow);
-  color: var(--text-color);
+  letter-spacing: 0.22em;
+  color: var(--title-color);
   text-align: left;
-  margin-bottom: var(--mb-1-5);
 }
 
+.skills__title::after {
+  content: 'CALL SHEET' / '';
+  font-weight: var(--font-normal);
+  color: var(--text-color);
+}
+
+/* One column of credits: the two-column groups become a single list. */
 .skills__box {
-  display: flex;
-  justify-content: center;
-  column-gap: 2rem;
+  display: grid;
+  row-gap: 0.95rem;
 }
 
 .skills__group {
   display: grid;
-  align-items: flex-start;
-  row-gap: 1rem;
+  row-gap: 0.95rem;
 }
 
 .skills__data {
@@ -45,24 +86,58 @@
 }
 
 .skills .bx-badge-check {
-  font-size: 1rem;
-  color: var(--accent-color);
+  display: none;
+}
+
+/* The name, the leader and the billing on one baseline. The leader is the
+   wrapper's ::after pulled into the middle with `order`. */
+.skills__data > div {
+  display: flex;
+  align-items: baseline;
+  flex: 1;
+  gap: 0.6rem;
+}
+
+.skills__data > div::after {
+  content: '';
+  order: 1;
+  flex: 1;
+  min-width: 1.5rem;
+  border-bottom: 1px dotted var(--glass-border-strong);
+  transform: translateY(-0.28em);
 }
 
 .skills__name {
-  font-size: var(--normal-font-size);
-  font-weight: var(--font-medium);
-  line-height: 18px;
+  order: 0;
+  font-family: var(--display-font);
+  font-size: 1.45rem;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0;
 }
 
 .skills__level {
-  font-size: var(--tiny-font-size);
+  order: 2;
+  font-family: var(--mono-font);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+.skills__data:hover .skills__name {
+  color: var(--accent-color);
+  font-style: italic;
 }
 
 @media screen and (max-width: 992px) {
   .skills__container {
-    grid-template-columns: max-content;
-    row-gap: 2rem;
+    grid-template-columns: minmax(0, 440px);
+    row-gap: 2.5rem;
+  }
+
+  .skills__content:nth-child(2) {
+    transform: rotate(0.9deg);
   }
 }
 
@@ -72,16 +147,22 @@
   }
 
   .skills__content {
-    padding: 1.5rem;
+    padding: 0 1.4rem 1.5rem;
   }
-}
 
-@media screen and (max-width: 350px) {
-  .skills__box {
-    column-gap: 1.25rem;
+  .skills__title {
+    margin: 0 -1.4rem 1.3rem;
+    padding: 1.2rem 1.4rem 0.8rem;
   }
 
   .skills__name {
-    font-size: var(--small-font-size);
+    font-size: 1.3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skills__content,
+  .skills__content:hover {
+    transition: none;
   }
 }

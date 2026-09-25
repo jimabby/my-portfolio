@@ -1,0 +1,137 @@
+/* The insert shot behind the title card. Two copies of one canvas: the soft
+   one blurred everywhere, the sharp one masked to a band around --focus, which
+   CodeShot.jsx moves with the visitor's pointer or finger. The whole shot
+   fades out at its top and bottom so it never meets the page with an edge,
+   and sits well back — the title is the subject, the code is the room. */
+.codeshot {
+  --focus: 50%;
+  --band: 58px;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.34;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 93%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 93%, transparent);
+}
+
+[data-theme='dark'] .codeshot {
+  opacity: 0.5;
+}
+
+.codeshot canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.codeshot__soft {
+  filter: blur(2.6px);
+  opacity: 0.6;
+}
+
+.codeshot__sharp {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent calc(var(--focus) - var(--band) * 2.2),
+    #000 calc(var(--focus) - var(--band) * 0.6),
+    #000 calc(var(--focus) + var(--band) * 0.6),
+    transparent calc(var(--focus) + var(--band) * 2.2)
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent calc(var(--focus) - var(--band) * 2.2),
+    #000 calc(var(--focus) - var(--band) * 0.6),
+    #000 calc(var(--focus) + var(--band) * 0.6),
+    transparent calc(var(--focus) + var(--band) * 2.2)
+  );
+}
+
+/* By night the monitor has scanlines and throws a little light where you
+   point, like a hand held up to the glass. */
+[data-theme='dark'] .codeshot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: repeating-linear-gradient(to bottom, hsla(0, 0%, 0%, 0.18) 0 1px, transparent 1px 3px);
+}
+
+.codeshot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  background: radial-gradient(
+    240px 180px at var(--gx, 50%) var(--gy, 50%),
+    hsla(38, 90%, 70%, 0.22),
+    transparent 70%
+  );
+  transition: opacity 0.6s var(--ease);
+}
+
+.codeshot.is-touched::after {
+  opacity: 1;
+}
+
+/* Autofocus confirmation: four brackets snap in on the point you tapped, go
+   green, and let go. */
+.codeshot__reticle {
+  position: absolute;
+  z-index: 2;
+  width: 64px;
+  height: 44px;
+  margin: -22px 0 0 -32px;
+  opacity: 0;
+  --c: var(--title-color);
+  background:
+    linear-gradient(var(--c), var(--c)) left top / 12px 2px no-repeat,
+    linear-gradient(var(--c), var(--c)) left top / 2px 12px no-repeat,
+    linear-gradient(var(--c), var(--c)) right top / 12px 2px no-repeat,
+    linear-gradient(var(--c), var(--c)) right top / 2px 12px no-repeat,
+    linear-gradient(var(--c), var(--c)) left bottom / 12px 2px no-repeat,
+    linear-gradient(var(--c), var(--c)) left bottom / 2px 12px no-repeat,
+    linear-gradient(var(--c), var(--c)) right bottom / 12px 2px no-repeat,
+    linear-gradient(var(--c), var(--c)) right bottom / 2px 12px no-repeat;
+}
+
+.codeshot__reticle.is-on {
+  animation: codeshot-af 0.9s var(--ease-out) forwards;
+}
+
+@keyframes codeshot-af {
+  0% {
+    opacity: 1;
+    transform: scale(1.8);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  45% {
+    --c: hsl(120, 70%, 45%);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1);
+    --c: hsl(120, 70%, 45%);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .codeshot {
+    --band: 44px;
+    opacity: 0.26;
+  }
+
+  [data-theme='dark'] .codeshot {
+    opacity: 0.4;
+  }
+}

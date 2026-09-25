@@ -14,7 +14,7 @@ const THEME_STORAGE_KEY = 'theme';
 // Browser-chrome colour per theme. Mirrors --body-color in index.css and the
 // inline bootstrap script in index.html, which paints both the attribute and
 // this meta tag before first paint to avoid a flash of the wrong theme.
-const THEME_COLOR = { light: '#f7f7f7', dark: '#101318' };
+const THEME_COLOR = { light: '#f3ede2', dark: '#0e0c0a' };
 
 // Only a deliberate toggle is ever stored. Returns null when the visitor has
 // never chosen, which is what keeps the OS setting authoritative.

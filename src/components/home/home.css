@@ -1,70 +1,226 @@
+/* The hero is the opening title card. The name is set as large as the measure
+   allows in the display face, a slate sits over it, and the portrait is one
+   frame of 35mm film. On first load, letterbox bars part to reveal it — the
+   curtain, not a fade. */
+
+.home {
+  position: relative;
+  min-height: min(100svh, 900px);
+  display: flex;
+  align-items: center;
+}
+
 .home__container {
+  position: relative;
+  z-index: 1;
   row-gap: 5.5rem;
+  width: 100%;
 }
 
 .home__content {
-  grid-template-columns: 116px repeat(2, 1fr);
-  padding-top: 5.25rem;
-  column-gap: 2.25rem;
+  grid-template-columns: 72px minmax(0, 1.35fr) minmax(0, 1fr);
+  padding-top: 4rem;
+  column-gap: 2.5rem;
   align-items: center;
 }
+
+/* ─── Opening bars ───
+   Two black bars meet in the middle of the frame and draw apart. Opacity and
+   transform only, on pseudo-elements, so they never shift layout; and the
+   image under them is painted from the first frame, so they cost the LCP
+   nothing. Keyed to .section--visible, which the hero gets on arrival. */
+.home::before,
+.home::after {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: calc(var(--z-fixed) + 1);
+  height: 50vh;
+  background: var(--film-black);
+  pointer-events: none;
+  transform: scaleY(0);
+}
+
+.home::before {
+  top: 0;
+  transform-origin: top;
+}
+
+.home::after {
+  bottom: 0;
+  transform-origin: bottom;
+}
+
+/* Held while the film leader plays (Leader.jsx sets data-leader on <html>),
+   so the curtain opens as the countdown ends rather than underneath it. */
+html:not([data-leader]) .home.section--visible::before,
+html:not([data-leader]) .home.section--visible::after {
+  animation: home-curtain 1.3s var(--ease-out) 0.15s backwards;
+}
+
+/* And shut the whole time the leader is up, so its fade-out dissolves into
+   the closed bars rather than into the page, and the reveal is still the
+   curtain's to make. */
+html[data-leader] .home::before,
+html[data-leader] .home::after {
+  transform: scaleY(1);
+}
+
+@keyframes home-curtain {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0);
+  }
+}
+
+/* ─── Social column ─── */
 
 .home__social {
   display: grid;
   grid-template-columns: max-content;
-  row-gap: 1rem;
+  row-gap: 0.9rem;
+  justify-items: center;
 }
 
-/* Each icon gets its own small glass chip, so the column reads as a control
-   rather than as three loose glyphs floating on the gradient. */
+.home__social::before,
+.home__social::after {
+  content: '';
+  justify-self: center;
+  width: 1px;
+  height: 3.5rem;
+  background: linear-gradient(transparent, var(--glass-border-strong));
+}
+
+.home__social::after {
+  background: linear-gradient(var(--glass-border-strong), transparent);
+}
+
 .home__social-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  font-size: 1.2rem;
+  width: 2.35rem;
+  height: 2.35rem;
+  font-size: 1.15rem;
   color: var(--title-color);
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border);
-  border-radius: var(--radius-pill);
-  box-shadow: var(--glass-inner), var(--glass-shadow);
-  transition: color 0.25s var(--ease), transform 0.35s var(--ease-out),
-    box-shadow 0.35s var(--ease-out), background-color 0.25s var(--ease);
+  border-radius: 50%;
+  transition: color 0.25s var(--ease), border-color 0.25s var(--ease),
+    transform 0.35s var(--ease-out);
 }
 
 .home__social-icon:hover {
   color: var(--accent-color);
-  background: var(--glass-bg-strong);
-  transform: translateY(-3px);
-  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
+  border-color: var(--accent-color);
+  transform: rotate(-8deg) scale(1.06);
+}
+
+/* ─── Title card ─── */
+
+/* A pool of the page's own colour behind the words, so the code shot behind
+   the hero (CodeShot.jsx) recedes where the title is read and stays vivid
+   everywhere else. */
+.home__data {
+  position: relative;
+}
+
+.home__data::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -2.5rem -4rem -1.5rem;
+  background: radial-gradient(closest-side, var(--body-color) 50%, transparent 100%);
+  opacity: 0.88;
+  pointer-events: none;
+}
+
+.home__slate {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1.6rem;
+  font-family: var(--mono-font);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--text-color);
+}
+
+.home__rec {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  box-shadow: 0 0 10px var(--accent-color);
+  animation: home-rec 1.6s steps(1, end) infinite;
+}
+
+@keyframes home-rec {
+  50% {
+    opacity: 0.15;
+  }
 }
 
 .home__title {
-  font-size: var(--big-font-size);
-  margin-bottom: var(--mb-0-25);
-  letter-spacing: var(--tracking-display);
-  line-height: 1.08;
+  font-family: var(--display-font);
+  font-size: clamp(4.2rem, 9.4vw, 8.4rem);
+  font-weight: 400;
+  line-height: 0.86;
+  letter-spacing: -0.035em;
+  margin-bottom: 1.8rem;
+}
+
+.home__title em {
+  display: block;
+  padding-left: 0.9em;
+  font-style: italic;
+  color: var(--accent-color);
+}
+
+/* Each word of the title rises out of a mask as the curtain opens — the way
+   a title card is cut in rather than faded. */
+html:not([data-leader]) .home.section--visible .home__title {
+  animation: home-title 1.4s var(--ease-out) 0.5s backwards;
+}
+
+html:not([data-leader]) .home.section--visible .home__title em {
+  animation: home-title 1.4s var(--ease-out) 0.68s backwards;
+}
+
+@keyframes home-title {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
 }
 
 .home__subtitle {
   position: relative;
-  font-size: var(--h3-font-size);
-  padding-left: 5.2rem;
-  font-weight: var(--font-normal);
-  margin-bottom: var(--mb-1);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--mono-font);
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: var(--font-medium);
+  color: var(--title-color);
+  margin-bottom: var(--mb-1-5);
 }
 
 .home__subtitle::before {
   content: '';
-  position: absolute;
-  width: 68px;
+  flex: 0 0 3rem;
   height: 1px;
-  background: linear-gradient(90deg, transparent, hsl(var(--hue), 12%, 60%));
-  left: 0;
-  top: 0.95rem;
+  background: var(--accent-color);
 }
 
 .home__cta {
@@ -76,75 +232,151 @@
 
 .home__description {
   max-width: 440px;
-  margin-bottom: var(--mb-1-5);
+  margin-bottom: var(--mb-2);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+/* ─── The still ───
+   One frame of a strip: the black film base with sprocket holes punched top
+   and bottom (a repeating gradient, so no image request), and the edge
+   printing running down the right-hand side. The image inside is graded
+   slightly warm by day and cool by night. */
+.home__still {
+  --hole: var(--body-color);
+  position: relative;
+  order: 1;
+  justify-self: center;
+  margin: 0;
+  padding: 26px 14px;
+  background: var(--film-black);
+  border-radius: 3px;
+  box-shadow: 0 30px 60px -28px hsla(28, 40%, 8%, 0.6);
+  transform: rotate(2.2deg);
+  transition: transform 0.8s var(--ease-out);
+}
+
+.home__still:hover {
+  transform: rotate(0deg) scale(1.015);
+}
+
+.home__still::before,
+.home__still::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  height: 9px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--hole) 0 9px,
+    transparent 9px 20px
+  );
+  border-radius: 1px;
+}
+
+.home__still::before {
+  top: 9px;
+}
+
+.home__still::after {
+  bottom: 9px;
 }
 
 /* A real <img>, not a CSS background: as the largest element on first paint it
    is the LCP, and only a genuine element is visible to the browser's preload
-   scanner. A background-image can't be found until the stylesheet has been
-   downloaded and parsed, which delayed it by a whole round trip. */
-/* The white ring is a glass bezel: a translucent edge with the specular
-   highlight the rest of the panes carry, so the portrait belongs to the same
-   material as everything around it. */
+   scanner. */
 .home__img {
-  object-fit: cover;
-  border: 6px solid var(--glass-bg-strong);
-  box-shadow: var(--glass-inner), var(--glass-shadow-lg);
-  order: 1;
-  justify-self: center;
+  display: block;
   width: 300px;
-  height: 300px;
-  animation: profile__animate 8s ease-in-out infinite 1s;
+  height: 360px;
+  object-fit: cover;
+  border-radius: 1px;
+  filter: sepia(0.18) saturate(0.92) contrast(1.05);
 }
 
-@keyframes profile__animate {
-  0% {
-    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
-  }
-  50% {
-    border-radius: 30% 60% 70% 40%/50% 60% 30% 60%;
-  }
-  100% {
-    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
-  }
+/* By night the holes cannot show the page through them — it is as dark as
+   the stock — so they are printed as pale emulsion instead. */
+[data-theme='dark'] .home__still {
+  --hole: hsla(38, 30%, 82%, 0.75);
+  box-shadow: 0 0 0 1px hsla(38, 40%, 80%, 0.08), 0 30px 60px -20px #000;
+}
+
+[data-theme='dark'] .home__img {
+  filter: saturate(0.85) contrast(1.08) brightness(0.92) hue-rotate(-6deg);
+}
+
+.home__edge {
+  position: absolute;
+  top: 50%;
+  right: -3px;
+  transform: translate(50%, -50%) rotate(90deg);
+  white-space: nowrap;
+  font-family: var(--mono-font);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: hsl(34, 90%, 58%);
+  opacity: 0.85;
+}
+
+.home__edge span {
+  font-size: 7px;
 }
 
 @media screen and (max-width: 992px) {
   .home__content {
-    grid-template-columns: 100px repeat(2, 1fr);
-    column-gap: 1.25rem;
-  }
-
-  .home__subtitle {
-    padding-left: 3.75rem;
-    margin-bottom: var(--mb-1);
-  }
-
-  .home__subtitle::before {
-    width: 42px;
-    top: 0.8rem;
+    grid-template-columns: 56px minmax(0, 1.3fr) minmax(0, 1fr);
+    column-gap: 1.5rem;
   }
 
   .home__description {
     max-width: initial;
-    margin-bottom: var(--mb-1-5);
   }
 
   .home__img {
-    width: 250px;
-    height: 250px;
+    width: 240px;
+    height: 290px;
   }
 }
 
 @media screen and (max-width: 768px) {
+  /* Room under the buttons for the code shot's typing line. */
+  .home {
+    min-height: auto;
+    padding-bottom: 5.5rem;
+  }
+
   .home__content {
     grid-template-columns: 0.5fr 3fr;
     padding-top: 3.3rem;
+    row-gap: 2.5rem;
   }
 
-  .home__img {
+  .home__social::before,
+  .home__social::after {
+    height: 2rem;
+  }
+
+  .home__still {
     order: initial;
-    justify-self: initial;
+    justify-self: start;
+    padding: 20px 10px;
+  }
+
+  .home__still::before,
+  .home__still::after {
+    left: 6px;
+    right: 6px;
+    height: 7px;
+  }
+
+  .home__still::before {
+    top: 7px;
+  }
+
+  .home__still::after {
+    bottom: 7px;
   }
 
   .home__data {
@@ -153,21 +385,33 @@
 
   .home__img {
     width: 200px;
-    height: 200px;
+    height: 240px;
+  }
+
+  .home__title em {
+    padding-left: 0.6em;
   }
 }
 
 @media screen and (max-width: 350px) {
   .home__img {
-    width: 180px;
-    height: 180px;
+    width: 170px;
+    height: 205px;
   }
 }
 
-[data-theme='dark'] .home__img {
-  border-color: hsla(0, 0%, 100%, 0.08);
-}
+@media (prefers-reduced-motion: reduce) {
+  .home::before,
+  .home::after {
+    display: none;
+  }
 
-[data-theme='dark'] .home__subtitle::before {
-  background: linear-gradient(90deg, transparent, hsl(220, 8%, 42%));
+  .home.section--visible .home__title,
+  .home.section--visible .home__title em {
+    animation: none;
+  }
+
+  .home__rec {
+    animation: none;
+  }
 }

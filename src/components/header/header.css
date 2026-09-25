@@ -34,8 +34,15 @@
   font: inherit;
 }
 
+/* The name as it would sit on a clapperboard: set in the display face, in
+   italic, with the production's slate number beside it in the mono. */
 .nav__logo {
-  letter-spacing: 0.04em;
+  font-family: var(--display-font);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.75rem;
+  line-height: 1;
+  letter-spacing: -0.01em;
 }
 
 .nav__list {
@@ -44,6 +51,7 @@
 }
 
 .nav__link {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,6 +59,35 @@
   color: var(--title-color);
   font-weight: var(--font-medium);
   transition: color 0.2s ease;
+}
+
+/* Desktop: the nav reads as a reel index — small tracked capitals in the
+   mono, and the scene you are in marked with a short accent rule. */
+@media screen and (min-width: 769px) {
+  .nav__link {
+    font-family: var(--mono-font);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-color);
+  }
+
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.55rem;
+    height: 1px;
+    background: var(--accent-color);
+    transform: scaleX(0);
+    transition: transform 0.4s var(--ease-out);
+  }
+
+  .active-link::after,
+  .nav__link:hover::after {
+    transform: scaleX(1);
+  }
 }
 
 .nav__icon,
@@ -96,7 +133,7 @@
 .scroll-header {
   background: var(--glass-bg-strong);
   border-color: var(--glass-border);
-  box-shadow: var(--glass-inner), 0 10px 30px -18px hsla(var(--hue), 30%, 20%, 0.45);
+  box-shadow: 0 10px 30px -22px hsla(28, 40%, 12%, 0.5);
 }
 
 [data-theme='dark'] .scroll-header {

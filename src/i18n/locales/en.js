@@ -148,6 +148,9 @@ const dictionary = {
     openPiece: 'Open {title}',
     close: 'Close details',
     viewAll: 'See all work',
+    prev: 'Previous volume',
+    next: 'Next volume',
+    count: '{n} volumes',
   },
   portfolio: {
     title: 'Portfolio',
@@ -288,6 +291,9 @@ const dictionary = {
     next: 'Next',
   },
   assistant: {
+    cueYou: 'YOU',
+    cueAi: "JIM'S AI (V.O.)",
+    beat: '(beat)',
     toggle: 'Toggle AI assistant',
     name: 'Ask about Jim',
     status: 'AI assistant powered by Gemini',

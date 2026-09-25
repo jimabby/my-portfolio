@@ -1,0 +1,63 @@
+/* The slate in the corner of the frame. Desktop only: on a phone the corner
+   belongs to the navigation bar, and there is no spare edge to put it on. */
+.reel {
+  position: fixed;
+  left: 1.5rem;
+  bottom: 1.4rem;
+  z-index: var(--z-fixed);
+  display: none;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.5rem 0.8rem;
+  font-family: var(--mono-font);
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--title-color);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--glass-shadow);
+  pointer-events: none;
+}
+
+@media screen and (min-width: 1100px) {
+  .reel {
+    display: flex;
+  }
+}
+
+.reel__rec {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  box-shadow: 0 0 8px var(--accent-color);
+  animation: reel-rec 1.6s steps(1, end) infinite;
+}
+
+@keyframes reel-rec {
+  50% {
+    opacity: 0.15;
+  }
+}
+
+.reel__scene {
+  max-width: 32ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reel__code {
+  padding-left: 0.8rem;
+  border-left: 1px solid var(--glass-border-strong);
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reel__rec {
+    animation: none;
+  }
+}
