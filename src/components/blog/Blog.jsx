@@ -168,7 +168,7 @@ const Blog = () => {
 
           {filtered.map(post => (
             // The card's genre drives its treatment: a browser window for a
-            // project, a slide mount for travel, a viewfinder for camera posts.
+            // project, a film frame for travel, a viewfinder for camera posts.
             <article
               className={`blog__card blog__card--${post.category.toLowerCase().replace(/\s+/g, '-')}`}
               key={post.id}
