@@ -1,16 +1,17 @@
-/* One-sheets. Each service is a film poster: black stock, the service's
-   number billed large in the display face, its title set like a feature's,
-   and a billing block — the hairline-and-small-caps band every poster has at
-   its foot — above the call to action. The numbering is a CSS counter. */
+/* Modules. Each service is a dark card read like a package in a terminal:
+   its path along the top, the index written large in the monospace as a
+   watermark, the title in the display face, and the pipeline it runs through
+   — plan, build, test, ship — as a status line above the call to action. The
+   numbering is a CSS counter. */
 .services__container {
   grid-template-columns: repeat(3, minmax(0, 290px));
   justify-content: start;
   column-gap: 1.6rem;
-  counter-reset: poster;
+  counter-reset: module;
 }
 
 .services__content {
-  counter-increment: poster;
+  counter-increment: module;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -23,8 +24,9 @@
     radial-gradient(120% 70% at 80% 0%, hsla(30, 90%, 55%, 0.28), transparent 60%),
     radial-gradient(90% 60% at 0% 100%, hsla(186, 60%, 40%, 0.22), transparent 70%),
     var(--film-black);
-  border-radius: var(--radius-sm);
-  box-shadow: 6px 12px 0 -3px hsla(28, 40%, 12%, 0.14), var(--glass-shadow);
+  border: 1px solid hsla(38, 30%, 90%, 0.08);
+  border-radius: 10px;
+  box-shadow: var(--glass-shadow);
   padding: 1.6rem 1.5rem 1.4rem;
   transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out);
 }
@@ -43,33 +45,35 @@
     var(--film-black);
 }
 
-/* The big number, bleeding off the right edge like a poster's key art. */
+/* The index, bleeding off the right edge as a watermark. */
 .services__content::before {
-  content: counter(poster, decimal-leading-zero);
+  content: '0' counter(module) / '';
   position: absolute;
   z-index: -1;
-  top: -1.4rem;
-  right: -0.8rem;
-  font-family: var(--display-font);
-  font-style: italic;
-  font-size: 11rem;
+  top: -0.6rem;
+  right: -0.6rem;
+  font-family: var(--mono-font);
+  font-size: 8.5rem;
+  font-weight: 700;
+  letter-spacing: -0.08em;
   line-height: 1;
-  color: hsla(38, 40%, 90%, 0.09);
+  color: hsla(38, 40%, 90%, 0.07);
   transition: transform 0.9s var(--ease-out), color 0.6s var(--ease);
 }
 
-/* The billing block. */
+/* The pipeline. */
 .services__content::after {
-  content: 'WRITTEN · DESIGNED · BUILT · SHIPPED' / '';
+  content: '✓ plan  ✓ build  ✓ test  → ship' / '';
+  white-space: pre;
   order: 2;
   display: block;
   margin: 1.4rem 0 1rem;
   padding-top: 0.8rem;
   border-top: 1px solid hsla(38, 30%, 88%, 0.25);
   font-family: var(--mono-font);
-  font-size: 0.56rem;
-  letter-spacing: 0.26em;
-  color: hsla(38, 30%, 88%, 0.5);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  color: hsla(150, 45%, 62%, 0.8);
 }
 
 .services__content > div {
@@ -81,8 +85,8 @@
 }
 
 .services__content:hover {
-  transform: translateY(-6px) rotate(-0.6deg);
-  box-shadow: 10px 18px 0 -4px hsla(28, 40%, 12%, 0.16), var(--glass-shadow-lg);
+  transform: translateY(-6px);
+  box-shadow: var(--glass-shadow-lg);
 }
 
 .services__content:hover::before {
@@ -95,6 +99,16 @@
   font-size: 1.6rem;
   color: hsl(38, 62%, 66%);
   margin-bottom: 5.5rem;
+}
+
+/* The module's path, printed along the top edge. */
+.services__content > div::before {
+  content: '~/services/0' counter(module) / '';
+  display: block;
+  margin-bottom: 1rem;
+  font-family: var(--mono-font);
+  font-size: 0.66rem;
+  color: hsla(38, 30%, 88%, 0.45);
 }
 
 .services__title {
@@ -114,8 +128,7 @@
   color: hsl(38, 30%, 92%);
   font-family: var(--mono-font);
   font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
   display: inline-flex;
   align-items: center;
   column-gap: 0.35rem;

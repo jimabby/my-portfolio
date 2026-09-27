@@ -31,9 +31,9 @@
   transform: scale(1.06);
 }
 
-/* Press quotes. Each testimonial is set like the pull-quote on a one-sheet:
-   an oversized opening mark, the words in the display face's italic, and the
-   critic's name under it in tracked mono. The DOM keeps its order — photo,
+/* Pull quotes. Each testimonial is set as a quote: an oversized opening
+   mark, the words in the display face's italic, and the client's name under
+   it in tracked mono. The DOM keeps its order — photo,
    name, quote — and flex `order` rearranges it into quote-first. */
 .testimonial__card {
   position: relative;

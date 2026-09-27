@@ -1102,10 +1102,11 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Film grade
-   The blog as the rest of the site now reads it: the index is a programme of
-   reels, and every post is a screening. Posts that are about the medium get
-   a treatment of their own —
+   Two languages
+   The blog splits the way the site does. Project write-ups are about the
+   work, so they read like it: screenshots in browser windows, sections
+   numbered as code comments. Posts about photography are about the medium,
+   so they get its treatment instead —
 
      .blog--travel  A travelogue shot on film. Photographs sit in 35mm frames
                     with sprocket holes and edge printing; captions play as
@@ -1120,7 +1121,7 @@
    layout (and every comment explaining it) stays where it was.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ─── Index: the programme ─── */
+/* ─── Index ─── */
 
 .blog__search {
   border: none;
@@ -1204,17 +1205,17 @@
   text-transform: uppercase;
 }
 
-/* Reels are numbered newest-first, so the latest post is the highest reel —
-   the way a series keeps counting up. Each card sets its own number inline
-   (Blog.jsx), so a filtered list keeps every reel's number. */
+/* Posts are numbered newest-first, so the latest post is the highest number
+   — the way a series keeps counting up. Each card sets its own number inline
+   (Blog.jsx), so a filtered list keeps every post's number. */
 .blog__list-container {
   max-width: 1000px;
   gap: 3.2rem;
 }
 
-/* One row per reel: the picture on the left, the programme note on the
-   right. The thumbnail's own padding and background draw its mount — film
-   base, slide card or viewfinder — so no extra markup is needed. */
+/* One row per post: the picture on the left, the note on the right. The
+   thumbnail's own padding and background draw its mount — browser window,
+   slide card or viewfinder — so no extra markup is needed. */
 .blog__card {
   display: grid;
   grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
@@ -1253,21 +1254,22 @@
   transition: transform 0.7s var(--ease-out);
 }
 
-/* Project: a frame of film. */
+/* Project: a browser window — a dark title bar with three dots over the
+   screenshot. */
 .blog__card .blog__card-thumb {
-  padding: 20px 10px;
+  padding: 22px 0 0;
+  border-radius: 8px;
+  border: 1px solid hsla(38, 30%, 90%, 0.1);
   background:
-    repeating-linear-gradient(90deg, hsla(38, 30%, 88%, 0.8) 0 8px, transparent 8px 18px)
-      left 10px top 6px / calc(100% - 20px) 7px no-repeat,
-    repeating-linear-gradient(90deg, hsla(38, 30%, 88%, 0.8) 0 8px, transparent 8px 18px)
-      left 10px bottom 6px / calc(100% - 20px) 7px no-repeat,
+    radial-gradient(circle, hsla(38, 30%, 90%, 0.3) 3px, transparent 3.5px) 3px 5px / 12px 12px no-repeat,
+    radial-gradient(circle, hsla(38, 30%, 90%, 0.3) 3px, transparent 3.5px) 16px 5px / 12px 12px no-repeat,
+    radial-gradient(circle, hsla(38, 30%, 90%, 0.3) 3px, transparent 3.5px) 29px 5px / 12px 12px no-repeat,
     var(--film-black);
   box-shadow: 8px 16px 30px -18px hsla(28, 40%, 8%, 0.6);
-  transform: rotate(-1deg);
 }
 
 .blog__card:hover .blog__card-thumb {
-  transform: rotate(0deg) scale(1.02);
+  transform: translateY(-3px);
 }
 
 /* Travel: a 35mm slide in its card mount. */
@@ -1280,7 +1282,12 @@
     hsl(40, 30%, 90%);
   box-shadow: inset 0 0 0 1px hsla(28, 30%, 20%, 0.1),
     8px 16px 30px -18px hsla(28, 40%, 8%, 0.6);
+  border: none;
   transform: rotate(2deg);
+}
+
+.blog__card--travel:hover .blog__card-thumb {
+  transform: rotate(0deg) scale(1.02);
 }
 
 /* Camera: the viewfinder — a dark eyepiece with focus brackets drawn in its
@@ -1298,11 +1305,12 @@
     linear-gradient(hsla(40, 20%, 92%, 0.9), hsla(40, 20%, 92%, 0.9)) right 8px bottom 8px / 16px 2px no-repeat,
     linear-gradient(hsla(40, 20%, 92%, 0.9), hsla(40, 20%, 92%, 0.9)) right 8px bottom 8px / 2px 16px no-repeat,
     #0b0b0b;
+  border: none;
   transform: none;
 }
 
 .blog__card-meta::before {
-  content: 'REEL ' counter(reel, decimal-leading-zero);
+  content: 'No. ' counter(post, decimal-leading-zero);
   margin-right: 0.4rem;
   font-family: var(--mono-font);
   font-size: 0.66rem;
@@ -1367,7 +1375,7 @@
   }
 }
 
-/* ─── The screening: every post ─── */
+/* ─── Every post ─── */
 
 .blog--single .card {
   background: none;
@@ -1426,12 +1434,18 @@
   text-wrap: balance;
 }
 
-/* The key frame: letterboxed on black, the way a still from the film would
-   be run in a programme. */
+/* The lead screenshot, in a browser window: a dark title bar with three dots
+   over the picture. */
 .blog__figure--hero {
-  padding: 3.2% 0;
-  background: var(--film-black);
-  border-radius: 2px;
+  overflow: hidden;
+  padding-top: 28px;
+  background:
+    radial-gradient(circle, hsla(38, 30%, 90%, 0.3) 4px, transparent 4.5px) 8px 7px / 14px 14px no-repeat,
+    radial-gradient(circle, hsla(38, 30%, 90%, 0.3) 4px, transparent 4.5px) 26px 7px / 14px 14px no-repeat,
+    radial-gradient(circle, hsla(38, 30%, 90%, 0.3) 4px, transparent 4.5px) 44px 7px / 14px 14px no-repeat,
+    var(--film-black);
+  border: 1px solid hsla(38, 30%, 90%, 0.1);
+  border-radius: 10px;
   box-shadow: 0 40px 70px -40px hsla(28, 40%, 8%, 0.8);
 }
 
@@ -1439,7 +1453,17 @@
   border-radius: 0;
 }
 
-/* Contents as a scene list. */
+/* The photography posts keep the key frame letterboxed on black, the way a
+   still from a film is run. */
+.blog--travel .blog__figure--hero,
+.blog--camera .blog__figure--hero {
+  padding: 3.2% 0;
+  background: var(--film-black);
+  border: none;
+  border-radius: 2px;
+}
+
+/* Contents as a numbered list. */
 .blog__toc {
   border-left: none;
   border-top: 1px solid var(--title-color);
@@ -1507,7 +1531,7 @@
 }
 
 .blog__heading::before {
-  content: 'SCENE ' counter(scene, decimal-leading-zero);
+  content: '// ' counter(scene, decimal-leading-zero);
   display: block;
   margin-bottom: 0.8rem;
   font-family: var(--mono-font);
@@ -1532,7 +1556,7 @@
   font-size: 1.02rem;
 }
 
-/* The director's note: an index card clipped into the script. */
+/* A tip: an index card clipped into the post. */
 .blog__tip {
   position: relative;
   background: var(--container-color);

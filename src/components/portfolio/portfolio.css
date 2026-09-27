@@ -1,7 +1,7 @@
-/* A contact sheet. The grid is one sheet of black stock; every project is a
-   frame on it, with sprocket rows above and below and the frame number
-   printed in the rebate. Hovering a frame rings it in grease pencil, the way
-   an editor marks the take they want printed. Frame numbers are a counter. */
+/* A workspace. The grid is one dark panel, like an editor with every project
+   open in its own browser window: a title bar with three dots over each
+   screenshot, and the project's index printed above it like a tab. Hovering
+   a window draws a focus ring round it. Indexes are a counter. */
 .work__filters {
   display: flex;
   justify-content: center;
@@ -59,9 +59,9 @@
   background:
     radial-gradient(90% 60% at 50% 0%, hsla(30, 30%, 30%, 0.18), transparent 70%),
     var(--film-black);
-  border-radius: var(--radius-sm);
+  border-radius: 14px;
   box-shadow: 0 40px 80px -40px hsla(28, 40%, 8%, 0.7);
-  counter-reset: frame 11;
+  counter-reset: frame;
   --frame-h: 200px;
   scroll-margin-top: calc(var(--header-height) + 1rem);
 }
@@ -91,71 +91,65 @@
   position: relative;
   display: block;
   border: none;
-  padding: 16px 0;
+  padding: 20px 0 0;
   margin-bottom: 0.9rem;
-  background: none;
+  overflow: hidden;
+  background: hsl(30, 8%, 16%);
+  border: 1px solid hsla(38, 30%, 90%, 0.1);
+  border-radius: 8px;
   text-align: left;
   cursor: pointer;
 }
 
-/* Sprocket rows, above and below the frame. */
-.work__img-button::before,
-.work__img-button::after {
+/* The window's title bar: three dots on the left. */
+.work__img-button::before {
   content: '';
   position: absolute;
+  top: 0;
   left: 0;
   right: 0;
-  height: 7px;
-  background: repeating-linear-gradient(
-    90deg,
-    hsla(38, 20%, 80%, 0.16) 0 8px,
-    transparent 8px 18px
-  );
-  border-radius: 1px;
+  height: 20px;
+  background:
+    radial-gradient(circle, hsla(38, 30%, 90%, 0.28) 3px, transparent 3.5px) 8px 50% / 12px 12px no-repeat,
+    radial-gradient(circle, hsla(38, 30%, 90%, 0.28) 3px, transparent 3.5px) 21px 50% / 12px 12px no-repeat,
+    radial-gradient(circle, hsla(38, 30%, 90%, 0.28) 3px, transparent 3.5px) 34px 50% / 12px 12px no-repeat;
 }
 
-.work__img-button::before {
-  top: 2px;
-}
-
-.work__img-button::after {
-  bottom: 2px;
-}
-
-/* The frame number, in the rebate. */
+/* The project's index, above the window like a tab. */
 .work__card::before {
-  content: '▸ ' counter(frame) 'A';
+  content: '#' counter(frame, decimal-leading-zero) / '';
   position: absolute;
-  top: -1.1rem;
+  top: -1.2rem;
   left: 0;
   font-family: var(--mono-font);
-  font-size: 0.6rem;
-  letter-spacing: 0.18em;
-  color: hsl(34, 90%, 58%);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  color: hsl(150, 45%, 62%);
   opacity: 0.8;
 }
 
-/* The grease-pencil ring: a slightly lopsided ellipse, drawn in on hover. */
+/* The focus ring, drawn in on hover. */
 .work__card::after {
   content: '';
   position: absolute;
   z-index: 2;
-  top: -0.6rem;
-  left: -0.9rem;
-  right: -0.9rem;
-  height: calc(var(--frame-h) + 3.2rem);
-  border: 2.5px solid hsl(4, 80%, 54%);
-  border-radius: 48% 52% 46% 54% / 55% 45% 55% 45%;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  height: calc(var(--frame-h) + 30px);
+  border: 2px solid var(--accent-color);
+  border-radius: 11px;
+  box-shadow: 0 0 24px -4px var(--accent-color);
   opacity: 0;
-  transform: rotate(-3deg) scale(1.08);
+  transform: scale(1.03);
   pointer-events: none;
-  transition: opacity 0.3s var(--ease), transform 0.5s var(--ease-out);
+  transition: opacity 0.25s var(--ease), transform 0.4s var(--ease-out);
 }
 
 .work__card:hover::after,
 .work__card:focus-within::after {
   opacity: 0.9;
-  transform: rotate(-2deg) scale(1);
+  transform: scale(1);
 }
 
 .work__card:hover .work__img {
@@ -164,7 +158,7 @@
 
 .work__img-overlay {
   position: absolute;
-  inset: 16px 0;
+  inset: 20px 0 0;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
@@ -531,8 +525,8 @@
 }
 
 @media screen and (max-width: 576px) {
-  /* Two frames across, the way a contact sheet actually runs: one to a row
-     made a page of nine projects nearly three screens tall. */
+  /* Two windows across: one to a row made a page of nine projects nearly
+     three screens tall. */
   .work__container {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 2rem 0.9rem;
@@ -544,26 +538,24 @@
   }
 
   .work__img-button {
-    padding: 12px 0;
+    padding-top: 14px;
     margin-bottom: 0.6rem;
+    border-radius: 6px;
   }
 
-  .work__img-button::before,
-  .work__img-button::after {
-    height: 5px;
-    background-size: auto;
-    background-image: repeating-linear-gradient(90deg, hsla(38, 20%, 80%, 0.16) 0 6px, transparent 6px 13px);
+  .work__img-button::before {
+    height: 14px;
+    background-size: 8px 8px;
+    background-position: 5px 50%, 14px 50%, 23px 50%;
   }
 
   .work__img-overlay {
-    inset: 12px 0;
+    inset: 14px 0 0;
   }
 
   .work__card::after {
-    top: -0.5rem;
-    left: -0.5rem;
-    right: -0.5rem;
-    height: calc(var(--frame-h) + 2.4rem);
+    height: calc(var(--frame-h) + 24px);
+    border-radius: 9px;
   }
 
   .work__title {
@@ -637,11 +629,11 @@
   box-shadow: 0 0 0 1px hsla(38, 40%, 80%, 0.08), 0 40px 80px -30px #000;
 }
 
-/* ═══ The screening room ═══
-   Opening a frame from the contact sheet takes you into a dark room, in
-   either grade: the picture is projected onto a black screen with a spill of
-   light around it, the credits sit above it in cream, and the other frames
-   of the project run beneath it as a strip of film. Written after the base
+/* ═══ The lightbox ═══
+   Opening a window from the grid takes you into a dark room, in either
+   grade: the screenshot sits on a black stage with a spill of light around
+   it, the title sits above it in cream, and the other screenshots of the
+   project run beneath it as a row of thumbnails. Written after the base
    modal rules so it wins on order; the phone rules repeat the class to win
    on specificity too. */
 .work__modal-backdrop {
@@ -766,29 +758,24 @@
   background: hsla(28, 20%, 4%, 0.6);
 }
 
-/* The rest of the reel, as film: black base, sprocket rows above and below,
-   frames butted up against each other. The frame on screen is lit; the rest
-   are in the dark until you point at them. */
+/* The rest of the screenshots, in a row on a dark tray. The one on screen
+   is lit; the rest are in the dark until you point at them. */
 .work__modal-thumbs {
   justify-content: flex-start;
   flex-wrap: nowrap;
   gap: 6px;
   overflow-x: auto;
   scrollbar-width: thin;
-  padding: 22px 10px;
-  background:
-    repeating-linear-gradient(90deg, hsla(38, 30%, 88%, 0.5) 0 8px, transparent 8px 18px)
-      left 10px top 7px / calc(100% - 20px) 7px no-repeat,
-    repeating-linear-gradient(90deg, hsla(38, 30%, 88%, 0.5) 0 8px, transparent 8px 18px)
-      left 10px bottom 7px / calc(100% - 20px) 7px no-repeat,
-    hsl(28, 10%, 9%);
-  border-radius: 2px;
+  padding: 10px;
+  background: hsl(28, 10%, 9%);
+  border: 1px solid hsla(38, 30%, 90%, 0.08);
+  border-radius: 8px;
 }
 
 .work__modal-thumb {
   width: 96px;
   border: none;
-  border-radius: 1px;
+  border-radius: 4px;
   outline: 2px solid transparent;
   outline-offset: 2px;
   opacity: 0.4;

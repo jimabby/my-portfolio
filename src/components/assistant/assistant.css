@@ -458,96 +458,85 @@
   }
 }
 
-/* ═══ Screenplay ═══
-   The conversation is written as a script. The window is a page of bond in
-   both grades — a prop, like the contact form, not a surface of the
-   interface — headed by a slate; every message carries its character cue
-   centred in capitals, the way dialogue is set; the replies come off a
-   typewriter; a pause is written as (beat); the suggestions are stage
-   directions; and the launcher is a reel that turns while a reply is being
-   written. Layered over the base rules above. */
+/* ═══ Console ═══
+   The conversation is a terminal session with an AI. The window is dark in
+   both themes, headed by a title bar with the model's status; every message
+   is prefixed the way a shell prefixes a prompt and its output; replies
+   stream in behind a block caret; the wait is a spinner; the suggestions are
+   commands you can run; and the launcher is a prompt glyph that pulses while
+   a reply is being written. Layered over the base rules above. */
 
-/* ─── The reel ─── */
+/* ─── The launcher ─── */
 .assistant__fab {
-  --reel: hsl(38, 30%, 88%);
-  color: var(--reel);
-  border: none;
-  background:
-    radial-gradient(circle at 50% 22%, var(--film-black) 0 5px, transparent 5.5px),
-    radial-gradient(circle at 78% 60%, var(--film-black) 0 5px, transparent 5.5px),
-    radial-gradient(circle at 22% 60%, var(--film-black) 0 5px, transparent 5.5px),
-    radial-gradient(circle at 50% 50%, hsl(28, 10%, 20%) 0 13px, transparent 13.5px),
-    radial-gradient(circle at 50% 50%, hsl(28, 8%, 30%) 0 27px, var(--film-black) 27.5px);
-  box-shadow: 0 0 0 2px var(--film-black), 6px 12px 24px -8px hsla(28, 40%, 8%, 0.6);
+  --term: hsl(30, 10%, 8%);
+  --term-ink: hsl(38, 30%, 90%);
+  color: var(--term-ink);
+  background: var(--term);
+  border: 1px solid hsla(38, 30%, 90%, 0.16);
+  border-radius: 16px;
+  box-shadow: 6px 12px 24px -8px hsla(28, 40%, 8%, 0.6);
+  font-family: var(--mono-font);
 }
 
-/* The spokes turn, not the whole button — the icon stays upright. */
-.assistant__fab::before {
+.assistant__fab-icon--prompt {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.assistant__fab-icon--prompt::after {
   content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: inherit;
-  transition: transform 0.9s var(--ease-out);
+  width: 0.5em;
+  height: 2px;
+  margin: 0.55em 0 0 0.12em;
+  background: var(--accent-color);
+  animation: blink 1s step-end infinite;
 }
 
-.assistant__fab:hover::before {
-  transform: rotate(60deg);
+/* A ring that breathes while the model is writing. */
+.assistant__fab.is-writing {
+  animation: assistant-pulse 1.4s ease-out infinite;
 }
 
-.assistant__fab.is-rolling::before {
-  animation: assistant-reel 1.4s linear infinite;
-}
-
-@keyframes assistant-reel {
-  to {
-    transform: rotate(360deg);
+@keyframes assistant-pulse {
+  0% {
+    box-shadow: 0 0 0 0 hsla(150, 45%, 55%, 0.5), 6px 12px 24px -8px hsla(28, 40%, 8%, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 0 14px hsla(150, 45%, 55%, 0), 6px 12px 24px -8px hsla(28, 40%, 8%, 0.6);
   }
 }
 
-.assistant__fab-icon {
-  position: relative;
-  z-index: 1;
-}
-
 .assistant__fab--open {
-  background:
-    radial-gradient(circle at 50% 50%, hsl(28, 10%, 20%) 0 13px, transparent 13.5px),
-    var(--film-black);
+  background: var(--term);
 }
 
-.assistant__fab--open::before {
-  display: none;
-}
-
-/* ─── The page ─── */
+/* ─── The window ─── */
 .assistant__panel {
-  --paper: hsl(42, 40%, 96%);
-  --ink: hsl(28, 20%, 12%);
-  --ink-soft: hsl(28, 12%, 40%);
-  --red: hsl(9, 72%, 42%);
+  --term: hsl(30, 10%, 8%);
+  --term-2: hsl(30, 9%, 11%);
+  --term-ink: hsl(38, 30%, 90%);
+  --term-dim: hsla(38, 30%, 90%, 0.55);
+  --term-rule: hsla(38, 30%, 90%, 0.1);
+  --term-ok: hsl(150, 45%, 62%);
+  --term-ai: hsl(38, 62%, 66%);
   width: 440px;
-  background: var(--paper);
+  background: var(--term);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border: none;
-  border-radius: 2px;
-  box-shadow: 0 1px 2px hsla(28, 40%, 12%, 0.15), 18px 30px 60px -24px hsla(28, 40%, 8%, 0.6);
-  font-family: var(--script-font);
-  color: var(--ink);
+  border: 1px solid hsla(38, 30%, 90%, 0.12);
+  border-radius: 12px;
+  box-shadow: 18px 30px 70px -24px hsla(28, 40%, 4%, 0.75);
+  font-family: var(--mono-font);
+  color: var(--term-ink);
   transform-origin: bottom right;
-  animation: assistant-page-in 0.4s var(--ease-out) both;
+  animation: assistant-window-in 0.3s var(--ease-out) both;
 }
 
-[data-theme='dark'] .assistant__panel {
-  --paper: hsl(40, 26%, 86%);
-  box-shadow: 0 0 0 1px hsla(38, 40%, 80%, 0.12), 18px 30px 70px -20px #000;
-}
-
-@keyframes assistant-page-in {
+@keyframes assistant-window-in {
   from {
     opacity: 0;
-    transform: translateY(12px) rotate(1deg);
+    transform: translateY(10px) scale(0.98);
   }
   to {
     opacity: 1;
@@ -555,103 +544,94 @@
   }
 }
 
-/* The slate: clapper stripes across the top, the production's name in the
-   display face, the credit under it in the mono. */
+/* The title bar: traffic lights, the session's name, the model's status. */
 .assistant__header {
-  position: relative;
-  padding: 1.35rem 1rem 0.8rem 1.1rem;
-  background: var(--film-black);
-  color: hsl(38, 30%, 90%);
+  padding: 0.7rem 0.8rem 0.7rem 0.9rem;
+  background: var(--term-2);
+  color: var(--term-ink);
+  border-bottom: 1px solid var(--term-rule);
   box-shadow: none;
 }
 
-.assistant__header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 9px;
-  background: repeating-linear-gradient(-55deg, hsl(38, 30%, 90%) 0 9px, var(--film-black) 9px 18px);
+.assistant__avatar {
+  width: auto;
+  height: auto;
+  gap: 0.35rem;
+  border: none;
+  border-radius: 0;
+  background: none;
+  font-size: 0;
 }
 
-.assistant__avatar {
+.assistant__avatar::before,
+.assistant__avatar::after {
+  content: '';
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: transparent;
-  border: 1px solid hsla(38, 30%, 90%, 0.4);
-  color: hsl(38, 62%, 66%);
-  font-family: var(--display-font);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 1.2rem;
+  background: hsla(38, 30%, 90%, 0.2);
+}
+
+.assistant__avatar::after {
+  background: var(--term-ok);
+  box-shadow: 0 0 8px var(--term-ok);
 }
 
 .assistant__name {
-  font-family: var(--display-font);
-  font-size: 1.35rem;
-  font-weight: 400;
-  line-height: 1.05;
+  font-family: var(--mono-font);
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.2;
 }
 
 .assistant__status {
   font-family: var(--mono-font);
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  opacity: 0.6;
+  font-size: 0.64rem;
+  color: var(--term-dim);
+  opacity: 1;
 }
 
 .assistant__clear,
 .assistant__close {
-  min-height: 32px;
+  min-height: 30px;
   padding: 0 0.6rem;
-  border-radius: 2px;
-  border: 1px solid hsla(38, 30%, 90%, 0.3);
+  border-radius: 6px;
+  border: 1px solid var(--term-rule);
   background: transparent;
-  color: hsl(38, 30%, 90%);
+  color: var(--term-dim);
   font-family: var(--mono-font);
-  font-size: 0.66rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: 0.68rem;
 }
 
 .assistant__clear:hover:not(:disabled),
 .assistant__close:hover {
-  border-color: hsl(38, 62%, 66%);
-  color: hsl(38, 62%, 66%);
+  border-color: var(--term-ai);
+  color: var(--term-ai);
   background: transparent;
 }
 
-/* The script. A red margin rule down the left, as on the contact page. */
+/* The transcript. */
 .assistant__messages {
-  gap: 1.3rem;
-  padding: 1.4rem 1.4rem 1.2rem 2.2rem;
-  background: linear-gradient(90deg, transparent 1.3rem, hsla(9, 70%, 50%, 0.28) 1.3rem calc(1.3rem + 1px), transparent calc(1.3rem + 1px));
-}
-
-.assistant__messages::before {
-  content: 'INT. JIM\'S AI — DAY' / '';
-  display: block;
-  font-weight: 700;
-  font-size: 0.85rem;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-[data-theme='dark'] .assistant__messages::before {
-  content: 'INT. JIM\'S AI — NIGHT' / '';
+  gap: 1.1rem;
+  padding: 1.1rem 1.1rem 1rem;
+  background: var(--term);
 }
 
 .assistant__messages::-webkit-scrollbar-thumb {
-  background: hsla(28, 20%, 12%, 0.25);
+  background: var(--term-rule);
 }
 
-/* The action line that opens the scene. */
+/* The banner a CLI prints when it starts. */
 .assistant__welcome-text {
-  font-family: var(--script-font);
-  font-size: 0.85rem;
-  line-height: 1.6;
-  color: var(--ink-soft);
+  font-family: var(--mono-font);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--term-dim);
+}
+
+.assistant__welcome-text::before {
+  content: '// ' / '';
+  color: var(--term-ok);
 }
 
 .assistant__message,
@@ -662,27 +642,32 @@
   max-width: none;
 }
 
+/* Who is speaking, the way a shell prefixes a prompt: `you ›` for the
+   visitor, `jim.ai ›` for the model. Real text, not decoration. */
 .assistant__cue {
-  display: block;
-  margin-bottom: 0.25rem;
-  text-align: center;
-  font-family: var(--script-font);
-  font-size: 0.8rem;
+  display: inline;
+  margin-right: 0.5rem;
+  font-family: var(--mono-font);
+  font-size: 0.76rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--ink);
+  color: var(--term-ok);
+}
+
+.assistant__cue::after {
+  content: ' ›' / '';
+  color: var(--term-dim);
 }
 
 .assistant__message--assistant .assistant__cue {
-  color: var(--red);
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--term-ai);
 }
 
-/* Dialogue: indented from both margins, as a script sets it. */
 .assistant__message-text,
 .assistant__message--user .assistant__message-text,
 .assistant__message-body {
-  margin: 0 8%;
+  margin: 0;
   padding: 0;
   background: none;
   border: none;
@@ -690,83 +675,106 @@
   box-shadow: none;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  color: var(--ink);
-  font-family: var(--script-font);
-  font-size: 0.86rem;
-  line-height: 1.6;
+  color: var(--term-ink);
+  font-family: var(--mono-font);
+  font-size: 0.8rem;
+  line-height: 1.7;
 }
 
-.assistant__message-body .assistant__message-text {
-  margin: 0;
+.assistant__message--user .assistant__message-text {
+  display: inline;
+}
+
+/* Output sits under a rule, indented, like a command's result. */
+.assistant__message-body {
+  padding-left: 0.9rem;
+  border-left: 1px solid var(--term-rule);
 }
 
 .assistant__message-body code {
   font-family: var(--mono-font);
-  background: hsla(28, 20%, 12%, 0.08);
+  background: hsla(38, 30%, 90%, 0.08);
+  border-color: var(--term-rule);
+  color: var(--term-ai);
 }
 
 .assistant__link {
-  color: var(--red);
+  color: var(--term-ai);
 }
 
 .assistant__link:hover {
-  color: var(--ink);
+  color: var(--term-ink);
 }
 
-/* The typewriter's caret. */
+/* The block caret. */
 .assistant__cursor {
   width: 0.55em;
   height: 1em;
-  background: var(--ink);
+  background: var(--term-ok);
   vertical-align: text-bottom;
 }
 
+/* While waiting for the first token: a braille spinner and the word. */
 .assistant__beat {
   margin: 0;
-  text-align: center;
-  font-family: var(--script-font);
-  font-size: 0.82rem;
-  font-style: italic;
-  color: var(--ink-soft);
-  animation: assistant-beat 1.2s ease-in-out infinite;
+  padding-left: 0.9rem;
+  border-left: 1px solid var(--term-rule);
+  font-family: var(--mono-font);
+  font-size: 0.78rem;
+  color: var(--term-dim);
 }
 
-@keyframes assistant-beat {
-  50% {
-    opacity: 0.35;
-  }
+.assistant__beat::before {
+  content: '⠋' / '';
+  display: inline-block;
+  width: 1.4em;
+  color: var(--term-ok);
+  animation: assistant-spin 0.8s steps(1, end) infinite;
+}
+
+@keyframes assistant-spin {
+  0% { content: '⠋' / ''; }
+  12.5% { content: '⠙' / ''; }
+  25% { content: '⠹' / ''; }
+  37.5% { content: '⠸' / ''; }
+  50% { content: '⠼' / ''; }
+  62.5% { content: '⠴' / ''; }
+  75% { content: '⠦' / ''; }
+  87.5% { content: '⠧' / ''; }
 }
 
 .assistant__feedback {
   font-family: var(--mono-font);
-  font-size: 0.64rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
+  font-size: 0.66rem;
+  color: var(--term-dim);
 }
 
 .assistant__feedback-btn {
-  color: var(--ink-soft);
-  border-radius: 2px;
+  color: var(--term-dim);
+  border-radius: 6px;
 }
 
 .assistant__feedback-btn:hover {
-  color: var(--ink);
-  background-color: hsla(28, 20%, 12%, 0.08);
+  color: var(--term-ink);
+  background-color: hsla(38, 30%, 90%, 0.08);
 }
 
-/* Suggestions, written as stage directions — on one line that scrolls
-   sideways, so they never take the page away from the conversation. */
+.assistant__feedback-btn:focus-visible {
+  outline-color: var(--term-ink);
+}
+
+/* Suggestions, as commands you can run — on one line that scrolls sideways,
+   so they never take the window away from the conversation. */
 .assistant__chips-bar {
   flex-wrap: nowrap;
   overflow-x: auto;
   scrollbar-width: none;
   -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent);
   mask-image: linear-gradient(90deg, #000 85%, transparent);
-  gap: 0.2rem 1.1rem;
-  padding: 0.45rem 1.2rem;
-  background: none;
-  border-top: 1px dashed hsla(28, 20%, 12%, 0.3);
+  gap: 0.4rem;
+  padding: 0.55rem 0.9rem;
+  background: var(--term-2);
+  border-top: 1px solid var(--term-rule);
 }
 
 .assistant__chips-bar::-webkit-scrollbar {
@@ -777,101 +785,93 @@
 .assistant__chip:hover {
   flex: 0 0 auto;
   white-space: nowrap;
-  padding: 0.3rem 0;
-  min-height: 32px;
-  background: none;
-  border: none;
-  border-radius: 0;
+  padding: 0.3rem 0.65rem;
+  min-height: 30px;
+  background: transparent;
+  border: 1px solid var(--term-rule);
+  border-radius: 6px;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  font-family: var(--script-font);
-  font-size: 0.78rem;
-  font-style: italic;
-  color: var(--ink-soft);
+  font-family: var(--mono-font);
+  font-size: 0.7rem;
+  color: var(--term-dim);
 }
 
 .assistant__chip::before {
-  content: '(';
-}
-
-.assistant__chip::after {
-  content: ')';
+  content: '$ ' / '';
+  color: var(--term-ok);
 }
 
 .assistant__chip:hover:not(:disabled) {
-  color: var(--red);
+  color: var(--term-ink);
+  border-color: var(--term-ok);
 }
 
-/* The next line of the script. */
+/* The prompt line. */
 .assistant__input-area {
-  padding: 0.75rem 1rem 0.9rem;
-  background: none;
-  border-top: 1px solid var(--ink);
+  padding: 0.6rem 0.8rem 0.75rem 0.9rem;
+  background: var(--term);
+  border-top: 1px solid var(--term-rule);
   align-items: center;
+  gap: 0.4rem;
+}
+
+.assistant__input-area::before {
+  content: '›' / '';
+  font-family: var(--mono-font);
+  font-weight: 700;
+  color: var(--term-ok);
 }
 
 .assistant__input,
 .assistant__input:focus {
   border: none;
-  border-bottom: 1px solid hsla(28, 20%, 12%, 0.35);
   border-radius: 0;
   box-shadow: none;
   background: transparent;
-  color: var(--ink);
-  font-family: var(--script-font);
+  color: var(--term-ink);
+  caret-color: var(--term-ok);
+  font-family: var(--mono-font);
   font-size: 16px;
   padding: 0.5rem 0.2rem;
 }
 
-.assistant__input:focus {
-  border-bottom-color: var(--red);
-}
-
 .assistant__input::placeholder {
-  color: var(--ink-soft);
+  color: var(--term-dim);
   opacity: 0.8;
 }
 
 .assistant__send {
-  width: 40px;
-  height: 40px;
-  border-radius: 2px;
-  background: var(--ink);
-  color: var(--paper);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--term-ok);
+  color: var(--term);
   box-shadow: none;
 }
 
 .assistant__send:hover:not(:disabled) {
-  background: var(--red);
+  background: var(--term-ai);
   transform: none;
 }
 
 .assistant__stop-icon {
-  background-color: var(--paper);
+  background-color: var(--term);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .assistant__fab.is-rolling::before,
-  .assistant__beat,
+  .assistant__fab.is-writing,
+  .assistant__fab-icon--prompt::after,
+  .assistant__beat::before,
   .assistant__panel {
     animation: none;
   }
 }
 
-/* The page's width above is for a desktop; on a phone the panel spans the
+/* The window's width above is for a desktop; on a phone the panel spans the
    screen between its gutters again, as the base rule has it. */
 @media screen and (max-width: 480px) {
   .assistant__panel {
     width: auto;
-  }
-
-  .assistant__messages {
-    padding: 1.2rem 1rem 1rem 1.9rem;
-  }
-
-  .assistant__message-text,
-  .assistant__message--user .assistant__message-text,
-  .assistant__message-body {
-    margin: 0 4%;
   }
 }

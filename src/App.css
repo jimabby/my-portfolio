@@ -5,24 +5,27 @@
 @import url('./assets/fonts.css');
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Design system — the site as a film
+   Design system — a title card, then the work
 
-   The page is cut like a feature: an opening title card, numbered scenes, a
-   set piece (the desk), and closing credits. Three ideas carry it everywhere:
+   The hero is shot like the opening of a film — a title card over a close-up
+   of the site's own source — and everything after it is written in the
+   language of the work itself: numbered sections set as code comments, an
+   editor's status bar, files and terminals, a git log. Three ideas carry it:
 
    1. Two grades, not two themes. Light is Day — warm paper stock, ink, one
-      vermilion accent, sun through the blinds. Dark is Night — a warm black
-      with a teal cast in the shadows and tungsten gold as the accent. Every
-      component reads the same tokens, so the whole film is regraded at once.
+      vermilion accent. Dark is Night — a warm black with tungsten gold as the
+      accent. Every component reads the same tokens, so the whole site is
+      regraded at once.
 
    2. Three voices of type. Instrument Serif is the title card: headings, the
       hero, pull quotes. Poppins is the reading text. A monospace is the
-      camera department: slates, timecodes, labels, metadata.
+      machine: labels, paths, line numbers, metadata.
 
-   3. Film stock over everything. A fixed grain layer and a few soft light
+   3. Texture over everything. A fixed grain layer and a few soft light
       leaks sit over the page (body::before / body::after), so flat colour
-      reads as photographed rather than rendered. Surfaces are paper and card,
-      not glass: square-ish corners, hairline rules, shadows that fall one way.
+      reads as printed rather than rendered. Surfaces are paper and dark
+      panes, hairline rules, shadows that fall one way. --film-black is the
+      dark pane every terminal and window is cut from.
 
    The --glass-* token names are kept so every existing component keeps
    working; they now describe paper surfaces rather than frosted panes.
@@ -71,7 +74,6 @@
   --display-font: 'Instrument Serif', 'Iowan Old Style', 'Palatino Linotype', Palatino,
     'Songti SC', 'Noto Serif CJK SC', Georgia, serif;
   --mono-font: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
-  --script-font: 'Courier Prime', 'Courier New', Courier, var(--mono-font);
   --film-black: #0b0a09;
   --sprocket: hsl(38, 36%, 93%);
   --grain-opacity: 0.07;
@@ -365,17 +367,17 @@ main {
   margin-bottom: 3.5rem;
 }
 
-/* Chapter cards. Every scene on the home page is numbered by a CSS counter —
-   no markup, so adding or reordering a section renumbers the film — and
-   slated in the camera department's monospace, with a rule running out to
-   the edge of the measure. The hero is the title card, not a scene. */
+/* Section numbers. Every section on the home page is numbered by a CSS
+   counter — no markup, so adding or reordering a section renumbers the page —
+   and written as a code comment in the monospace, with a rule under the
+   heading. The hero is the title card, not a numbered section. */
 .main {
   counter-reset: scene;
 }
 
 .main .section__title::before {
   counter-increment: scene;
-  content: 'SC. ' counter(scene, decimal-leading-zero);
+  content: '// ' counter(scene, decimal-leading-zero);
   display: flex;
   align-items: center;
   gap: 0.9rem;
@@ -384,7 +386,7 @@ main {
   font-size: 0.7rem;
   font-style: normal;
   font-weight: 500;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.12em;
   line-height: 1;
   color: var(--accent-color);
 }
@@ -401,7 +403,7 @@ main {
   transition: transform 1.2s var(--ease-out) 0.2s;
 }
 
-/* The rule draws itself as the scene comes into view. */
+/* The rule draws itself as the section comes into view. */
 .main .section:not(.section--visible) .section__title::after {
   transform: scaleX(0);
 }
@@ -772,7 +774,7 @@ main {
     align-items: center;
     min-height: 44px;
   }
-  body .desk__all {
+  body .workspace__all {
     min-height: 44px;
   }
   body .footer__list {

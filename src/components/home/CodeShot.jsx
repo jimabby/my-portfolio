@@ -23,9 +23,9 @@ import './codeshot.css';
 // The source is loaded as its own chunk after first paint, so none of it
 // sits in front of the title card.
 const SOURCES = [
-  () => import('../portfolio/Desk.jsx?raw'),
-  () => import('../leader/Leader.jsx?raw'),
-  () => import('../reel/Reel.jsx?raw'),
+  () => import('../portfolio/Workspace.jsx?raw'),
+  () => import('../boot/Boot.jsx?raw'),
+  () => import('../statusbar/StatusBar.jsx?raw'),
 ];
 
 const MAX_COLUMNS = 92;

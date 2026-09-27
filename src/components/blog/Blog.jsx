@@ -167,14 +167,14 @@ const Blog = () => {
           )}
 
           {filtered.map(post => (
-            // The card's genre drives its treatment: a film frame for a
+            // The card's genre drives its treatment: a browser window for a
             // project, a slide mount for travel, a viewfinder for camera posts.
             <article
               className={`blog__card blog__card--${post.category.toLowerCase().replace(/\s+/g, '-')}`}
               key={post.id}
-              // The reel number belongs to the post, not to its position in a
+              // The number belongs to the post, not to its position in a
               // filtered list, so it is fixed here rather than counted in CSS.
-              style={{ counterReset: `reel ${posts.length - posts.indexOf(post)}` }}
+              style={{ counterReset: `post ${posts.length - posts.indexOf(post)}` }}
             >
               {post.thumbnail && (
                 <Img src={post.thumbnail} alt={t(`posts.${post.key}.title`, post.title)} className="blog__card-thumb" loading="lazy" decoding="async"  sizes="(max-width: 768px) 100vw, 400px"/>

@@ -52,14 +52,14 @@
   transform-origin: bottom;
 }
 
-/* Held while the film leader plays (Leader.jsx sets data-leader on <html>),
-   so the curtain opens as the countdown ends rather than underneath it. */
+/* Held while the boot log plays (Boot.jsx sets data-leader on <html>),
+   so the curtain opens as the log ends rather than underneath it. */
 html:not([data-leader]) .home.section--visible::before,
 html:not([data-leader]) .home.section--visible::after {
   animation: home-curtain 1.3s var(--ease-out) 0.15s backwards;
 }
 
-/* And shut the whole time the leader is up, so its fade-out dissolves into
+/* And shut the whole time the boot log is up, so its fade-out dissolves into
    the closed bars rather than into the page, and the reveal is still the
    curtain's to make. */
 html[data-leader] .home::before,
@@ -235,6 +235,95 @@ html:not([data-leader]) .home.section--visible .home__title em {
   margin-bottom: var(--mb-2);
   font-size: 1.02rem;
   line-height: 1.75;
+}
+
+/* ─── The prompt ───
+   A single input line into the AI assistant: a shell prompt, the field, and
+   the key that runs it. The label is read by assistive tech and hidden on
+   screen, where the placeholder says the same thing. */
+.home__ask {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: 480px;
+  margin-top: 1.4rem;
+  padding: 0.35rem 0.35rem 0.35rem 0.9rem;
+  font-family: var(--mono-font);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--glass-shadow);
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.home__ask:focus-within {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px var(--accent-soft), var(--glass-shadow);
+}
+
+.home__ask-prompt {
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+.home__ask-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.home__ask-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.55rem 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--title-color);
+  caret-color: var(--accent-color);
+  font-family: var(--mono-font);
+  font-size: 0.82rem;
+}
+
+.home__ask-input::placeholder {
+  color: var(--text-color);
+  opacity: 0.75;
+}
+
+.home__ask-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 36px;
+  padding: 0 0.8rem;
+  border: 1px solid var(--glass-border-strong);
+  border-radius: calc(var(--radius-sm) - 2px);
+  background: transparent;
+  color: var(--title-color);
+  font-family: var(--mono-font);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.home__ask-submit:hover {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--container-color);
+}
+
+.home__ask-submit kbd {
+  font-family: inherit;
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 768px) {
+  .home__ask-input {
+    font-size: 16px;
+  }
 }
 
 /* ─── The still ───

@@ -62,6 +62,21 @@ export default function Assistant() {
   // Abort any in-flight request if the component unmounts mid-stream.
   useEffect(() => () => abortRef.current?.abort(), []);
 
+  // Other parts of the page (the prompt in the hero) open the assistant by
+  // dispatching `assistant:ask`, optionally with a question to send straight
+  // away. Read through a ref so the listener always calls the current
+  // sendMessage without being re-registered on every render.
+  const sendRef = useRef(null);
+  useEffect(() => {
+    const onAsk = (e) => {
+      setIsOpen(true);
+      const question = e.detail?.question;
+      if (question) sendRef.current?.(question);
+    };
+    window.addEventListener('assistant:ask', onAsk);
+    return () => window.removeEventListener('assistant:ask', onAsk);
+  }, []);
+
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(-MAX_STORED_MESSAGES)));
@@ -247,6 +262,10 @@ export default function Assistant() {
     abortRef.current?.abort();
   }
 
+  useEffect(() => {
+    sendRef.current = sendMessage;
+  });
+
   function handleKeyDown(e) {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -304,7 +323,7 @@ export default function Assistant() {
       <button
         ref={fabRef}
         type="button"
-        className={`assistant__fab ${isOpen ? 'assistant__fab--open' : ''}${isStreaming ? ' is-rolling' : ''}`}
+        className={`assistant__fab ${isOpen ? 'assistant__fab--open' : ''}${isStreaming ? ' is-writing' : ''}`}
         onClick={() => setIsOpen((v) => !v)}
         aria-label={t('assistant.toggle')}
         aria-expanded={isOpen}
@@ -312,9 +331,7 @@ export default function Assistant() {
         {isOpen ? (
           <span className="assistant__fab-icon">X</span>
         ) : (
-          <span className="assistant__fab-icon">
-            <i className="uil uil-message"></i>
-          </span>
+          <span className="assistant__fab-icon assistant__fab-icon--prompt">&gt;</span>
         )}
       </button>
 
@@ -361,9 +378,9 @@ export default function Assistant() {
             )}
             {allMessages.map((msg, i) => (
               <div key={i} className={`assistant__message assistant__message--${msg.role}`}>
-                {/* The character cue, as a screenplay names who speaks next.
-                    Real text, not decoration: it is also how a screen reader
-                    tells the two sides of the conversation apart. */}
+                {/* The prompt prefix, as a shell marks who is speaking. Real
+                    text, not decoration: it is also how a screen reader tells
+                    the two sides of the conversation apart. */}
                 <span className="assistant__cue">
                   {t(msg.role === 'user' ? 'assistant.cueYou' : 'assistant.cueAi')}
                 </span>
@@ -414,7 +431,7 @@ export default function Assistant() {
             {isStreaming && streamText === '' && (
               <div className="assistant__message assistant__message--assistant">
                 <span className="assistant__cue">{t('assistant.cueAi')}</span>
-                {/* A pause, written the way a script writes one. */}
+                {/* A spinner while the first token is on its way. */}
                 <p className="assistant__beat">{t('assistant.beat')}</p>
               </div>
             )}

@@ -7,10 +7,10 @@ import Contact from './components/contact/Contact';
 import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
-import Desk from './components/portfolio/Desk';
+import Workspace from './components/portfolio/Workspace';
 import Portfolio from './components/portfolio/Portfolio';
-import Reel from './components/reel/Reel';
-import Leader from './components/leader/Leader';
+import StatusBar from './components/statusbar/StatusBar';
+import Boot from './components/boot/Boot';
 import { useKeyLight } from './components/ambient/useKeyLight';
 import Qualification from './components/qualification/Qualification';
 import ScrollUp from './components/scrollup/ScrollUp';
@@ -113,10 +113,10 @@ function PortfolioPage() {
 
       <main className="main" id="main-content">
         <Home />
-        {/* The flat-lay of flagship work sits directly under the hero: it is
-            the thing you scroll into, while the full 24-project grid stays in
-            <Portfolio /> further down. */}
-        <Desk />
+        {/* The flagship work sits directly under the hero, open in an editor:
+            it is the thing you scroll into, while the full 24-project grid
+            stays in <Portfolio /> further down. */}
+        <Workspace />
         <About />
         <Skills />
         <Services />
@@ -130,8 +130,8 @@ function PortfolioPage() {
 
       <Footer />
       <ScrollUp />
-      <Reel />
-      <Leader />
+      <StatusBar />
+      <Boot />
     </>
   );
 }

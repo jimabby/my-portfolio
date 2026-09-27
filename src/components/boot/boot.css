@@ -1,0 +1,164 @@
+/* The boot log. Timeline, in one place:
+
+     0.00 – 0.45s   the prompt types `npm run dev`
+     0.45 – 1.35s   the build output prints, one line per --step
+     1.35 – 1.75s   "ready" holds for a beat
+     1.75 – 2.15s   the log fades; home.css opens the curtain on the hero
+
+   Everything is keyed off --step, so the whole log can be retimed from one
+   value. Skipping replaces the timeline with a quick fade. */
+
+.boot {
+  --step: 0.18s;
+  --ink: hsl(38, 30%, 90%);
+  --ink-dim: hsla(38, 30%, 90%, 0.5);
+  --ok: hsl(150, 45%, 62%);
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: radial-gradient(ellipse at center, hsl(30, 8%, 13%) 0%, hsl(30, 10%, 5%) 75%);
+  color: var(--ink);
+  cursor: pointer;
+  animation: boot-out 0.4s var(--ease) calc(0.45s + var(--step) * 5 + 0.4s) forwards;
+}
+
+.boot.is-skipping {
+  animation: boot-out 0.25s var(--ease) forwards;
+}
+
+@keyframes boot-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.boot__window {
+  width: min(560px, 100%);
+  border: 1px solid hsla(38, 30%, 90%, 0.14);
+  border-radius: 10px;
+  background: hsla(30, 10%, 8%, 0.9);
+  box-shadow: 0 30px 80px -30px #000;
+  overflow: hidden;
+  animation: boot-in 0.3s var(--ease-out) both;
+}
+
+@keyframes boot-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+
+.boot__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid hsla(38, 30%, 90%, 0.08);
+}
+
+.boot__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: hsla(38, 30%, 90%, 0.18);
+}
+
+.boot__title {
+  flex: 1;
+  margin-right: calc(30px + 0.8rem);
+  text-align: center;
+  font-family: var(--mono-font);
+  font-size: 0.7rem;
+  color: var(--ink-dim);
+}
+
+.boot__log {
+  margin: 0;
+  padding: 1.1rem 1.2rem 1.3rem;
+  list-style: none;
+  font-family: var(--mono-font);
+  font-size: clamp(0.72rem, 2.6vw, 0.85rem);
+  line-height: 1.8;
+}
+
+/* Each line is hidden until its own step, then stays. The first one is the
+   command, typed out rather than printed. */
+.boot__line {
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0;
+  animation: boot-print 0.01s linear calc(0.45s + (var(--k) - 1) * var(--step)) forwards;
+}
+
+@keyframes boot-print {
+  to {
+    opacity: 1;
+  }
+}
+
+.boot__line--cmd {
+  width: 0;
+  text-overflow: clip;
+  opacity: 1;
+  animation: boot-type 0.4s steps(11, end) forwards;
+}
+
+.boot__line--cmd::before {
+  content: '$ ';
+  color: var(--ok);
+}
+
+@keyframes boot-type {
+  to {
+    width: 13ch;
+  }
+}
+
+.boot__line--dim {
+  color: var(--ink-dim);
+}
+
+.boot__line--ok {
+  color: var(--ok);
+}
+
+.boot__line--ready {
+  margin-top: 0.6rem;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+.boot__line--url {
+  color: var(--ink);
+}
+
+/* A caret after the last line while "ready" holds. */
+.boot__line--url::after {
+  content: '';
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  margin-left: 0.4em;
+  vertical-align: text-bottom;
+  background: var(--ink);
+  animation: boot-caret 0.8s steps(1, end) infinite;
+}
+
+@keyframes boot-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* The floating controls belong to the page, not the log: they wait
+   off-screen until the boot is over. */
+html[data-leader] .assistant__fab,
+html[data-leader] .statusbar {
+  visibility: hidden;
+}

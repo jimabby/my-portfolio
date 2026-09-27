@@ -1,0 +1,59 @@
+/* The editor's status bar in the corner of the page. Desktop only: on a phone
+   the corner belongs to the navigation bar, and there is no spare edge to put
+   it on. */
+.statusbar {
+  position: fixed;
+  left: 1.5rem;
+  bottom: 1.4rem;
+  z-index: var(--z-fixed);
+  display: none;
+  align-items: stretch;
+  font-family: var(--mono-font);
+  font-size: 0.68rem;
+  color: var(--title-color);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+@media screen and (min-width: 1100px) {
+  .statusbar {
+    display: flex;
+  }
+}
+
+.statusbar > span {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.75rem;
+  white-space: nowrap;
+}
+
+.statusbar > span + span {
+  border-left: 1px solid var(--glass-border-strong);
+}
+
+.statusbar__branch {
+  background: var(--accent-color);
+  color: var(--container-color);
+}
+
+.statusbar__glyph {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+}
+
+.statusbar__dir {
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+.statusbar__line {
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-color);
+}
