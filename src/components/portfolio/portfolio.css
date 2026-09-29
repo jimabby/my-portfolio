@@ -54,7 +54,6 @@
 .work__container {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2.4rem 1.6rem;
-  max-width: 1080px;
   padding: 2.6rem 2.2rem 2.4rem;
   background:
     radial-gradient(90% 60% at 50% 0%, hsla(30, 30%, 30%, 0.18), transparent 70%),
@@ -247,8 +246,8 @@
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
   padding: 1.5rem;
-  max-width: 980px;
-  width: min(92vw, 980px);
+  max-width: 61.25rem;
+  width: min(92vw, 61.25rem);
   max-height: calc(100vh - 3rem);
   overflow: auto;
   box-shadow: var(--glass-inner), var(--glass-shadow-lg);
@@ -353,7 +352,7 @@
 
 .work__modal-img {
   width: 100%;
-  height: min(60vh, 520px);
+  height: min(60vh, 32.5rem);
   object-fit: contain;
   background: var(--soft-surface);
   border-radius: var(--radius-md);
@@ -361,7 +360,7 @@
 
 .work__modal-body--single .work__modal-img {
   height: auto;
-  max-height: min(60vh, 520px);
+  max-height: min(60vh, 32.5rem);
 }
 
 .work__modal-nav {
@@ -496,8 +495,6 @@
   .work__container {
     gap: 2.4rem 1.5rem;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-left: var(--mb-1-5);
-    margin-right: var(--mb-1-5);
   }
 
   .work__title {
@@ -531,9 +528,6 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 2rem 0.9rem;
     padding: 2rem 0.9rem 1.8rem;
-    margin-left: 0;
-    margin-right: 0;
-    border-radius: 0;
     --frame-h: 118px;
   }
 
@@ -645,8 +639,8 @@
 }
 
 .work__modal-content {
-  width: min(94vw, 1080px);
-  max-width: 1080px;
+  width: min(94vw, 67.5rem);
+  max-width: 67.5rem;
   padding: 1.4rem 1.6rem 1.6rem;
   background: none;
   border: none;

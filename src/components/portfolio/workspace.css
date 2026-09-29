@@ -51,8 +51,8 @@
 
 .workspace__body {
   display: grid;
-  grid-template-columns: 250px minmax(0, 1fr);
-  min-height: 460px;
+  grid-template-columns: 15.625rem minmax(0, 1fr);
+  min-height: 28.75rem;
 }
 
 /* ─── Explorer ─── */
@@ -266,8 +266,10 @@
   display: block;
   width: 100%;
   aspect-ratio: 16 / 10;
-  object-fit: cover;
-  object-position: top center;
+  /* The whole page or app, never a crop of it: screenshots come in every
+     shape, so each fits inside the frame on the shot's own dark ground. */
+  object-fit: contain;
+  object-position: center;
 }
 
 .workspace__doc {
@@ -406,10 +408,26 @@
   color: var(--title-color);
 }
 
+/* ─── Wide desktop: a wider window needs a taller one, or it reads as a
+   letterbox strip. The screenshot goes squarer to fill the extra height. ─── */
+@media screen and (min-width: 1280px) {
+  .workspace__body {
+    min-height: 34rem;
+  }
+
+  .workspace__readme {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  }
+
+  .workspace__shot-img {
+    aspect-ratio: 4 / 3;
+  }
+}
+
 /* ─── Tablet: the README stacks, shot over text ─── */
 @media screen and (max-width: 991px) {
   .workspace__body {
-    grid-template-columns: 210px minmax(0, 1fr);
+    grid-template-columns: 13.125rem minmax(0, 1fr);
   }
 
   .workspace__readme {
@@ -423,11 +441,6 @@
 
 /* ─── Phone: the explorer is a row of chips; the tabs step aside ─── */
 @media screen and (max-width: 767px) {
-  .workspace__window {
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
-
   .workspace__body {
     grid-template-columns: minmax(0, 1fr);
     min-height: 0;

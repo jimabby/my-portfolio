@@ -27,7 +27,7 @@ const Home = () => {
               alt={t('home.profileAlt')}
               fetchPriority='high'
               decoding='async'
-              sizes='(max-width: 768px) 220px, 320px'
+              sizes='(max-width: 768px) 220px, 340px'
             />
             <span className='home__edge' aria-hidden='true'>
               JK 400TX <span>▸</span> 12 <span>▸</span> 12A
@@ -37,6 +37,14 @@ const Home = () => {
           <Data />
         </div>
       </div>
+
+      {/* The hero fills the screen, so this is the way on: a shell command
+          that changes into the work, the arrow saying which way it goes. */}
+      <a className='home__scroll' href='#workspace' aria-label={t('workspace.title')}>
+        <span className='home__scroll-prompt' aria-hidden='true'>$</span>
+        <span aria-hidden='true'>cd ./work</span>
+        <span className='home__scroll-arrow' aria-hidden='true'>↓</span>
+      </a>
     </section>
   )
 }

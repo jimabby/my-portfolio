@@ -6,8 +6,10 @@
   padding-top: 7rem;
 }
 
+/* The page's full measure, like the home sections; on a desktop the list
+   runs in two columns so a wide screen isn't one long ribbon of cards. */
 .workindex__container {
-  max-width: 900px;
+  max-width: var(--container-width);
 }
 
 .workindex__title {
@@ -237,9 +239,21 @@
   margin: 0;
 }
 
+@media screen and (min-width: 1280px) {
+  .workindex__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .workindex__link {
+    grid-template-columns: 14rem 1fr;
+    height: 100%;
+  }
+}
+
 .workindex__link {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 16.25rem 1fr;
   gap: 1.5rem;
   align-items: center;
   padding: 1rem;
@@ -262,7 +276,7 @@
 
 .workindex__thumb {
   width: 100%;
-  height: 160px;
+  height: 10rem;
   object-fit: cover;
   object-position: top;
   border-radius: var(--radius-md);
@@ -329,7 +343,7 @@
   }
 
   .workindex__thumb {
-    height: 190px;
+    height: 11.875rem;
   }
 }
 

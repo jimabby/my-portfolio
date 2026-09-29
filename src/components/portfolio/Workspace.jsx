@@ -172,7 +172,7 @@ const Workspace = () => {
                       alt={project.title}
                       className="workspace__shot-img"
                       decoding="async"
-                      sizes="(max-width: 767px) 92vw, 520px"
+                      sizes="(max-width: 767px) 92vw, (min-width: 1280px) 660px, 520px"
                     />
                   </figure>
 

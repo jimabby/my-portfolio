@@ -3,23 +3,75 @@
    frame of 35mm film. On first load, letterbox bars part to reveal it — the
    curtain, not a fade. */
 
+/* The whole screen, however tall, so the next section never peeks in under
+   the title card; the scroll cue at the foot is the way on. */
 .home {
   position: relative;
-  min-height: min(100svh, 900px);
+  min-height: 100svh;
+  /* Room at the foot for the scroll cue, so it never sits on the prompt. */
+  padding-bottom: 6rem;
   display: flex;
   align-items: center;
+}
+
+/* ─── Scroll cue ───
+   A shell prompt at the foot of the frame: `$ cd ./work`, the arrow bobbing
+   below it. Takes the visitor to the first section, Selected work. */
+.home__scroll {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.95rem;
+  font-family: var(--mono-font);
+  font-size: var(--smaller-font-size);
+  color: var(--title-color);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--glass-shadow);
+  transform: translateX(-50%);
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.home__scroll:hover,
+.home__scroll:focus-visible {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.home__scroll-prompt {
+  color: var(--accent-color);
+}
+
+.home__scroll-arrow {
+  display: inline-block;
+  color: var(--accent-color);
+  animation: home-scroll-bob 1.8s var(--ease) infinite;
+}
+
+@keyframes home-scroll-bob {
+  0%,
+  100% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(3px);
+  }
 }
 
 .home__container {
   position: relative;
   z-index: 1;
   row-gap: 5.5rem;
-  width: 100%;
 }
 
 .home__content {
   grid-template-columns: 72px minmax(0, 1.35fr) minmax(0, 1fr);
-  padding-top: 4rem;
+  padding-top: 2rem;
   column-gap: 2.5rem;
   align-items: center;
 }
@@ -231,7 +283,7 @@ html:not([data-leader]) .home.section--visible .home__title em {
 }
 
 .home__description {
-  max-width: 440px;
+  max-width: 27.5rem;
   margin-bottom: var(--mb-2);
   font-size: 1.02rem;
   line-height: 1.75;
@@ -245,7 +297,7 @@ html:not([data-leader]) .home.section--visible .home__title em {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  max-width: 480px;
+  max-width: 30rem;
   margin-top: 1.4rem;
   padding: 0.35rem 0.35rem 0.35rem 0.9rem;
   font-family: var(--mono-font);
@@ -377,8 +429,8 @@ html:not([data-leader]) .home.section--visible .home__title em {
    scanner. */
 .home__img {
   display: block;
-  width: 300px;
-  height: 360px;
+  width: 18.75rem;
+  height: 22.5rem;
   object-fit: cover;
   border-radius: 1px;
   filter: sepia(0.18) saturate(0.92) contrast(1.05);
@@ -413,6 +465,23 @@ html:not([data-leader]) .home.section--visible .home__title em {
   font-size: 7px;
 }
 
+/* A short laptop screen (768px tall and the like): tighter above and below
+   so the whole title card and the scroll cue still fit on one screen. */
+@media screen and (min-width: 769px) and (max-height: 820px) {
+  .home {
+    padding-top: 5.5rem;
+    padding-bottom: 4.5rem;
+  }
+
+  .home__content {
+    padding-top: 0;
+  }
+
+  .home__scroll {
+    bottom: 1rem;
+  }
+}
+
 @media screen and (max-width: 992px) {
   .home__content {
     grid-template-columns: 56px minmax(0, 1.3fr) minmax(0, 1fr);
@@ -424,8 +493,8 @@ html:not([data-leader]) .home.section--visible .home__title em {
   }
 
   .home__img {
-    width: 240px;
-    height: 290px;
+    width: 15rem;
+    height: 18.125rem;
   }
 }
 
@@ -434,6 +503,12 @@ html:not([data-leader]) .home.section--visible .home__title em {
   .home {
     min-height: auto;
     padding-bottom: 5.5rem;
+  }
+
+  /* On a phone the hero is not a full screen, and the foot of it belongs to
+     the code shot's typing line. */
+  .home__scroll {
+    display: none;
   }
 
   .home__content {
@@ -473,8 +548,8 @@ html:not([data-leader]) .home.section--visible .home__title em {
   }
 
   .home__img {
-    width: 200px;
-    height: 240px;
+    width: 12.5rem;
+    height: 15rem;
   }
 
   .home__title em {
@@ -484,8 +559,8 @@ html:not([data-leader]) .home.section--visible .home__title em {
 
 @media screen and (max-width: 350px) {
   .home__img {
-    width: 170px;
-    height: 205px;
+    width: 10.625rem;
+    height: 12.8125rem;
   }
 }
 
@@ -500,7 +575,8 @@ html:not([data-leader]) .home.section--visible .home__title em {
     animation: none;
   }
 
-  .home__rec {
+  .home__rec,
+  .home__scroll-arrow {
     animation: none;
   }
 }

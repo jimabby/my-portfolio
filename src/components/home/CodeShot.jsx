@@ -10,6 +10,10 @@ import './codeshot.css';
 // the empty frame asks the assistant for a completion on the spot, and an
 // autofocus reticle snaps in where you touched.
 //
+// On a wide screen the monitor is a split editor: a second pane types a
+// different stretch of the source down the right-hand side, so the code
+// fills the frame behind the portrait as well as the title.
+//
 // Rendered on a canvas rather than shipped as video: nothing to download,
 // sharp at any size, and it takes its colours from the current grade. Drawn
 // twice from one pass — a sharp copy masked to the focus band over a soft
@@ -29,6 +33,9 @@ const SOURCES = [
 ];
 
 const MAX_COLUMNS = 92;
+
+// Wide enough that each half still holds a readable line of code.
+const SPLIT_WIDTH = 1100;
 
 const loadLines = async () => {
   const modules = await Promise.all(SOURCES.map((load) => load()));
@@ -82,8 +89,7 @@ const CodeShot = () => {
     const hero = wrap.parentElement;
 
     let source = [];
-    let cursor = 0;
-    let lines = [];
+    let panes = [];
     let width = 0;
     let height = 0;
     let dpr = 1;
@@ -92,9 +98,6 @@ const CodeShot = () => {
     let padX = 0;
     let maxLines = 0;
     let caretY = 0;
-    let scroll = 0;
-    let nextLineAt = 0;
-    let aiQueued = false;
     let focusY = 0;
     let focusTarget = 0;
     let lastPointerAt = -Infinity;
@@ -108,10 +111,52 @@ const CodeShot = () => {
 
     const theme = () => (document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
 
-    const nextSourceLine = () => {
-      const text = source[cursor % source.length] ?? '';
-      cursor += 1;
-      return { text, shown: 0, ghostFrom: -1, acceptAt: 0, flashAt: -Infinity, number: cursor };
+    // Each pane is its own file: its own place in the source, its own
+    // typing, its own suggestions.
+    const makePane = () => ({
+      cursor: 0,
+      lines: [],
+      scroll: 0,
+      nextLineAt: 0,
+      aiQueued: false,
+      left: 0,
+      right: 0,
+    });
+
+    const nextSourceLine = (pane) => {
+      const text = source[pane.cursor % source.length] ?? '';
+      pane.cursor += 1;
+      return { text, shown: 0, ghostFrom: -1, acceptAt: 0, flashAt: -Infinity, number: pane.cursor };
+    };
+
+    // Fill a pane with code already written, so the shot opens mid-scene
+    // rather than on an empty editor.
+    const prime = (pane) => {
+      pane.cursor = Math.floor(Math.random() * Math.max(1, source.length));
+      pane.lines = [];
+      for (let i = 0; i < maxLines - 1; i += 1) {
+        const line = nextSourceLine(pane);
+        line.shown = line.text.length;
+        pane.lines.push(line);
+      }
+      pane.lines.push(nextSourceLine(pane));
+    };
+
+    // One pane, or two side by side once the frame is wide enough. A pane
+    // added on a resize opens already full, like the first.
+    const layoutPanes = () => {
+      const count = width >= SPLIT_WIDTH ? 2 : 1;
+      while (panes.length > count) panes.pop();
+      while (panes.length < count) {
+        const pane = makePane();
+        if (source.length) prime(pane);
+        panes.push(pane);
+      }
+      const paneW = width / count;
+      panes.forEach((pane, i) => {
+        pane.left = i * paneW;
+        pane.right = (i + 1) * paneW;
+      });
     };
 
     const resize = () => {
@@ -134,23 +179,12 @@ const CodeShot = () => {
         canvas.height = Math.round(height * dpr);
       });
       if (!focusY) focusY = focusTarget = height * 0.5;
+      layoutPanes();
       draw(performance.now());
     };
 
-    // Fill the screen with code already written, so the shot opens mid-scene
-    // rather than on an empty editor.
-    const prime = () => {
-      cursor = Math.floor(Math.random() * Math.max(1, source.length));
-      lines = [];
-      for (let i = 0; i < maxLines - 1; i += 1) {
-        const line = nextSourceLine();
-        line.shown = line.text.length;
-        lines.push(line);
-      }
-      lines.push(nextSourceLine());
-    };
-
-    const step = (now, dt) => {
+    const step = (pane, now, dt) => {
+      const { lines } = pane;
       const current = lines[lines.length - 1];
       if (!current) return;
 
@@ -159,7 +193,7 @@ const CodeShot = () => {
         if (current.shown < current.text.length && now >= current.acceptAt) {
           current.shown = current.text.length;
           current.flashAt = now;
-          nextLineAt = now + 520;
+          pane.nextLineAt = now + 520;
         }
       } else if (current.shown < current.text.length) {
         const ch = current.text[Math.floor(current.shown)];
@@ -169,17 +203,17 @@ const CodeShot = () => {
         // Offer a completion part-way through a line worth completing: on a
         // click, or now and then of its own accord.
         const worth = current.text.trim().length > 18 && current.shown > 6 && rest > 8;
-        if (worth && (aiQueued || Math.random() < dt * 0.09)) {
-          aiQueued = false;
+        if (worth && (pane.aiQueued || Math.random() < dt * 0.09)) {
+          pane.aiQueued = false;
           current.ghostFrom = Math.floor(current.shown);
           current.shown = current.ghostFrom;
           current.acceptAt = now + 1150;
         }
-        if (current.shown >= current.text.length) nextLineAt = now + 140 + Math.random() * 260;
-      } else if (now >= nextLineAt) {
-        lines.push(nextSourceLine());
+        if (current.shown >= current.text.length) pane.nextLineAt = now + 140 + Math.random() * 260;
+      } else if (now >= pane.nextLineAt) {
+        lines.push(nextSourceLine(pane));
         if (lines.length > maxLines) lines.shift();
-        scroll = lineH;
+        pane.scroll = lineH;
       }
     };
 
@@ -188,21 +222,49 @@ const CodeShot = () => {
       const colors = PALETTE[theme()];
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, width, height);
-      ctx.font = `${fontPx}px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace`;
       ctx.textBaseline = 'alphabetic';
-
-      const gutterW = fontPx * 3.4;
-      const bottom = caretY + scroll;
       const blinkOn = Math.floor(now / 530) % 2 === 0;
+
+      panes.forEach((pane, index) => {
+        // The split between panes, a hairline the height of the editor.
+        if (index > 0) {
+          ctx.fillStyle = colors.gutter;
+          ctx.fillRect(Math.round(pane.left), 0, 1, height);
+        }
+        // Each pane keeps to its own half; a long line runs under the split
+        // rather than across it.
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(pane.left, 0, pane.right - pane.left - (index < panes.length - 1 ? 12 : 0), height);
+        ctx.clip();
+        drawPane(pane, colors, now, blinkOn);
+        ctx.restore();
+      });
+
+      softCtx.setTransform(1, 0, 0, 1, 0, 0);
+      softCtx.clearRect(0, 0, soft.width, soft.height);
+      softCtx.drawImage(sharp, 0, 0);
+
+      wrap.style.setProperty('--focus', `${focusY.toFixed(1)}px`);
+      wrap.style.setProperty('--gx', `${glowX.toFixed(1)}px`);
+      wrap.style.setProperty('--gy', `${glowY.toFixed(1)}px`);
+    };
+
+    function drawPane(pane, colors, now, blinkOn) {
+      const { lines } = pane;
+      ctx.font = `${fontPx}px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace`;
+      const gutterW = fontPx * 3.4;
+      const bottom = caretY + pane.scroll;
+      const lineStart = pane.left + (pane.left > 0 ? Math.max(24, padX * 0.6) : padX);
 
       for (let i = lines.length - 1, row = 0; i >= 0; i -= 1, row += 1) {
         const line = lines[i];
         const y = bottom - row * lineH;
         if (y < -lineH) break;
-        const x = padX + gutterW;
+        const x = lineStart + gutterW;
 
         ctx.fillStyle = colors.gutter;
-        ctx.fillText(String(line.number).padStart(4, ' '), padX - fontPx, y);
+        ctx.fillText(String(line.number).padStart(4, ' '), lineStart - fontPx, y);
 
         // The accepted suggestion flashes as it lands.
         const flash = Math.max(0, 1 - (now - line.flashAt) / 900);
@@ -239,15 +301,7 @@ const CodeShot = () => {
           ctx.fillRect(x + typedW + 1, y - fontPx * 0.9, fontPx * 0.55, fontPx * 1.1);
         }
       }
-
-      softCtx.setTransform(1, 0, 0, 1, 0, 0);
-      softCtx.clearRect(0, 0, soft.width, soft.height);
-      softCtx.drawImage(sharp, 0, 0);
-
-      wrap.style.setProperty('--focus', `${focusY.toFixed(1)}px`);
-      wrap.style.setProperty('--gx', `${glowX.toFixed(1)}px`);
-      wrap.style.setProperty('--gy', `${glowY.toFixed(1)}px`);
-    };
+    }
 
     const loop = (now) => {
       frame = 0;
@@ -255,15 +309,19 @@ const CodeShot = () => {
       const dt = Math.min(0.1, (now - (last || now)) / 1000);
       last = now;
 
-      step(now, dt);
-      scroll = Math.max(0, scroll - scroll * Math.min(1, dt * 12) - 0.2);
+      panes.forEach((pane) => {
+        step(pane, now, dt);
+        pane.scroll = Math.max(0, pane.scroll - pane.scroll * Math.min(1, dt * 12) - 0.2);
+      });
 
       // Idle, the focus drifts on its own — except when the assistant speaks,
       // when it pulls to that line, the way a film cuts to the beat that
       // matters. Touched, it follows the visitor.
       if (now - lastPointerAt > 3500) {
-        const current = lines[lines.length - 1];
-        const suggesting = current && current.ghostFrom >= 0 && current.shown < current.text.length;
+        const suggesting = panes.some(({ lines }) => {
+          const current = lines[lines.length - 1];
+          return current && current.ghostFrom >= 0 && current.shown < current.text.length;
+        });
         focusTarget = suggesting
           ? caretY - lineH * 0.3
           : height * (0.46 + 0.24 * Math.sin(now / 4200));
@@ -304,10 +362,13 @@ const CodeShot = () => {
     const onPointerDown = (event) => {
       if (event.target.closest?.('a, button, input, textarea, select, label')) return;
       onPointerMove(event);
-      aiQueued = true;
+      const rect = wrap.getBoundingClientRect();
+      // The assistant answers in the pane that was touched.
+      const x = event.clientX - rect.left;
+      const pane = panes.find((p) => x < p.right) ?? panes[panes.length - 1];
+      if (pane) pane.aiQueued = true;
       const reticle = reticleRef.current;
       if (reticle) {
-        const rect = wrap.getBoundingClientRect();
         reticle.style.left = `${event.clientX - rect.left}px`;
         reticle.style.top = `${event.clientY - rect.top}px`;
         reticle.classList.remove('is-on');
@@ -332,7 +393,7 @@ const CodeShot = () => {
       if (!alive || loaded.length === 0) return;
       source = loaded;
       resize();
-      prime();
+      panes.forEach(prime);
       draw(performance.now());
       if (still) return;
       observer.observe(wrap);

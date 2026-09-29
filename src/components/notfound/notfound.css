@@ -38,7 +38,7 @@
 }
 
 .notfound__text {
-  max-width: 360px;
+  max-width: 22.5rem;
   color: var(--text-color);
   margin-bottom: var(--mb-1);
 }

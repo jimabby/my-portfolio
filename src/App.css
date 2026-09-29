@@ -131,6 +131,49 @@
   --z-tooltip: 10;
   --z-fixed: 100;
   --z-modal: 1000;
+
+  /* The page's measure, in rem so it grows with the type. */
+  --container-width: 64rem;
+
+  /* The least room between the page's content and the edge of the screen.
+     Every container keeps it at every width, so no section — dark panes
+     included — ever runs into the edge. */
+  --gutter: 2rem;
+}
+
+@media screen and (max-width: 992px) {
+  :root {
+    --gutter: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  :root {
+    --gutter: 1rem;
+  }
+}
+
+/* On a wide monitor the whole page scales up, not just the gutters: the root
+   size grows, and with it every rem — type, cards, the portrait, and the
+   container. A percentage, so a reader's own browser font size still counts. */
+@media screen and (min-width: 1280px) {
+  html {
+    font-size: 106.25%;
+  }
+
+  :root {
+    --container-width: 72rem;
+  }
+}
+
+@media screen and (min-width: 1680px) {
+  html {
+    font-size: 112.5%;
+  }
+
+  :root {
+    --container-width: 78rem;
+  }
 }
 
 /* ─── Dark theme ─── */
@@ -349,12 +392,21 @@ main {
    as deliberate rather than as a margin nobody chose. */
 .section__title,
 .section__subtitle {
-  max-width: 1024px;
+  width: calc(100% - 2 * var(--gutter));
+  max-width: var(--container-width);
   margin-left: auto;
   margin-right: auto;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   text-align: left;
+}
+
+/* A heading already inside a container has its gutters from it. */
+.container .section__title,
+.container .section__subtitle {
+  width: auto;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .section__title {
@@ -437,7 +489,8 @@ main {
 }
 
 .container {
-  max-width: 1024px;
+  width: calc(100% - 2 * var(--gutter));
+  max-width: var(--container-width);
   margin-left: auto;
   margin-right: auto;
   padding-left: 0.75rem;
@@ -574,7 +627,7 @@ main {
 
 .error-boundary__text {
   color: var(--text-color);
-  max-width: 460px;
+  max-width: 28.75rem;
 }
 
 .error-boundary__actions {
@@ -604,11 +657,6 @@ main {
     --normal-font-size: 0.95rem;
     --small-font-size: 0.84rem;
     --smaller-font-size: 0.76rem;
-  }
-
-  .container {
-    margin-left: var(--mb-1-5);
-    margin-right: var(--mb-1-5);
   }
 
   .button {
@@ -810,10 +858,5 @@ main {
 @media screen and (max-width: 350px) {
   :root {
     --big-font-size: 2.2rem;
-  }
-
-  .container {
-    margin-left: var(--mb-1);
-    margin-right: var(--mb-1);
   }
 }

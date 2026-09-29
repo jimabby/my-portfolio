@@ -4,10 +4,10 @@
    its value. The quotes, colon and comma are CSS, so the markup (and what a
    screen reader hears) is still just the name and the level.
 
-   Anchored to the container's left edge, on the same axis as the section
-   heading, rather than centred between two equal margins. */
+   The two panes share the container's full measure, starting on the same
+   axis as the section heading, so a wide screen is not left half empty. */
 .skills__container {
-  grid-template-columns: repeat(2, minmax(0, 420px));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: 2rem;
   justify-content: start;
   align-items: start;
@@ -174,7 +174,7 @@
 
 @media screen and (max-width: 992px) {
   .skills__container {
-    grid-template-columns: minmax(0, 460px);
+    grid-template-columns: minmax(0, 28.75rem);
     row-gap: 2rem;
   }
 }
