@@ -9,6 +9,72 @@
 
 export const UPDATES = [
   {
+    id: '2026-09-27-film-and-code',
+    date: '2026-09-27',
+    tag: 'feature',
+    title: {
+      en: 'A new look: the home page opens like a film, then reads like code — the assistant is now a terminal and the projects sit in an editor.',
+      'zh-Hans': '全新外观：首页以电影片头开场，之后以代码的语言呈现——AI 助手化身终端，项目收进一个代码编辑器。',
+      'zh-Hant': '全新外觀：首頁以電影片頭開場，之後以程式碼的語言呈現——AI 助理化身終端機，專案收進一個程式碼編輯器。',
+      ja: '新しいデザイン：トップページは映画のように始まり、その先はコードの言葉で語ります。AI アシスタントはターミナルに、プロジェクトはエディターの中に。',
+    },
+  },
+  {
+    id: '2026-09-27-grand-hotel-film',
+    date: '2026-09-27',
+    tag: 'blog',
+    title: {
+      en: 'The Grand Hotel Taipei photo essay now plays like a film, from title card to end credits.',
+      'zh-Hans': '圆山大饭店摄影随笔现在像一部电影般展开，从片头字幕到片尾名单。',
+      'zh-Hant': '圓山大飯店攝影隨筆現在像一部電影般展開，從片頭字幕到片尾名單。',
+      ja: '圓山大飯店のフォトエッセイが、タイトルカードからエンドクレジットまで映画のように展開するようになりました。',
+    },
+  },
+  {
+    id: '2026-09-24-policy-time-machine',
+    date: '2026-09-24',
+    tag: 'blog',
+    title: {
+      en: 'New post: Policy Time Machine — trying tomorrow’s rules on yesterday’s decisions, with a demo video.',
+      'zh-Hans': '新文章：Policy Time Machine——用明天的规则重审昨天的决定，附演示视频。',
+      'zh-Hant': '新文章：Policy Time Machine——用明天的規則重審昨天的決定，附示範影片。',
+      ja: '新記事：Policy Time Machine — 明日のルールで昨日の判断を検証する。デモ動画付き。',
+    },
+  },
+  {
+    id: '2026-08-29-work-filters',
+    date: '2026-08-29',
+    tag: 'feature',
+    title: {
+      en: 'The project index can now be filtered by category, search, and tags — and every filtered view is a link you can share.',
+      'zh-Hans': '项目索引页现在可以按分类、关键词和标签筛选，每一种筛选结果都能以链接分享。',
+      'zh-Hant': '專案索引頁現在可以依分類、關鍵字與標籤篩選，每一種篩選結果都能以連結分享。',
+      ja: 'プロジェクト一覧をカテゴリー・キーワード・タグで絞り込めるようになり、絞り込んだ状態をそのままリンクで共有できます。',
+    },
+  },
+  {
+    id: '2026-08-20-housed',
+    date: '2026-08-20',
+    tag: 'project',
+    title: {
+      en: 'New project: the Housed redesign, with a full write-up.',
+      'zh-Hans': '新增项目：Housed 改版，附完整说明文章。',
+      'zh-Hant': '新增專案：Housed 改版，附完整說明文章。',
+      ja: '新プロジェクト：Housed のリデザインを、詳しい解説記事とともに掲載しました。',
+    },
+  },
+  {
+    id: '2026-08-16-offline',
+    date: '2026-08-16',
+    tag: 'feature',
+    title: {
+      en: 'The site now works offline and can be installed as an app.',
+      'zh-Hans': '网站现已支持离线浏览，也可以作为应用安装。',
+      'zh-Hant': '網站現已支援離線瀏覽，也可以作為應用程式安裝。',
+      ja: 'オフラインでも閲覧でき、アプリとしてインストールできるようになりました。',
+    },
+  },
+  {
     id: '2026-08-16-resume-and-work',
     date: '2026-08-16',
     tag: 'feature',
