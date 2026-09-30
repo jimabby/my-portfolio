@@ -371,12 +371,19 @@
     bottom: calc(100% + 0.5rem);
   }
 
+  /* The dot is the first of four 44px buttons, so it sits ~170px in from the
+     right edge; a 20rem panel hung off it ran past the left edge of a phone.
+     Dropping .updates to static makes the panel resolve against .header (the
+     fixed, full-width bar), so it can be pinned inside the viewport gutters. */
+  .updates {
+    position: static;
+  }
+
   .updates__panel {
     top: auto;
     bottom: calc(100% + 0.5rem);
-    /* The dot sits near the right edge of a narrow viewport, so pin the panel
-       to the nav container instead of letting it overflow off-screen. */
-    right: -0.5rem;
+    right: 1rem;
+    width: min(22rem, calc(100% - 2rem));
   }
 }
 
