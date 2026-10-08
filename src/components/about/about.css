@@ -226,8 +226,25 @@
 }
 
 @media screen and (max-width: 576px) {
+  /* A third of a phone is ~100px; the label's wide tracking pushed
+     "EXPERIENCE" past the tile edge. Tighter tracking and gaps here, and
+     minmax(0, 1fr) so a long label can never widen its own column. */
   .about__info {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+
+  .about__box {
+    padding: 1.6rem 0.5rem 0.75rem;
+  }
+
+  .about__title {
+    font-size: 0.56rem;
+    letter-spacing: 0.03em;
+  }
+
+  .about__subtitle {
+    font-size: 1.15rem;
   }
 
   .about__description {
@@ -237,7 +254,7 @@
 
 @media screen and (max-width: 350px) {
   .about__info {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

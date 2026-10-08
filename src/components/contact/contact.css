@@ -281,8 +281,10 @@
     row-gap: 3rem;
   }
 
+  /* Stacked, the cards span the column like the form under them; centred at
+     their desktop width they floated away from their own left-aligned label. */
   .contact__info {
-    justify-content: center;
+    grid-template-columns: 1fr;
   }
 
   .contact__form {
@@ -291,10 +293,6 @@
 }
 
 @media screen and (max-width: 576px) {
-  .contact__info {
-    grid-template-columns: 1fr;
-  }
-
   .contact__form {
     width: 100%;
     padding: 4rem 1.3rem 1.8rem;

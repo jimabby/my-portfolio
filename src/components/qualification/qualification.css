@@ -62,7 +62,7 @@
 
 .qualification__sections {
   display: grid;
-  grid-template-columns: 0.7fr;
+  grid-template-columns: minmax(0, 0.7fr);
   justify-content: center;
 }
 
@@ -74,9 +74,11 @@
   display: block;
 }
 
+/* minmax(0, 1fr), not 1fr: a bare 1fr has a min-content floor, so a long
+   title widened its side and the spine sat somewhere different on each tab. */
 .qualification__data {
   display: grid;
-  grid-template-columns: 1fr max-content 1fr;
+  grid-template-columns: minmax(0, 1fr) max-content minmax(0, 1fr);
   column-gap: 1.5rem;
 }
 
@@ -145,8 +147,10 @@
 }
 
 @media screen and (max-width: 576px) {
+  /* Full width, not `initial`: an auto track shrank to each tab's content
+     and was centred, so the spine moved when the tab switched. */
   .qualification__sections {
-    grid-template-columns: initial;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   /* One-sided on a phone: the graph runs down the left and every entry
@@ -154,7 +158,7 @@
      third of the screen. The entry's empty spacer goes, and the graph's cell
      is moved to the front of whichever side it was on. */
   .qualification__data {
-    grid-template-columns: max-content 1fr;
+    grid-template-columns: max-content minmax(0, 1fr);
     column-gap: 1.1rem;
   }
 
