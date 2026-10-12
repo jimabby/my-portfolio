@@ -66,6 +66,7 @@ async function sendContactEmail(fields, config = process.env) {
 
   const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
     method: 'POST',
+    signal: AbortSignal.timeout(12000),
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       service_id: serviceId,

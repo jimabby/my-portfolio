@@ -237,6 +237,8 @@ export default defineConfig(({ mode }) => {
       // because they need the Playwright runner rather than vitest.
       include: ['src/**/*.test.{js,jsx}'],
       environment: 'jsdom',
+      // Let jsdom own browser storage on Node versions with native Web Storage.
+      execArgv: ['--no-experimental-webstorage'],
       globals: true,
       setupFiles: './src/test/setup.js',
     },

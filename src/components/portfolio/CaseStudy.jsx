@@ -1,4 +1,9 @@
-import { Navigate, useParams } from 'react-router';
+import ProjectStory from './ProjectStory';
+import ProjectComparison from './ProjectComparison';
+import { ProjectFacts } from './ProjectDetails';
+import ProjectBack from './ProjectBack';
+import ProjectLink from './ProjectLink';
+import { Navigate, useParams, useLocation } from 'react-router';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import ScrollUp from '../scrollup/ScrollUp';
@@ -7,10 +12,9 @@ import { manifestKeyFor, metadataFor } from '../image/srcset';
 import Seo from '../seo/Seo';
 import ShareButtons from '../share/ShareButtons';
 import CaseStudySchema from './CaseStudySchema';
-import LocaleLink from '../../i18n/LocaleLink';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { useLocalePath } from '../../i18n/useLocalePath';
-import { projectsData, projectPath } from './Data';
+import { projectsData } from './Data';
 import NotFound from '../notfound/NotFound';
 // Registers the per-image captions into this chunk. Import for side effect.
 import '../../i18n/captions/register';
@@ -21,6 +25,7 @@ import './casestudy.css';
 // a URL: it could not be shared, bookmarked, or found in search.
 const CaseStudy = () => {
   const { slug } = useParams();
+  const location = useLocation();
   const { t } = useLanguage();
   const withLocale = useLocalePath();
 
@@ -32,7 +37,7 @@ const CaseStudy = () => {
 
   // Projects written up on the blog own that URL instead. Vercel 301s this
   // path for real visitors; this covers in-app navigation to a stale link.
-  if (project.article) return <Navigate to={withLocale(project.article)} replace />;
+  if (project.article) return <Navigate to={withLocale(project.article)} state={location.state} replace />;
 
   const previous = projectsData[index - 1];
   const next = projectsData[index + 1];
@@ -41,7 +46,6 @@ const CaseStudy = () => {
   const images = project.gallery?.length > 0 ? project.gallery : [project.image];
   const hasExternalLink = project.link && project.link !== '#';
   const categoryLabel = t(`portfolio.filters.${project.category.toLowerCase()}`, project.category);
-  const roleLabel = project.role && t(`casestudy.roles.${project.role}`, project.role);
 
   return (
     <>
@@ -60,9 +64,7 @@ const CaseStudy = () => {
       <main className="casestudy section" id="main-content">
         <div className="casestudy__container container">
           <div className="casestudy__back-wrapper">
-            <LocaleLink to="/#portfolio" className="casestudy__back">
-              {t('casestudy.backToWork')}
-            </LocaleLink>
+            <ProjectBack className="casestudy__back" />
           </div>
 
           <header className="casestudy__hero">
@@ -72,30 +74,7 @@ const CaseStudy = () => {
             <h1 className="casestudy__title">{project.title}</h1>
             {summary && <p className="casestudy__summary">{summary}</p>}
 
-            {/* Role, year and stack: a page of screenshots and one line of
-                text is thin enough that search engines may skip it. */}
-            {(roleLabel || project.year || project.stack?.length > 0) && (
-              <dl className="casestudy__facts">
-                {roleLabel && (
-                  <div className="casestudy__fact">
-                    <dt className="casestudy__fact-label">{t('casestudy.roleLabel')}</dt>
-                    <dd className="casestudy__fact-value">{roleLabel}</dd>
-                  </div>
-                )}
-                {project.year && (
-                  <div className="casestudy__fact">
-                    <dt className="casestudy__fact-label">{t('casestudy.yearLabel')}</dt>
-                    <dd className="casestudy__fact-value">{project.year}</dd>
-                  </div>
-                )}
-                {project.stack?.length > 0 && (
-                  <div className="casestudy__fact">
-                    <dt className="casestudy__fact-label">{t('casestudy.stackLabel')}</dt>
-                    <dd className="casestudy__fact-value">{project.stack.join(', ')}</dd>
-                  </div>
-                )}
-              </dl>
-            )}
+            <ProjectFacts project={project} />
 
             {project.tags?.length > 0 && (
               <ul className="casestudy__tags">
@@ -120,6 +99,9 @@ const CaseStudy = () => {
             )}
           </header>
 
+          <ProjectStory key={project.slug} slug={project.slug} showFacts={false} />
+          {project.slug !== 'oncora' && <ProjectComparison key={project.slug} project={project} />}
+          <h2 className="casestudy__screens-title">{t('improvements.allScreens')}</h2>
           <section className="casestudy__gallery" aria-label={t('casestudy.galleryLabel')}>
             {images.map((image, i) => {
               // Captions are index-aligned with the gallery; a test keeps the
@@ -171,29 +153,29 @@ const CaseStudy = () => {
           {(previous || next) && (
             <nav className="casestudy__prevnext" aria-label={t('casestudy.moreWork')}>
               {previous ? (
-                <LocaleLink
-                  to={projectPath(previous)}
+                <ProjectLink
+                  project={previous}
                   className="casestudy__prevnext-link casestudy__prevnext-link--prev"
                 >
                   <span className="casestudy__prevnext-dir">
                     <i className="bx bx-arrow-back"></i> {t('casestudy.previous')}
                   </span>
                   <span className="casestudy__prevnext-title">{previous.title}</span>
-                </LocaleLink>
+                </ProjectLink>
               ) : (
                 <div />
               )}
 
               {next ? (
-                <LocaleLink
-                  to={projectPath(next)}
+                <ProjectLink
+                  project={next}
                   className="casestudy__prevnext-link casestudy__prevnext-link--next"
                 >
                   <span className="casestudy__prevnext-dir">
                     {t('casestudy.next')} <i className="bx bx-right-arrow-alt"></i>
                   </span>
                   <span className="casestudy__prevnext-title">{next.title}</span>
-                </LocaleLink>
+                </ProjectLink>
               ) : (
                 <div />
               )}

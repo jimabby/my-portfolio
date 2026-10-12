@@ -2,6 +2,9 @@
 
 Personal portfolio and blog built with React + Vite, deployed on Vercel.
 
+Use Node **22.22.0** (`nvm use`); `.nvmrc` and `.node-version` pin the local runtime.
+Vitest disables native Node Web Storage in its workers so jsdom owns browser storage.
+
 ## Tech Stack
 
 - **React 19** + React Router v8
@@ -181,3 +184,46 @@ same values in Vercel:
   and contact rate limits are shared across serverless instances. They also
   back `/api/feedback`, which records whether an assistant reply was useful —
   without them the vote is accepted and dropped rather than stored.
+
+
+## Project stories and conversion events
+
+The homepage includes selected work, About me, Skills, Services, Qualifications,
+the full Portfolio grid, Testimonials, and Contact, in that order.
+The searchable archive is also available at `/work`, and the résumé at `/resume`.
+Home section links scroll directly to their corresponding sections.
+The terminal introduction is opt-in with `?boot` and honours reduced motion.
+
+`Data.jsx` includes confirmed project metadata. Dates and roles for
+Hermes (2026-04-15, software developer), Housed redesign (2026-08-10, full-stack
+developer), and Oncora (2026-07-27, app developer) were supplied by the owner. The
+2026 year follows the existing project timeline. Do not infer missing launch dates,
+roles, deployment status, or performance metrics for other projects.
+
+`ProjectStory.jsx` adds the flagship narratives and manually controlled screenshot
+tours. These use captured product screens, not recordings or simulated live apps.
+The three steps for each tour reference gallery indices. Playback is opt-in, pauses
+when the browser tab is hidden, and stops after the final step. New prose and labels
+are translated in `src/i18n/improvements/`, one module per language.
+`ProjectComparison.jsx` pairs the Housed and Simba rebuilds with their earlier
+screenshots and provides a keyboard-accessible reveal slider.
+
+Conversion events use the existing Vercel Analytics integration:
+
+| Event | Trigger | Properties |
+| --- | --- | --- |
+| `project_open` | Project detail or project article route opens | project slug, locale |
+| `project_select` | Selection in the home project explorer | project slug |
+| `project_tour_play` | A visitor starts or replays a tour | project slug, locale |
+| `resume_download` | PDF download link clicked | locale |
+| `contact_sent` | Contact API confirms success | locale |
+
+Events never contain form fields, chat text, email addresses, or search queries.
+Downloads measure intent, not completion of the browser's file transfer. Failed
+analytics calls do not block user actions. Production event reporting requires
+Vercel Web Analytics enabled and an account plan supporting custom events; verify
+in the deployment dashboard. See https://vercel.com/docs/analytics/custom-events.
+Local tests intercept/mock events; they do not verify production ingestion.
+
+Contact email delivery is bounded to 12 seconds at the upstream request and 15
+seconds in the browser. A timeout retains the message and shows retry/email options.

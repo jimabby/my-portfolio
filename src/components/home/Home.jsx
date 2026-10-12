@@ -27,7 +27,7 @@ const Home = () => {
               alt={t('home.profileAlt')}
               fetchPriority='high'
               decoding='async'
-              sizes='(max-width: 768px) 220px, 340px'
+              sizes='(max-width: 768px) 90px, 340px'
             />
             <span className='home__edge' aria-hidden='true'>
               JK 400TX <span>▸</span> 12 <span>▸</span> 12A

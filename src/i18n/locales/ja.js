@@ -1,3 +1,4 @@
+import improvements from '../improvements/ja.js';
 // UI strings for ja.
 //
 // One module per language, loaded on demand by ./index.js. All four used to
@@ -363,4 +364,13 @@ const dictionary = {
 // Portfolio project summaries, keyed by project id.
 dictionary.projects = projects;
 
+dictionary.improvements = improvements;
+dictionary.home.description = improvements.intro;
+dictionary.services.fullstack.description = improvements.offers[0];
+dictionary.services.software.description = improvements.offers[2];
+dictionary.about.support = improvements.location;
+dictionary.about.supportValue = improvements.locationValue;
+dictionary.contact.error = improvements.contactError;
+dictionary.casestudy.roles.software = improvements.softwareRole;
+dictionary.casestudy.roles.app = improvements.appRole;
 export default dictionary;

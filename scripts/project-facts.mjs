@@ -22,7 +22,8 @@ export function buildProjectsSection(source) {
   const lines = parseProjects(source).map((project) => {
     const external =
       project.link && project.link !== '#' ? ` Live: ${project.link}` : '';
-    return `- ${project.title} [${project.category}] - ${project.summary} Page: ${projectPath(project)}.${external}`;
+    const facts = [project.role && `Role: ${project.role}`, project.projectDate && `Project date: ${project.projectDate}`, project.stack?.length && `Built with: ${project.stack.join(', ')}`].filter(Boolean).join('. ');
+    return `- ${project.title} [${project.category}] - ${project.summary} Page: ${projectPath(project)}.${external}${facts ? ` ${facts}.` : ''}`;
   });
 
   return `## Projects

@@ -100,9 +100,8 @@ describe('Workspace', () => {
     );
   });
 
-  // The facts block on the case-study page is deliberately unpopulated: no
-  // project in Data.jsx sets role, year or stack. The README must not invent
-  // them either — it shows only fields that actually exist.
+  // The explorer uses the actual project summary and tags. Additional verified
+  // metadata belongs to the project detail page.
   it('shows only fields the project data carries', () => {
     const { container } = renderWorkspace();
     const oncora = find('oncora');

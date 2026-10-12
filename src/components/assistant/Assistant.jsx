@@ -1,9 +1,11 @@
+import { subscribeToAssistantRequests } from './requests';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import './assistant.css';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { useLocalePath } from '../../i18n/useLocalePath';
 import { renderMarkdown } from './markdown';
+import { boundedHistory, MAX_INPUT_LENGTH } from './history';
 
 const STORAGE_KEY = 'assistant_messages_v1';
 const MAX_STORED_MESSAGES = 20;
@@ -67,14 +69,12 @@ export default function Assistant() {
   // away. Read through a ref so the listener always calls the current
   // sendMessage without being re-registered on every render.
   const sendRef = useRef(null);
+  useEffect(() => { sendRef.current = sendMessage; });
   useEffect(() => {
-    const onAsk = (e) => {
+    return subscribeToAssistantRequests((question) => {
       setIsOpen(true);
-      const question = e.detail?.question;
       if (question) sendRef.current?.(question);
-    };
-    window.addEventListener('assistant:ask', onAsk);
-    return () => window.removeEventListener('assistant:ask', onAsk);
+    });
   }, []);
 
   useEffect(() => {
@@ -94,6 +94,7 @@ export default function Assistant() {
 
   useEffect(() => {
     if (!isOpen) return;
+    const opener = document.activeElement;
     const fab = fabRef.current;
     inputRef.current?.focus();
     const onKeyDown = (e) => {
@@ -123,19 +124,21 @@ export default function Assistant() {
     document.addEventListener('keydown', onKeyDown);
     return () => {
       document.removeEventListener('keydown', onKeyDown);
-      fab?.focus();
+      if (opener?.isConnected && opener !== document.body) opener.focus();
+      else if (fab?.offsetParent) fab.focus();
+      else document.querySelector('.nav__assistant')?.focus();
     };
   }, [isOpen]);
 
   async function sendMessage(text) {
-    const userMessage = text.trim();
+    const userMessage = text.trim().slice(0, MAX_INPUT_LENGTH);
     if (!userMessage || isStreaming) return;
 
     // `messages` holds the prior turns only; the new message is sent
     // separately so the server doesn't receive it twice. Locally generated
     // error notices are stripped: they were never the model's output, and
     // feeding them back makes it apologise for failures it didn't have.
-    const priorHistory = messages.filter((m) => !m.localOnly);
+    const priorHistory = boundedHistory(messages);
     setMessages([...messages, { role: 'user', content: userMessage }]);
     setInput('');
     setIsStreaming(true);
@@ -261,10 +264,6 @@ export default function Assistant() {
   function stopStreaming() {
     abortRef.current?.abort();
   }
-
-  useEffect(() => {
-    sendRef.current = sendMessage;
-  });
 
   function handleKeyDown(e) {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -461,6 +460,8 @@ export default function Assistant() {
           <div className="assistant__input-area">
             <input
               ref={inputRef}
+              maxLength={MAX_INPUT_LENGTH}
+              aria-label={t('assistant.placeholder')}
               className="assistant__input"
               type="text"
               placeholder={t('assistant.placeholder')}

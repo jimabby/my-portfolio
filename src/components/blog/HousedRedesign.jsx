@@ -1,3 +1,5 @@
+import ProjectStory from '../portfolio/ProjectStory';
+import ProjectBack from '../portfolio/ProjectBack';
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import BlogProgressBar from "./BlogProgressBar";
@@ -30,7 +32,6 @@ import newMemberPortal from "../../assets/housed-redesign/housed-redesign-member
 import newJournal from "../../assets/housed-redesign/housed-redesign-journal.webp";
 import newArticle from "../../assets/housed-redesign/housed-redesign-article.webp";
 import Img from '../image/Img';
-import LocaleLink from "../../i18n/LocaleLink";
 
 const TITLE = 'Rebuilding Housed - From Brochure Site to Booking Platform';
 const DESCRIPTION =
@@ -54,9 +55,7 @@ const HousedRedesign = () => {
         <div className="blog__container container">
 
           <div className="blog__back-wrapper">
-            <LocaleLink to="/blog" className="blog__back-button">
-              {t('blog.backToBlog')}
-            </LocaleLink>
+            <ProjectBack blog className="blog__back-button" />
           </div>
 
           {/* HERO */}
@@ -85,6 +84,8 @@ const HousedRedesign = () => {
               <Img src={newHome} alt={t('posts.housedRedesign.heroImgAlt')} className="blog__img" fetchPriority="high" decoding="async" sizes="(max-width: 820px) 100vw, 780px" />
             </figure>
           </header>
+
+          <ProjectStory slug="housed-redesign" />
 
           {/* TABLE OF CONTENTS */}
           <nav className="blog__toc card">
@@ -356,9 +357,7 @@ const HousedRedesign = () => {
           <BlogPrevNext currentSlug="housed-redesign" />
 
           <div className="blog__back-wrapper blog__back-wrapper--bottom">
-            <LocaleLink to="/blog" className="blog__back-button">
-              {t('blog.backToBlog')}
-            </LocaleLink>
+            <ProjectBack blog className="blog__back-button" />
           </div>
         </div>
       </main>

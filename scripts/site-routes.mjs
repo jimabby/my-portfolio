@@ -185,6 +185,9 @@ export function parseProjects(source) {
     // A project written up on the blog has no case study page of its own.
     article: body.match(/article: '([^']*)'/)?.[1],
     category: body.match(/category: '([^']*)'/)?.[1],
+    role: body.match(/role: '([^']*)'/)?.[1],
+    projectDate: body.match(/projectDate: '([^']*)'/)?.[1],
+    stack: body.match(/stack: \[([^\]]*)\]/)?.[1]?.match(/'([^']*)'/g)?.map((value) => value.slice(1, -1)),
     // The live site or repo. Written with either quote style in Data.jsx.
     link: body.match(/link:\s*['"]([^'"]*)['"]/)?.[1],
     // The card screenshot, as a path the build can read. Used to compose this

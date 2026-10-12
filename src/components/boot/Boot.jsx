@@ -3,35 +3,13 @@ import { projectsData } from '../portfolio/Data';
 import { PREFIXED_LOCALES } from '../../i18n/routes';
 import './boot.css';
 
-// The boot log: the dev server starting up in a terminal — the command, a
-// few lines of build output, "ready" — and then the hero's curtain opens on
-// the title card. About two seconds, all of it CSS; this component only
-// decides whether it plays and takes it away when it is done.
-//
-// It is an opening, not a gate, so it is deliberately hard to be annoyed by:
-//   - once per browser session (a reload or a return to / does not replay it);
-//   - only on the home page, and never when a link points into it (#portfolio);
-//   - any click, scroll, touch or key skips it on the spot;
-//   - never for readers who have asked for reduced motion, and never under
-//     automation, so end-to-end tests click the page rather than the log.
-// `?boot` in the URL forces it, for previewing.
-//
-// Decoration only: hidden from assistive tech, nothing in it can take focus,
-// and the page underneath is rendered, readable and indexable throughout.
-const SEEN_KEY = 'boot-seen';
-
+// Optional terminal introduction, previewed with ?boot. Never hides content
+// on ordinary visits or for visitors requesting reduced motion.
 const shouldPlay = () => {
   if (typeof window === 'undefined' || !window.matchMedia) return false;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
-  const forced = new URLSearchParams(window.location.search).has('boot');
-  if (forced) return true;
-  if (window.location.hash) return false;
-  if (navigator.webdriver) return false;
-  try {
-    return sessionStorage.getItem(SEEN_KEY) !== '1';
-  } catch {
-    return false;
-  }
+  // Opt in for the terminal intro. The default visit opens on the work immediately.
+  return new URLSearchParams(window.location.search).has('boot');
 };
 
 // Each line is printed at its own step of the timeline in boot.css.
@@ -63,16 +41,15 @@ const Boot = () => {
   }, [state]);
 
   useEffect(() => {
-    if (state !== 'playing') return undefined;
-    try {
-      sessionStorage.setItem(SEEN_KEY, '1');
-    } catch {
-      // Storage blocked: it simply plays again next visit.
-    }
+    if (state === 'done') return undefined;
+    const fallback = setTimeout(() => setState('done'), state === 'skipping' ? 350 : 2600);
     const skip = () => setState((current) => (current === 'playing' ? 'skipping' : current));
     const events = ['pointerdown', 'wheel', 'touchstart', 'keydown'];
     events.forEach((type) => window.addEventListener(type, skip, { passive: true }));
-    return () => events.forEach((type) => window.removeEventListener(type, skip));
+    return () => {
+      clearTimeout(fallback);
+      events.forEach((type) => window.removeEventListener(type, skip));
+    };
   }, [state]);
 
   // The last thing the log does is fade itself out; when that animation

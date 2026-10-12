@@ -1,3 +1,5 @@
+import ProjectStory from '../portfolio/ProjectStory';
+import ProjectBack from '../portfolio/ProjectBack';
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import BlogProgressBar from "./BlogProgressBar";
@@ -17,7 +19,6 @@ import aiAssistantImg from '../../assets/hermes/Hermes_ai-assistant.webp';
 import categoryImg    from '../../assets/hermes/Hermes_ai-category.webp';
 import accountsImg    from '../../assets/hermes/Hermes_accounts.webp';
 import Img from '../image/Img';
-import LocaleLink from "../../i18n/LocaleLink";
 
 const Hermes = () => {
   const { t } = useLanguage();
@@ -37,9 +38,7 @@ const Hermes = () => {
 
           {/* Back button */}
           <div className="blog__back-wrapper">
-            <LocaleLink to="/blog" className="blog__back-button">
-              {t('blog.backToBlog')}
-            </LocaleLink>
+            <ProjectBack blog className="blog__back-button" />
           </div>
 
           {/* HERO */}
@@ -68,6 +67,8 @@ const Hermes = () => {
               <Img src={overviewImg} alt="Hermes app overview showing the inbox" className="blog__img" fetchPriority="high" decoding="async"  sizes="(max-width: 820px) 100vw, 780px"/>
             </figure>
           </header>
+
+          <ProjectStory slug="hermes-ai-email-client" />
 
           {/* TABLE OF CONTENTS */}
           <nav className="blog__toc card">
@@ -327,9 +328,7 @@ const Hermes = () => {
 
           {/* BOTTOM BACK NAV */}
           <div className="blog__back-wrapper blog__back-wrapper--bottom">
-            <LocaleLink to="/blog" className="blog__back-button">
-              {t('blog.backToBlog')}
-            </LocaleLink>
+            <ProjectBack blog className="blog__back-button" />
           </div>
 
         </div>

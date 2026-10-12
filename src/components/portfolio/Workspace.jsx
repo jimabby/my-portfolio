@@ -1,9 +1,12 @@
+import { requestAssistant } from '../assistant/requests';
+import ProjectLink from './ProjectLink';
+import { trackConversion } from '../../utils/analytics';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import './workspace.css';
 import Img from '../image/Img';
 import LocaleLink from '../../i18n/LocaleLink';
 import { useLanguage } from '../../i18n/LanguageContext';
-import { projectPath, projectsData } from './Data';
+import { projectsData } from './Data';
 
 // The flagship work as an editor window. Each project is a folder in the
 // explorer on the left; opening one adds a tab and shows its README in the
@@ -47,6 +50,7 @@ const Workspace = () => {
   const open = useCallback((slug) => {
     setTabs((current) => (current.includes(slug) ? current : [...current, slug]));
     setActive(slug);
+    trackConversion('project_select', { project: slug });
   }, []);
 
   // Closing the active tab moves to its neighbour, the way an editor does;
@@ -70,11 +74,7 @@ const Workspace = () => {
 
   // The assistant listens for this event (Assistant.jsx).
   const ask = (p) => {
-    window.dispatchEvent(
-      new CustomEvent('assistant:ask', {
-        detail: { question: t('workspace.askQuestion').replace('{title}', p.title) },
-      })
-    );
+    requestAssistant(t('workspace.askQuestion').replace('{title}', p.title));
   };
 
   if (projects.length === 0) return null;
@@ -179,6 +179,7 @@ const Workspace = () => {
                   <div className="workspace__doc">
                     <h3 className="workspace__title">{project.title}</h3>
                     <span className="workspace__cat">{categoryFor(project)}</span>
+
                     {summaryFor(project) && (
                       <p className="workspace__summary">{summaryFor(project)}</p>
                     )}
@@ -194,10 +195,10 @@ const Workspace = () => {
                     )}
 
                     <div className="workspace__actions">
-                      <LocaleLink to={projectPath(project)} className="workspace__link">
+                      <ProjectLink project={project} className="workspace__link">
                         {t(project.article ? 'portfolio.readArticle' : 'portfolio.caseStudy')}
                         <i className="bx bx-right-arrow-alt" aria-hidden="true"></i>
-                      </LocaleLink>
+                      </ProjectLink>
                       <button type="button" className="workspace__ask" onClick={() => ask(project)}>
                         <span aria-hidden="true">›</span> {t('workspace.ask')}
                       </button>
@@ -218,10 +219,10 @@ const Workspace = () => {
         </div>
       </div>
 
-      <a className="workspace__all" href="#portfolio">
+      <LocaleLink className="workspace__all" to="/work">
         {t('workspace.viewAll')}
         <i className="bx bx-right-arrow-alt" aria-hidden="true"></i>
-      </a>
+      </LocaleLink>
     </section>
   );
 };

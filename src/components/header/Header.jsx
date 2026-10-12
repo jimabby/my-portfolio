@@ -1,3 +1,4 @@
+import { requestAssistant } from '../assistant/requests';
 import React, { useEffect, useRef, useState } from 'react'
 import "./header.css"
 import { useLocation } from 'react-router';
@@ -7,7 +8,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 import UpdatesDot from './UpdatesDot';
 import LocaleLink from "../../i18n/LocaleLink";
 
-const SECTIONS = ['home', 'about', 'skills', 'services', 'portfolio', 'testimonial', 'contact'];
+const SECTIONS = ['home', 'workspace', 'about', 'skills', 'services', 'qualification', 'portfolio', 'testimonial', 'contact'];
 
 const THEME_STORAGE_KEY = 'theme';
 
@@ -111,7 +112,7 @@ const Header = () => {
     return () => observers.forEach((o) => o.disconnect());
   }, [path]);
 
-  const currentActiveNav = path.startsWith('/blog') ? 'blog' : activeNav;
+  const currentActiveNav = path.startsWith('/blog') ? 'blog' : path.startsWith('/work') || activeNav === '#workspace' ? '#portfolio' : activeNav;
 
   // Dark mode
   const [theme, setTheme] = useState(getInitialTheme);
@@ -159,7 +160,7 @@ const Header = () => {
   return (
     <header className='header'>
       <nav className='nav container'>
-        <LocaleLink to="/" className="nav__logo">Jim</LocaleLink>
+        <LocaleLink to="/#home" className="nav__logo">Jim</LocaleLink>
 
         <div className={Toggle ? "nav__menu show-menu": "nav__menu"}>
           <ul className='nav__list grid'>
@@ -182,21 +183,15 @@ const Header = () => {
               </LocaleLink>
             </li>
             <li className='nav__item'>
-              <LocaleLink
-                to="/#skills"
-                onClick={() => handleNavClick('#skills')}
-                className={currentActiveNav === '#skills' ? 'nav__link active-link' : 'nav__link'}
-              >
-                <i className='uil uil-file nav__icon'></i>{t('nav.skills')}
+              <LocaleLink to="/#skills" onClick={() => handleNavClick('#skills')}
+                className={currentActiveNav === '#skills' ? 'nav__link active-link' : 'nav__link'}>
+                <i className="uil uil-file nav__icon"></i>{t('nav.skills')}
               </LocaleLink>
             </li>
             <li className='nav__item'>
-              <LocaleLink
-                to="/#services"
-                onClick={() => handleNavClick('#services')}
-                className={currentActiveNav === '#services' ? 'nav__link active-link' : 'nav__link'}
-              >
-                <i className='uil uil-briefcase-alt nav__icon'></i>{t('nav.services')}
+              <LocaleLink to="/#services" onClick={() => handleNavClick('#services')}
+                className={currentActiveNav === '#services' ? 'nav__link active-link' : 'nav__link'}>
+                <i className="uil uil-briefcase-alt nav__icon"></i>{t('nav.services')}
               </LocaleLink>
             </li>
             <li className='nav__item'>
@@ -236,6 +231,10 @@ const Header = () => {
         </div>
 
         <div className="nav__buttons">
+          <button type="button" className="nav__assistant" aria-label={t('assistant.toggle')}
+            onClick={() => requestAssistant()}>
+            <span aria-hidden="true">›_</span>
+          </button>
           <UpdatesDot />
           <LanguageSwitcher />
           <button

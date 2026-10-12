@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './contact.css'
+import { trackConversion } from '../../utils/analytics';
 import { useLanguage } from '../../i18n/LanguageContext';
 
 const now = () =>
@@ -8,17 +9,18 @@ const now = () =>
     : Date.now();
 
 const Contact = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const form = useRef();
   // Monotonic clock, so how long the form has been open is measured locally and
   // sent as a duration. An absolute timestamp compared against the server's
   // clock would silently classify anyone whose device clock runs fast as a bot.
   const renderedAtRef = useRef(now());
   const statusTimerRef = useRef(null);
+  const requestRef = useRef(null);
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
   const [errors, setErrors] = useState({});
 
-  useEffect(() => () => clearTimeout(statusTimerRef.current), []);
+  useEffect(() => () => { clearTimeout(statusTimerRef.current); requestRef.current?.abort(); }, []);
 
   const resetStatusLater = () => {
     clearTimeout(statusTimerRef.current);
@@ -50,6 +52,7 @@ const Contact = () => {
 
   const sendEmail = async (e) => {
     e.preventDefault();
+    if (requestRef.current) return;
 
     const data = Object.fromEntries(new FormData(form.current));
 
@@ -61,11 +64,16 @@ const Contact = () => {
       return;
     }
     setErrors({});
+    clearTimeout(statusTimerRef.current);
     setStatus('sending');
+    const controller = new AbortController();
+    requestRef.current = controller;
+    const timeout = setTimeout(() => controller.abort(), 15000);
 
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
+        signal: controller.signal,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...data,
@@ -74,13 +82,18 @@ const Contact = () => {
       });
       if (!response.ok) throw new Error(`Contact request failed: ${response.status}`);
 
+      const result = await response.json();
+      if (!result.ok) throw new Error('Contact request was not accepted');
       setStatus('sent');
-      e.target.reset();
+      trackConversion('contact_sent', { locale: lang });
+      form.current?.reset();
       renderedAtRef.current = now();
       resetStatusLater();
     } catch {
       setStatus('error');
-      resetStatusLater();
+    } finally {
+      clearTimeout(timeout);
+      requestRef.current = null;
     }
   }
 
@@ -185,7 +198,7 @@ const Contact = () => {
 
             <div aria-live='polite' role='status'>
               {status === 'sent' && <p className='contact__status contact__status--success'>{t('contact.sent')}</p>}
-              {status === 'error' && <p className='contact__status contact__status--error'>{t('contact.error')}</p>}
+              {status === 'error' && <p className='contact__status contact__status--error'>{t('contact.error')}{' '}<a href='mailto:wksunshine@gmail.com'>{t('improvements.emailInstead')}</a></p>}
             </div>
           </form>
         </div>

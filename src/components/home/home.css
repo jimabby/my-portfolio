@@ -64,12 +64,14 @@
 }
 
 .home__container {
+  grid-template-columns: minmax(0, 1fr);
   position: relative;
   z-index: 1;
   row-gap: 5.5rem;
 }
 
 .home__content {
+  min-width: 0;
   grid-template-columns: 72px minmax(0, 1.35fr) minmax(0, 1fr);
   padding-top: 2rem;
   column-gap: 2.5rem;
@@ -106,8 +108,8 @@
 
 /* Held while the boot log plays (Boot.jsx sets data-leader on <html>),
    so the curtain opens as the log ends rather than underneath it. */
-html:not([data-leader]) .home.section--visible::before,
-html:not([data-leader]) .home.section--visible::after {
+html[data-leader] .home.section--visible::before,
+html[data-leader] .home.section--visible::after {
   animation: home-curtain 1.3s var(--ease-out) 0.15s backwards;
 }
 
@@ -234,18 +236,18 @@ html[data-leader] .home::after {
 /* Each word of the title rises out of a mask as the curtain opens — the way
    a title card is cut in rather than faded. */
 html:not([data-leader]) .home.section--visible .home__title {
-  animation: home-title 1.4s var(--ease-out) 0.5s backwards;
+  animation: home-title 0.35s var(--ease-out) backwards;
 }
 
 html:not([data-leader]) .home.section--visible .home__title em {
-  animation: home-title 1.4s var(--ease-out) 0.68s backwards;
+  animation: home-title 0.35s var(--ease-out) backwards;
 }
 
 @keyframes home-title {
   from {
     opacity: 0;
     transform: translateY(0.35em);
-    filter: blur(8px);
+    filter: none;
   }
   to {
     opacity: 1;
@@ -579,4 +581,29 @@ html:not([data-leader]) .home.section--visible .home__title em {
   .home__scroll-arrow {
     animation: none;
   }
+}
+
+/* A readable first screen on phones: the portrait supports the introduction. */
+@media screen and (max-width: 768px) {
+  .home { padding: 2.25rem 0 2.5rem; min-height: 0; }
+  .home__content { position: relative; display: flex; flex-direction: column; align-items: stretch; padding-top: 0; gap: 1.5rem; }
+  .home__data { order: 1; }
+  .home__still { position: absolute; top: 2.3rem; right: 0; padding: 12px 6px; z-index: 2; }
+  .home__img { width: 5.6rem; height: 7rem; }
+  .home__edge { display: none; }
+  .home__still::before, .home__still::after { height: 4px; }
+  .home__still::before { top: 4px; }
+  .home__still::after { bottom: 4px; }
+  .home__slate { font-size: .56rem; letter-spacing: .06em; margin-bottom: 1.1rem; }
+  .home__title { font-size: clamp(3.5rem, 15vw, 5rem); min-height: 8rem; max-width: calc(100% - 110px); }
+  .home__title em { padding-left: .25em; }
+  .home__subtitle { padding-left: 0; margin: 1.3rem 0 1rem; font-size: .68rem; letter-spacing: .09em; }
+  .home__subtitle::before { display: none; }
+  .home__description { font-size: .96rem; margin-bottom: 1.4rem; }
+  .home__cta { gap: .6rem; flex-wrap: wrap; }
+  .home__cta .button { padding: .9rem 1rem; font-size: .65rem; }
+  .home__ask { margin-top: 1.2rem; }
+  .home__social { order: 2; display: flex; gap: .8rem; }
+  .home__social::before, .home__social::after { display: none; }
+  .home__social-icon { width: 44px; height: 44px; }
 }

@@ -1,3 +1,4 @@
+import ProjectLink from './ProjectLink';
 import { useCallback, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import Header from '../header/Header';
@@ -5,9 +6,8 @@ import Footer from '../footer/Footer';
 import ScrollUp from '../scrollup/ScrollUp';
 import Img from '../image/Img';
 import Seo from '../seo/Seo';
-import LocaleLink from '../../i18n/LocaleLink';
 import { useLanguage } from '../../i18n/LanguageContext';
-import { projectsData, projectPath, projectsNav } from './Data';
+import { projectsData, projectsNav } from './Data';
 import './workindex.css';
 
 // Every tag any project carries, so the filter row is derived from the data
@@ -210,7 +210,7 @@ const WorkIndex = () => {
           <ul className="workindex__list">
             {projects.map((project) => (
               <li key={project.id} className="workindex__item">
-                <LocaleLink to={projectPath(project)} className="workindex__link">
+                <ProjectLink project={project} className="workindex__link">
                   <Img
                     src={project.image}
                     alt=""
@@ -223,6 +223,7 @@ const WorkIndex = () => {
                     <span className="workindex__badge">
                       {t(`portfolio.filters.${project.category.toLowerCase()}`, project.category)}
                     </span>
+
                     <h2 className="workindex__item-title">{project.title}</h2>
                     <p className="workindex__summary">
                       {t(`projects.${project.id}`, project.summary || '')}
@@ -232,7 +233,7 @@ const WorkIndex = () => {
                       <i className="bx bx-right-arrow-alt"></i>
                     </span>
                   </div>
-                </LocaleLink>
+                </ProjectLink>
               </li>
             ))}
           </ul>

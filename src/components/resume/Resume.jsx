@@ -16,6 +16,7 @@ import {
 } from '../qualification/resumeData';
 import CV from '../../assets/Software Developer - Jim.pdf';
 import './resume.css';
+import { trackConversion } from '../../utils/analytics';
 
 const EMAIL = 'wksunshine@gmail.com';
 const PHONE = '+61 406 448 436';
@@ -34,7 +35,7 @@ const PROFILES = [
 // content as HTML — translated, crawlable, and styled to print onto one page.
 // The PDF stays, offered as a download rather than as the only way in.
 const Resume = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   // The same facts as the visible page, in the shape Google reads for a
   // person's profile page.
@@ -120,7 +121,7 @@ const Resume = () => {
 
             {/* Hidden when printing: on paper the reader already has it. */}
             <div className="resume__actions">
-              <a href={CV} download className="button button--flex">
+              <a href={CV} onClick={() => trackConversion('resume_download', { locale: lang })} download className="button button--flex">
                 {t('resume.download')}
                 <i className="uil uil-import"></i>
               </a>

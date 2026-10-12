@@ -7,15 +7,16 @@ import Contact from './components/contact/Contact';
 import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
+import ProjectAnalytics from './components/portfolio/ProjectAnalytics';
 import Workspace from './components/portfolio/Workspace';
 import Portfolio from './components/portfolio/Portfolio';
+import Skills from './components/skills/Skills';
+import Services from './components/services/Services';
+import Qualification from './components/qualification/Qualification';
 import StatusBar from './components/statusbar/StatusBar';
 import Boot from './components/boot/Boot';
 import { useKeyLight } from './components/ambient/useKeyLight';
-import Qualification from './components/qualification/Qualification';
 import ScrollUp from './components/scrollup/ScrollUp';
-import Services from './components/services/Services';
-import Skills from './components/skills/Skills';
 import { Suspense, lazy, useEffect } from 'react';
 import NotFound from './components/notfound/NotFound';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -113,9 +114,6 @@ function PortfolioPage() {
 
       <main className="main" id="main-content">
         <Home />
-        {/* The flagship work sits directly under the hero, open in an editor:
-            it is the thing you scroll into, while the full 24-project grid
-            stays in <Portfolio /> further down. */}
         <Workspace />
         <About />
         <Skills />
@@ -155,7 +153,7 @@ function RouteScrollManager() {
 // forward to that translation once. `replace` keeps it out of history, and it
 // cannot loop because the destination is a prefixed path.
 function LocaleRoute() {
-  const { pathname } = useLocation();
+  const { pathname, search, hash } = useLocation();
   const navigate = useNavigate();
   const { lang, setLang, hasStoredPreference } = useLanguage();
   const urlLang = splitLocalePath(pathname).lang;
@@ -169,7 +167,7 @@ function LocaleRoute() {
     const preferred = detectBrowserLang();
     if (preferred === DEFAULT_LANG) return;
     const { path } = splitLocalePath(pathname);
-    navigate(localizedPath(preferred, path), { replace: true });
+    navigate({ pathname: localizedPath(preferred, path), search, hash }, { replace: true });
     // Runs only on the first render at an unprefixed URL.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -210,6 +208,7 @@ export function AppRoutes() {
       <div id="top"></div>
       <a href="#main-content" className="skip-link">{t('nav.skipToContent')}</a>
       <RouteScrollManager />
+      <ProjectAnalytics />
       <Suspense fallback={null}>
         <Routes>
           <Route path="/">{localePages()}</Route>

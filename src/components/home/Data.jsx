@@ -1,6 +1,6 @@
+import { requestAssistant } from '../assistant/requests';
 import React, { useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
-import LocaleLink from '../../i18n/LocaleLink'
 
 // Four elements, and no more: name, role, one paragraph, the two calls to
 // action. The "Currently" strip that used to sit between the paragraph and the
@@ -14,7 +14,7 @@ const Data = () => {
   // just opens it.
   const ask = (e) => {
     e.preventDefault()
-    window.dispatchEvent(new CustomEvent('assistant:ask', { detail: { question: question.trim() } }))
+    requestAssistant(question.trim())
     setQuestion('')
   }
 
@@ -40,19 +40,14 @@ const Data = () => {
       </p>
 
       <div className='home__cta'>
-        <a href='#contact' className='button button--flex'>
+        <a href='#workspace' className='button button--flex'>
+          {t('improvements.viewWork')}
+          <i className='bx bx-right-arrow-alt button__icon-inline' aria-hidden='true'></i>
+        </a>
+        <a href='#contact' className='button button--ghost button--flex'>
           {t('home.sayHello')}
           <i className='uil uil-message button__icon-inline'></i>
         </a>
-        {/* Goes to the resume page rather than straight to the PDF. A blind
-            download is the wrong default: it is unreadable on a phone without
-            a viewer, invisible to search, and gives nothing to anyone who just
-            wanted to skim. /resume is the readable version and offers the same
-            PDF as its own button. */}
-        <LocaleLink to='/resume' className='button button--ghost button--flex'>
-          {t('home.viewResume')}
-          <i className='uil uil-file button__icon-inline'></i>
-        </LocaleLink>
       </div>
 
       {/* A prompt into the AI assistant, so the first thing the page offers
@@ -66,6 +61,7 @@ const Data = () => {
           id='home-ask'
           className='home__ask-input'
           type='text'
+          maxLength={1000}
           autoComplete='off'
           placeholder={t('home.askPlaceholder')}
           value={question}

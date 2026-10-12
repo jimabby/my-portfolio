@@ -461,3 +461,5 @@
   color: var(--accent-color);
   font-style: italic;
 }
+
+.casestudy__screens-title { font-family: var(--display-font); font-weight: 400; font-size: 2rem; margin: 2.5rem 0 1.5rem; }

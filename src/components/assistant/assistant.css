@@ -875,3 +875,9 @@
     width: auto;
   }
 }
+
+/* Mobile access lives in the navigation bar, clear of the page content. */
+@media screen and (max-width: 768px) {
+  .assistant__fab { display: none; }
+  .assistant__panel { left: .75rem; right: .75rem; width: auto; bottom: calc(var(--header-height) + env(safe-area-inset-bottom, 0px) + .75rem); height: min(600px, 75dvh); max-height: calc(100dvh - var(--header-height) - env(safe-area-inset-bottom, 0px) - 1.5rem); }
+}

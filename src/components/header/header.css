@@ -500,3 +500,12 @@
     column-gap: 0;
   }
 }
+
+.nav__assistant { display: none; }
+@media screen and (max-width: 768px) {
+  .nav__assistant { display: grid; place-items: center; min-width: 44px; min-height: 44px; background: transparent; color: var(--title-color); font-family: var(--mono-font); font-size: 1.15rem; }
+  .nav__buttons { gap: .25rem; }
+  .nav__buttons .updates { display: none; }
+  .header { padding-bottom: env(safe-area-inset-bottom, 0px); }
+  body { padding-bottom: calc(var(--header-height) + env(safe-area-inset-bottom, 0px)); }
+}
