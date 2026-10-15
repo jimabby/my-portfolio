@@ -67,14 +67,14 @@ test('walkthrough navigates the captured screens and stops at the end', async ({
   await expect(tour.getByRole('button', { name: 'Replay tour' })).toHaveAttribute('aria-pressed', 'false');
 });
 
-test('ordinary human visits skip the intro, opt-in intro can be dismissed', async ({ page }) => {
+test('the intro plays once per session, can be dismissed, and respects reduced motion', async ({ page }) => {
   await page.addInitScript(() => Object.defineProperty(navigator, 'webdriver', { get: () => false }));
   await page.goto('/');
-  await expect(page.locator('.home__title')).toBeVisible();
-  await expect(page.locator('.boot')).toHaveCount(0);
-  await page.goto('/?boot');
   await expect(page.locator('.boot')).toBeVisible();
   await page.keyboard.press('Escape');
+  await expect(page.locator('.boot')).toHaveCount(0);
+  await page.goto('/');
+  await expect(page.locator('.home__title')).toBeVisible();
   await expect(page.locator('.boot')).toHaveCount(0);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/?boot');

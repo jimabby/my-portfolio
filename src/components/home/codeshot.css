@@ -125,13 +125,20 @@
   }
 }
 
+/* A phone has no pointer to pull focus with until it is touched, so the shot
+   is sharper and a little brighter there than on a desktop. */
 @media screen and (max-width: 768px) {
   .codeshot {
-    --band: 44px;
-    opacity: 0.26;
+    --band: 90px;
+    opacity: 0.42;
   }
 
   [data-theme='dark'] .codeshot {
-    opacity: 0.4;
+    opacity: 0.56;
+  }
+
+  .codeshot__soft {
+    filter: blur(1.4px);
+    opacity: 0.75;
   }
 }

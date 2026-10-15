@@ -108,8 +108,8 @@
 
 /* Held while the boot log plays (Boot.jsx sets data-leader on <html>),
    so the curtain opens as the log ends rather than underneath it. */
-html[data-leader] .home.section--visible::before,
-html[data-leader] .home.section--visible::after {
+html:not([data-leader]) .home.section--visible::before,
+html:not([data-leader]) .home.section--visible::after {
   animation: home-curtain 1.3s var(--ease-out) 0.15s backwards;
 }
 
@@ -236,18 +236,18 @@ html[data-leader] .home::after {
 /* Each word of the title rises out of a mask as the curtain opens — the way
    a title card is cut in rather than faded. */
 html:not([data-leader]) .home.section--visible .home__title {
-  animation: home-title 0.35s var(--ease-out) backwards;
+  animation: home-title 1.4s var(--ease-out) 0.5s backwards;
 }
 
 html:not([data-leader]) .home.section--visible .home__title em {
-  animation: home-title 0.35s var(--ease-out) backwards;
+  animation: home-title 1.4s var(--ease-out) 0.68s backwards;
 }
 
 @keyframes home-title {
   from {
     opacity: 0;
     transform: translateY(0.35em);
-    filter: none;
+    filter: blur(8px);
   }
   to {
     opacity: 1;
@@ -585,7 +585,6 @@ html:not([data-leader]) .home.section--visible .home__title em {
 
 /* A readable first screen on phones: the portrait supports the introduction. */
 @media screen and (max-width: 768px) {
-  .home { padding: 2.25rem 0 2.5rem; min-height: 0; }
   .home__content { position: relative; display: flex; flex-direction: column; align-items: stretch; padding-top: 0; gap: 1.5rem; }
   .home__data { order: 1; }
   .home__still { position: absolute; top: 2.3rem; right: 0; padding: 12px 6px; z-index: 2; }
