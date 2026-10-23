@@ -29,4 +29,5 @@ export default {
   21: 'React Native finance tracker with receipt scanning, cashback optimisation, and an AI coach.',
   22: 'Cancer companion app for tracking symptoms, treatment cycles, and reports to share with a care team.',
   23: 'Editorial rebuild of the Housed site, with club pages, memberships, live timetables, and a member portal.',
+  24: 'Staff hub and website CMS for a childcare group: documents, training, and promotions that reach every page without a deploy.',
 };

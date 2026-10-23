@@ -9,6 +9,17 @@
 
 export const UPDATES = [
   {
+    id: '2026-10-23-simba-cms',
+    date: '2026-10-23',
+    tag: 'project',
+    title: {
+      en: 'New project: the Simba Education Staff Hub & CMS — documents and training for every centre, and website promotions laid out for every screen.',
+      'zh-Hans': '新项目：Simba Education 员工中心与 CMS——为每个园所提供文件与培训，并让官网推广适配每一种屏幕。',
+      'zh-Hant': '新專案：Simba Education 員工中心與 CMS——為每個園所提供文件與培訓，並讓官網推廣適配每一種螢幕。',
+      ja: '新プロジェクト：Simba Education スタッフハブ & CMS — 全園のための文書と研修、そしてあらゆる画面に合わせてレイアウトされるサイトのプロモーション。',
+    },
+  },
+  {
     id: '2026-09-27-film-and-code',
     date: '2026-09-27',
     tag: 'feature',

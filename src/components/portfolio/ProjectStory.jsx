@@ -12,6 +12,7 @@ const tours = {
   'hermes-ai-email-client': [0, 2, 1],
   'housed-redesign': [1, 7, 9],
   oncora: [0, 2, 4],
+  'simba-education-cms': [2, 1, 5],
 };
 
 function Walkthrough({ project, story }) {

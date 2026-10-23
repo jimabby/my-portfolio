@@ -97,6 +97,25 @@ export default {
         "Trends bring temperature, energy, and other recorded measures together over time.",
         "The report organises self-reported observations for discussion with the care team."
       ]
+    },
+    "simba-education-cms": {
+      "problem": "Head office needed one place to share policies, announcements, and training with five centres, and website promotions had to go live without waiting on a developer and a deployment. The Staff Hub & CMS puts both jobs in one signed-in workspace.",
+      "decisions": [
+        "Write a promotion once and lay it out automatically for every page, device, and screen width, while keeping any hand adjustment made at one size.",
+        "Give centre staff a reading view and head office the editing rights, with role-based folders, an audit log, and two-step sign-in for administrators.",
+        "Make background work visible: emails, website refreshes, and document previews each report their health, and anything that failed can be retried from the screen."
+      ],
+      "outcome": "An Angular 21 client on a .NET 10 API and Postgres, deployed on AWS, now carries campaigns, events, legal pages, documents, and training for every centre. The walkthrough follows a promotion from the list to its canvas, then over to each team’s training.",
+      "steps": [
+        "Write the promotion",
+        "Arrange each size",
+        "Follow each team"
+      ],
+      "stepText": [
+        "Each campaign is written once and ticked onto the pages it belongs on.",
+        "The canvas shows the banner at its real size, ready to adjust for that page and width.",
+        "On the staff side, team progress shows where every person at every centre is with their training."
+      ]
     }
   }
 };

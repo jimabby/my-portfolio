@@ -597,6 +597,70 @@ const oncora = {
   ],
 };
 
+// Simba Education - Staff Hub & CMS
+const simbaCms = {
+  en: [
+    'One sign-in, two workspaces. The dashboard greets each person by time of day and centre, carries one of Simba’s four values, and puts the staff hub beside the content studio that runs the public website.',
+    'Every campaign is laid out automatically for each page, device, and screen width, then drawn on a canvas at the banner’s real size. Drag or restyle any part and that adjustment is kept for that size alone.',
+    'A promotion is written once and ticked onto the pages it belongs on — the home page, every centre, special offers. The list shows each one as its desktop banner, with where it runs and which sizes were adjusted by hand.',
+    'Three starting layouts — picture beside the words, words over a photograph, or free placement — with background and curve colours drawn from the brand palette, and a picture description for screen readers.',
+    'Documents are sorted into folders by category, with a folder for every centre. Staff view and download; only head office adds or changes files, and leadership folders are restricted by role.',
+    'Team progress puts every person against every training in one grid, grouped by centre with a completion rate for each. Status reads at a glance — approved, awaiting approval, sent back, in progress, run out — and the totals above cover every page of the search.',
+    'Approvals gathers every hand-in waiting on a reviewer, oldest first, and marks the ones resubmitted after a comment. Alongside it, new starters’ welcome checklists and every certificate due to run out in the next 30 days.',
+    'The certificate register tracks first aid, CPR, anaphylaxis, asthma, child protection, and Working With Children Checks for every staff member, by centre. Staff and their director are reminded 30 days before anything runs out, and the whole register exports as CSV.',
+    'A training module is read, watched, then acknowledged: hub documents and video links come first, then a short reflection or checklist. Completions can repeat yearly and issue a Simba certificate.',
+    'Incursions, celebrations, and open days are listed on the page of each centre that holds them and leave the site once their last day has passed. A term’s calendar can be uploaded as a spreadsheet.',
+    'The media library shows which banners use each picture. Uploading a file that is already there reuses it instead of adding a copy, and deleting one that is in use asks first.',
+    'Operations makes the background work visible — emails, website refreshes, document previews, scheduled banner changes — with a health check per worker, queue counts, and a way to retry anything that gave up.',
+    'The sign-in page sets the tone in Simba’s own colours and values. Administrators must set up two-step sign-in, and a session ends 24 hours after it starts, however often it is renewed.',
+  ],
+  'zh-Hans': [
+    '一次登录，两个工作区。仪表盘按时段与所属园所问候每位用户，展示 Simba 的四项核心价值之一，并把员工中心与管理官网的内容工作室并排放置。',
+    '每个推广活动都会针对每个页面、设备与屏幕宽度自动排版，再以横幅的真实尺寸呈现在画布上。拖动或修改任何元素，调整只会保留在该尺寸上。',
+    '推广内容只需撰写一次，再勾选要出现的页面——首页、每个园所页面、优惠专页。列表以桌面版横幅缩略图呈现每个活动，并标明投放位置与手动调整过的尺寸。',
+    '三种起始版式——图文并排、文字叠于照片之上，或自由排布——背景色与弧线色取自品牌色板，并为屏幕阅读器提供图片描述。',
+    '文件按类别归入文件夹，每个园所各有一个专属文件夹。员工可查看与下载，只有总部能新增或修改文件，管理层文件夹按角色限制访问。',
+    '团队进度把每位员工与每项培训放进同一张表格，按园所分组并显示各自的完成率。状态一目了然——已通过、待审批、已退回、进行中、已过期——上方的汇总涵盖搜索结果的所有页面。',
+    '审批页汇集所有等待审核的提交，按时间先后排列，并标出根据意见重新提交的项目。旁边是新员工的入职清单进度，以及未来 30 天内即将到期的所有证书。',
+    '证书登记册按园所追踪每位员工的急救、心肺复苏、过敏性休克、哮喘、儿童保护与儿童工作许可（WWCC）证书。到期前 30 天会提醒员工及其园长，整份登记册可导出为 CSV。',
+    '每项培训分为阅读、观看、确认三步：先是文件库中的资料与视频链接，再是简短的反思或核对清单。完成记录可设为每年重修，并可签发 Simba 证书。',
+    '外出活动、节庆与开放日会显示在每个举办园所的页面上，并在最后一天过后自动下架。整个学期的日程可用电子表格一次上传。',
+    '媒体库会标明每张图片被哪些横幅使用。重复上传同一文件会直接复用而不会新增副本，删除正在使用的图片前会先询问。',
+    '运维页面让后台工作一目了然——邮件发送、官网刷新、文件预览生成、定时横幅切换——每个工作进程都有健康状态，队列有计数，失败的任务可一键重试。',
+    '登录页以 Simba 自己的色彩与价值观定下基调。管理员必须启用两步验证，且无论续期多少次，会话都会在登录 24 小时后结束。',
+  ],
+  'zh-Hant': [
+    '一次登入，兩個工作區。儀表板依時段與所屬園所問候每位使用者，展示 Simba 的四項核心價值之一，並把員工中心與管理官網的內容工作室並排放置。',
+    '每個推廣活動都會針對每個頁面、裝置與螢幕寬度自動排版，再以橫幅的實際尺寸呈現在畫布上。拖曳或修改任何元素，調整只會保留在該尺寸上。',
+    '推廣內容只需撰寫一次，再勾選要出現的頁面——首頁、每個園所頁面、優惠專頁。列表以桌面版橫幅縮圖呈現每個活動，並標明投放位置與手動調整過的尺寸。',
+    '三種起始版式——圖文並排、文字疊於照片之上，或自由排布——背景色與弧線色取自品牌色票，並為螢幕閱讀器提供圖片描述。',
+    '文件依類別歸入資料夾，每個園所各有一個專屬資料夾。員工可檢視與下載，只有總部能新增或修改檔案，管理層資料夾依角色限制存取。',
+    '團隊進度把每位員工與每項培訓放進同一張表格，依園所分組並顯示各自的完成率。狀態一目了然——已通過、待審核、已退回、進行中、已過期——上方的彙總涵蓋搜尋結果的所有頁面。',
+    '審核頁彙集所有等待審閱的提交，依時間先後排列，並標出依意見重新提交的項目。旁邊是新進員工的到職清單進度，以及未來 30 天內即將到期的所有證書。',
+    '證書登記冊依園所追蹤每位員工的急救、心肺復甦、過敏性休克、氣喘、兒童保護與兒童工作許可（WWCC）證書。到期前 30 天會提醒員工及其園長，整份登記冊可匯出為 CSV。',
+    '每項培訓分為閱讀、觀看、確認三步：先是文件庫中的資料與影片連結，再是簡短的反思或檢核清單。完成紀錄可設為每年重修，並可核發 Simba 證書。',
+    '校外活動、節慶與開放日會顯示在每個舉辦園所的頁面上，並在最後一天過後自動下架。整個學期的行事曆可用試算表一次上傳。',
+    '媒體庫會標明每張圖片被哪些橫幅使用。重複上傳同一檔案會直接沿用而不會新增副本，刪除正在使用的圖片前會先詢問。',
+    '維運頁面讓背景工作一目了然——郵件寄送、官網重新整理、文件預覽產生、排程橫幅切換——每個工作程序都有健康狀態，佇列有計數，失敗的任務可一鍵重試。',
+    '登入頁以 Simba 自己的色彩與價值觀定下基調。管理員必須啟用兩步驟驗證，且無論續期多少次，工作階段都會在登入 24 小時後結束。',
+  ],
+  ja: [
+    'ひとつのサインインで、ふたつのワークスペース。ダッシュボードは時間帯と所属園に合わせて挨拶し、Simba の4つの価値観のひとつを添え、スタッフハブと公式サイトを運用するコンテンツスタジオを並べて配置します。',
+    'キャンペーンはページ・デバイス・画面幅ごとに自動でレイアウトされ、実寸のバナーとしてキャンバスに描画されます。要素をドラッグしたりスタイルを変えたりすると、その調整はそのサイズにだけ保存されます。',
+    'プロモーションは一度書くだけ。表示したいページ（トップページ、各園のページ、特典ページ）にチェックを入れます。一覧では各キャンペーンをデスクトップ用バナーで表示し、掲載先と手動調整したサイズを示します。',
+    '3つの基本レイアウト（写真と文章を並べる、写真の上に文章を重ねる、自由配置）から始められます。背景色とカーブの色はブランドパレットから選び、スクリーンリーダー向けに画像の説明も設定できます。',
+    '文書はカテゴリー別のフォルダーに整理され、園ごとの専用フォルダーもあります。スタッフは閲覧とダウンロードのみ、ファイルの追加・変更は本部だけが行え、管理職向けフォルダーは役割で制限されます。',
+    'チーム進捗は全スタッフと全研修をひとつの表に並べ、園ごとにまとめて完了率を表示します。承認済み、承認待ち、差し戻し、進行中、期限切れといった状態がひと目で分かり、上部の集計は検索結果の全ページを対象にしています。',
+    '承認画面にはレビュー待ちの提出物が古い順に集まり、コメント後に再提出されたものには印が付きます。隣には新人のウェルカムチェックリストの進捗と、30日以内に期限が切れる資格証明書の一覧を表示します。',
+    '資格証明書の登録簿は、応急処置、CPR、アナフィラキシー、喘息、児童保護、Working With Children Check を園ごと・スタッフごとに管理します。期限の30日前に本人と園長へリマインドが届き、登録簿全体を CSV で書き出せます。',
+    '研修は「読む・見る・確認する」の流れ。文書ハブの資料と動画リンクのあとに、短い振り返りやチェックリストが続きます。修了は毎年の更新に設定でき、Simba の修了証も発行できます。',
+    '園外活動、行事、オープンデーは開催する各園のページに掲載され、最終日を過ぎると自動でサイトから外れます。学期分の予定はスプレッドシートで一括アップロードできます。',
+    'メディアライブラリーは各画像がどのバナーで使われているかを表示します。同じファイルを再アップロードすると複製せずに再利用し、使用中の画像を削除する前には確認を求めます。',
+    'オペレーション画面はバックグラウンド処理（メール送信、サイトの更新、文書プレビューの生成、予約したバナーの切り替え）を可視化。ワーカーごとの稼働状況、キューの件数、失敗した処理の再実行を備えています。',
+    'サインイン画面は Simba 自身の色と価値観でトーンを決めています。管理者は2段階認証の設定が必須で、セッションは何度更新してもサインインから24時間で終了します。',
+  ],
+};
+
 // Keyed by the project ids in Data.jsx.
 const byProject = {
   1: takeaway,
@@ -621,6 +685,7 @@ const byProject = {
   20: airconSolutions,
   21: pockyt,
   22: oncora,
+  24: simbaCms,
 };
 
 const LANGS = ['en', 'zh-Hans', 'zh-Hant', 'ja'];

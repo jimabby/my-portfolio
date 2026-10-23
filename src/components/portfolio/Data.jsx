@@ -52,6 +52,19 @@ import SimbaEduRedesign2 from "../../assets/simba-edu-redesign/simba-edu-redesig
 import SimbaEduRedesign3 from "../../assets/simba-edu-redesign/simba-edu-redesign3.webp";
 import SimbaEduRedesign4 from "../../assets/simba-edu-redesign/simba-edu-redesign4.webp";
 import SimbaEduRedesign5 from "../../assets/simba-edu-redesign/simba-edu-redesign5.webp";
+import SimbaCmsDashboard from "../../assets/simba-cms/simba-cms-dashboard.webp";
+import SimbaCmsCampaignCanvas from "../../assets/simba-cms/simba-cms-campaign-canvas.webp";
+import SimbaCmsCampaigns from "../../assets/simba-cms/simba-cms-campaigns.webp";
+import SimbaCmsCampaignLayout from "../../assets/simba-cms/simba-cms-campaign-layout.webp";
+import SimbaCmsDocuments from "../../assets/simba-cms/simba-cms-documents.webp";
+import SimbaCmsTrainingProgress from "../../assets/simba-cms/simba-cms-training-progress.webp";
+import SimbaCmsTrainingApprovals from "../../assets/simba-cms/simba-cms-training-approvals.webp";
+import SimbaCmsTrainingCertificates from "../../assets/simba-cms/simba-cms-training-certificates.webp";
+import SimbaCmsTrainingDetail from "../../assets/simba-cms/simba-cms-training-detail.webp";
+import SimbaCmsEvents from "../../assets/simba-cms/simba-cms-events.webp";
+import SimbaCmsMedia from "../../assets/simba-cms/simba-cms-media.webp";
+import SimbaCmsOperations from "../../assets/simba-cms/simba-cms-operations.webp";
+import SimbaCmsSignIn from "../../assets/simba-cms/simba-cms-sign-in.webp";
 import SimbaHealthRedesign1 from "../../assets/simba-health-redesign/simba-health-redesign1.webp";
 import SimbaHealthRedesign2 from "../../assets/simba-health-redesign/simba-health-redesign2.webp";
 import SimbaHealthRedesign3 from "../../assets/simba-health-redesign/simba-health-redesign3.webp";
@@ -335,6 +348,35 @@ export const projectsData = [
       SimbaEduRedesign3,
       SimbaEduRedesign4,
       SimbaEduRedesign5,
+    ],
+  },
+  {
+    id: 24,
+    image: SimbaCmsDashboard,
+    title: 'Simba Education - Staff Hub & CMS',
+    slug: 'simba-education-cms',
+    role: 'fullstack',
+    year: '2026',
+    projectDate: '2026-10-22',
+    stack: ['Angular', '.NET', 'PostgreSQL', 'AWS'],
+    category: 'App',
+    link: '#',
+    summary: 'Staff hub and website CMS for a childcare group: documents, training, and promotions that reach every page without a deploy.',
+    tags: ['Web App', 'Education', 'CMS', 'Training'],
+    gallery: [
+      SimbaCmsDashboard,
+      SimbaCmsCampaignCanvas,
+      SimbaCmsCampaigns,
+      SimbaCmsCampaignLayout,
+      SimbaCmsDocuments,
+      SimbaCmsTrainingProgress,
+      SimbaCmsTrainingApprovals,
+      SimbaCmsTrainingCertificates,
+      SimbaCmsTrainingDetail,
+      SimbaCmsEvents,
+      SimbaCmsMedia,
+      SimbaCmsOperations,
+      SimbaCmsSignIn,
     ],
   },
   {
