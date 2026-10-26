@@ -20,7 +20,7 @@ import { projectsData } from './Data';
 // with, so the section never lands on an empty pane. Below 768px the explorer
 // becomes a row of chips that scrolls sideways and the tabs step aside.
 //
-// Curated on purpose. There are 25 projects in Data.jsx; the explorer shows
+// Curated on purpose. There are 26 projects in Data.jsx; the explorer shows
 // the seven that best represent the work, and the rest are one click away in
 // the portfolio grid below. Hermes leads because it is the AI product.
 const CURATED = [

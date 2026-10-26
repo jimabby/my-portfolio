@@ -9,6 +9,17 @@
 
 export const UPDATES = [
   {
+    id: '2026-10-26-imperial-centre',
+    date: '2026-10-26',
+    tag: 'project',
+    title: {
+      en: 'New project: Imperial Centre — a Gosford shopping centre’s website, with every store’s hours, events, and parking a tap away.',
+      'zh-Hans': '新项目：Imperial Centre——Gosford 购物中心的网站，每家商店的营业时间、活动与停车信息一触即达。',
+      'zh-Hant': '新專案：Imperial Centre——Gosford 購物中心的網站，每家商店的營業時間、活動與停車資訊一觸即達。',
+      ja: '新プロジェクト：Imperial Centre — ゴスフォードのショッピングセンターのサイト。全店舗の営業時間、イベント、駐車場情報にすぐアクセスできます。',
+    },
+  },
+  {
     id: '2026-10-23-simba-cms',
     date: '2026-10-23',
     tag: 'project',

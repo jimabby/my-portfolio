@@ -116,6 +116,25 @@ export default {
         "The canvas shows the banner at its real size, ready to adjust for that page and width.",
         "On the staff side, team progress shows where every person at every centre is with their training."
       ]
+    },
+    "imperial-centre": {
+      "problem": "Most people visiting a shopping centre’s website want one of three answers: is the shop I need here, is it open now, and where do I park. Imperial Centre’s new site is built around answering those quickly, on any screen.",
+      "decisions": [
+        "Give every one of the 48 retailers its own page and its own hours, and show today’s hours on each directory card, so nobody has to open a store’s page to find out whether it is open.",
+        "Work out NSW public holidays in code for any year, Easter and substitute days included, and apply the state’s restricted trading rules, so the holiday hours never need updating by hand.",
+        "Send contact and leasing enquiries through one rate-limited route with a honeypot, a confirmation to the visitor, and a fallback inbox if the send fails, so no enquiry is lost."
+      ],
+      "outcome": "A Next.js site with TypeScript and Tailwind CSS, with store and event pages built ahead of time, the trading hours page rebuilt daily, and enquiries sent through SendGrid. The walkthrough goes from finding a store to checking its hours to planning the trip.",
+      "steps": [
+        "Find a store",
+        "Check the hours",
+        "Plan the trip"
+      ],
+      "stepText": [
+        "Search, filter by category, or jump to a letter, with today’s hours on every card.",
+        "Centre, retailer, and public holiday hours side by side, with today marked.",
+        "Choose how you’re arriving and see the car parks, free periods, and nearest stops."
+      ]
     }
   }
 };

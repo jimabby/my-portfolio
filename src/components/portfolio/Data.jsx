@@ -36,6 +36,18 @@ import HousedRedesignJournal from "../../assets/housed-redesign/housed-redesign-
 import HousedRedesignArticle from "../../assets/housed-redesign/housed-redesign-article.webp";
 import HousedRedesignFreePass from "../../assets/housed-redesign/housed-redesign-free-pass.webp";
 import HousedRedesignMemberPortal from "../../assets/housed-redesign/housed-redesign-member-portal.webp";
+import ImperialCentreHome from "../../assets/imperial-centre/imperial-centre-home.webp";
+import ImperialCentreDirectory from "../../assets/imperial-centre/imperial-centre-directory.webp";
+import ImperialCentreCentreMap from "../../assets/imperial-centre/imperial-centre-centre-map.webp";
+import ImperialCentreStore from "../../assets/imperial-centre/imperial-centre-store.webp";
+import ImperialCentreCategories from "../../assets/imperial-centre/imperial-centre-categories.webp";
+import ImperialCentreTradingHours from "../../assets/imperial-centre/imperial-centre-trading-hours.webp";
+import ImperialCentreWhatsOn from "../../assets/imperial-centre/imperial-centre-whats-on.webp";
+import ImperialCentreEvent from "../../assets/imperial-centre/imperial-centre-event.webp";
+import ImperialCentreGettingHere from "../../assets/imperial-centre/imperial-centre-getting-here.webp";
+import ImperialCentreParkingRates from "../../assets/imperial-centre/imperial-centre-parking-rates.webp";
+import ImperialCentreVisit from "../../assets/imperial-centre/imperial-centre-visit.webp";
+import ImperialCentreContact from "../../assets/imperial-centre/imperial-centre-contact.webp";
 import OnsenImg from "../../assets/onsen/onsen.webp";
 import OnsenImg1 from "../../assets/onsen/onsen1.webp";
 import SimbaImg from "../../assets/simba-education/simbaeducation.webp";
@@ -256,6 +268,34 @@ export const projectsData = [
       HousedRedesignArticle,
       HousedRedesignFreePass,
       HousedRedesignMemberPortal,
+    ],
+  },
+  {
+    id: 25,
+    image: ImperialCentreHome,
+    title: 'Imperial Centre',
+    slug: 'imperial-centre',
+    role: 'fullstack',
+    year: '2026',
+    projectDate: '2026-10-26',
+    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'SendGrid'],
+    category: 'Website',
+    link: '#',
+    summary: 'Website for a Gosford shopping centre: a searchable store directory, trading hours for every shop, events, parking, and enquiries.',
+    tags: ['Website', 'Retail', 'Next.js'],
+    gallery: [
+      ImperialCentreHome,
+      ImperialCentreDirectory,
+      ImperialCentreCentreMap,
+      ImperialCentreStore,
+      ImperialCentreCategories,
+      ImperialCentreTradingHours,
+      ImperialCentreWhatsOn,
+      ImperialCentreEvent,
+      ImperialCentreGettingHere,
+      ImperialCentreParkingRates,
+      ImperialCentreVisit,
+      ImperialCentreContact,
     ],
   },
   {

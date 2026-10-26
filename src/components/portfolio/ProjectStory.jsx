@@ -13,6 +13,7 @@ const tours = {
   'housed-redesign': [1, 7, 9],
   oncora: [0, 2, 4],
   'simba-education-cms': [2, 1, 5],
+  'imperial-centre': [1, 5, 8],
 };
 
 function Walkthrough({ project, story }) {

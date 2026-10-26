@@ -661,6 +661,66 @@ const simbaCms = {
   ],
 };
 
+// Imperial Centre
+const imperialCentre = {
+  en: [
+    'The home page opens on the centre itself, at 171 Mann Street, with the three things most visitors come for straight underneath: the store directory, today’s hours, and how to get there.',
+    'The directory lists all 48 retailers A to Z. Search by name, filter by category, or jump to a letter — letters with no stores are greyed out — and every card shows that store’s hours for today and its level.',
+    'The centre map opens in place, one floor at a time, with zoom for the small shop numbers and a key to bathrooms, entrances, escalators, and parking.',
+    'Each store has its own page with a description, a week of hours, shop number, phone, and website, then three more stores from the same category to keep browsing.',
+    'Eight categories, from fresh food to services, each opening the directory already filtered to that category.',
+    'Centre hours mark today in Sydney time. The public holidays below are worked out for any year — Easter included — with NSW restricted trading days closed and substitute days added when a holiday falls on a weekend.',
+    'What’s On splits events into current and ending soon. Everything listed is free unless it says otherwise.',
+    'An event page answers when, where, and what it costs before anything else, with a direct link to getting here.',
+    'Getting Here asks how you are arriving: driving shows the two car parks and their free periods, public transport shows the nearest bus stops and Gosford Station.',
+    'The ticketless car park explained in full: licence plate entry, rates for both car parks side by side, and how to pay at the station or the exit gate.',
+    'Further down the home page, the free parking and the short walk from the station are pitched as a reason to visit, not hidden in a policy page.',
+    'Contact and leasing enquiries share one form and one set of validation rules. Each form goes to its own team, the visitor gets a confirmation, and an enquiry that fails to send goes to a fallback inbox instead of being lost.',
+  ],
+  'zh-Hans': [
+    '首页以位于 Mann Street 171 号的购物中心本身开场，紧接着就是大多数访客最需要的三件事：商店目录、今日营业时间与交通方式。',
+    '商店目录按 A 到 Z 列出全部 48 家商户。可按名称搜索、按类别筛选，或直接跳到某个字母——没有商店的字母会显示为灰色——每张卡片都标明该店今日营业时间与所在楼层。',
+    '中心地图在页面内展开，逐层查看，可放大看清细小的店铺编号，并附有洗手间、入口、扶梯与停车场的图例。',
+    '每家商店都有自己的页面，包含简介、一周营业时间、店铺编号、电话与网站，下方再推荐三家同类别商店，方便继续浏览。',
+    '从生鲜食品到生活服务共八个类别，点击任一类别即打开已按该类别筛选好的商店目录。',
+    '中心营业时间按悉尼时间标出今天。下方的公众假期可推算任意年份——包括复活节——新南威尔士州限制营业日显示为休息，假期逢周末时自动加入补假日。',
+    '“活动资讯”把活动分为进行中与即将结束两类。除非另有说明，所列活动均为免费。',
+    '活动页面先回答时间、地点与费用，再附上前往方式的直接链接。',
+    '“交通指南”先问您如何前来：选择自驾会显示两个停车场及其免费时段，选择公共交通则显示最近的公交站与 Gosford 火车站。',
+    '完整说明无票停车：车牌识别入场、两个停车场的收费并排对照，以及在缴费机或出口闸门的付款方式。',
+    '首页下方把免费停车和从车站步行即达作为前来的理由来呈现，而不是藏在条款页里。',
+    '联系与招租咨询共用一个表单与同一套校验规则。每个表单发送给各自的团队，访客会收到确认邮件；若发送失败，咨询会转入备用邮箱，而不会遗失。',
+  ],
+  'zh-Hant': [
+    '首頁以位於 Mann Street 171 號的購物中心本身開場，緊接著就是多數訪客最需要的三件事：商店目錄、今日營業時間與交通方式。',
+    '商店目錄依 A 到 Z 列出全部 48 家商戶。可依名稱搜尋、依類別篩選，或直接跳到某個字母——沒有商店的字母會顯示為灰色——每張卡片都標明該店今日營業時間與所在樓層。',
+    '中心地圖在頁面內展開，逐層檢視，可放大看清細小的店鋪編號，並附有洗手間、入口、手扶梯與停車場的圖例。',
+    '每家商店都有自己的頁面，包含簡介、一週營業時間、店鋪編號、電話與網站，下方再推薦三家同類別商店，方便繼續瀏覽。',
+    '從生鮮食品到生活服務共八個類別，點選任一類別即開啟已依該類別篩選好的商店目錄。',
+    '中心營業時間依雪梨時間標出今天。下方的國定假日可推算任何年份——包括復活節——新南威爾斯州限制營業日顯示為公休，假日逢週末時自動加入補假日。',
+    '「活動資訊」把活動分為進行中與即將結束兩類。除非另有說明，所列活動均為免費。',
+    '活動頁面先回答時間、地點與費用，再附上前往方式的直接連結。',
+    '「交通指南」先問您如何前來：選擇開車會顯示兩個停車場及其免費時段，選擇大眾運輸則顯示最近的公車站與 Gosford 火車站。',
+    '完整說明無票停車：車牌辨識入場、兩個停車場的費率並排對照，以及在繳費機或出口柵門的付款方式。',
+    '首頁下方把免費停車和從車站步行即達當作前來的理由來呈現，而不是藏在條款頁裡。',
+    '聯絡與招租詢問共用一個表單與同一套驗證規則。每個表單寄給各自的團隊，訪客會收到確認信；若寄送失敗，詢問會轉入備用信箱，而不會遺失。',
+  ],
+  ja: [
+    'トップページは Mann Street 171番地のセンターそのものから始まり、そのすぐ下に多くの来訪者が求める3つ、店舗一覧・本日の営業時間・アクセスを並べています。',
+    '店舗一覧は全48店舗を A から Z の順に表示します。名前で検索、カテゴリーで絞り込み、頭文字へジャンプでき（店舗のない文字はグレー表示）、各カードには本日の営業時間とフロアが表示されます。',
+    'センターマップはページ内でフロアごとに開き、小さな店舗番号も読めるようズームでき、トイレ・入口・エスカレーター・駐車場の凡例付きです。',
+    '各店舗には専用ページがあり、紹介文、1週間の営業時間、店舗番号、電話、ウェブサイトを掲載。下には同じカテゴリーの店舗を3つ表示し、そのまま見て回れます。',
+    '生鮮食品からサービスまでの8カテゴリー。どれを選んでも、そのカテゴリーで絞り込まれた店舗一覧が開きます。',
+    'センターの営業時間はシドニー時間で今日を示します。下の祝日はイースターを含めどの年でも計算され、NSW 州の営業制限日は休業、週末に重なった祝日には振替日が加わります。',
+    'What’s On ではイベントを開催中と終了間近に分けて表示。特に記載がない限り、すべて無料です。',
+    'イベントページは日時・場所・料金を最初に示し、アクセスページへの直接リンクを添えています。',
+    'アクセスページは来場方法から尋ねます。車なら2つの駐車場と無料時間を、公共交通機関なら最寄りのバス停と Gosford 駅を表示します。',
+    'チケットレス駐車場を詳しく説明。ナンバープレート認識での入場、2つの駐車場の料金の並列比較、精算機と出口ゲートでの支払い方法を掲載しています。',
+    'トップページの後半では、無料駐車と駅からの近さを来場の理由として打ち出し、規約ページに埋もれさせていません。',
+    'お問い合わせとテナント募集の問い合わせは同じフォームと検証ルールを共有。フォームごとに担当チームへ届き、送信者には確認メールが送られ、送信に失敗した問い合わせは失われずに予備の受信箱へ転送されます。',
+  ],
+};
+
 // Keyed by the project ids in Data.jsx.
 const byProject = {
   1: takeaway,
@@ -686,6 +746,7 @@ const byProject = {
   21: pockyt,
   22: oncora,
   24: simbaCms,
+  25: imperialCentre,
 };
 
 const LANGS = ['en', 'zh-Hans', 'zh-Hant', 'ja'];
