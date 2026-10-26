@@ -34,6 +34,8 @@ export default {
   "revealValue": "顯示 {n}% 新設計",
   "requestDemo": "討論這個專案",
   "allScreens": "全部專案截圖",
+  "featureYes": "支援",
+  "featureNo": "不支援",
   "comparisonNotes": {
     "housed-redesign": "Housed 首頁從品牌介紹轉向更直觀的俱樂部與會員方案入口。下文詳細解釋導覽、預約與內容的變化。",
     "simba-education-new-build": "原 WordPress 網站與客製教育網站呈現相同主題，但以不同方式組織第一印象。可比較頁面層次、圖片與課程入口。",
@@ -135,6 +137,67 @@ export default {
         "中心、主要商戶與國定假日的營業時間並排呈現，並標出今天。",
         "選擇前來方式，即可查看停車場、免費時段與最近的站點。"
       ]
+    },
+    "housed-sales-system": {
+      "problem": "Housed 的銷售團隊過去用訂閱制 CRM ABC GymSales 處理每一筆名單、每一通電話與每一次跟進。Housed 希望擁有自己的系統——自己的資料、自己的規則、自己的成本——同時不讓忙碌的銷售團隊重新學習一套工作方式。",
+      "decisions": [
+        "動手寫程式之前，先逐頁梳理 GymSales，再匯入俱樂部真實的設定、49 條自動化規則與 106 個訊息範本，讓團隊一打開新系統就已經是熟悉的俱樂部。",
+        "保留 GymSales 的版面與用語——News Feed、Next Call、End of Day——無需重新訓練；把心力放在團隊一直在變通處理的地方：自動化歷程、重複資料合併，以及依各分店時區計算的報表。",
+        "把訊息發送視為風險最高的部分：排入佇列時與發送時兩次檢查退訂，Twilio 回呼簽章驗證，發送佇列可由兩台伺服器共用而不會重複發送。"
+      ],
+      "outcome": "以 Angular、.NET 與 PostgreSQL 打造的應用，簡訊經 Twilio、電子郵件經 SendGrid 發送，已為 Housed Macquarie Park 部署。下方表格逐項比較它與 GymSales；導覽則跟著一位銷售顧問，從名單列表走到當日結算報表。",
+      "steps": [
+        "找到名單",
+        "處理佇列",
+        "結束一天"
+      ],
+      "stepText": [
+        "搜尋、篩選並批次編輯名單，每個人的狀態、來源與退訂情形都在同一列。",
+        "下一位該聯絡的人，依等待時間最長排序；若四小時內已聯絡過，會提出提醒。",
+        "依分店時區統計的一天：新名單、通話、已預約與已完成的到訪，以及仍未處理的事項。"
+      ],
+      "comparison": {
+        "eyebrow": "GymSales 與 Housed Sales System",
+        "title": "逐項比較",
+        "intro": "第一個目標是功能對等：銷售顧問在 GymSales 用過的每個頁面，上線第一天都要有。之後再補上團隊一直在變通處理的部分。少數 GymSales 功能尚未移轉，也一併列出。",
+        "columns": ["功能", "ABC GymSales", "Housed Sales System"],
+        "groups": [
+          {
+            "label": "沿用 GymSales",
+            "rows": [
+              ["具備篩選、標籤與批次操作的名單列表", "yes", "yes"],
+              ["包含完整聯絡紀錄的客戶檔案", "yes", "yes"],
+              ["具四小時聯絡保護的 Next Call 佇列", "yes", "yes"],
+              ["依日、週、月與銷售顧問檢視的行事曆", "yes", "yes"],
+              ["自動簡訊與電子郵件跟進", "yes", "yes"],
+              ["具合併欄位的簡訊與電子郵件範本", "yes", "yes"],
+              ["業績、報表與 End of Day", "yes", "yes"],
+              ["依管道退訂與「請勿來電」", "yes", "yes"]
+            ]
+          },
+          {
+            "label": "超越 GymSales 的新增功能",
+            "rows": [
+              ["具版本的自動化規則，每條規則都有執行歷程", "no", "yes"],
+              ["新名單查重，以及兩筆資料合併", "no", "yes"],
+              ["報表與 End of Day 依各分店時區計算", "no", "yes"],
+              ["行事曆檢查未記錄結果的預約", "no", "yes"],
+              ["每筆名單的廣告點擊來源（gclid、fbclid、UTM）", "no", "yes"],
+              ["會籍成交時自動建立二次銷售機會的規則", "no", "yes"],
+              ["分店層級規則：必填行銷來源、重新聯絡間隔", "僅營業時間", "yes"]
+            ]
+          },
+          {
+            "label": "尚未移轉",
+            "rows": [
+              ["WhatsApp 訊息", "yes", "no"],
+              ["訪客頁面與櫃台簽到機", "yes", "no"],
+              ["會員系統整合", "20 多個系統", "僅 GymMaster"]
+            ]
+          }
+        ],
+        "note": "依據 Housed 實際使用的 GymSales 功能，於 2026 年 7 月從線上帳戶梳理，並於 2026 年 10 月再次核對。GymSales 可能還有 Housed 未使用的功能。"
+      }
     }
   }
 };

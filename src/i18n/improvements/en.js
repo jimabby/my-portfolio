@@ -34,6 +34,8 @@ export default {
   "revealValue": "{n}% new design",
   "requestDemo": "Discuss this project",
   "allScreens": "All project screenshots",
+  "featureYes": "Included",
+  "featureNo": "Not included",
   "comparisonNotes": {
     "housed-redesign": "The Housed homepage moves from a broad brand introduction to a more visual starting point for exploring clubs and memberships. The full story below explains the changes to navigation, booking, and content.",
     "simba-education-new-build": "The original WordPress site and the custom education build share the same subject, but organise the first impression differently. Compare the page hierarchy, imagery, and entry points into the programmes.",
@@ -135,6 +137,67 @@ export default {
         "Centre, retailer, and public holiday hours side by side, with today marked.",
         "Choose how you’re arriving and see the car parks, free periods, and nearest stops."
       ]
+    },
+    "housed-sales-system": {
+      "problem": "Housed’s sales team ran every lead, call, and follow-up through ABC GymSales, a subscription CRM. Housed wanted to own that system — its data, its rules, and its cost — without asking a busy sales team to learn a new way of working.",
+      "decisions": [
+        "Map GymSales screen by screen before writing any code, then import the club’s real settings, 49 automations, and 106 message templates, so the team opens a system that already knows their club.",
+        "Keep the GymSales layout and vocabulary — News Feed, Next Call, End of Day — so nobody needs retraining, and spend the effort on what the team kept working around: automation history, duplicate merging, and reports in each gym’s own timezone.",
+        "Treat messaging as the risky part: opt-outs checked when a message is queued and again when it is sent, signed Twilio webhooks, and a send queue that two servers can share without sending anything twice."
+      ],
+      "outcome": "An Angular, .NET, and PostgreSQL app, with SMS through Twilio and email through SendGrid, deployed for Housed Macquarie Park. The table below compares it with GymSales feature by feature; the walkthrough follows a salesperson from the lead list to the end-of-day report.",
+      "steps": [
+        "Find the lead",
+        "Work the queue",
+        "Close the day"
+      ],
+      "stepText": [
+        "Search, refine, and bulk-edit leads, with each person’s status, source, and opt-outs in one row.",
+        "The next person to call, ordered by who has waited longest, with a warning if they were contacted in the last four hours.",
+        "The gym’s day in its own timezone: new leads, calls, appointments booked and completed, and what is still open."
+      ],
+      "comparison": {
+        "eyebrow": "GymSales and Housed Sales System",
+        "title": "Feature by feature",
+        "intro": "The first goal was parity: every screen a salesperson used in GymSales had to exist on day one. After that, the build added what the team kept working around. A few GymSales features have not been carried over yet, and they are listed too.",
+        "columns": ["Feature", "ABC GymSales", "Housed Sales System"],
+        "groups": [
+          {
+            "label": "Kept from GymSales",
+            "rows": [
+              ["Lead list with filters, tags, and bulk actions", "yes", "yes"],
+              ["Client profile with the full contact history", "yes", "yes"],
+              ["Next Call queue with a four-hour contact guard", "yes", "yes"],
+              ["Calendar by day, week, month, and salesperson", "yes", "yes"],
+              ["Automated SMS and email follow-ups", "yes", "yes"],
+              ["SMS and email templates with merge fields", "yes", "yes"],
+              ["Performance, reports, and End of Day", "yes", "yes"],
+              ["Opt-outs per channel, and Do Not Call", "yes", "yes"]
+            ]
+          },
+          {
+            "label": "Added beyond GymSales",
+            "rows": [
+              ["Versioned automations with a run history for each rule", "no", "yes"],
+              ["Duplicate check on new leads, and a two-record merge", "no", "yes"],
+              ["Reports and End of Day in each gym’s own timezone", "no", "yes"],
+              ["Calendar check for appointments with no outcome recorded", "no", "yes"],
+              ["Ad-click attribution on every lead (gclid, fbclid, UTM)", "no", "yes"],
+              ["Rules that open a secondary-sale opportunity on a membership sale", "no", "yes"],
+              ["Per-gym rules: required marketing source, re-engagement window", "Working hours only", "yes"]
+            ]
+          },
+          {
+            "label": "Not carried over yet",
+            "rows": [
+              ["WhatsApp messaging", "yes", "no"],
+              ["Guests page and front-desk sign-in kiosk", "yes", "no"],
+              ["Member-system integrations", "20+ systems", "GymMaster only"]
+            ]
+          }
+        ],
+        "note": "Based on the GymSales features Housed used, mapped from the live account in July 2026 and checked again in October 2026. GymSales may offer features Housed did not use."
+      }
     }
   }
 };

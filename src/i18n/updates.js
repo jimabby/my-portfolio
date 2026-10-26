@@ -9,6 +9,17 @@
 
 export const UPDATES = [
   {
+    id: '2026-10-27-housed-sales-system',
+    date: '2026-10-27',
+    tag: 'project',
+    title: {
+      en: 'New project: Housed Sales System — an in-house sales CRM built to replace GymSales, with a feature-by-feature comparison.',
+      'zh-Hans': '新项目：Housed Sales System——为替代 GymSales 而自建的销售 CRM，并附逐项功能对比。',
+      'zh-Hant': '新專案：Housed Sales System——為取代 GymSales 而自建的銷售 CRM，並附逐項功能比較。',
+      ja: '新プロジェクト：Housed Sales System — GymSales を置き換えるために自社開発した営業 CRM。機能ごとの比較付き。',
+    },
+  },
+  {
     id: '2026-10-26-imperial-centre',
     date: '2026-10-26',
     tag: 'project',

@@ -2,6 +2,7 @@ import { useEffect, useId, useState } from 'react';
 import { projectsData } from './Data';
 import { ProjectFacts } from './ProjectDetails';
 import ProjectComparison from './ProjectComparison';
+import ProjectFeatureComparison from './ProjectFeatureComparison';
 import { useLanguage } from '../../i18n/LanguageContext';
 import LocaleLink from '../../i18n/LocaleLink';
 import Img from '../image/Img';
@@ -14,6 +15,7 @@ const tours = {
   oncora: [0, 2, 4],
   'simba-education-cms': [2, 1, 5],
   'imperial-centre': [1, 5, 8],
+  'housed-sales-system': [1, 4, 6],
 };
 
 function Walkthrough({ project, story }) {
@@ -86,6 +88,7 @@ export default function ProjectStory({ slug, showFacts = true }) {
       <LocaleLink to="/#contact" className="project-story__contact">{t('improvements.requestDemo')} <span aria-hidden="true">↗</span></LocaleLink>
     </section>
     <ProjectComparison project={project} />
+    <ProjectFeatureComparison comparison={story.comparison} />
     <Walkthrough key={slug} project={project} story={story} />
   </div>;
 }

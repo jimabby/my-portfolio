@@ -36,6 +36,18 @@ import HousedRedesignJournal from "../../assets/housed-redesign/housed-redesign-
 import HousedRedesignArticle from "../../assets/housed-redesign/housed-redesign-article.webp";
 import HousedRedesignFreePass from "../../assets/housed-redesign/housed-redesign-free-pass.webp";
 import HousedRedesignMemberPortal from "../../assets/housed-redesign/housed-redesign-member-portal.webp";
+import HousedSalesNewsFeed from "../../assets/housed-sales-system/housed-sales-system-news-feed.webp";
+import HousedSalesPeople from "../../assets/housed-sales-system/housed-sales-system-people.webp";
+import HousedSalesProfile from "../../assets/housed-sales-system/housed-sales-system-profile.webp";
+import HousedSalesTimeline from "../../assets/housed-sales-system/housed-sales-system-timeline.webp";
+import HousedSalesNextCall from "../../assets/housed-sales-system/housed-sales-system-next-call.webp";
+import HousedSalesCalendar from "../../assets/housed-sales-system/housed-sales-system-calendar.webp";
+import HousedSalesEndOfDay from "../../assets/housed-sales-system/housed-sales-system-end-of-day.webp";
+import HousedSalesAutomations from "../../assets/housed-sales-system/housed-sales-system-automations.webp";
+import HousedSalesTemplates from "../../assets/housed-sales-system/housed-sales-system-templates.webp";
+import HousedSalesGymSettings from "../../assets/housed-sales-system/housed-sales-system-gym-settings.webp";
+import HousedSalesObjections from "../../assets/housed-sales-system/housed-sales-system-objections.webp";
+import HousedSalesSecondarySales from "../../assets/housed-sales-system/housed-sales-system-secondary-sales.webp";
 import ImperialCentreHome from "../../assets/imperial-centre/imperial-centre-home.webp";
 import ImperialCentreDirectory from "../../assets/imperial-centre/imperial-centre-directory.webp";
 import ImperialCentreCentreMap from "../../assets/imperial-centre/imperial-centre-centre-map.webp";
@@ -268,6 +280,34 @@ export const projectsData = [
       HousedRedesignArticle,
       HousedRedesignFreePass,
       HousedRedesignMemberPortal,
+    ],
+  },
+  {
+    id: 26,
+    image: HousedSalesNewsFeed,
+    title: 'Housed Sales System',
+    slug: 'housed-sales-system',
+    role: 'fullstack',
+    year: '2026',
+    projectDate: '2026-10-27',
+    stack: ['Angular', '.NET', 'PostgreSQL', 'Twilio', 'SendGrid'],
+    category: 'App',
+    link: '#',
+    summary: 'In-house sales CRM built to replace the gym’s GymSales subscription: leads, call queues, automated follow-ups, and daily reporting.',
+    tags: ['Web App', 'Fitness', 'CRM'],
+    gallery: [
+      HousedSalesNewsFeed,
+      HousedSalesPeople,
+      HousedSalesProfile,
+      HousedSalesTimeline,
+      HousedSalesNextCall,
+      HousedSalesCalendar,
+      HousedSalesEndOfDay,
+      HousedSalesAutomations,
+      HousedSalesTemplates,
+      HousedSalesGymSettings,
+      HousedSalesObjections,
+      HousedSalesSecondarySales,
     ],
   },
   {

@@ -721,6 +721,66 @@ const imperialCentre = {
   ],
 };
 
+// Housed Sales System
+const housedSales = {
+  en: [
+    'The News Feed is the first screen, as it was in GymSales: club activity on the left, with each automated SMS and email shown in full, and today’s people and activity counts on the right.',
+    'People keeps the GymSales lead list: reach counts for SMS and email, refine filters, bulk actions across every page, and an opt-out badge next to the number. Deleted people can be restored, and a CSV can be imported.',
+    'A client profile puts calling, messaging, emailing, and booking one click from the name, with contact details, lead source, who booked and who closed, and the pipeline status beside them.',
+    'The timeline records every call, message, appointment, and automation, each automation tagged with the version that sent it. It filters by channel, or by membership, referrals, and system events.',
+    'Next Call orders the queue by who has waited longest. A lead contacted three times in the last four hours is flagged before anyone calls again.',
+    'Above the calendar, a check for appointments that passed with no outcome recorded, so no sale or no-show goes missing from the reports. Then week, month, day, and per-salesperson views.',
+    'End of Day reports today, week to date, and month to date in the gym’s own timezone, with the version of the metric definitions on every report.',
+    'The 49 automations imported from GymSales. Each one is versioned, shows how many times it has run, and keeps a history; one switch pauses them all.',
+    'The 106 SMS and email templates came across from GymSales too, each scoped to the company or to chosen clubs, with versioned edits and a test send.',
+    'Each gym has its own rules: whether a marketing source is required, how long before a Not Interested lead can be contacted again, opening hours, and staff notifications.',
+    'When a lead becomes Not Interested, the salesperson picks the objection from an ordered list. Renaming or retiring an objection keeps the original label on past records.',
+    'Secondary sales such as personal training are set up as sale types plus assignment rules, so a membership sale can open the follow-up opportunity for the right person automatically.',
+  ],
+  'zh-Hans': [
+    'News Feed 是第一个页面，与 GymSales 一样：左侧是俱乐部动态，每条自动短信与邮件都完整显示；右侧是今日人数与活动统计。',
+    'People 沿用 GymSales 的线索列表：短信与邮件可触达人数、细化筛选、跨所有分页的批量操作，号码旁标示退订。已删除的人员可以恢复，也可以导入 CSV。',
+    '客户档案把致电、发短信、发邮件与预约放在名字旁一键可达，旁边是联系方式、线索来源、预约人与成交人，以及销售管道状态。',
+    '时间线记录每一通电话、每条消息、每次预约与自动化，每条自动化都标注发送它的版本。可按渠道筛选，也可按会籍、推荐与系统事件筛选。',
+    'Next Call 按等待时间最长排序。四小时内已被联系三次的线索会被标出，避免再次致电。',
+    '日历上方会检查已过时间却未记录结果的预约，确保报表不漏掉任何成交或爽约。下方是周、月、日与按销售顾问的视图。',
+    'End of Day 按门店时区报告今日、本周至今与本月至今的数据，每份报表都标明指标定义的版本。',
+    '从 GymSales 导入的 49 条自动化规则。每条都有版本、显示已运行次数并保留历史；一个开关即可全部暂停。',
+    '106 个短信与邮件模板同样从 GymSales 迁移而来，可限定于公司或指定俱乐部，支持版本化编辑与测试发送。',
+    '每家门店有自己的规则：是否必填营销来源、“不感兴趣”的线索多久后可再次联系、营业时间，以及员工通知。',
+    '线索转为“不感兴趣”时，销售顾问从有序列表中选择异议原因。重命名或停用某个原因时，过往记录仍保留原来的标签。',
+    '私教等二次销售以销售类型加分配规则来设置，会籍成交时可自动为合适的人建立跟进机会。',
+  ],
+  'zh-Hant': [
+    'News Feed 是第一個頁面，與 GymSales 相同：左側是俱樂部動態，每則自動簡訊與電子郵件都完整顯示；右側是今日人數與活動統計。',
+    'People 沿用 GymSales 的名單列表：簡訊與電子郵件可觸及人數、細部篩選、跨所有分頁的批次操作，號碼旁標示退訂。已刪除的人員可以還原，也可以匯入 CSV。',
+    '客戶檔案把撥打電話、傳簡訊、寄電子郵件與預約放在名字旁一鍵可達，旁邊是聯絡資料、名單來源、預約人與成交人，以及銷售流程狀態。',
+    '時間軸記錄每一通電話、每則訊息、每次預約與自動化，每則自動化都標註發送它的版本。可依管道篩選，也可依會籍、推薦與系統事件篩選。',
+    'Next Call 依等待時間最長排序。四小時內已被聯絡三次的名單會被標出，避免再次來電。',
+    '行事曆上方會檢查已過時間卻未記錄結果的預約，確保報表不漏掉任何成交或未到。下方是週、月、日與依銷售顧問的檢視。',
+    'End of Day 依分店時區報告今日、本週至今與本月至今的數據，每份報表都標明指標定義的版本。',
+    '從 GymSales 匯入的 49 條自動化規則。每條都有版本、顯示已執行次數並保留歷程；一個開關即可全部暫停。',
+    '106 個簡訊與電子郵件範本同樣從 GymSales 移轉而來，可限定於公司或指定俱樂部，支援版本化編輯與測試發送。',
+    '每家分店有自己的規則：是否必填行銷來源、「沒興趣」的名單多久後可再次聯絡、營業時間，以及員工通知。',
+    '名單轉為「沒興趣」時，銷售顧問從排序好的清單中選擇異議原因。重新命名或停用某個原因時，過往紀錄仍保留原本的標籤。',
+    '私人教練等二次銷售以銷售類型加分配規則來設定，會籍成交時可自動為合適的人建立跟進機會。',
+  ],
+  ja: [
+    'News Feed は GymSales と同じく最初の画面です。左にクラブの動き（自動送信された SMS やメールは全文表示）、右に本日の人数とアクティビティ数を表示します。',
+    'People は GymSales のリード一覧を引き継いでいます。SMS とメールの到達可能数、詳細な絞り込み、全ページにまたがる一括操作、電話番号の横のオプトアウト表示。削除した人は復元でき、CSV の取り込みもできます。',
+    '顧客プロフィールでは、電話、メッセージ、メール、予約が名前からワンクリック。連絡先、流入元、予約者と成約者、パイプラインのステータスが並びます。',
+    'タイムラインには通話、メッセージ、予約、自動化がすべて残り、自動化には送信したバージョンが付きます。チャネル別のほか、会員、紹介、システムイベント別にも絞り込めます。',
+    'Next Call は待ち時間の長い順にキューを並べます。直近 4 時間に 3 回連絡したリードには、再度電話する前に印が付きます。',
+    'カレンダーの上では、時間が過ぎたのに結果が記録されていない予約を確認し、成約や無断キャンセルがレポートから漏れないようにします。その下に週・月・日・担当者別の表示があります。',
+    'End of Day はジムのタイムゾーンで本日、週初来、月初来の数字を報告し、すべてのレポートに指標定義のバージョンを記載します。',
+    'GymSales から取り込んだ 49 件の自動化。それぞれバージョン管理され、実行回数と履歴を確認でき、ひとつのスイッチで一斉に停止できます。',
+    '106 件の SMS・メールテンプレートも GymSales から移行。会社全体または選んだクラブに適用範囲を指定でき、バージョン管理された編集とテスト送信に対応しています。',
+    'ジムごとにルールを設定できます。流入元を必須にするか、「興味なし」のリードに再連絡できるまでの期間、営業時間、スタッフへの通知。',
+    'リードが「興味なし」になると、営業担当は並び順の決まったリストから理由を選びます。理由の名前を変えたり無効にしたりしても、過去の記録には元のラベルが残ります。',
+    'パーソナルトレーニングなどの二次販売は、販売タイプと割り当てルールで設定し、会員契約が成立すると適切な担当者のフォローアップ商談を自動で作成できます。',
+  ],
+};
+
 // Keyed by the project ids in Data.jsx.
 const byProject = {
   1: takeaway,
@@ -747,6 +807,7 @@ const byProject = {
   22: oncora,
   24: simbaCms,
   25: imperialCentre,
+  26: housedSales,
 };
 
 const LANGS = ['en', 'zh-Hans', 'zh-Hant', 'ja'];

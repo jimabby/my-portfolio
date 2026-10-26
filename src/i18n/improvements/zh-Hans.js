@@ -34,6 +34,8 @@ export default {
   "revealValue": "显示 {n}% 新设计",
   "requestDemo": "讨论这个项目",
   "allScreens": "全部项目截图",
+  "featureYes": "支持",
+  "featureNo": "不支持",
   "comparisonNotes": {
     "housed-redesign": "Housed 首页从品牌介绍转向更直观的俱乐部和会员方案入口。下文详细解释导航、预约和内容的变化。",
     "simba-education-new-build": "原 WordPress 网站与定制教育网站呈现相同的主题，但以不同方式组织第一印象。可对比页面层次、图片与课程入口。",
@@ -135,6 +137,67 @@ export default {
         "中心、主要商户与公众假期的营业时间并排呈现，并标出今天。",
         "选择前来方式，即可查看停车场、免费时段与最近的站点。"
       ]
+    },
+    "housed-sales-system": {
+      "problem": "Housed 的销售团队过去用订阅制 CRM ABC GymSales 处理每一条线索、每一通电话和每一次跟进。Housed 希望拥有自己的系统——自己的数据、自己的规则、自己的成本——同时不让忙碌的销售团队重新学习一套工作方式。",
+      "decisions": [
+        "动手写代码之前，先逐个页面梳理 GymSales，再导入俱乐部真实的设置、49 条自动化规则和 106 个消息模板，让团队一打开新系统就已经是熟悉的俱乐部。",
+        "保留 GymSales 的布局与用语——News Feed、Next Call、End of Day——无需重新培训；把精力花在团队一直在变通应对的地方：自动化历史、重复记录合并，以及按各门店时区计算的报表。",
+        "把消息发送当作风险最高的部分：入队时和发送时两次检查退订，Twilio 回调签名校验，发送队列可由两台服务器共享而不会重复发送。"
+      ],
+      "outcome": "基于 Angular、.NET 与 PostgreSQL 的应用，短信经 Twilio、邮件经 SendGrid 发送，已为 Housed Macquarie Park 部署。下方表格逐项对比它与 GymSales；导览则跟随一位销售顾问，从线索列表走到当日结算报表。",
+      "steps": [
+        "找到线索",
+        "处理队列",
+        "结束一天"
+      ],
+      "stepText": [
+        "搜索、筛选并批量编辑线索，每个人的状态、来源与退订情况都在同一行。",
+        "下一位该联系的人，按等待时间最长排序；若四小时内已联系过，会给出提醒。",
+        "按门店时区统计的一天：新线索、通话、已预约与已完成的到访，以及仍未处理的事项。"
+      ],
+      "comparison": {
+        "eyebrow": "GymSales 与 Housed Sales System",
+        "title": "逐项对比",
+        "intro": "第一个目标是功能对等：销售顾问在 GymSales 用过的每个页面，上线第一天都要有。之后再补上团队一直在变通应对的部分。少数 GymSales 功能尚未迁移，也一并列出。",
+        "columns": ["功能", "ABC GymSales", "Housed Sales System"],
+        "groups": [
+          {
+            "label": "沿用 GymSales",
+            "rows": [
+              ["带筛选、标签与批量操作的线索列表", "yes", "yes"],
+              ["包含完整联系记录的客户档案", "yes", "yes"],
+              ["带四小时联系保护的 Next Call 队列", "yes", "yes"],
+              ["按日、周、月与销售顾问查看的日历", "yes", "yes"],
+              ["自动短信与邮件跟进", "yes", "yes"],
+              ["带合并字段的短信与邮件模板", "yes", "yes"],
+              ["业绩、报表与 End of Day", "yes", "yes"],
+              ["按渠道退订与“请勿致电”", "yes", "yes"]
+            ]
+          },
+          {
+            "label": "超越 GymSales 的新增功能",
+            "rows": [
+              ["带版本的自动化规则，每条规则都有运行历史", "no", "yes"],
+              ["新线索查重，以及两条记录合并", "no", "yes"],
+              ["报表与 End of Day 按各门店时区计算", "no", "yes"],
+              ["日历检查未记录结果的预约", "no", "yes"],
+              ["每条线索的广告点击来源（gclid、fbclid、UTM）", "no", "yes"],
+              ["会籍成交时自动建立二次销售机会的规则", "no", "yes"],
+              ["门店级规则：必填营销来源、重新联系间隔", "仅营业时间", "yes"]
+            ]
+          },
+          {
+            "label": "尚未迁移",
+            "rows": [
+              ["WhatsApp 消息", "yes", "no"],
+              ["访客页面与前台签到终端", "yes", "no"],
+              ["会员系统集成", "20 多个系统", "仅 GymMaster"]
+            ]
+          }
+        ],
+        "note": "依据 Housed 实际使用的 GymSales 功能，于 2026 年 7 月从线上账户梳理，并于 2026 年 10 月再次核对。GymSales 可能还有 Housed 未使用的功能。"
+      }
     }
   }
 };
