@@ -2,6 +2,7 @@ import DorinBlaga from '../../assets/testimonials/Dorin-Blaga.webp';
 import BenRadcliffe from '../../assets/testimonials/Ben-Radcliffe.webp';
 import ZhongtaoLi from '../../assets/testimonials/Zhongtao-Li.webp';
 import JamesXabregas from '../../assets/testimonials/James-Xabregas.webp';
+import EdwaldHe from '../../assets/testimonials/Edwald-He.webp';
 
 const Data = [
   {
@@ -33,6 +34,12 @@ const Data = [
     image: JamesXabregas,
     title: "James Xabregas",
     description: "Weidong reported directly to me at Braiv, where he worked on our data analytics platform across backend systems and front-end dashboards. His work included building data pipelines in Google BigQuery, implementing logic with Google Cloud Functions, and developing dashboards using React and Next.js.\n\nWeidong is a practical engineer who focuses on solving real problems without overcomplicating things. He communicates clearly, takes feedback well, and works steadily through challenges. I found him reliable, collaborative, and easy to work with in a fast-moving environment. I'm happy to recommend Weidong for software engineering and data-focused roles."
+  },
+  {
+    id: 6,
+    image: EdwaldHe,
+    title: "Yi (Edwald) He",
+    description: "I've enjoyed working alongside Weidong (Jim) Kong at Cessleigh. He brings strong full-stack development skills and a practical understanding of how software supports day-to-day business operations.\n\nJim's work spans React, TypeScript and Node.js applications, content management systems and workflow automation. His contributions to our web platforms and internal systems show his ability to connect user-facing experiences with the processes and services behind them. He approaches development with the business purpose in mind and turns requirements into clear, workable solutions.\n\nAs a teammate, Jim brings a collaborative approach and communicates effectively with both technical and non-technical colleagues. I value his ability to understand different perspectives, contribute ideas and keep discussions focused on solving the problem at hand.\n\nI would happily recommend Jim for software engineering and full-stack development roles where technical ability, clear communication and an understanding of business workflows are important. I'm glad to have him as a colleague."
   }
 ]
 
