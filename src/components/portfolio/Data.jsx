@@ -62,6 +62,9 @@ import ImperialCentreVisit from "../../assets/imperial-centre/imperial-centre-vi
 import ImperialCentreContact from "../../assets/imperial-centre/imperial-centre-contact.webp";
 import OnsenImg from "../../assets/onsen/onsen.webp";
 import OnsenImg1 from "../../assets/onsen/onsen1.webp";
+import OnsenImg2 from "../../assets/onsen/onsen2.webp";
+import OnsenImg3 from "../../assets/onsen/onsen3.webp";
+import OnsenImg4 from "../../assets/onsen/onsen4.webp";
 import SimbaImg from "../../assets/simba-education/simbaeducation.webp";
 import SimbaImg1 from "../../assets/simba-education/simbaeducation1.webp";
 import SimbaImg2 from "../../assets/simba-education/simbaeducation2.webp";
@@ -76,6 +79,15 @@ import SimbaEduRedesign2 from "../../assets/simba-edu-redesign/simba-edu-redesig
 import SimbaEduRedesign3 from "../../assets/simba-edu-redesign/simba-edu-redesign3.webp";
 import SimbaEduRedesign4 from "../../assets/simba-edu-redesign/simba-edu-redesign4.webp";
 import SimbaEduRedesign5 from "../../assets/simba-edu-redesign/simba-edu-redesign5.webp";
+import SimbaEduRedesign6 from "../../assets/simba-edu-redesign/simba-edu-redesign6.webp";
+import SimbaEduRedesign7 from "../../assets/simba-edu-redesign/simba-edu-redesign7.webp";
+import SimbaEduRedesign8 from "../../assets/simba-edu-redesign/simba-edu-redesign8.webp";
+import SimbaEduRedesign9 from "../../assets/simba-edu-redesign/simba-edu-redesign9.webp";
+import SimbaEduRedesign10 from "../../assets/simba-edu-redesign/simba-edu-redesign10.webp";
+import SimbaEduRedesign11 from "../../assets/simba-edu-redesign/simba-edu-redesign11.webp";
+import SimbaEduRedesign12 from "../../assets/simba-edu-redesign/simba-edu-redesign12.webp";
+import SimbaEduRedesign13 from "../../assets/simba-edu-redesign/simba-edu-redesign13.webp";
+import SimbaEduRedesign14 from "../../assets/simba-edu-redesign/simba-edu-redesign14.webp";
 import SimbaCmsDashboard from "../../assets/simba-cms/simba-cms-dashboard.webp";
 import SimbaCmsCampaignCanvas from "../../assets/simba-cms/simba-cms-campaign-canvas.webp";
 import SimbaCmsCampaigns from "../../assets/simba-cms/simba-cms-campaigns.webp";
@@ -93,6 +105,10 @@ import SimbaHealthRedesign1 from "../../assets/simba-health-redesign/simba-healt
 import SimbaHealthRedesign2 from "../../assets/simba-health-redesign/simba-health-redesign2.webp";
 import SimbaHealthRedesign3 from "../../assets/simba-health-redesign/simba-health-redesign3.webp";
 import SimbaHealthRedesign4 from "../../assets/simba-health-redesign/simba-health-redesign4.webp";
+import SimbaHealthRedesign5 from "../../assets/simba-health-redesign/simba-health-redesign5.webp";
+import SimbaHealthRedesign6 from "../../assets/simba-health-redesign/simba-health-redesign6.webp";
+import SimbaHealthRedesign7 from "../../assets/simba-health-redesign/simba-health-redesign7.webp";
+import SimbaHealthRedesign8 from "../../assets/simba-health-redesign/simba-health-redesign8.webp";
 import SimbaHealth1 from "../../assets/simba-health/simba-health1.webp";
 import SimbaHealth2 from "../../assets/simba-health/simba-health2.webp";
 import SimbaHealth3 from "../../assets/simba-health/simba-health3.webp";
@@ -105,6 +121,10 @@ import SimbaHearing1 from "../../assets/simba-hearing/simba-hearing1.webp";
 import SimbaHearing2 from "../../assets/simba-hearing/simba-hearing2.webp";
 import SimbaHearing3 from "../../assets/simba-hearing/simba-hearing3.webp";
 import SimbaHearing4 from "../../assets/simba-hearing/simba-hearing4.webp";
+import SimbaHearing5 from "../../assets/simba-hearing/simba-hearing5.webp";
+import SimbaHearing6 from "../../assets/simba-hearing/simba-hearing6.webp";
+import SimbaHearing7 from "../../assets/simba-hearing/simba-hearing7.webp";
+import SimbaHearing8 from "../../assets/simba-hearing/simba-hearing8.webp";
 import AirbestHero from "../../assets/airbest/airbest-hero.webp";
 import AirbestImg from "../../assets/airbest/airbest.webp";
 import AirbestImg1 from "../../assets/airbest/airbest1.webp";
@@ -347,7 +367,7 @@ export const projectsData = [
     link: 'https://onsen.housed.com.au/',
     summary: 'Premium gym brand site under Housed with a refined aesthetic.',
     tags: ['Website', 'Fitness', 'Brand'],
-    gallery: [OnsenImg, OnsenImg1],
+    gallery: [OnsenImg, OnsenImg1, OnsenImg2, OnsenImg3, OnsenImg4],
   },
   {
     id: 9,
@@ -428,6 +448,15 @@ export const projectsData = [
       SimbaEduRedesign3,
       SimbaEduRedesign4,
       SimbaEduRedesign5,
+      SimbaEduRedesign6,
+      SimbaEduRedesign7,
+      SimbaEduRedesign8,
+      SimbaEduRedesign9,
+      SimbaEduRedesign10,
+      SimbaEduRedesign11,
+      SimbaEduRedesign12,
+      SimbaEduRedesign13,
+      SimbaEduRedesign14,
     ],
   },
   {
@@ -494,6 +523,10 @@ export const projectsData = [
       SimbaHealthRedesign2,
       SimbaHealthRedesign3,
       SimbaHealthRedesign4,
+      SimbaHealthRedesign5,
+      SimbaHealthRedesign6,
+      SimbaHealthRedesign7,
+      SimbaHealthRedesign8,
     ],
   },
   {
@@ -510,6 +543,10 @@ export const projectsData = [
       SimbaHearing2,
       SimbaHearing3,
       SimbaHearing4,
+      SimbaHearing5,
+      SimbaHearing6,
+      SimbaHearing7,
+      SimbaHearing8,
     ],
   },
   {
